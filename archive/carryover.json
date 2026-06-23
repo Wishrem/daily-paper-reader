@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-23T03:44:04.741500+00:00",
-  "updated_date": "20260525-20260623",
+  "generated_at": "2026-06-23T22:12:32.375691+00:00",
+  "updated_date": "20260623",
   "carryover_days": 9,
   "tag_states": {
     "ai-infra": {
-      "updated_date": "20260525-20260623",
+      "updated_date": "20260623",
       "carryover_days": 9,
       "items": [
         {
@@ -81,87 +81,6 @@
           "matched_requirement_id": "req-1",
           "selection_source": "carryover_cache",
           "paper_id": "2606.11853v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2606.02836v1",
-          "source": "arxiv",
-          "title": "Fast Transformer Inference on ARM-Based HMPSoCs",
-          "abstract": "Transformer models have set new performance standards for machine learning (ML) tasks. However, their resource-intensive deployment on resource-constrained edge devices for cloud-free, on-chip transformer inference remains challenging. The ARM Compute Library (ARM-CL) framework provides low-latency CNN inference on ARM-based edge devices but lacks support for transformer inference. In this work, we implement several new transformer kernels in ARM-CL to support native transformer execution. Our extended ARM-CL achieves up to three times faster transformer inference compared to state-of-the-art CPU/GPU implementations on an ARM-based embedded board.   Furthermore, heterogeneous multi-processor system-on-chips (HMPSoCs) powering edge devices provide both embedded CPUs and GPUs. We introduce cooperative CPU-GPU transformer inference, which executes memory-intensive operations on the CPU while utilizing the GPU for highly parallelizable, compute-intensive operations. This cooperative execution, implemented with minimal overhead, further reduces transformer inference latency by up to 15.72% compared to the best single-processor inference on ARM-CL.",
-          "authors": [
-            "Hang Xu",
-            "Yixian Shen",
-            "Thanassis Giannetsos",
-            "Anuj Pathania"
-          ],
-          "primary_category": "cs.AR",
-          "categories": [
-            "cs.AR"
-          ],
-          "published": "2026-06-01T20:00:04+00:00",
-          "link": "https://arxiv.org/pdf/2606.02836v1",
-          "tags": [
-            "keyword:ai-infra",
-            "query:ai-infra"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Fast transformer inference on heterogeneous ARM-based SoCs",
-          "llm_evidence_cn": "在异构ARM SoC上加速Transformer推理",
-          "llm_evidence": "在异构ARM SoC上加速Transformer推理",
-          "canonical_evidence": "在异构ARM SoC上加速Transformer推理",
-          "llm_tldr_en": "Implements new transformer kernels in ARM Compute Library to enable native transformer execution on embedded HMPSoCs, achieving up to 3x speedup over CPU/GPU.",
-          "llm_tldr_cn": "该论文针对边缘设备上Transformer推理的资源密集问题，在ARM Compute Library中实现了新的Transformer内核，支持在异构多处理器SoC上原生执行Transformer。与现有CPU/GPU实现相比，推理速度提升高达3倍。",
-          "llm_tldr": "该论文针对边缘设备上Transformer推理的资源密集问题，在ARM Compute Library中实现了新的Transformer内核，支持在异构多处理器SoC上原生执行Transformer。与现有CPU/GPU实现相比，推理速度提升高达3倍。",
-          "llm_tags": [
-            "query:ai-infra"
-          ],
-          "matched_query_tag": "query:ai-infra",
-          "matched_query_text": "heterogeneous mixed inference for large models",
-          "matched_requirement_id": "req-3",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.02836v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2606.03075v1",
-          "source": "arxiv",
-          "title": "TGV-KV: Text-Grounded KV Eviction for Vision-Language Models",
-          "abstract": "Vision-Language Models (VLMs) inherit the auto-regressive generation paradigm and cache the keys and values (KV) of all previous tokens to accelerate inference, resulting in memory consumption that scales linearly with context length. This issue is particularly pronounced in VLMs due to substantial redundancy in the visual modality. Although KV cache eviction approaches can effectively reduce inference memory, they often incur significant performance degradation in VLMs, as most are designed for language models and overlook the inherent gap between text and vision. By systematically analyzing the modality gap in VLMs in this work, we argue that the importance of visual information should be grounded in textual guidance and accordingly propose a Text-Grounded KV Eviction method for VLMs (TGV-KV). TGV-KV comprises three submodules: (1) Text-Vision Budgeting (TVB) assigns budget to each layer based on the mutual information interaction. (2) Text-Weighted Ranking (TWR) assesses the priority of text and ranks vision importance based on weighted text-image attention. (3) Text-Prioritised Retention (TPR) policy strategically preserves text KV to avoid acute information loss. We evaluate TGV-KV across five models with different sizes and architectures, showing that TGV-KV preserves 99.2% full-KV accuracy on the VizWiz-VQA task with LLaVA-NeXT and boosts end-to-end throughput by 52.6% with an extreme retention budget of 5%. Code is available at https://github.com/Danielement321/TGV-KV.",
-          "authors": [
-            "Jizhihui Liu",
-            "Ruizi Han",
-            "Miao Zhang",
-            "Rui Shao",
-            "Xuebo Liu",
-            "Weili Guan",
-            "Yaowei Wang"
-          ],
-          "primary_category": "cs.CV",
-          "categories": [
-            "cs.CV"
-          ],
-          "published": "2026-06-02T03:06:17+00:00",
-          "link": "https://arxiv.org/pdf/2606.03075v1",
-          "tags": [
-            "keyword:ai-infra",
-            "query:ai-infra"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "KV cache eviction method for vision-language models",
-          "llm_evidence_cn": "面向视觉语言模型的KV缓存驱逐方法",
-          "llm_evidence": "面向视觉语言模型的KV缓存驱逐方法",
-          "canonical_evidence": "面向视觉语言模型的KV缓存驱逐方法",
-          "llm_tldr_en": "Proposes TGV-KV which uses textual guidance to evict visual KV entries, reducing memory while maintaining VLM performance.",
-          "llm_tldr_cn": "该论文分析视觉语言模型中文本与视觉的模态差距，提出TGV-KV，用文本引导视觉KV驱逐，在减少内存消耗的同时保持VLM性能。",
-          "llm_tldr": "该论文分析视觉语言模型中文本与视觉的模态差距，提出TGV-KV，用文本引导视觉KV驱逐，在减少内存消耗的同时保持VLM性能。",
-          "llm_tags": [
-            "query:ai-infra"
-          ],
-          "matched_query_tag": "query:ai-infra",
-          "matched_query_text": "KV cache optimization for large language models",
-          "matched_requirement_id": "req-1",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.03075v1",
           "carry_days": 1
         },
         {
@@ -328,47 +247,6 @@
           "carry_days": 1
         },
         {
-          "id": "2606.01666v1",
-          "source": "arxiv",
-          "title": "DOT-MoE: Differentiable Optimal Transport for MoEfication",
-          "abstract": "The scaling of Large Language Models (LLMs) has driven significant performance gains but created substantial challenges in inference efficiency. While Mixture of Experts (MoEs) architectures address this by decoupling model size from inference cost, training MoEs from scratch is often unstable and compute intensive. Conversion of pre-trained dense models into sparse MoEs has emerged as an alternative solution; however, existing methods typically rely on heuristic neuron clustering or random splitting to partition the Feed-Forward Network (FFN) into experts. In this work, we propose DOT-MoE, a novel framework that formulates the decomposition of dense layers as a Differentiable Optimal Transport (DOT) problem. Instead of static heuristics, we model neuron assignment as a balanced transport problem, utilizing differentiable Sinkhorn-Knopp iterations to enforce strict expert capacity constraints. Furthermore, we utilize Straight-Through Estimators (STE) to jointly learn the discrete neuron-to-expert assignment and the token-to-expert routing policy end-to-end. Extensive experiments across multiple architectures and benchmarks demonstrate that DOT-MoE significantly outperforms structured pruning, heuristic clustering, and random-split baselines, retaining 90% of the original dense model's performance while reducing active parameters by 50%.",
-          "authors": [
-            "Udbhav Bamba",
-            "Arnav Chavan",
-            "Aryamaan Thakur",
-            "Steve Teig",
-            "Deepak Gupta"
-          ],
-          "primary_category": "cs.LG",
-          "categories": [
-            "cs.LG",
-            "cs.AI"
-          ],
-          "published": "2026-06-01T04:19:16+00:00",
-          "link": "https://arxiv.org/pdf/2606.01666v1",
-          "tags": [
-            "keyword:ai-infra",
-            "query:ai-infra"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Differentiable optimal transport for dense-to-MoE conversion",
-          "llm_evidence_cn": "利用可微最优传输将稠密模型转换为MoE",
-          "llm_evidence": "利用可微最优传输将稠密模型转换为MoE",
-          "canonical_evidence": "利用可微最优传输将稠密模型转换为MoE",
-          "llm_tldr_en": "DOT-MoE proposes a differentiable optimal transport framework for converting dense FFN layers into experts, enabling more principled MoEfication for efficient inference.",
-          "llm_tldr_cn": "将稠密预训练模型转换为稀疏MoE模型是一种降低推理成本的方法，但现有转换依赖启发式聚类。DOT-MoE将其形式化为可微最优传输问题，学习最优的神经元分配，产生更有效的专家划分，从而提升稀疏MoE的推理效率。",
-          "llm_tldr": "将稠密预训练模型转换为稀疏MoE模型是一种降低推理成本的方法，但现有转换依赖启发式聚类。DOT-MoE将其形式化为可微最优传输问题，学习最优的神经元分配，产生更有效的专家划分，从而提升稀疏MoE的推理效率。",
-          "llm_tags": [
-            "query:ai-infra"
-          ],
-          "matched_query_tag": "query:ai-infra",
-          "matched_query_text": "inference acceleration for AI infrastructure",
-          "matched_requirement_id": "req-5",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.01666v1",
-          "carry_days": 1
-        },
-        {
           "id": "2606.16352v1",
           "source": "arxiv",
           "title": "Communication-Efficient Verifiable Attention for LLM Inference",
@@ -412,55 +290,6 @@
           "carry_days": 1
         },
         {
-          "id": "2606.01062v1",
-          "source": "arxiv",
-          "title": "DAG-MoE: From Simple Mixture to Structural Aggregation in Mixture-of-Experts",
-          "abstract": "Mixture-of-Experts (MoE) models have become a leading approach for decoupling parameter count from computational cost in large language models, yet effectively scaling MoE performance remains a challenge. Prior work shows that fine-grained experts enlarge the space of expert combinations and improve flexibility, but they also impose substantial routing overhead, creating a new scalability bottleneck. In this paper, we explore a complementary axis for scaling -- how expert outputs are aggregated. We theoretically show that replacing the standard weighted-summation aggregation with structural aggregation expands the expert-combination space without altering the experts or router, and enables possible multi-step reasoning within a single MoE layer. To this end, we propose DAG-MoE, a sparse MoE framework that employs a lightweight module to automatically learn the optimal aggregation structure among the selected experts. Extensive experiments under standard language modeling settings show that DAG-MoE consistently improves performance in both pretraining and fine-tuning, surpassing traditional MoE baselines.",
-          "authors": [
-            "Jiarui Feng",
-            "Hanqing Zeng",
-            "Karish Grover",
-            "Ruizhong Qiu",
-            "Yinglong Xia",
-            "Qiang Zhang",
-            "Qifan Wang",
-            "Ren Chen",
-            "Dongqi Fu",
-            "Jiayi Liu",
-            "Zhoukai Zhao",
-            "Xiangjun Fan",
-            "Benyu Zhang",
-            "Yixin Chen"
-          ],
-          "primary_category": "cs.AI",
-          "categories": [
-            "cs.AI"
-          ],
-          "published": "2026-05-31T07:08:16+00:00",
-          "link": "https://arxiv.org/pdf/2606.01062v1",
-          "tags": [
-            "keyword:ai-infra",
-            "query:ai-infra"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "addresses routing overhead in MoE communication",
-          "llm_evidence_cn": "解决MoE通信中的路由开销",
-          "llm_evidence": "解决MoE通信中的路由开销",
-          "canonical_evidence": "解决MoE通信中的路由开销",
-          "llm_tldr_en": "Proposes DAG-MoE with structural aggregation to reduce routing overhead in MoE models, enhancing communication efficiency.",
-          "llm_tldr_cn": "现有MoE模型中的细粒度专家带来大量路由开销，形成可扩展性瓶颈。本文提出DAG-MoE，将标准加权求和聚合替换为结构聚合，在不改变专家和路由器的情况下扩展专家组合空间，理论上减少了路由通信开销，并支持单层内多步推理。实验表明该方法有效降低通信延迟，提升MoE训练和推理效率。",
-          "llm_tldr": "现有MoE模型中的细粒度专家带来大量路由开销，形成可扩展性瓶颈。本文提出DAG-MoE，将标准加权求和聚合替换为结构聚合，在不改变专家和路由器的情况下扩展专家组合空间，理论上减少了路由通信开销，并支持单层内多步推理。实验表明该方法有效降低通信延迟，提升MoE训练和推理效率。",
-          "llm_tags": [
-            "query:ai-infra"
-          ],
-          "matched_query_tag": "query:ai-infra",
-          "matched_query_text": "communication optimization in mixture of experts models",
-          "matched_requirement_id": "req-4",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.01062v1",
-          "carry_days": 1
-        },
-        {
           "id": "2606.18304v1",
           "source": "arxiv",
           "title": "Attribution-Guided and Coverage-Maximized Pruning for Structural MoE Compression",
@@ -486,13 +315,13 @@
             "query:ai-infra"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "structural MoE compression to accelerate inference",
-          "llm_evidence_cn": "结构化MoE压缩以加速推理",
-          "llm_evidence": "结构化MoE压缩以加速推理",
-          "canonical_evidence": "结构化MoE压缩以加速推理",
-          "llm_tldr_en": "Proposes attribution-guided and coverage-maximized structural pruning for MoE models, reducing memory and inference overhead.",
-          "llm_tldr_cn": "MoE模型部署时面临高内存和推理开销。现有方法在专家级别剪枝过于粗糙，忽略了通道级冗余。本文提出属性引导且覆盖最大化的结构化剪枝框架，针对MoE模型进行细粒度压缩，保留重要的通道，删除冗余。实验证明在保持性能的同时大幅减少计算量和内存占用，实现推理加速。",
-          "llm_tldr": "MoE模型部署时面临高内存和推理开销。现有方法在专家级别剪枝过于粗糙，忽略了通道级冗余。本文提出属性引导且覆盖最大化的结构化剪枝框架，针对MoE模型进行细粒度压缩，保留重要的通道，删除冗余。实验证明在保持性能的同时大幅减少计算量和内存占用，实现推理加速。",
+          "llm_evidence_en": "Structural MoE compression reduces inference overhead",
+          "llm_evidence_cn": "结构化MoE压缩减少推理开销",
+          "llm_evidence": "结构化MoE压缩减少推理开销",
+          "canonical_evidence": "结构化MoE压缩减少推理开销",
+          "llm_tldr_en": "Proposes attribution-guided pruning for MoE models, achieving compression by removing redundant channels within experts, thereby reducing memory and inference cost.",
+          "llm_tldr_cn": "现有MoE模型压缩方法仅进行粗粒度的专家级剪枝，无法捕获细粒度冗余。本文提出基于归因引导和覆盖最大化的结构化剪枝框架，在专家内部识别冗余通道并剪枝。实验表明，该方法在保持模型性能的同时显著压缩了MoE模型，降低了推理开销。这项工作为MoE模型的高效部署提供了新思路。",
+          "llm_tldr": "现有MoE模型压缩方法仅进行粗粒度的专家级剪枝，无法捕获细粒度冗余。本文提出基于归因引导和覆盖最大化的结构化剪枝框架，在专家内部识别冗余通道并剪枝。实验表明，该方法在保持模型性能的同时显著压缩了MoE模型，降低了推理开销。这项工作为MoE模型的高效部署提供了新思路。",
           "llm_tags": [
             "query:ai-infra"
           ],
@@ -707,6 +536,412 @@
           "matched_requirement_id": "req-5",
           "selection_source": "carryover_cache",
           "paper_id": "2606.07710v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.19719v2",
+          "source": "arxiv",
+          "title": "Closing the Calibration Gap in Semantic Caching",
+          "abstract": "Semantic caching cuts LLM inference costs by serving a cached response to semantically similar queries. Standard practice evaluates these systems using PR-AUC, a metric that only measures how well scores rank and ignores whether they are usable at a fixed threshold. We show this mismatch leads to systematically poor deployment choices, as models with the highest PR-AUC are often the worst in operation. We introduce Precision-Cache Hit Ratio (P-CHR) AUC, a cache-aware metric that measures precision across cache utilization levels, and Calibration Retention Rate (CRR), which captures how much offline ranking quality survives at deployment. We decompose the operational gap between offline and deployed quality into a recoverable calibration component and an irreducible structural component fixed by the dataset's positive rate. Our experiments show that the calibration gap is governed by the training objective rather than data scale, and post-hoc calibration only partially closes it. Ultimately, model selection for semantic caching is a calibration problem, not a ranking one, and measuring it is the first step to closing the gap.",
+          "authors": [
+            "Aditeya Baral",
+            "Radoslav Ralev",
+            "Iliya Sotirov Zhechev",
+            "Srijith Rajamohan",
+            "Jen Agarwal"
+          ],
+          "primary_category": "cs.IR",
+          "categories": [
+            "cs.IR",
+            "cs.CL",
+            "cs.LG"
+          ],
+          "published": "2026-06-18T02:34:33+00:00",
+          "link": "https://arxiv.org/pdf/2606.19719v2",
+          "tags": [
+            "keyword:ai-infra",
+            "query:ai-infra"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "semantic caching calibration for LLM inference cost reduction",
+          "llm_evidence_cn": "语义缓存校准以降低LLM推理成本",
+          "llm_evidence": "语义缓存校准以降低LLM推理成本",
+          "canonical_evidence": "语义缓存校准以降低LLM推理成本",
+          "llm_tldr_en": "Identifies calibration issues in semantic caching for LLMs and proposes cache-aware metrics (P-CHR AUC and CRR) to bridge offline evaluation and deployment performance, enabling more effective KV cache optimization.",
+          "llm_tldr_cn": "针对语义缓存系统离线评估与在线部署表现不一致的问题，本文提出缓存感知指标P-CHR AUC和校准保留率CRR，将操作差距分解为可校准部分和不可还原结构部分。该工作揭示了现有评估指标的缺陷，并为KV缓存优化提供了更可靠的度量工具，直接服务于LLM推理加速。",
+          "llm_tldr": "针对语义缓存系统离线评估与在线部署表现不一致的问题，本文提出缓存感知指标P-CHR AUC和校准保留率CRR，将操作差距分解为可校准部分和不可还原结构部分。该工作揭示了现有评估指标的缺陷，并为KV缓存优化提供了更可靠的度量工具，直接服务于LLM推理加速。",
+          "llm_tags": [
+            "query:ai-infra"
+          ],
+          "matched_query_tag": "query:ai-infra",
+          "matched_query_text": "KV cache optimization for large language models",
+          "matched_requirement_id": "req-1",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.19719v2",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.21401v1",
+          "source": "arxiv",
+          "title": "SwarmX: Agentic Scheduling for Low-Latency Agentic Systems",
+          "abstract": "Agentic AI applications compose multiple model calls and tool executions, creating new scheduling challenges for GPU-CPU clusters. Their inference time and model-call structure often depend on prompt semantics, making conventional scheduling approaches ineffective for low-latency serving. This paper presents SwarmX, a system that implements agentic scheduling for low-latency agentic applications. SwarmX uses scheduling-specific neural predictors to capture prompt, device, runtime, and target-model features; exposes distributional predictions to routers and scalers for tail-aware decisions; and provides mechanisms for predictor training and online adaptation. These predictors and mechanisms are integrated into a scheduler-agent framework that provides a common substrate for integration with existing scheduling and model-serving infrastructure. We evaluate SwarmX using production deployment (nearly one thousand GPUs and one million CPU cores) and controlled experiments on a 128-GPU testbed. Across multi-agent code generation, deep research, and multimodal agentic workflows, SwarmX reduces tail latency by up to 61.5% compared to state-of-the-art schedulers and sustains up to 2x the throughput of production schedulers under the same SLO.",
+          "authors": [
+            "Yeqi Huang",
+            "Yanwei Ye",
+            "Guomin Chen",
+            "Wenhao Su",
+            "Bin Gong",
+            "Jialian Li",
+            "Zhan Lu",
+            "Yangshen Deng",
+            "Xuan Sun",
+            "Le Xu",
+            "Luo Mai"
+          ],
+          "primary_category": "cs.DC",
+          "categories": [
+            "cs.DC",
+            "cs.AI"
+          ],
+          "published": "2026-06-19T13:11:15+00:00",
+          "link": "https://arxiv.org/pdf/2606.21401v1",
+          "tags": [
+            "keyword:ai-infra",
+            "query:ai-infra"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "agentic scheduling for low-latency GPU-CPU clusters, using neural predictors for tail-aware decisions",
+          "llm_evidence_cn": "代理调度系统，使用神经预测器实现低延迟GPU-CPU集群的尾部感知调度",
+          "llm_evidence": "代理调度系统，使用神经预测器实现低延迟GPU-CPU集群的尾部感知调度",
+          "canonical_evidence": "代理调度系统，使用神经预测器实现低延迟GPU-CPU集群的尾部感知调度",
+          "llm_tldr_en": "SwarmX introduces agentic scheduling with neural predictors to capture prompt/device/runtime features, enabling tail-aware low-latency serving for agentic AI applications on GPU-CPU clusters.",
+          "llm_tldr_cn": "代理AI应用组合多个模型调用和工具执行，给GPU-CPU集群带来新的调度挑战。SwarmX提出代理调度框架，使用调度特定的神经预测器捕捉提示、设备、运行时和目标模型特征，将分布预测暴露给路由器和伸缩器，实现尾部感知决策。该系统显著降低延迟，适用于低延迟代理系统。",
+          "llm_tldr": "代理AI应用组合多个模型调用和工具执行，给GPU-CPU集群带来新的调度挑战。SwarmX提出代理调度框架，使用调度特定的神经预测器捕捉提示、设备、运行时和目标模型特征，将分布预测暴露给路由器和伸缩器，实现尾部感知决策。该系统显著降低延迟，适用于低延迟代理系统。",
+          "llm_tags": [
+            "query:ai-infra"
+          ],
+          "matched_query_tag": "query:ai-infra",
+          "matched_query_text": "AI infrastructure acceleration techniques",
+          "matched_requirement_id": "req-2",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.21401v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.16384v1",
+          "source": "arxiv",
+          "title": "Mixtures of Subspaces for Bandwidth Efficient Context Parallel Training",
+          "abstract": "Pretraining language models with extended context windows enhances their ability to leverage rich information during generation. Existing methods split input sequences into chunks, broadcast them across multiple devices, and compute attention block by block which incurs significant communication overhead. While feasible in high-speed clusters, these methods are impractical for decentralized training over low-bandwidth connections. We propose a compression method for communication-efficient context parallelism in decentralized settings, achieving a remarkable compression rate of over 95\\% with negligible overhead and no loss in convergence. Our key insight is to exploit the intrinsic low-rank structure of activation outputs by dynamically constraining them to learned mixtures of subspaces via efficient reparameterizations. We demonstrate scaling billion-parameter decentralized models to context lengths exceeding 100K tokens on networks as slow as 300Mbps, matching the wall-clock convergence speed of centralized models on 100Gbps interconnects.",
+          "authors": [
+            "Sameera Ramasinghe",
+            "Ajanthan Thalaiyasingam",
+            "Hadi Mohaghegh Dolatabadi",
+            "Gil Avraham",
+            "Violetta Shevchenko",
+            "Yan Zuo",
+            "Chamin Hewa Koneputugodage",
+            "Alexander Long"
+          ],
+          "primary_category": "cs.LG",
+          "categories": [
+            "cs.LG"
+          ],
+          "published": "2026-06-15T08:17:13+00:00",
+          "link": "https://arxiv.org/pdf/2606.16384v1",
+          "tags": [
+            "keyword:ai-infra",
+            "query:ai-infra"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "bandwidth-efficient context parallel training via Mixtures of Subspaces compression",
+          "llm_evidence_cn": "通过子空间混合压缩实现带宽高效的上下文并行训练",
+          "llm_evidence": "通过子空间混合压缩实现带宽高效的上下文并行训练",
+          "canonical_evidence": "通过子空间混合压缩实现带宽高效的上下文并行训练",
+          "llm_tldr_en": "Proposes compression method for context parallelism reducing communication by 95% with no loss, enabling decentralized training over low-bandwidth connections. Directly addresses model parallelism communication optimization.",
+          "llm_tldr_cn": "长上下文预训练需要跨设备广播块，通信开销大，在低带宽环境下不可行。论文提出子空间混合压缩方法，利用激活输出的低秩结构动态约束，实现95%以上压缩率且无收敛损失。该方法使上下文并行训练适用于低带宽连接，是模型并行通信优化的突破。",
+          "llm_tldr": "长上下文预训练需要跨设备广播块，通信开销大，在低带宽环境下不可行。论文提出子空间混合压缩方法，利用激活输出的低秩结构动态约束，实现95%以上压缩率且无收敛损失。该方法使上下文并行训练适用于低带宽连接，是模型并行通信优化的突破。",
+          "llm_tags": [
+            "query:ai-infra"
+          ],
+          "matched_query_tag": "query:ai-infra",
+          "matched_query_text": "model parallelism techniques for distributed training",
+          "matched_requirement_id": "req-6",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.16384v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.17952v1",
+          "source": "arxiv",
+          "title": "SoftMoE: Soft Differentiable Routing for Mixture-of-Experts in LLMs",
+          "abstract": "Sparse Mixture-of-Experts (MoE) architectures enable scaling LLM parameters under a fixed inference budget by activating only a small subset of experts via top-$k$ routing. While this preserves causality and suits autoregressive language models, the discrete top-$k$ operator is not differentiable, forcing a fixed number of active experts per input and resulting in inefficient use of computation. We propose SoftMoE, which replaces discrete routing with a truncated soft top-$k$ LapSum relaxation, allowing gradient-based optimization of expert routing. We further parameterize the mean number of active experts per layer and impose a global budget constraint, enabling the model to learn how to allocate expert capacity across layers. SoftMoE remains fully compatible with autoregressive modeling and achieves performance comparable to or better than sparse MoE on language modeling and downstream tasks, while activating significantly fewer experts. Notably, the learned allocation is highly non-uniform, with later layers activating more experts. The source code is publicly available$^\\dagger$.",
+          "authors": [
+            "Mikołaj Zasada",
+            "Łukasz Struski",
+            "Jacek Tabor",
+            "Marcin Kurdziel"
+          ],
+          "primary_category": "cs.LG",
+          "categories": [
+            "cs.LG",
+            "cs.AI"
+          ],
+          "published": "2026-06-16T14:05:41+00:00",
+          "link": "https://arxiv.org/pdf/2606.17952v1",
+          "tags": [
+            "keyword:ai-infra",
+            "query:ai-infra"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "SoftMoE replaces discrete top-k routing with soft differentiable routing for MoE",
+          "llm_evidence_cn": "SoftMoE用可微的软路由替换离散top-k路由以优化MoE通信",
+          "llm_evidence": "SoftMoE用可微的软路由替换离散top-k路由以优化MoE通信",
+          "canonical_evidence": "SoftMoE用可微的软路由替换离散top-k路由以优化MoE通信",
+          "llm_tldr_en": "SoftMoE introduces a differentiable soft routing mechanism for MoE LLMs, enabling gradient-based optimization and dynamic expert allocation, improving computational efficiency.",
+          "llm_tldr_cn": "针对稀疏MoE中离散top-k路由不可微且计算利用不足的问题，SoftMoE提出了一种可微的软路由机制，通过截断的soft top-k LapSum松弛实现梯度优化，并参数化每层平均专家数以进行全局预算约束。该方法不仅保持了因果性，还能自动分配专家容量，从而提升计算效率。实验证明SoftMoE在降低计算开销的同时保持了模型质量，为MoE架构的高效推理提供了新思路。",
+          "llm_tldr": "针对稀疏MoE中离散top-k路由不可微且计算利用不足的问题，SoftMoE提出了一种可微的软路由机制，通过截断的soft top-k LapSum松弛实现梯度优化，并参数化每层平均专家数以进行全局预算约束。该方法不仅保持了因果性，还能自动分配专家容量，从而提升计算效率。实验证明SoftMoE在降低计算开销的同时保持了模型质量，为MoE架构的高效推理提供了新思路。",
+          "llm_tags": [
+            "query:ai-infra"
+          ],
+          "matched_query_tag": "query:ai-infra",
+          "matched_query_text": "communication optimization in mixture of experts models",
+          "matched_requirement_id": "req-4",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.17952v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.22175v1",
+          "source": "arxiv",
+          "title": "StickyInvoc: Rethinking Task Models for High-throughput Workflows in the LLM Era",
+          "abstract": "The integration of LLMs into high-throughput workflows is creating a new class of workloads on HPC clusters that promises to accelerate advances in scientific discovery with unprecedented generative capabilities. However, the traditional task model imposes a prohibitive overhead in this new domain: each task must create its computational state from scratch and destroy it upon completion. For each LLM inference task, this \"create-destroy\" model forces the repeated and costly transfer of multi-gigabyte model parameters from a long-term, reliable storage to a compute node's local disk, its CPU memory, and finally its GPU memory. This overhead, compounded by the inherently high startup cost of LLM inference, the typical scale of thousands of tasks in high-throughput workflows, and the heterogeneous and preemptible nature of high-throughput resources, presents a significant performance barrier.   To overcome this barrier, this paper presents StickyInvoc: a symbiotic relationship between two new task models for high-throughput workflows. Specifically, a \"sticky\" task creates a persistent state on a compute node from a user-provided template, but doesn't execute any goodput computation by itself. Instead, this state is then inherited by subsequent \"invocation\" tasks, which perform the actual computation without incurring the state creation overhead or destroying the state upon exit. StickyInvoc thus allows the decoupling of the creation and destruction of computational states, allowing the computational state of LLM models to be created once per sticky task and its cost amortized over many subsequent invocation tasks. Our evaluation shows that when rewritten in the StickyInvoc paradigm, a claim verification workflow consisting of 150k inferences achieves a 3.6x speedup on a stable testbed with 20 GPUs, and completes in just 784 seconds by incrementally scaling out to 186 otherwise idle GPUs.",
+          "authors": [
+            "Thanh Son Phung",
+            "Douglas Thain"
+          ],
+          "primary_category": "cs.DC",
+          "categories": [
+            "cs.DC"
+          ],
+          "published": "2026-06-20T18:02:59+00:00",
+          "link": "https://arxiv.org/pdf/2606.22175v1",
+          "tags": [
+            "keyword:ai-infra",
+            "query:ai-infra"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "Rethinking task models to reduce overhead of LLM inference on HPC clusters",
+          "llm_evidence_cn": "重新思考任务模型以减少HPC集群上LLM推理的开销",
+          "llm_evidence": "重新思考任务模型以减少HPC集群上LLM推理的开销",
+          "canonical_evidence": "重新思考任务模型以减少HPC集群上LLM推理的开销",
+          "llm_tldr_en": "StickyInvoc reduces LLM inference overhead on HPC by preserving compute state across tasks, avoiding repeated model parameter transfers.",
+          "llm_tldr_cn": "针对LLM推理在高性能计算集群中因传统任务模型每次创建和销毁计算状态而导致的巨大参数传输开销，StickyInvoc提出了一种粘性调用模型，通过跨任务保留计算状态来避免重复加载模型参数。该方法显著减少了LLM推理的启动开销和存储读取压力，提高了高吞吐工作流中GPU集群的资源利用率，为AI基础设施加速提供了新范式。",
+          "llm_tldr": "针对LLM推理在高性能计算集群中因传统任务模型每次创建和销毁计算状态而导致的巨大参数传输开销，StickyInvoc提出了一种粘性调用模型，通过跨任务保留计算状态来避免重复加载模型参数。该方法显著减少了LLM推理的启动开销和存储读取压力，提高了高吞吐工作流中GPU集群的资源利用率，为AI基础设施加速提供了新范式。",
+          "llm_tags": [
+            "query:ai-infra"
+          ],
+          "matched_query_tag": "query:ai-infra",
+          "matched_query_text": "inference acceleration for AI infrastructure",
+          "matched_requirement_id": "req-5",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.22175v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.16497v1",
+          "source": "arxiv",
+          "title": "daVinci-kernel: Co-Evolving Skill Selection, Summarization, and Utilization via RL for GPU Kernel Optimization",
+          "abstract": "GPU kernel optimization represents a paradigm where functional correctness is assumed and execution efficiency is the objective. We present daVinci-kernel, a reinforcement learning framework that couples skill discovery with skill exploitation through a dynamically evolving skill library. daVinci-kernel jointly trains three agents sharing one LLM backbone: a Skill Selection Agent that retrieves relevant techniques via BM25 and LLM reranking, a Policy Agent that generates multi-turn CUDA/Triton kernels conditioned on selected skills, and a Skill Summary Agent that distills successful rollouts into reusable skills. Candidate skills are added only after execution-based verification confirms reproducible speedups. All three agents share a single LLM backbone, are initialized via a structured SFT cold start on diversity-filtered data, and are then jointly optimized end-to-end with multi-turn REINFORCE and per-agent advantage estimation. On KernelBench, daVinci-kernel-14B achieves 37.2%, 70.6%, and 32.2% on Level 1, Level 2, and Level 3 under the Fast$_1$ threshold, outperforming the strongest prior RL-trained model, Dr.Kernel-14B.",
+          "authors": [
+            "Dayuan Fu",
+            "Mohan Jiang",
+            "Tongyu Wang",
+            "Dian Yang",
+            "Jiarui Hu",
+            "Liming Liu",
+            "Jinlong Hou",
+            "Pengfei Li"
+          ],
+          "primary_category": "cs.LG",
+          "categories": [
+            "cs.LG",
+            "cs.AI",
+            "cs.CL"
+          ],
+          "published": "2026-06-15T09:58:21+00:00",
+          "link": "https://arxiv.org/pdf/2606.16497v1",
+          "tags": [
+            "keyword:ai-infra",
+            "query:ai-infra"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "RL framework for GPU kernel optimization to accelerate AI infrastructure",
+          "llm_evidence_cn": "用强化学习框架优化GPU内核以加速AI基础设施",
+          "llm_evidence": "用强化学习框架优化GPU内核以加速AI基础设施",
+          "canonical_evidence": "用强化学习框架优化GPU内核以加速AI基础设施",
+          "llm_tldr_en": "daVinci-kernel uses RL with skill discovery to automatically generate optimized GPU kernels, achieving reproducible speedups.",
+          "llm_tldr_cn": "针对GPU内核优化中正确性易保证但效率提升难的问题，daVinci-kernel利用强化学习框架自动发现和利用优化技巧。它联合训练三个基于同一LLM骨干的智能体：技能选择、策略生成和技能总结，通过执行验证确保加速收益的可复现性。该方法能自动生成优化的CUDA/Triton内核，显著提升GPU执行效率，为AI基础设施下层计算加速提供了自动化工具。",
+          "llm_tldr": "针对GPU内核优化中正确性易保证但效率提升难的问题，daVinci-kernel利用强化学习框架自动发现和利用优化技巧。它联合训练三个基于同一LLM骨干的智能体：技能选择、策略生成和技能总结，通过执行验证确保加速收益的可复现性。该方法能自动生成优化的CUDA/Triton内核，显著提升GPU执行效率，为AI基础设施下层计算加速提供了自动化工具。",
+          "llm_tags": [
+            "query:ai-infra"
+          ],
+          "matched_query_tag": "query:ai-infra",
+          "matched_query_text": "AI infrastructure acceleration techniques",
+          "matched_requirement_id": "req-2",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.16497v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.17466v1",
+          "source": "arxiv",
+          "title": "Contextual Robust Optimization for AI Data Center Scheduling with Statistical Guarantees",
+          "abstract": "The rapid growth of AI workloads is substantially increasing data center electricity demand and carbon emissions, motivating the development of carbon-aware scheduling methods. However, effective scheduling is challenging because renewable generation and AI workloads are subject to forecast errors, while training and inference workloads exhibit heterogeneity in computational characteristics. This paper proposes a contextual robust optimization framework for AI data center operation. The proposed model explicitly captures the heterogeneous computational characteristics of AI training and inference workloads. To deal with renewable generation and workload forecast errors, we develop loss-based uncertainty learning models that directly map contextual features to covariate-dependent uncertainty sets. The resulting contextual joint chance-constrained scheduling problem is reformulated into a tractable robust optimization problem, and a calibration algorithm is developed to provide finite-sample probabilistic feasibility guarantees for multiple joint chance constraints. Numerical experiments based on real-world AI workload traces and renewable generation data show that the proposed method reduces operating costs by an average of 5.57% compared to benchmark methods while maintaining reliable feasibility and strong computational scalability.",
+          "authors": [
+            "Yijie Yang",
+            "Xi Weng",
+            "Yue Chen"
+          ],
+          "primary_category": "math.OC",
+          "categories": [
+            "math.OC"
+          ],
+          "published": "2026-06-16T03:27:56+00:00",
+          "link": "https://arxiv.org/pdf/2606.17466v1",
+          "tags": [
+            "keyword:ai-infra",
+            "query:ai-infra"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "contextual robust optimization for AI data center scheduling with heterogeneous workloads",
+          "llm_evidence_cn": "AI数据中心调度上下文鲁棒优化，处理异构工作负载",
+          "llm_evidence": "AI数据中心调度上下文鲁棒优化，处理异构工作负载",
+          "canonical_evidence": "AI数据中心调度上下文鲁棒优化，处理异构工作负载",
+          "llm_tldr_en": "Contextual robust optimization framework for AI data center scheduling that captures heterogeneous training and inference workloads and uses loss-based uncertainty learning to handle forecast errors, enabling carbon-aware operation.",
+          "llm_tldr_cn": "论文针对AI数据中心中可再生能源和负载预测误差带来的调度挑战，提出一个上下文鲁棒优化框架。该框架显式建模AI训练和推理工作的异构计算特性，并开发基于损失的不确定性学习模型来处理预测误差。实验表明该方法能有效降低能耗和碳排放，为AI基础设施的绿色加速提供了新思路。",
+          "llm_tldr": "论文针对AI数据中心中可再生能源和负载预测误差带来的调度挑战，提出一个上下文鲁棒优化框架。该框架显式建模AI训练和推理工作的异构计算特性，并开发基于损失的不确定性学习模型来处理预测误差。实验表明该方法能有效降低能耗和碳排放，为AI基础设施的绿色加速提供了新思路。",
+          "llm_tags": [
+            "query:ai-infra"
+          ],
+          "matched_query_tag": "query:ai-infra",
+          "matched_query_text": "AI infrastructure acceleration techniques",
+          "matched_requirement_id": "req-2",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.17466v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.22249v1",
+          "source": "arxiv",
+          "title": "On the Expressive Power of Weight Quantization in Large Language Models",
+          "abstract": "In recent years, weight quantization that encodes the learnable parameters of large language models in an $n$-bit format has garnered significant attention due to its potential for model compression and inference acceleration. Many practical techniques have been developed; however, the theoretical understanding of many aspects, especially the approximation and degradation of expressive power as the number of quantization bits decreases, remains unclear. In this paper, we provide a theoretical investigation into the expressive capability of large language models relative to the number of quantization bits. We argue that 1.58-bit is the limiting precision for weight quantization by establishing the universal approximation and expressive collapse properties of weight-quantized models with respect to the number of quantization bits. Additionally, we confirm that weight quantization leads to expressive degradation, in which the expressive capacity of weight-quantized models degrades polynomially as the number of quantization bits decreases. These theoretical findings provide a solid foundation for advancing weight quantization in the context of scaling laws and shed insights for future research in model compression and inference acceleration.",
+          "authors": [
+            "Shao-Qun Zhang"
+          ],
+          "primary_category": "cs.LG",
+          "categories": [
+            "cs.LG",
+            "cs.AI"
+          ],
+          "published": "2026-06-20T22:22:26+00:00",
+          "link": "https://arxiv.org/pdf/2606.22249v1",
+          "tags": [
+            "keyword:ai-infra",
+            "query:ai-infra"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "theoretical analysis of weight quantization for inference acceleration",
+          "llm_evidence_cn": "权重量化的理论分析，可加速推理",
+          "llm_evidence": "权重量化的理论分析，可加速推理",
+          "canonical_evidence": "权重量化的理论分析，可加速推理",
+          "llm_tldr_en": "Provides theoretical investigation into expressive power of weight quantization in LLMs, establishing 1.58-bit as limiting precision for universal approximation and expressive collapse.",
+          "llm_tldr_cn": "论文系统研究了LLM权重量化的表达能力，指出1.58比特是保持通用逼近能力的极限精度。通过证明当量化比特数低于该阈值时会出现表达能力坍缩，为推理加速中的量化方法选择提供了理论基础。该理论结果有助于指导实际量化方案的设计，平衡模型压缩与性能。",
+          "llm_tldr": "论文系统研究了LLM权重量化的表达能力，指出1.58比特是保持通用逼近能力的极限精度。通过证明当量化比特数低于该阈值时会出现表达能力坍缩，为推理加速中的量化方法选择提供了理论基础。该理论结果有助于指导实际量化方案的设计，平衡模型压缩与性能。",
+          "llm_tags": [
+            "query:ai-infra"
+          ],
+          "matched_query_tag": "query:ai-infra",
+          "matched_query_text": "inference acceleration for AI infrastructure",
+          "matched_requirement_id": "req-5",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.22249v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.20869v1",
+          "source": "arxiv",
+          "title": "A3C3: AI Algorithm and Accelerator Co-design, Co-search, and Co-generation",
+          "abstract": "We present a holistic methodology for artificial intelligence algorithm and accelerator co-design, co-search, and co-generation (A3C3), which jointly optimizes neural network architectures and their hardware implementations to address the inefficiencies of traditional top-down AI system design flows. Conventional AI deployment often treats model design and hardware mapping as separate stages: an algorithm is first developed for accuracy, and only afterward adapted to meet latency, throughput, energy, or resource constraints. This separation can lead to suboptimal systems, particularly as modern AI workloads become increasingly heterogeneous, memory-intensive, and platform-dependent. A3C3 instead parameterizes both algorithmic and accelerator design spaces and searches them jointly, enabling the automatic generation of model-accelerator pairs that better balance accuracy, latency, throughput, energy efficiency, and hardware utilization. This article is a book chapter of the Handbook of Embedded Machine Learning, edited by Sudeep Pasricha and Muhammad Shafique, Springer Nature.",
+          "authors": [
+            "Selin Yildirim",
+            "Yingbing Huang",
+            "Deming Chen"
+          ],
+          "primary_category": "cs.AR",
+          "categories": [
+            "cs.AR",
+            "cs.AI"
+          ],
+          "published": "2026-06-18T19:01:45+00:00",
+          "link": "https://arxiv.org/pdf/2606.20869v1",
+          "tags": [
+            "keyword:ai-infra",
+            "query:ai-infra"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "AI algorithm and accelerator co-design for heterogeneous computing",
+          "llm_evidence_cn": "面向异构计算的AI算法与加速器协同设计",
+          "llm_evidence": "面向异构计算的AI算法与加速器协同设计",
+          "canonical_evidence": "面向异构计算的AI算法与加速器协同设计",
+          "llm_tldr_en": "Presents A3C3, a holistic co-design/co-search/co-generation methodology for AI algorithms and accelerators, optimizing both for heterogeneous, memory-intensive workloads.",
+          "llm_tldr_cn": "A3C3提出算法与加速器协同设计、协同搜索和协同生成的完整方法论，联合优化神经网络架构和硬件实现。该方法参数化算法和加速器设计空间，针对现代AI工作负载的异构性、内存密集性和平台依赖性，生成高效系统。可直接应用于AI基础设施中异构计算加速。",
+          "llm_tldr": "A3C3提出算法与加速器协同设计、协同搜索和协同生成的完整方法论，联合优化神经网络架构和硬件实现。该方法参数化算法和加速器设计空间，针对现代AI工作负载的异构性、内存密集性和平台依赖性，生成高效系统。可直接应用于AI基础设施中异构计算加速。",
+          "llm_tags": [
+            "query:ai-infra"
+          ],
+          "matched_query_tag": "query:ai-infra",
+          "matched_query_text": "search for heterogeneous computing in AI infrastructure",
+          "matched_requirement_id": "req-9",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.20869v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.17781v1",
+          "source": "arxiv",
+          "title": "MIVE: A Minimalist Integer Vector Engine for Softmax LayerNorm and RMSNorm Acceleration",
+          "abstract": "The rapid growth of Large Language Models (LLMs) has intensified the need for specialized hardware accelerators that can satisfy stringent inference latency and power constraints. Although matrix multiplications dominate the overall computational workload, non-linear vector normalization operations, such as LayerNorm, RMSNorm and Softmax can become critical hardware bottlenecks. Existing accelerators typically implement these functions using dedicated hardware blocks, leading to duplicated resources and inefficient silicon utilization. To address this limitation, we propose a Minimalist Integer Vector Engine (MIVE), a programmable architecture capable of executing all three operations within a unified datapath. By exploiting common computational patterns across LayerNorm, RMSNorm and Softmax the proposed vector engine maximizes hardware sharing while reducing implementation overhead. Physical ASIC implementation results show that MIVE provides comprehensive multi-function support while achieving higher area and hardware efficiency than most state-of-the-art standalone accelerators.",
+          "authors": [
+            "Kosmas Alexandridis",
+            "Giorgos Dimitrakopoulos"
+          ],
+          "primary_category": "cs.AR",
+          "categories": [
+            "cs.AR",
+            "cs.AI"
+          ],
+          "published": "2026-06-16T10:58:02+00:00",
+          "link": "https://arxiv.org/pdf/2606.17781v1",
+          "tags": [
+            "keyword:ai-infra",
+            "query:ai-infra"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "Hardware accelerator for LLM normalization and softmax operations, reducing inference latency",
+          "llm_evidence_cn": "用于LLM归一化和softmax操作的硬件加速器，降低推理延迟",
+          "llm_evidence": "用于LLM归一化和softmax操作的硬件加速器，降低推理延迟",
+          "canonical_evidence": "用于LLM归一化和softmax操作的硬件加速器，降低推理延迟",
+          "llm_tldr_en": "MIVE proposes a unified programmable architecture to accelerate LayerNorm, RMSNorm, and Softmax using integer operations, reducing silicon area and inference latency.",
+          "llm_tldr_cn": "LLM推理中非矩阵运算（LayerNorm、RMSNorm、Softmax）成为硬件瓶颈。现有加速器为每个运算设计独立模块，资源利用率低。本文提出MIVE，一个统一的整数向量引擎，利用公共计算模式在一个数据通路上执行所有三种运算。实验表明，该方法在减少芯片面积的同时加速了这些运算，降低了推理延迟。",
+          "llm_tldr": "LLM推理中非矩阵运算（LayerNorm、RMSNorm、Softmax）成为硬件瓶颈。现有加速器为每个运算设计独立模块，资源利用率低。本文提出MIVE，一个统一的整数向量引擎，利用公共计算模式在一个数据通路上执行所有三种运算。实验表明，该方法在减少芯片面积的同时加速了这些运算，降低了推理延迟。",
+          "llm_tags": [
+            "query:ai-infra"
+          ],
+          "matched_query_tag": "query:ai-infra",
+          "matched_query_text": "inference acceleration for AI infrastructure",
+          "matched_requirement_id": "req-5",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.17781v1",
           "carry_days": 1
         }
       ]
