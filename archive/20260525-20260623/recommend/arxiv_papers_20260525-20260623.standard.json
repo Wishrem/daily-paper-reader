@@ -1,0 +1,1601 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-23T03:44:04.738909+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 50,
+    "deep_cap": 6,
+    "deep_selected": 29,
+    "quick_candidates": 43,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2606.01007v1",
+      "source": "arxiv",
+      "title": "Beyond Task-Agnostic: Task-Aware Grouping for Communication-Efficient Multi-Task MoE Inference",
+      "abstract": "Sparsely activated Mixture-of-Experts (MoE) models scale capacity via conditional computation, but distributed inference suffers from cross-GPU expert communication and routing-induced load imbalance. Existing placement methods reduce this cost by co-locating frequently co-activated experts; however, they derive a single deployment plan from globally aggregated routing traces, thereby averaging away the heterogeneous, task-specific co-activation patterns that actually drive communication in multi-task serving. We observe that expert co-activation is strongly task-conditioned: pairs tightly coupled in one task family are often uncorrelated in another, so effective deployment should group experts by task-aware co-activation rather than by a task-agnostic average. Based on this insight, we propose \\emph{Task-Aware Coactivation Grouping} (TACG), a deployment-time framework that uses family-specific dispatch and co-activation traces to derive per-expert task-family preferences, reweights the co-activation graph so that intra-family locality dominates grouping, and assigns each expert to a primary GPU under exact capacity constraints. To keep the static placement robust under online workload skew, we further introduce \\emph{Generic Expert Shared Replication} (GESR), a lightweight companion that identifies generic experts with consistently central co-activation profiles, replicates them across a small set of secondary GPUs, and applies locality- and load-aware selection at serving time. Experiments on three representative open-source MoE models demonstrate that our framework reduces the average communication cost by 31.39\\% over the baseline, while preserving an average Jain fairness index of 0.9975. This advantage persists even under severe distribution shifts in the inference data, consistently outperforming strong baselines.",
+      "authors": [
+        "Zhiyao Xu",
+        "Aoxue Liu",
+        "Zhanjie Ding",
+        "Dan Zhao",
+        "Yong Jiang",
+        "Qing Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-05-31T04:51:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.01007v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "Task-aware grouping for communication-efficient multi-task MoE inference",
+      "llm_evidence_cn": "任务感知分组实现通信高效的多任务MoE推理",
+      "llm_evidence": "任务感知分组实现通信高效的多任务MoE推理",
+      "canonical_evidence": "任务感知分组实现通信高效的多任务MoE推理",
+      "llm_tldr_en": "Proposes task-aware grouping of experts to reduce cross-GPU communication in multi-task MoE inference, outperforming task-agnostic methods.",
+      "llm_tldr_cn": "针对多任务混合专家模型推理中跨GPU通信开销大的问题，本文提出任务感知分组方法，根据任务特定的专家共激活模式进行部署规划，显著降低通信量，实验表明优于全局任务无关方法，直接服务于AI基础设施中MoE通信优化需求。",
+      "llm_tldr": "针对多任务混合专家模型推理中跨GPU通信开销大的问题，本文提出任务感知分组方法，根据任务特定的专家共激活模式进行部署规划，显著降低通信量，实验表明优于全局任务无关方法，直接服务于AI基础设施中MoE通信优化需求。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.26678v1",
+      "source": "arxiv",
+      "title": "NestedKV: Nested Memory Routing for Long-Context KV Cache Compression",
+      "abstract": "Long-context language models are limited by the memory footprint of the key-value (KV) cache. Existing training-free KV compression methods usually rank tokens by one importance signal -- attention, recency, layer-wise allocation, or key distinctiveness -- which becomes brittle when useful context is globally distinctive, locally episodic, or immediately relevant. We introduce NestedKV, a key-only KV cache compression method inspired by the Continuum Memory System in Nested Learning. NestedKV maintains global, block-level, and sliding-window key anchors, scores tokens by multi-time-scale cosine anomaly, and combines the resulting rankings with a training-free outer learner using head-adaptive mixing and surprise-gated token routing. The score is paired with adaptive per-head budgets and requires no training or LLM modification. Across RULER (4k--32k), LooGLE, LongBench, LongBench-E, InfiniteBench, and MMLU-Pro on Qwen3 and Llama-3.2 models, NestedKV is strongest when the retained cache is small. On Qwen3-4B, it improves over KeyDiff by up to 19.10 points on RULER and 19.29 on LongBench at $r=0.75$; at $r=0.95$, it retains 37.32 on LongBench versus 17.55 for KeyDiff.",
+      "authors": [
+        "Hong Chen",
+        "Xiang Liu",
+        "Yubo Gao",
+        "Yuxuan Fan",
+        "Bo Wang",
+        "Yuanlin Chu",
+        "Yuanguo Lin",
+        "Xuming Hu"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-05-26T08:14:39+00:00",
+      "link": "https://arxiv.org/pdf/2605.26678v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "KV cache compression via nested memory routing for long-context LLMs",
+      "llm_evidence_cn": "通过嵌套内存路由实现长上下文LLM的KV缓存压缩",
+      "llm_evidence": "通过嵌套内存路由实现长上下文LLM的KV缓存压缩",
+      "canonical_evidence": "通过嵌套内存路由实现长上下文LLM的KV缓存压缩",
+      "llm_tldr_en": "NestedKV introduces a multi-scale scoring method using global, block, and sliding-window anchors to compress KV cache, outperforming single-signal approaches.",
+      "llm_tldr_cn": "长上下文大语言模型受限于KV缓存内存开销，现有训练免费方法仅依赖单维度重要性信号，在多种上下文模式下表现脆弱。本文提出NestedKV，维护全局、块级和滑动窗口三种键锚点，通过多时间尺度余弦异常评分与训练免费外学习器结合，实现更鲁棒的KV缓存压缩。实验表明该方法在多种场景下优于现有压缩技术。",
+      "llm_tldr": "长上下文大语言模型受限于KV缓存内存开销，现有训练免费方法仅依赖单维度重要性信号，在多种上下文模式下表现脆弱。本文提出NestedKV，维护全局、块级和滑动窗口三种键锚点，通过多时间尺度余弦异常评分与训练免费外学习器结合，实现更鲁棒的KV缓存压缩。实验表明该方法在多种场景下优于现有压缩技术。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.28095v1",
+      "source": "arxiv",
+      "title": "SiDP: Memory-Efficient Data Parallelism for Offline LLM Inference",
+      "abstract": "The rapid adoption of large language models (LLMs) has shifted a substantial portion of inference workloads into throughput-oriented offline regimes, where fully utilizing GPU compute requires large batch sizes. However, existing deployments face a structural tension. Data parallelism (DP) scales throughput well but replicates model weights, leaving limited GPU memory for key-value (KV) cache and constraining batch size. Model parallelism reduces per-device weights, but requires fine-grained synchronization that erodes DP's independence and scheduling flexibility. We present SiDP, a memory-efficient data-parallel paradigm for offline LLM inference that treats weights as a bandwidth-backed shared resource inside a DP group. Instead of storing the full model on every GPU, SiDP organizes weights as a distributed pool: each layer is owned by a single GPU, and other replicas access its weights on demand via two complementary execution modes: a Weight-as-a-Service (WaS) mode that streams remote weights over NVLink into a small cache in the large-batch regime, and a Compute-as-a-Service (CaS) mode that ships activations to owners in the small-batch tail. Evaluated on NVIDIA H20, H200, and B200 GPUs with Qwen3-32B, Qwen2.5-72B, and Llama-3.1-70B, SiDP increases usable KV capacity by up to 1.8x under the same configurations, and converts this into up to 1.5x higher end-to-end throughput over baselines (vLLM) for offline workloads.",
+      "authors": [
+        "Alan Zhao",
+        "Cyril Y. He"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-05-27T07:52:03+00:00",
+      "link": "https://arxiv.org/pdf/2605.28095v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Memory-efficient data parallelism for offline LLM inference frees GPU memory for KV cache",
+      "llm_evidence_cn": "面向离线LLM推理的内存高效数据并行方法释放GPU内存用于KV缓存",
+      "llm_evidence": "面向离线LLM推理的内存高效数据并行方法释放GPU内存用于KV缓存",
+      "canonical_evidence": "面向离线LLM推理的内存高效数据并行方法释放GPU内存用于KV缓存",
+      "llm_tldr_en": "Proposes SiDP, a memory-efficient data-parallel paradigm that treats weights as a bandwidth-backed shared resource to free memory for KV cache, enabling larger batch sizes in offline LLM inference.",
+      "llm_tldr_cn": "针对离线LLM推理中数据并行复制权重导致KV缓存内存不足的问题，本文提出SiDP，将权重视为带宽支持的共享资源跨数据并行组共享，从而释放内存给KV缓存，支持更大批处理大小，推理吞吐量提升显著，直接优化了KV缓存管理和推理加速。",
+      "llm_tldr": "针对离线LLM推理中数据并行复制权重导致KV缓存内存不足的问题，本文提出SiDP，将权重视为带宽支持的共享资源跨数据并行组共享，从而释放内存给KV缓存，支持更大批处理大小，推理吞吐量提升显著，直接优化了KV缓存管理和推理加速。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.28302v1",
+      "source": "arxiv",
+      "title": "How Far Can Disaggregation Go? A Design-Space Exploration of Attention-FFN Disaggregation for Efficient MoE LLM Serving",
+      "abstract": "Modern large language model (LLM) inference has progressively disaggregated to keep pace with growing model sizes and tight TTFT and TPOT service-level objectives: from chunked-prefill aggregation, to prefill-decode (P/D) disaggregation, and most recently to operator-level Attention-FFN Disaggregation (AFD). This trend is especially important for mixture-of-experts (MoE) models, where memory-bound attention, compute-intensive expert FFNs, and MoE dispatch/combine communication create distinct resource demands. AFD further exposes this heterogeneity by placing attention and MoE-FFN execution on separate GPU groups. Each level of disaggregation deepens the scheduling design space across workload characteristics, resource allocation, and interconnect topology, raising the central question: when does each level actually pay off? We systematically characterize this trade-off for MoE inference across realistic workloads spanning input/output sequence lengths, prefix-KV reuse, and per-user latency constraints. Using chunked-prefill and P/D disaggregation as baselines, we study the benefits and limits of AFD at scale through a framework that fuses on-device kernel measurements with high-fidelity network simulation. Under strict TTFT/TPOT SLOs, AFD sustains around 4k tokens/s of system throughput on DeepSeek-V3.2 across chat, coding, and agentic-coding workloads, where non-AFD deployments are infeasible. We distill concrete takeaways for jointly optimizing throughput and interactivity, including how to partition attention and FFN across GPUs as a function of workload and model architecture, providing design principles for current rack- and cluster-scale deployments as well as future disaggregated AI infrastructure.",
+      "authors": [
+        "Hanjiang Wu",
+        "Abhimanyu Rajeshkumar Bambhaniya",
+        "Sarbartha Banerjee",
+        "Tuhin Khare",
+        "Sudarshan Srinivasan",
+        "Suvinay Subramanian",
+        "Souvik Kundu",
+        "Madhu Kumar",
+        "Midhilesh Elavazhagan",
+        "William Won",
+        "Amir Yazdanbakhsh",
+        "Tushar Krishna"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.DC"
+      ],
+      "published": "2026-05-27T10:55:57+00:00",
+      "link": "https://arxiv.org/pdf/2605.28302v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "explores heterogeneous disaggregation of attention and FFN for efficient MoE serving",
+      "llm_evidence_cn": "探索注意力和FFN的异构分解以高效服务MoE",
+      "llm_evidence": "探索注意力和FFN的异构分解以高效服务MoE",
+      "canonical_evidence": "探索注意力和FFN的异构分解以高效服务MoE",
+      "llm_tldr_en": "Explores operator-level Attention-FFN Disaggregation (AFD) for MoE LLM serving, placing attention and MoE-FFN on separate GPU groups to expose heterogeneity.",
+      "llm_tldr_cn": "大语言模型推理在MoE模型中面临注意力（内存受限）和专家FFN（计算密集）的不同资源需求。本文系统探索了从分块预填到预填-解码分解，再到操作级注意力-FFN分解（AFD）的设计空间。AFD将注意力和MoE-FFN执行放在不同GPU组上，利用异构性提升资源利用率。实验表明，适当分解可显著降低TTFT和TPOT，提高服务效率。",
+      "llm_tldr": "大语言模型推理在MoE模型中面临注意力（内存受限）和专家FFN（计算密集）的不同资源需求。本文系统探索了从分块预填到预填-解码分解，再到操作级注意力-FFN分解（AFD）的设计空间。AFD将注意力和MoE-FFN执行放在不同GPU组上，利用异构性提升资源利用率。实验表明，适当分解可显著降低TTFT和TPOT，提高服务效率。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "heterogeneous mixed inference for large models",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.28640v1",
+      "source": "arxiv",
+      "title": "Augmenting Attention with Exponentially Decaying Memory Improves Query-Aware KV Sparsity",
+      "abstract": "Efficient inference is critical for long-context language models, where attention computation and KV-cache access dominate the cost. Recent work RAT+, introduces a recurrence-augmented attention backbone that enables flexible dilated attention at inference time. In this paper, we investigate whether this exponentially decaying memory can also improve existing query-aware sparse inference methods. Using representative methods including Quest, MoBA, and SnapKV, we show that RAT+ consistently improves accuracy over standard attention across sparse budgets on eight needle-in-a-haystack tasks. We validate these gains both on the released checkpoints from the RAT+ paper and on OLMo2-7B, which we continue pretraining with the added memory module for 10B tokens. Finally, we propose two hypotheses explaining why this memory module benefits query-aware sparse inference and design targeted experiments to support them.",
+      "authors": [
+        "Xiuying Wei",
+        "Caglar Gulcehre"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-05-27T15:46:19+00:00",
+      "link": "https://arxiv.org/pdf/2605.28640v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "augmenting attention with exponentially decaying memory improves query-aware KV sparsity",
+      "llm_evidence_cn": "用指数衰减记忆增强注意力，改进查询感知的键值稀疏性",
+      "llm_evidence": "用指数衰减记忆增强注意力，改进查询感知的键值稀疏性",
+      "canonical_evidence": "用指数衰减记忆增强注意力，改进查询感知的键值稀疏性",
+      "llm_tldr_en": "Shows that adding a recurrence-augmented attention backbone with exponential decay consistently improves existing query-aware KV sparsity methods on long-context tasks.",
+      "llm_tldr_cn": "长上下文模型中注意力和KV缓存访问是推理成本大头，现有查询感知稀疏方法精度有待提升。本文利用RAT+的循环增强注意力骨干，引入指数衰减记忆，显著提升了Quest、MoBA、SnapKV等稀疏方法的准确率。在八项大海捞针任务和OLMo2-7B模型上验证了效果，为KV缓存优化提供了新思路。",
+      "llm_tldr": "长上下文模型中注意力和KV缓存访问是推理成本大头，现有查询感知稀疏方法精度有待提升。本文利用RAT+的循环增强注意力骨干，引入指数衰减记忆，显著提升了Quest、MoBA、SnapKV等稀疏方法的准确率。在八项大海捞针任务和OLMo2-7B模型上验证了效果，为KV缓存优化提供了新思路。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.29873v1",
+      "source": "arxiv",
+      "title": "Moment-KV: Momentum-Based Decode-Time KV Cache Compression for Long Generation",
+      "abstract": "Key-Value (KV) cache remains a major bottleneck for deploying Large Language Models (LLMs) in long-generation tasks. Prior work often applies uniform compression across both prefill and decoding caches, but compressing the prefill cache degrades performance by corrupting critical context. While preserving the prefill cache is essential, decoding-phase compression remains underexplored, with existing methods relying on rigid recency windows or instantaneous attention. Our analysis of attention dynamics reveals strong temporal patterns: critical tokens receive sustained attention over long horizons, while local reasoning involves short-lived bursts. Static heuristics fail to capture this behavior, leading to premature eviction of important tokens or retention of stale ones. We propose Moment-KV, a decoding-time KV cache compression method based on momentum-driven temporal attention aggregation. Our method models token importance as a continuously evolving state, where attention is aggregated with decay, capturing both long-term influence and recent relevance. Experiments show that Moment-KV significantly improves generation fidelity in long-generation tasks (2.3-3.2 %) while maintaining decoding latency.",
+      "authors": [
+        "Soumyadeep Jana",
+        "Sagar Nishad",
+        "Sanasam Ranbir Singh"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-28T12:56:51+00:00",
+      "link": "https://arxiv.org/pdf/2605.29873v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "momentum-based decode-time KV cache compression",
+      "llm_evidence_cn": "基于动量的解码阶段KV缓存压缩",
+      "llm_evidence": "基于动量的解码阶段KV缓存压缩",
+      "canonical_evidence": "基于动量的解码阶段KV缓存压缩",
+      "llm_tldr_en": "Moment-KV proposes a momentum-based decode-time KV cache compression method that preserves prefill cache and selectively compresses decoding cache by leveraging temporal attention patterns, reducing memory without sacrificing quality.",
+      "llm_tldr_cn": "针对长文本生成中KV缓存占用瓶颈，Moment-KV提出了一种基于动量的解码阶段KV缓存压缩方法。该方法通过分析注意力动态的时间模式，在保留预填充缓存完整性的同时，对解码缓存进行选择性压缩。实验表明，该方法在保持生成质量的同时显著减少了缓存占用，为长序列LLM推理提供了高效解决方案。",
+      "llm_tldr": "针对长文本生成中KV缓存占用瓶颈，Moment-KV提出了一种基于动量的解码阶段KV缓存压缩方法。该方法通过分析注意力动态的时间模式，在保留预填充缓存完整性的同时，对解码缓存进行选择性压缩。实验表明，该方法在保持生成质量的同时显著减少了缓存占用，为长序列LLM推理提供了高效解决方案。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.31105v1",
+      "source": "arxiv",
+      "title": "GRKV: Global Regression for Training-Free KV Cache Compression in Long-Context LLMs",
+      "abstract": "Large language models (LLMs) with extended context lengths rely on the key-value (KV) cache to support attention over prior tokens. However, maintaining the KV cache incurs substantial memory overhead, motivating KV-cache compression methods that enforce a fixed budget through eviction and merging. Modern eviction methods increasingly adopt span-based retention because preserving contiguous spans is empirically effective and better preserves semantic coherence. Yet, when combined with post-eviction merging, span-based retention concentrates merges onto a small set of span-boundary carrier tokens, producing a highly imbalanced merge pattern that exacerbates over-merging and increases information loss. To address this imbalance, we propose GRKV (Global Regression for KV Cache), a training-free KV-cache merging method that directly minimizes the discrepancy between compressed-cache and full-cache attention outputs. GRKV uses ridge-regression-based merge steps to distribute information from evicted tokens across retained tokens, while regularizing the updates to prevent over-smoothing. Across the LongBench and RULER long-context benchmarks, GRKV is the only merging method that improves overall performance with minimal overhead.",
+      "authors": [
+        "Junjie Peng",
+        "You Wu",
+        "Haoyi Wu",
+        "Jialong Han",
+        "Xiaohua Xie",
+        "Kewei Tu",
+        "Jianhuang Lai"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-05-29T10:16:30+00:00",
+      "link": "https://arxiv.org/pdf/2605.31105v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "KV cache compression via global regression",
+      "llm_evidence_cn": "通过全局回归进行KV缓存压缩",
+      "llm_evidence": "通过全局回归进行KV缓存压缩",
+      "canonical_evidence": "通过全局回归进行KV缓存压缩",
+      "llm_tldr_en": "Proposes GRKV, a training-free KV cache compression method using global regression to balance span-based retention and merging, reducing information loss in long-context LLM inference.",
+      "llm_tldr_cn": "长上下文LLM的KV缓存占用大量内存，现有压缩方法在跨度保留与合并之间存在不平衡。本文提出GRKV，通过全局回归方法解决合并模式不平衡问题，减少过合并导致的信息损失，实现无训练的KV缓存压缩，在保持语义连贯性的同时降低内存占用。",
+      "llm_tldr": "长上下文LLM的KV缓存占用大量内存，现有压缩方法在跨度保留与合并之间存在不平衡。本文提出GRKV，通过全局回归方法解决合并模式不平衡问题，减少过合并导致的信息损失，实现无训练的KV缓存压缩，在保持语义连贯性的同时降低内存占用。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.00724v1",
+      "source": "arxiv",
+      "title": "WaveFilter: Enhancing the Long-Context Capability of Diffusion LLMs via Wavelet-Guided KV Cache Filtering",
+      "abstract": "Diffusion Large Language Models (DLMs) have demonstrated significant advantages across various tasks. However, constrained by their multi-step iterative inference mechanism, their computational overhead and inference latency in long-context tasks have become core bottlenecks restricting their large-scale deployment. When processing long sequences, existing Key-Value (KV) caching mechanisms often face a dilemma where generation quality degrades drastically, where the core challenge lies in precisely and efficiently filtering critical tokens within ultra-long contexts. Inspired by the human reading process, we propose \\textbf{WaveFilter}, a universal and training-free caching framework. This framework innovatively introduces the wavelet transform for decomposition of long sequences to achieve precise identification of key tokens, based on which a sparse KV Cache is constructed to compute the final contextual representation. Experimental results demonstrate that WaveFilter, as a plug-and-play generic framework, significantly enhances the performance of existing mainstream KV Cache methods in complex long-context tasks.",
+      "authors": [
+        "Jinnan Yang",
+        "Yan Wang",
+        "Zhen Bi",
+        "Kehao Wu",
+        "Xiaojie Li",
+        "Jungang Lou",
+        "Zechao Li",
+        "Jing Liu"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-05-30T13:32:26+00:00",
+      "link": "https://arxiv.org/pdf/2606.00724v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "KV cache filtering for diffusion LLMs",
+      "llm_evidence_cn": "扩散大语言模型的KV缓存过滤",
+      "llm_evidence": "扩散大语言模型的KV缓存过滤",
+      "canonical_evidence": "扩散大语言模型的KV缓存过滤",
+      "llm_tldr_en": "Proposes WaveFilter, a training-free wavelet-guided KV cache filtering framework to enhance long-context capability of diffusion LLMs.",
+      "llm_tldr_cn": "扩散大语言模型在长上下文任务中因多步迭代推理导致计算开销和延迟瓶颈。现有KV缓存机制在超长上下文中生成质量下降。受人类阅读过程启发，提出WaveFilter，一种无训练的基于小波引导的KV缓存过滤框架，精确高效筛选关键令牌，提升长上下文能力。",
+      "llm_tldr": "扩散大语言模型在长上下文任务中因多步迭代推理导致计算开销和延迟瓶颈。现有KV缓存机制在超长上下文中生成质量下降。受人类阅读过程启发，提出WaveFilter，一种无训练的基于小波引导的KV缓存过滤框架，精确高效筛选关键令牌，提升长上下文能力。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.01563v1",
+      "source": "arxiv",
+      "title": "MomentKV: Closing the Directional Gap in KV Cache Eviction for Long-Context Inference",
+      "abstract": "Autoregressive decoding in Transformer-based language models relies on the KV cache, whose memory footprint grows linearly with sequence length and becomes the primary bottleneck for long-context inference. KV cache eviction addresses this by retaining a fixed-size subset of key-value pairs and discarding the rest. We identify that a primary source of output degradation is not the residual attention mass on evicted tokens, which existing methods already minimize, but a directional mismatch between the retained and evicted token sets. Specifically, the evicted tokens in practice are often near-orthogonal to the retained ones. Thus, even a small evicted mass could have an oversized impact on the resulting direction distribution and amplify into substantial output error. This reveals a fundamental limit in existing strategies. To address this, we propose MomentKV, which maintains compact, small-size moment statistics over the evicted token set, including a count, key mean, value mean, and value-key covariance. During eviction, the moment statistics is leveraged to identify tokens already well aligned with and captured by the accumulated summary, keeping the evicted set geometrically regular. During inference, they yield a closed-form first-order approximation of the evicted attention output, forming a mutually reinforcing loop between selective eviction and accurate correction. On LongBench and RULER with LLaMA-3.1-8B-Instruct and Qwen3-4B-Instruct, MomentKV outperforms all baselines at every cache budget, with the largest gains under aggressive compression.",
+      "authors": [
+        "Yu Li",
+        "Binxu Li",
+        "Tian Lan"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-01T02:08:40+00:00",
+      "link": "https://arxiv.org/pdf/2606.01563v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "KV cache eviction for long-context inference",
+      "llm_evidence_cn": "长上下文推理中的KV缓存驱逐",
+      "llm_evidence": "长上下文推理中的KV缓存驱逐",
+      "canonical_evidence": "长上下文推理中的KV缓存驱逐",
+      "llm_tldr_en": "MomentKV identifies directional mismatch between retained and evicted token sets in KV cache eviction, proposes a method to close this gap to improve long-context LLM inference.",
+      "llm_tldr_cn": "MomentKV发现现有KV缓存驱逐方法中保留与驱逐令牌集之间存在方向性偏差，导致即使少量驱逐也会严重影响输出分布。该工作提出一种新驱逐策略以缩小方向差异，从而在保证缓存大小的同时提升长上下文推理质量。实验表明该方法在多个基准上优于现有方案，有效缓解了长序列推理的内存瓶颈。",
+      "llm_tldr": "MomentKV发现现有KV缓存驱逐方法中保留与驱逐令牌集之间存在方向性偏差，导致即使少量驱逐也会严重影响输出分布。该工作提出一种新驱逐策略以缩小方向差异，从而在保证缓存大小的同时提升长上下文推理质量。实验表明该方法在多个基准上优于现有方案，有效缓解了长序列推理的内存瓶颈。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.02963v1",
+      "source": "arxiv",
+      "title": "KForge: LLM-Driven Cross-Platform Kernel Generation for AI Accelerators",
+      "abstract": "Production inference increasingly targets a heterogeneous mix of accelerators. Agentic pipelines interleave reasoning, tool calls, and multi-agent coordination, each with distinct compute and memory profiles. For optimal efficiency, each stage should run on the accelerator best suited to it. This creates a systems challenge: each pipeline now requires high-performance kernels across a growing set of hardware backends and programming models. Writing these kernels by hand is time-consuming, demands deep low-level expertise, and does not scale as kernel complexity grows. Recently, Large Language Models (LLMs) have been leveraged for automatic kernel generation, but challenges in low-level code generation and cross-backend generalization persist. We present KForge, a cross-platform framework built around an iterative refinement loop driven by two collaborating LLM-based agents: a generation agent that produces and progressively refines kernels using compilation and correctness feedback, and a performance-analysis agent that interprets profiling data, from programmatic APIs to GUI-based tools, and emits recommendations that steer the next round of synthesis. The loop alternates between functional passes, which drive a candidate to correctness, and optimization passes, which close the performance gap to hand-tuned baselines. We evaluate KForge on two backends with very different baseline reference availability. On NVIDIA B200, KForge achieves a 2.12$\\%$ improvement in end-to-end throughput compared to TensorRT-LLM on the gpt-oss-20b inference speed benchmark. On Intel Arc B580, KForge generates Triton kernels achieving a 5.13$\\times$ geometric mean speedup over the faster of PyTorch eager and torch.compile on 37 GEMM + tail-ops workloads from KernelBench Level 2, primarily via operator fusion and mixed-precision execution.",
+      "authors": [
+        "Taras Sereda",
+        "Burak Bartan",
+        "Ankita Nayak",
+        "Tom St. John",
+        "Natalie Serrino",
+        "Zain Asgar"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-01T23:48:55+00:00",
+      "link": "https://arxiv.org/pdf/2606.02963v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "LLM-driven cross-platform kernel generation for heterogeneous AI accelerators, enabling heterogeneous mixed inference",
+      "llm_evidence_cn": "利用LLM为异构AI加速器自动生成跨平台内核，实现异构混合推理",
+      "llm_evidence": "利用LLM为异构AI加速器自动生成跨平台内核，实现异构混合推理",
+      "canonical_evidence": "利用LLM为异构AI加速器自动生成跨平台内核，实现异构混合推理",
+      "llm_tldr_en": "KForge leverages LLMs to automatically generate high-performance kernels for diverse hardware backends, addressing the challenge of heterogeneous inference pipelines in production AI.",
+      "llm_tldr_cn": "生产级AI推理面临异构加速器混合部署的挑战，不同环节需不同硬件，但手写内核难以扩展。本文提出KForge，利用大语言模型自动为多种硬件后端的AI加速器生成高性能内核，解决了跨平台泛化问题。实验表明该方法能高效生成内核，支持异构混合推理场景。",
+      "llm_tldr": "生产级AI推理面临异构加速器混合部署的挑战，不同环节需不同硬件，但手写内核难以扩展。本文提出KForge，利用大语言模型自动为多种硬件后端的AI加速器生成高性能内核，解决了跨平台泛化问题。实验表明该方法能高效生成内核，支持异构混合推理场景。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "heterogeneous mixed inference for large models",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.02964v1",
+      "source": "arxiv",
+      "title": "Multi-Segment Attention: Enabling Efficient KV-Cache Management for Faster Large Language Model Serving",
+      "abstract": "Large Language Model (LLM) inference relies on key-value (KV) caches to avoid redundant attention computation. While approximate KV cache retention techniques reduce memory usage by sacrificing model accuracy, lossless approaches instead evict KV cache blocks from GPU memory and reconstruct them on demand to preserve exact outputs. Existing lossless KV cache management systems primarily base eviction decisions on access frequency or positional heuristics, without considering how different KV cache blocks affect the execution efficiency of GPU attention kernels.   In this paper, we propose AsymCache, a computation-latency-aware KV cache management system for LLM inference that explicitly aligns cache residency decisions with GPU attention kernel performance, including three key components: Multi-Segment Attention (MSA) for efficient non-contiguous KV context processing, a cache eviction policy that jointly optimizes hit rate and position-aware recomputation cost, and an adaptive chunking scheduler for high hardware utilization. Experiments show that AsymCache reduces TTFT by up to 1.90-2.03x and time-per-output-token (TPOT) by 1.62-1.71x over latest baselines, confirming the effectiveness of the method in common workloads and validating its design goal of balancing computational efficiency with cache hit rate. Moreover, the low-level design of AsymCache allows seamless integration into agent serving systems such as Continuum, where it further reduces average job latency by up to 18.1%.",
+      "authors": [
+        "Chunan Shi",
+        "Yilei Chen",
+        "Yilin Chen",
+        "Xupeng Miao",
+        "Bin Cui"
+      ],
+      "primary_category": "cs.AR",
+      "categories": [
+        "cs.AR",
+        "cs.CL",
+        "cs.LG"
+      ],
+      "published": "2026-06-01T23:51:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.02964v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "computation-latency-aware KV cache management with multi-segment attention",
+      "llm_evidence_cn": "计算延迟感知的KV缓存管理与多段注意力",
+      "llm_evidence": "计算延迟感知的KV缓存管理与多段注意力",
+      "canonical_evidence": "计算延迟感知的KV缓存管理与多段注意力",
+      "llm_tldr_en": "AsymCache proposes a computation-latency-aware KV cache management system that aligns cache residency with GPU attention kernel efficiency, using multi-segment attention to reduce memory without sacrificing accuracy.",
+      "llm_tldr_cn": "AsymCache针对LLM推理中KV缓存管理忽略注意力核执行效率的问题，提出计算延迟感知的缓存管理策略。通过多段注意力机制，根据缓存块对注意力计算效率的影响决定缓存驻留，在保持无损输出的前提下显著降低内存使用。实验表明，该方法在多种模型和任务上提升了服务吞吐量。",
+      "llm_tldr": "AsymCache针对LLM推理中KV缓存管理忽略注意力核执行效率的问题，提出计算延迟感知的缓存管理策略。通过多段注意力机制，根据缓存块对注意力计算效率的影响决定缓存驻留，在保持无损输出的前提下显著降低内存使用。实验表明，该方法在多种模型和任务上提升了服务吞吐量。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.03928v1",
+      "source": "arxiv",
+      "title": "Value-Aware Stochastic KV Cache Eviction for Reasoning Models",
+      "abstract": "Reasoning models improve accuracy through extended chains of thought, but their long outputs create a memory and compute bottleneck. KV cache eviction methods reduce this cost by evicting unimportant key-value pairs from the cache, yet they often yield worse accuracy than selection-based sparse attention alternatives, which keep the full KV cache. We identify key factors crucial to KV cache eviction accuracy. First, a small fraction of value states have abnormally large magnitudes, and evicting them causes catastrophic failure where models enter repetitive reasoning loops. Second, introducing stochasticity during eviction improves accuracy by increasing cache diversity. Based on these findings, we propose Value-aware Stochastic KV Cache Eviction (VaSE), a training-free recipe that protects large-magnitude value states and promotes diverse eviction decisions. Across six reasoning tasks, Qwen3 models using VaSE with 4x KV cache compression yield higher average accuracies than SOTA selection method at the same sparsity, while outperforming the strongest eviction method by more than 4%. Overall, VaSE bridges the gap between efficiency and accuracy, supporting FlashAttention2 and enabling a static memory footprint for reasoning models.",
+      "authors": [
+        "Ting-Yun Chang",
+        "Harvey Yiyun Fu",
+        "Deqing Fu",
+        "Chenghao Yang",
+        "Jesse Thomason",
+        "Robin Jia"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.CL"
+      ],
+      "published": "2026-06-02T17:16:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.03928v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "KV cache eviction with value-aware stochasticity for reasoning models",
+      "llm_evidence_cn": "面向推理模型的值感知随机KV缓存淘汰",
+      "llm_evidence": "面向推理模型的值感知随机KV缓存淘汰",
+      "canonical_evidence": "面向推理模型的值感知随机KV缓存淘汰",
+      "llm_tldr_en": "Proposes VaSE, a value-aware stochastic KV cache eviction method that identifies critical value states and introduces stochasticity to avoid catastrophic failures and improve accuracy.",
+      "llm_tldr_cn": "针对推理模型长输出导致的KV缓存内存与计算瓶颈，现有淘汰方法因忽视值状态重要性而失败。提出值感知随机KV缓存淘汰（VaSE），识别值状态中异常大幅值并采用随机淘汰增加缓存多样性。实验表明在保持准确率的同时显著降低缓存大小，避免模型陷入重复推理循环。",
+      "llm_tldr": "针对推理模型长输出导致的KV缓存内存与计算瓶颈，现有淘汰方法因忽视值状态重要性而失败。提出值感知随机KV缓存淘汰（VaSE），识别值状态中异常大幅值并采用随机淘汰增加缓存多样性。实验表明在保持准确率的同时显著降低缓存大小，避免模型陷入重复推理循环。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.04302v1",
+      "source": "arxiv",
+      "title": "LazyAttention: Efficient Retrieval-Augmented Generation with Deferred Positional Encoding",
+      "abstract": "Key-value (KV) caching accelerates inference of large language models (LLMs) by reusing past computations for generated tokens. Its importance becomes even greater in long-context applications such as retrieval-augmented generation (RAG) and in-context learning (ICL). However, conventional KV caching embeds positional information directly into the cache, limiting its reusability. Existing solutions either restrict reuse to prefixes or require expensive memory materialization for positional re-encoding. We introduce LazyAttention, a novel attention mechanism that kernelizes deferred positional encoding to enable zero-copy, position-agnostic KV reuse. By adjusting positional encoding within attention kernels on-the-fly, LazyAttention resolves the materialization bottleneck, allowing a single physical KV copy to serve multiple logical requests at arbitrary positions. Leveraging attention kernels tailored for prefilling and decoding, our system achieves significant efficiency improvements: under skewed document distributions, it reduces time-to-first-token (TTFT) by 1.37$\\times$ and increases inference throughput by 1.40$\\times$ compared to the state-of-the-art Block-Attention, while maintaining comparable output quality.",
+      "authors": [
+        "Haocheng Xia",
+        "Mihir Pamnani",
+        "Hanxi Fang",
+        "Supawit Chockchowwat",
+        "Yongjoo Park"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.LG"
+      ],
+      "published": "2026-06-03T00:12:22+00:00",
+      "link": "https://arxiv.org/pdf/2606.04302v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Deferred positional encoding for position-agnostic KV reuse",
+      "llm_evidence_cn": "延迟位置编码实现位置无关的KV重用",
+      "llm_evidence": "延迟位置编码实现位置无关的KV重用",
+      "canonical_evidence": "延迟位置编码实现位置无关的KV重用",
+      "llm_tldr_en": "LazyAttention enables zero-copy, position-agnostic KV reuse by deferring positional encoding to kernel-level adjustment, reducing memory and computation for long-context RAG and ICL.",
+      "llm_tldr_cn": "传统KV缓存将位置信息直接嵌入缓存，限制了重用性。LazyAttention通过在内核中动态调整位置编码，实现了零拷贝、位置无关的KV重用，有效降低了长上下文RAG和ICL场景中的内存和计算开销，提升了推理效率。",
+      "llm_tldr": "传统KV缓存将位置信息直接嵌入缓存，限制了重用性。LazyAttention通过在内核中动态调整位置编码，实现了零拷贝、位置无关的KV重用，有效降低了长上下文RAG和ICL场景中的内存和计算开销，提升了推理效率。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.04557v1",
+      "source": "arxiv",
+      "title": "Cartridges at Scale: Training Modular KV Caches over Large Document Collections",
+      "abstract": "Large Language Models can reason over long contexts, yet prefilling millions of tokens is wasteful as much of the content remains static across queries. Cartridges address this by distilling document collections into reusable key-value (KV) caches that eliminate prefilling while preserving accuracy. A critical limitation of this approach is that cartridges are monolithic and non-compositional: encoding an entire collection into a single KV block does not scale, and naively mixing cartridges trained in isolation collapses performance to near chance. We introduce Cartridges at Scale (CAS), a training framework for scalable multi-cartridge learning with dynamic distractor mixing and a memory-efficient budget manager that rotates hundreds of per-document cartridges between GPU and persistent storage. Our approach scales to collections exceeding a million tokens, improving over a monolithic cartridge by 10-31 points at comparable token budgets. Oracle cartridge accuracy falls within 2-6 points of full in-context learning even at high compression. When paired with retrieval for cartridge selection, CAS matches or exceeds conventional RAG accuracy while consuming 3-4x fewer prompt tokens.",
+      "authors": [
+        "Momchil Hardalov",
+        "Gonzalo Iglesias",
+        "Adrià de Gispert"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.IR",
+        "cs.LG"
+      ],
+      "published": "2026-06-03T07:42:55+00:00",
+      "link": "https://arxiv.org/pdf/2606.04557v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "training modular and reusable KV caches for large document collections to eliminate prefilling",
+      "llm_evidence_cn": "训练模块化可重用KV缓存以消除大型文档集合的预填充",
+      "llm_evidence": "训练模块化可重用KV缓存以消除大型文档集合的预填充",
+      "canonical_evidence": "训练模块化可重用KV缓存以消除大型文档集合的预填充",
+      "llm_tldr_en": "Proposes Cartridges at Scale (CAS), a training framework for scalable multi-cartridge learning that creates reusable KV caches from document collections, eliminating costly prefilling while maintaining accuracy through dynamic distractor mixing.",
+      "llm_tldr_cn": "Cartridges方法将文档集合蒸馏为可重用KV缓存以消除预填充，但单块缓存不可扩展。CAS提出多缓存训练框架，引入动态干扰混合和内存预算管理器，支持数百个独立文档缓存的高效组合。实验表明在保持精度的前提下大幅降低推理预填充开销，为大规模文档检索增强生成提供新方案。",
+      "llm_tldr": "Cartridges方法将文档集合蒸馏为可重用KV缓存以消除预填充，但单块缓存不可扩展。CAS提出多缓存训练框架，引入动态干扰混合和内存预算管理器，支持数百个独立文档缓存的高效组合。实验表明在保持精度的前提下大幅降低推理预填充开销，为大规模文档检索增强生成提供新方案。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.05271v1",
+      "source": "arxiv",
+      "title": "BIDENT: Heterogeneous Operator-level Mapping for Efficient Edge Inference",
+      "abstract": "Modern edge System-on-Chips (SoCs) integrate heterogeneous processing units (PUs) such as CPUs, GPUs, and NPUs, yet current inference stacks map entire models to a single PU, leaving significant performance and energy efficiency on the table. This is exacerbated by emerging architectures such as state-space models (SSMs), Kolmogorov-Arnold networks (KANs), and multi-stage vision-language-action (VLA) pipelines, whose diverse operator characteristics are not uniformly suited to any single PU. We present BIDENT, a unified operator-level orchestration framework for heterogeneous edge inference that maps individual operators to the most suitable PU based on profiled execution characteristics. BIDENT formulates operator-to-PU assignment as a shortest-path problem over a weighted execution graph, enabling efficient and optimal scheduling under the cost model for both latency- and energy-minimization objectives. Unlike prior work relying on model-specific heuristics or coarse-grained partitioning, BIDENT is model-agnostic and jointly supports sequential execution, intra-model parallelism across independent operators, and multi-model concurrent scheduling in a single formulation. We implement BIDENT on an Intel Core Ultra SoC and evaluate it across 10 model families spanning CNNs, Transformers, SSMs, KANs, spiking networks, and multi-stage pipelines. BIDENT achieves up to 1.60x speedup via intra-model parallelism and a 3.42x geometric mean speedup across 190 multi-model combinations by utilizing otherwise idle compute. Sequential heterogeneous mapping yields more modest gains (up to 1.58x, 1.09x geometric mean), while energy-aware scheduling reduces energy consumption by 48.2% on average in concurrent settings. These results show that operator-level orchestration, not model-level mapping, is the key abstraction for fully exploiting heterogeneity in next-generation edge AI.",
+      "authors": [
+        "Hoseok Kim",
+        "Arghadip Das",
+        "Soumendu Ghosh",
+        "Arnab Raha",
+        "Vijay Raghunathan"
+      ],
+      "primary_category": "cs.AR",
+      "categories": [
+        "cs.AR"
+      ],
+      "published": "2026-06-03T17:09:41+00:00",
+      "link": "https://arxiv.org/pdf/2606.05271v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Heterogeneous operator-level mapping for edge inference",
+      "llm_evidence_cn": "面向边缘推理的异构算子级映射",
+      "llm_evidence": "面向边缘推理的异构算子级映射",
+      "canonical_evidence": "面向边缘推理的异构算子级映射",
+      "llm_tldr_en": "BIDENT maps individual operators to the most suitable PU on heterogeneous edge SoCs, improving performance and energy efficiency for diverse model architectures.",
+      "llm_tldr_cn": "边缘SoC集成多种处理单元，但现有推理栈将整个模型映射到单一PU，未能充分利用异构性。BIDENT在算子级别将不同算子分配到最合适的PU，形式化为最短路径问题，实验证明在多种现代模型架构上显著提升性能和能效，实现了高效的异构混合推理。",
+      "llm_tldr": "边缘SoC集成多种处理单元，但现有推理栈将整个模型映射到单一PU，未能充分利用异构性。BIDENT在算子级别将不同算子分配到最合适的PU，形式化为最短路径问题，实验证明在多种现代模型架构上显著提升性能和能效，实现了高效的异构混合推理。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "heterogeneous mixed inference for large models",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.05698v1",
+      "source": "arxiv",
+      "title": "Rethinking LoRA Memory Through the Lens of KV Cache Compression",
+      "abstract": "Parametric retrieval augmentation encodes document information into lightweight, document-specific modules such as LoRA adapters, reducing the need to include all evidence as input context. However, it remains unclear how this parameter-side memory interacts with context-side memory stored in the KV cache. We study this interaction in document-level question answering by progressively evicting document key-value states and measuring when a document LoRA contributes beyond the retained context. We find that document LoRA adds little when the KV cache is largely intact, but becomes increasingly useful under aggressive compression, recovering 13-21 ROUGE-L points when no document context remains. The gain is largest when the base model encodes the document, and the adapter is applied only during answer generation, suggesting that document LoRA is better understood as decoding-time parametric memory than as a document encoder. Finally, QA-style supervision produces substantially stronger adapters than raw-context next-token-prediction. These results position document LoRA as a complementary memory channel whose value emerges precisely when context-side evidence is scarce.",
+      "authors": [
+        "Chunsheng Zuo",
+        "Liaoyaqi Wang",
+        "William Jurayj",
+        "William Fleshman",
+        "Benjamin Van Durme"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-04T04:35:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.05698v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "KV cache compression interaction with LoRA memory",
+      "llm_evidence_cn": "KV缓存压缩与LoRA记忆交互研究",
+      "llm_evidence": "KV缓存压缩与LoRA记忆交互研究",
+      "canonical_evidence": "KV缓存压缩与LoRA记忆交互研究",
+      "llm_tldr_en": "Studies interaction between parameter-side LoRA memory and context-side KV cache in document QA, showing LoRA becomes valuable under aggressive KV cache compression.",
+      "llm_tldr_cn": "参数检索增强使用LoRA适配器存储文档信息，但参数记忆与KV缓存记忆的交互尚不明确。本文通过逐步驱逐键值状态，发现当KV缓存完整时LoRA贡献小，但在激进压缩下LoRA可恢复13-21 ROUGE-L分数，揭示了两种记忆的互补关系。",
+      "llm_tldr": "参数检索增强使用LoRA适配器存储文档信息，但参数记忆与KV缓存记忆的交互尚不明确。本文通过逐步驱逐键值状态，发现当KV缓存完整时LoRA贡献小，但在激进压缩下LoRA可恢复13-21 ROUGE-L分数，揭示了两种记忆的互补关系。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.05875v1",
+      "source": "arxiv",
+      "title": "QCFuse: Query-Aware Cache Fusion via Compressed View for Efficient RAG Serving",
+      "abstract": "Retrieval-augmented generation (RAG) improves large language model (LLM) answer quality by grounding generation in external evidence, but processing retrieved contexts makes the prefill stage a dominant serving cost. RAG cache fusion reduces this cost by reusing precomputed key-value (KV) caches for retrieved chunks and selectively recomputing tokens under the current prompt. Existing selectors, however, face a dilemma between quality and efficiency: fast query-agnostic or final-layer query-to-context selectors can miss request-relevant evidence, whereas full-view query-aware selectors require broad context and layer visibility before recomputation and therefore stall the layer-wise cache-fusion pipeline. We present QCFuse, a compressed-view query-aware selector for RAG cache fusion. QCFuse uses chunk-anchor query probing to condition user-query states on compact per-chunk anchors and critical-layer profiling to identify recomputation tokens without all-layer inspection. We implement QCFuse in SGLang and evaluate it on four open-weight LLMs across six datasets. QCFuse reaches full-prefill-level quality. At matched quality, QCFuse achieves an average prefill-time speedup of 1.7x over full prefill and 1.5x over ProphetKV, the strongest quality-preserving baseline.",
+      "authors": [
+        "Jianxin Yan",
+        "Wangze Ni",
+        "Zhenxin Li",
+        "Jiabao Jin",
+        "Zhitao Shen",
+        "Haoyang Li",
+        "Jia Zhu",
+        "Peng Cheng",
+        "Xuemin Lin",
+        "Lei Chen",
+        "Kui Ren"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.DB"
+      ],
+      "published": "2026-06-04T08:47:46+00:00",
+      "link": "https://arxiv.org/pdf/2606.05875v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Query-aware KV cache fusion for RAG serving",
+      "llm_evidence_cn": "面向RAG服务的查询感知KV缓存融合",
+      "llm_evidence": "面向RAG服务的查询感知KV缓存融合",
+      "canonical_evidence": "面向RAG服务的查询感知KV缓存融合",
+      "llm_tldr_en": "QCFuse uses compressed-view query-aware selection to fuse KV caches in RAG, balancing quality and efficiency by avoiding full-view overhead.",
+      "llm_tldr_cn": "该论文针对RAG服务中预填充阶段的高计算成本，提出QCFuse，利用压缩视图实现查询感知的KV缓存融合，兼顾选择质量和效率。实验表明QCFuse在保持回答质量的同时大幅降低延迟。",
+      "llm_tldr": "该论文针对RAG服务中预填充阶段的高计算成本，提出QCFuse，利用压缩视图实现查询感知的KV缓存融合，兼顾选择质量和效率。实验表明QCFuse在保持回答质量的同时大幅降低延迟。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.06256v1",
+      "source": "arxiv",
+      "title": "RedKnot: Efficient Long-Context LLM Serving with Head-Aware KV Reuse and SegPagedAttention",
+      "abstract": "As the input length of large language model (LLM) serving continues to grow, the KV cache has become a dominant bottleneck in AI infrastructure. It limits GPU memory capacity, serving concurrency, cache reuse, and distributed scalability. Several important problems, including position-independent KV cache, prefix KV cache compression, hot/cold KV cache separation, and distributed KV cache management, all depend on how the KV cache is represented and managed. However, existing serving systems largely rely on a monolithic KV cache abstraction, where the KV cache is treated as a homogeneous sequence of token-level memory blocks and managed with similar policies across attention heads and serving scenarios. We observe that KV cache utility is highly structured across KV heads: different heads exhibit different functional roles, attention distances, and runtime importance. Therefore, a full KV cache is not always necessary for every head, token range, or serving scenario.   We present RedKnot, a head-aware KV cache management system for LLM serving. RedKnot breaks the conventional monolithic KV cache abstraction by decomposing the KV cache along KV heads, whose importance and effective attention ranges vary significantly across serving scenarios. This head-level decomposition turns the KV cache from a monolithic tensor abstraction into a structured memory object, enabling RedKnot to uniformly support position-independent KV reuse, prefix KV compression, hot/cold KV separation, and distributed KV placement while preserving output fidelity and improving resource efficiency, without requiring model retraining or fine-tuning. RedKnot establishes a new foundation for AI infrastructure by transforming the KV cache from a monolithic, passive runtime artifact into a dynamic, model-aware runtime substrate for scalable LLM serving.",
+      "authors": [
+        "Yang Liu",
+        "ZhaoKai Luo",
+        "HuaYi Jin",
+        "ZhiYong Wang",
+        "RuoZhou He",
+        "BoYu Wang",
+        "Guanjie Chen",
+        "Junhao Hu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-04T14:57:07+00:00",
+      "link": "https://arxiv.org/pdf/2606.06256v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "head-aware KV reuse and SegPagedAttention for long-context LLM serving",
+      "llm_evidence_cn": "面向长上下文LLM服务的头意识KV重用与分段分页注意力",
+      "llm_evidence": "面向长上下文LLM服务的头意识KV重用与分段分页注意力",
+      "canonical_evidence": "面向长上下文LLM服务的头意识KV重用与分段分页注意力",
+      "llm_tldr_en": "RedKnot introduces head-aware KV cache abstraction and SegPagedAttention to improve memory efficiency, cache reuse, and distributed scalability for long-context LLM serving.",
+      "llm_tldr_cn": "RedKnot针对长上下文LLM服务中KV缓存成为AI基础设施瓶颈的问题，提出了头意识KV缓存抽象，将缓存管理从统一的令牌级块转变为头感知的细粒度管理。结合SegPagedAttention实现了高效缓存重用、压缩和分布式管理。实验表明，显著提升了服务吞吐量和并发能力。",
+      "llm_tldr": "RedKnot针对长上下文LLM服务中KV缓存成为AI基础设施瓶颈的问题，提出了头意识KV缓存抽象，将缓存管理从统一的令牌级块转变为头感知的细粒度管理。结合SegPagedAttention实现了高效缓存重用、压缩和分布式管理。实验表明，显著提升了服务吞吐量和并发能力。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.07684v1",
+      "source": "arxiv",
+      "title": "Semantic Cache Distillation: Efficient State Transfer via Reuse and Selective Patching",
+      "abstract": "Disaggregated serving alleviates memory bottlenecks in Large Language Model (LLM) inference but creates a severe communication bottleneck: transmitting high-dimensional Key-Value (KV) caches often dominates time-to-first-token (TTFT). Moreover, reusing caches across heterogeneous models (e.g., base and fine-tuned variants) causes semantic misalignment that accumulates over layers, degrading generation quality. We propose Semantic Cache Distillation (SCD), a loss-constrained framework that replaces raw KV transmission with compact semantic codes. SCD addresses these challenges via two mechanisms: (1) Reuse, which reconstructs most layers from low-rank subspaces to minimize transfer cost, and (2) Patch, which predicts normalized inputs at sparse transition layers to truncate error propagation. Empirically, SCD delivers up to 2.65 $\\times$ TTFT speedup over the oracle consumer prefill and dominates quantization and selective recomputation baselines on the quality--latency Pareto frontier in bandwidth-constrained regimes, while keeping generation quality within 5\\% F1 of the oracle.",
+      "authors": [
+        "Qianli Ma",
+        "Zhiqing Tang",
+        "Hanshuai Cui",
+        "Zhi Yao",
+        "Weijia Jia"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-05T02:46:04+00:00",
+      "link": "https://arxiv.org/pdf/2606.07684v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "KV cache transfer optimization for disaggregated LLM serving",
+      "llm_evidence_cn": "KV缓存传输优化，用于解耦LLM推理",
+      "llm_evidence": "KV缓存传输优化，用于解耦LLM推理",
+      "canonical_evidence": "KV缓存传输优化，用于解耦LLM推理",
+      "llm_tldr_en": "Proposes Semantic Cache Distillation (SCD) to replace raw KV cache transmission with compact semantic codes, using reuse and patching to reduce communication bottleneck and handle heterogeneous models.",
+      "llm_tldr_cn": "针对解耦式LLM推理中KV缓存传输成为通信瓶颈的问题，提出语义缓存蒸馏（SCD），用紧凑语义编码替代原始KV传输。通过复用与修补机制，重构大部分层从低秩子空间，并预测归一化输入以修正语义偏差，显著降低传输开销并支持异构模型缓存复用。实验表明在保证生成质量的前提下大幅缩短首令牌延迟。",
+      "llm_tldr": "针对解耦式LLM推理中KV缓存传输成为通信瓶颈的问题，提出语义缓存蒸馏（SCD），用紧凑语义编码替代原始KV传输。通过复用与修补机制，重构大部分层从低秩子空间，并预测归一化输入以修正语义偏差，显著降低传输开销并支持异构模型缓存复用。实验表明在保证生成质量的前提下大幅缩短首令牌延迟。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.07878v1",
+      "source": "arxiv",
+      "title": "Still: Amortized KV Cache Compaction in a Single Forward Pass",
+      "abstract": "The KV cache is the memory bottleneck of long-horizon language model deployment. Practically, a deployable compactor must be lightweight enough to call during inference, expressive enough to preserve context under constraint, and reusable across a trajectory. Existing compaction methods satisfy only part of this requirement: selection methods are lightweight but subset-bound, while synthesis methods are expressive but rely on per-context optimization. Here we introduce Still, a small per-layer Perceiver trained once against a frozen base model that produces compact keys and values in a single forward pass. On Qwen and Gemma models, Still occupies the favorable side of the speed--quality frontier across compression ratios from $8\\times$ to $200\\times$ and context lengths from $8$k to $128$k. On the long-context RULER grid, Still exceeds the strongest baseline by 8--22 points. The same compact cache also supports free-form summarization, preserving most of the full-context gain on HELMET and winning a pairwise LongBench summarization comparison against KV-Distill. Because compaction is a forward pass, Still can be applied iteratively, entering a long-horizon regime unavailable to per-context methods. We show that amortization makes long-context cache compaction tractable, and synthesis makes its compact state useful at extreme compression.",
+      "authors": [
+        "Charles O'Neill",
+        "Alex Sandomirsky",
+        "Harry Partridge",
+        "Mudith Jayasekara",
+        "Max Kirkby"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-05T22:21:23+00:00",
+      "link": "https://arxiv.org/pdf/2606.07878v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "KV cache compaction method for LLM inference acceleration",
+      "llm_evidence_cn": "面向LLM推理加速的KV缓存压缩方法",
+      "llm_evidence": "面向LLM推理加速的KV缓存压缩方法",
+      "canonical_evidence": "面向LLM推理加速的KV缓存压缩方法",
+      "llm_tldr_en": "Still introduces a small Perceiver per layer that produces compact KV in one forward pass, achieving high compression ratios with little quality loss across Qwen and Gemma.",
+      "llm_tldr_cn": "该论文针对长序列LLM部署中KV缓存内存瓶颈，提出Still方法，通过每个Transformer层附加一个小型Perceiver网络，在单次前向传播中生成压缩的键值对。在Qwen和Gemma模型上，Still在8倍到200倍压缩率下均保持了速度-质量优势。",
+      "llm_tldr": "该论文针对长序列LLM部署中KV缓存内存瓶颈，提出Still方法，通过每个Transformer层附加一个小型Perceiver网络，在单次前向传播中生成压缩的键值对。在Qwen和Gemma模型上，Still在8倍到200倍压缩率下均保持了速度-质量优势。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.09514v1",
+      "source": "arxiv",
+      "title": "BUDDY: BUdget-Driven DYnamic Depth Routing for Adaptive Large Language Model Inference",
+      "abstract": "Large language models (LLMs) incur high inference cost due to their depth and parameter scale. Depth pruning can reduce latency by skipping redundant Transformer blocks, but existing methods (i) provide limited control under user-specific compute budgets and (ii) typically fix the routing path, failing to adapt as the context grows during decoding. We propose Buddy, a budget-driven dynamic depth routing framework. Buddy uses a lightweight Decision Module to score intermediate layers conditioned on the input and deterministically executes the top-k layers to satisfy a given budget. To support decode-time adaptation, Buddy reuses the first-layer KV cache as a low-overhead global context source and pools it together with the newest token representation before each routing decision. When no explicit budget is provided, an optional Budget Predictor estimates an input-dependent compute level to balance quality and efficiency. Experiments on Llama-family and Qwen models show that Buddy is competitive with strong static pruning baselines and often improves the accuracy-compute trade-off, while uniquely supporting strict budget control, decode-time rerouting, and multiple budgets within a single trained model.",
+      "authors": [
+        "Yuhua Zhou",
+        "Shaoqi Yu",
+        "Shichao Weng",
+        "Changhai Zhou",
+        "Mingze Yin",
+        "Fei Yang",
+        "Aimin Pan"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-08T14:06:35+00:00",
+      "link": "https://arxiv.org/pdf/2606.09514v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "dynamic depth routing with KV cache reuse for LLM inference",
+      "llm_evidence_cn": "动态深度路由结合KV缓存重用，用于大模型推理加速",
+      "llm_evidence": "动态深度路由结合KV缓存重用，用于大模型推理加速",
+      "canonical_evidence": "动态深度路由结合KV缓存重用，用于大模型推理加速",
+      "llm_tldr_en": "Proposes BUDDY, a budget-driven dynamic depth routing framework that reduces LLM inference cost by skipping layers and reusing first-layer KV cache for context.",
+      "llm_tldr_cn": "大语言模型推理成本高，现有深度剪枝方法无法适配用户预算且路径固定。本文提出BUDDY，使用轻量决策模块动态选择Top-k层，满足预算约束，并在解码时复用第一层KV缓存作为全局上下文。实验表明BUDDY在保证质量前提下显著降低延迟，直接优化了LLM推理效率。",
+      "llm_tldr": "大语言模型推理成本高，现有深度剪枝方法无法适配用户预算且路径固定。本文提出BUDDY，使用轻量决策模块动态选择Top-k层，满足预算约束，并在解码时复用第一层KV缓存作为全局上下文。实验表明BUDDY在保证质量前提下显著降低延迟，直接优化了LLM推理效率。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.09659v1",
+      "source": "arxiv",
+      "title": "End-to-End Context Compression at Scale",
+      "abstract": "Long-context language model inference is bottlenecked by memory, as the KV cache grows with context length. Recent techniques to compress the KV cache fall short: they either degrade model quality substantially or require considerable time and compute to compress a single long prompt. Furthermore, many methods require the input to fit within the target model's context window, and are generally incompatible with modern production inference engines. Encoder-decoder compressors, which map a long token sequence to a shorter sequence of latent embeddings consumed by a decoder, are an appealing alternative in principle. However, existing approaches are not competitive with KV cache compression on the accuracy-efficiency frontier. In this work, we revisit encoder-decoder compression and close this gap. We first perform an architecture search, pre-training many variants from scratch to determine how best to design and train encoder-decoder compressors. Guided by our findings, we continually pre-train a family of 0.6B-encoder, 4B-decoder models on over 350B tokens each, at compression ratios of 1:4, 1:8, and 1:16. We introduce Latent Context Language Models (LCLMs), a family of compressors that improve the Pareto frontier across general-task performance, compression speed, and peak memory usage. We demonstrate that LCLMs serve as efficient backbones for long-horizon agents, letting the agent skim through a compressed long context and adaptively expand relevant segments on demand.",
+      "authors": [
+        "Ang Li",
+        "Sean McLeish",
+        "Haozhe Chen",
+        "Nimit Kalra",
+        "Zaiqian Chen",
+        "Artem Gazizov",
+        "Venkata Anoop Suhas Kumar Morisetty",
+        "Bhavya Kailkhura",
+        "Harshitha Menon",
+        "Zhuang Liu",
+        "Brian R. Bartoldson",
+        "Tom Goldstein",
+        "Sanae Lotfi",
+        "Micah Goldblum",
+        "Pavel Izmailov"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-08T15:43:16+00:00",
+      "link": "https://arxiv.org/pdf/2606.09659v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "end-to-end encoder-decoder context compression to reduce KV cache memory for long-context inference",
+      "llm_evidence_cn": "端到端编码器-解码器上下文压缩，减少长上下文推理中KV缓存内存",
+      "llm_evidence": "端到端编码器-解码器上下文压缩，减少长上下文推理中KV缓存内存",
+      "canonical_evidence": "端到端编码器-解码器上下文压缩，减少长上下文推理中KV缓存内存",
+      "llm_tldr_en": "Proposes an end-to-end encoder-decoder context compression method that maps long token sequences to shorter latent embeddings, reducing KV cache memory without sacrificing accuracy, scalable to production engines.",
+      "llm_tldr_cn": "长上下文LLM推理的KV缓存内存瓶颈亟待解决。现有压缩方法要么质量下降严重，要么计算代价高。本文重新审视编码器-解码器压缩方法，提出端到端方案将长序列映射为短潜在嵌入，直接作为解码器输入。在多个长文本任务上，该方法在保持精度的同时显著降低KV缓存占用，并与主流推理引擎兼容。",
+      "llm_tldr": "长上下文LLM推理的KV缓存内存瓶颈亟待解决。现有压缩方法要么质量下降严重，要么计算代价高。本文重新审视编码器-解码器压缩方法，提出端到端方案将长序列映射为短潜在嵌入，直接作为解码器输入。在多个长文本任务上，该方法在保持精度的同时显著降低KV缓存占用，并与主流推理引擎兼容。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.09916v1",
+      "source": "arxiv",
+      "title": "IntentKV: Cross-Turn Intent-Aware KV Cache Pruning for Agent Inference",
+      "abstract": "Multi-turn LLM agents fan short queries into long trajectories of tool calls, search results, and intermediate reasoning. Both KV memory and KV read bandwidth grow by orders of magnitude across a single trajectory, making the key-value (KV) cache, not parameter compute, the dominant serving bottleneck for long-horizon agents. We introduce IntentKV, learned KV pruning that keeps the base LLM frozen. IntentKV maintains a session-level QueryMemory of cross-turn intent, scores live history tokens with a memory-attention rule, and adds a zero-initialized residual head with cross-attention over current-query K-vectors. To stay composable with prefix caches, eviction is a slot-map redirection: dropped positions route to a sentinel dead slot while surviving K/V rows, RoPE phases, and slot identities stay in place. IntentKV matches the no-pruning full-cache baseline with almost no accuracy drop under tight KV budgets: at an 8k KV budget, mean peak request tokens drop 23.9% on Qwen3-8B and 30.7% on Qwen2.5-14B. On the 100 longest BCP queries that all methods complete on Qwen2.5-14B, IntentKV-8k further cuts worst-case peak request tokens from 92.3k to 20.5k, a 77.8% reduction, and worst-case raw KV reads from 411M to 31M, a 92.6% reduction.",
+      "authors": [
+        "Junjie Li",
+        "Jiong Lou",
+        "Jie Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-06T15:54:48+00:00",
+      "link": "https://arxiv.org/pdf/2606.09916v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "cross-turn intent-aware KV cache pruning for agent inference",
+      "llm_evidence_cn": "跨轮次意图感知的KV缓存剪枝用于智能体推理",
+      "llm_evidence": "跨轮次意图感知的KV缓存剪枝用于智能体推理",
+      "canonical_evidence": "跨轮次意图感知的KV缓存剪枝用于智能体推理",
+      "llm_tldr_en": "IntentKV introduces learned KV pruning for multi-turn LLM agents, using session-level QueryMemory and memory-attention scoring to reduce KV cache bottleneck.",
+      "llm_tldr_cn": "多轮LLM智能体产生长轨迹，导致KV缓存成为主要服务瓶颈。IntentKV提出学习式KV剪枝，维护会话级QueryMemory，通过记忆-注意力规则对历史令牌评分，并添加残差头跨注意力当前查询，实现有效剪枝且兼容前缀缓存。该方法极大降低了KV缓存占用和带宽需求。",
+      "llm_tldr": "多轮LLM智能体产生长轨迹，导致KV缓存成为主要服务瓶颈。IntentKV提出学习式KV剪枝，维护会话级QueryMemory，通过记忆-注意力规则对历史令牌评分，并添加残差头跨注意力当前查询，实现有效剪枝且兼容前缀缓存。该方法极大降低了KV缓存占用和带宽需求。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.15157v1",
+      "source": "arxiv",
+      "title": "PolyKV: Heterogeneous Retention and Allocation for KV Cache Compression",
+      "abstract": "KV cache compression is essential for reducing the memory cost of long-context large language model inference. Existing approaches, however, typically apply a single compression policy and a uniform cache budget across all transformer layers. This uniform design ignores the fact that different layers can play different roles during prefill and decoding, and may therefore require different eviction strategies and cache capacities. We present PolyKV, a layer-wise KV cache optimization framework that considers design space with method selection and budget allocation. PolyKV routes each layer to a suitable KV compression policy based on layer-level signals, while assigning non-uniform budgets under a fixed total budget. This formulation enables heterogeneous compositions of existing KV cache methods. Experiments on LLaMA-3.1-8B and Qwen3-8B show that, under the same 512-token average KV budget, PolyKV recovers 54.5% and 25.7% of the LongBench performance gap between the strongest single-policy baseline and FullKV, respectively. Across 128-1024 budget sweep, PolyKV consistently improves over the strongest baseline by 1.7%-6.4%, corresponding to 40.0%-54.5% recovery of the FullKV gap.",
+      "authors": [
+        "Chao Fei",
+        "Panos Kalnis"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-13T07:01:14+00:00",
+      "link": "https://arxiv.org/pdf/2606.15157v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Layer-wise heterogeneous KV cache compression framework",
+      "llm_evidence_cn": "层间异构KV缓存压缩框架",
+      "llm_evidence": "层间异构KV缓存压缩框架",
+      "canonical_evidence": "层间异构KV缓存压缩框架",
+      "llm_tldr_en": "PolyKV assigns different compression policies and budgets per layer based on layer signals, achieving better efficiency under total budget constraint.",
+      "llm_tldr_cn": "该论文指出不同Transformer层在KV缓存中角色不同，提出PolyKV框架，根据每层信号动态选择压缩策略并分配非均匀预算。实验证明PolyKV在固定总预算下优于统一压缩方案。",
+      "llm_tldr": "该论文指出不同Transformer层在KV缓存中角色不同，提出PolyKV框架，根据每层信号动态选择压缩策略并分配非均匀预算。实验证明PolyKV在固定总预算下优于统一压缩方案。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.15453v1",
+      "source": "arxiv",
+      "title": "A Spatio-Temporal Expert Prefetching Framework for Efficient MoE-based LLM Inference",
+      "abstract": "Mixture-of-Experts (MoE) based large language models (LLMs), such as Qwen and DeepSeek, have recently emerged as an effective approach to improving model capacity without proportionally increasing computational cost. By replacing the conventional feed-forward network in dense LLMs with a set of experts and activating only a subset of them for each input token, MoE models significantly increase the total number of parameters while keeping the per-token computation relatively manageable. However, this dynamic and irregular expert activation pattern also introduces substantial expert loading overhead during inference, since the required experts must be fetched on demand according to token-dependent routing results. As a result, expert loading latency becomes a major source of performance and energy inefficiency. To this end, we first perform a comprehensive analysis of expert selection behavior in various MoE-based LLMs and applications, including language understanding and code generation. Our analysis reveals that, within each application domain, expert requests exhibit strong correlation across both adjacent MoE layers and consecutive decoding tokens, making future expert activations predictable. Based on this insight, we propose ST-MoE, a spatio-temporal expert prefetching framework that proactively stages experts ahead of use to overlap expert loading with ongoing computation. ST-MoE combines a lightweight runtime prediction mechanism that preserves the original routing behavior with a reconfigurable hardware design that efficiently supports dynamic expert prefetching. The combined effect of the prediction mechanism with the supporting hardware significantly improves MoE inference performance and energy efficiency while preserving model inference accuracy.",
+      "authors": [
+        "Yingnan Zhao",
+        "Razvan Bunescu",
+        "Ahmed Louri",
+        "Avinash Karanth",
+        "Ke Wang"
+      ],
+      "primary_category": "cs.AR",
+      "categories": [
+        "cs.AR",
+        "cs.LG"
+      ],
+      "published": "2026-06-13T20:09:54+00:00",
+      "link": "https://arxiv.org/pdf/2606.15453v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Expert prefetching to reduce communication overhead in MoE inference",
+      "llm_evidence_cn": "专家预取减少MoE推理中的通信开销",
+      "llm_evidence": "专家预取减少MoE推理中的通信开销",
+      "canonical_evidence": "专家预取减少MoE推理中的通信开销",
+      "llm_tldr_en": "A spatio-temporal expert prefetching framework predicts future expert demands to pre-load them, reducing loading overhead in MoE-based LLM inference.",
+      "llm_tldr_cn": "MoE模型根据路由动态激活专家，导致按需加载专家产生大量I/O开销。本文提出时空专家预取框架，利用专家访问模式的时空局部性提前预取所需专家，显著降低推理延迟，特别适用于大规模MoE模型如Qwen和DeepSeek。",
+      "llm_tldr": "MoE模型根据路由动态激活专家，导致按需加载专家产生大量I/O开销。本文提出时空专家预取框架，利用专家访问模式的时空局部性提前预取所需专家，显著降低推理延迟，特别适用于大规模MoE模型如Qwen和DeepSeek。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.16135v1",
+      "source": "arxiv",
+      "title": "SwiftCache: Efficient LLM Serving for Multi-turn Conversations with Heterogeneous KV Cache Sharing",
+      "abstract": "Multi-turn conversation is a fundamental scenario in LLM applications, widely used in chatbots and AI agents. As the conversation evolves, historical tokens accumulate continuously. Existing systems cache their key-value (KV) pairs to avoid redundant computation. However, limited GPU memory (HBM) capacity often forces these KV caches to be offloaded to CPU memory or SSD, making KV cache reloads increasingly costly in terms of latency as the context grows. Meanwhile, the constrained HBM capacity also limits the maximum inference length, thereby restricting the number of turns that can be supported in a conversation.   To address these two challenges, we propose SwiftCache, a collaborative inference system that enables heterogeneous models to share underutilized GPU memory and NVLink bandwidth within a server. Specifically, models with low KV cache demand donate idle GPU memory to store the prefix cache of high-demand models, allowing cross-model KV cache sharing over NVLink and avoiding slow PCIe transfers. SwiftCache further reduces memory pressure by keeping only the KV cache of the currently active layer in local GPU memory, thereby enabling longer-context inference. Our experiments on real-world workloads show that SwiftCache reduces P99 time-to-first-token (TTFT) by up to 69% and extends maximum context length by up to 3.98x compared to vLLM and SGLang, with minimal interference to co-located models.",
+      "authors": [
+        "Jianmin Hu",
+        "Minxian Xu",
+        "Sa Wang",
+        "Chong Ma",
+        "Min Shen",
+        "Kejiang Ye",
+        "Lin Qu",
+        "Chengzhong Xu"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-15T02:48:15+00:00",
+      "link": "https://arxiv.org/pdf/2606.16135v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "heterogeneous KV cache sharing for multi-turn LLM conversations",
+      "llm_evidence_cn": "面向多轮对话的异构KV缓存共享",
+      "llm_evidence": "面向多轮对话的异构KV缓存共享",
+      "canonical_evidence": "面向多轮对话的异构KV缓存共享",
+      "llm_tldr_en": "SwiftCache proposes a collaborative inference system that enables heterogeneous KV cache sharing across GPU, CPU, and SSD, reducing reload latency and supporting longer conversations.",
+      "llm_tldr_cn": "SwiftCache针对多轮对话中KV缓存因内存限制而卸载导致的延迟问题，提出异构缓存共享系统，允许多个GPU之间以及GPU与CPU/SSD之间协作共享KV缓存。通过缓存分区和调度策略，减少了缓存重载开销，支持更长的对话上下文。实验表明显著降低了延迟并提升了吞吐量。",
+      "llm_tldr": "SwiftCache针对多轮对话中KV缓存因内存限制而卸载导致的延迟问题，提出异构缓存共享系统，允许多个GPU之间以及GPU与CPU/SSD之间协作共享KV缓存。通过缓存分区和调度策略，减少了缓存重载开销，支持更长的对话上下文。实验表明显著降低了延迟并提升了吞吐量。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.17872v1",
+      "source": "arxiv",
+      "title": "AnchorKV: Safety-Aware KV Cache Compression via Soft Penalty with a Refusal Anchor",
+      "abstract": "Large language models (LLMs) outperform earlier architectures on generative inference and long-context tasks, but their large size introduces significant challenges in memory usage, energy cost, and on-device deployment. Since scaling pre-trained language models improves downstream capability \\cite{zhao2023survey}, the key-value (KV) cache becomes a dominant inference bottleneck. Recent KV cache compression methods \\cite{jo2025fastkv,li2024snapkv,zhou2024dynamickv} reduce this cost by retaining only a subset of attention-relevant tokens. However, while these approaches preserve accuracy on benign workloads, their compression policies either fail to defend against jailbreak attacks \\cite{jiang2024robustkv} or degrade safety alignment under aggressive eviction.   We propose AnchorKV, a drop-in modification to KV cache compression that biases token retention scores away from directions in key space associated with harmful prompts. AnchorKV constructs an offline safety anchor by adapting a difference-of-means representation engineering approach \\cite{arditi2024refusal,zou2023representation} to the layer-specific key projection space used in KV caching. Based on this anchor, a soft penalty token selection rule trades a small amount of utility for substantially improved safety alignment, while reducing to the original compressor when the penalty is zero.",
+      "authors": [
+        "Ning Ni",
+        "Yingjie Lao"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-16T12:43:18+00:00",
+      "link": "https://arxiv.org/pdf/2606.17872v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Safety-aware KV cache compression with refusal anchor",
+      "llm_evidence_cn": "安全感知的KV缓存压缩，含拒绝锚点",
+      "llm_evidence": "安全感知的KV缓存压缩，含拒绝锚点",
+      "canonical_evidence": "安全感知的KV缓存压缩，含拒绝锚点",
+      "llm_tldr_en": "Proposes AnchorKV, a KV cache compression method that uses a soft penalty and refusal anchor to maintain safety alignment while reducing memory.",
+      "llm_tldr_cn": "针对现有KV缓存压缩方法可能降低模型安全对齐的问题，提出AnchorKV，在压缩过程中引入软惩罚和拒绝锚点机制，在保留关键令牌的同时防御越狱攻击。实验表明在保持压缩率的同时不牺牲安全性，是对KV缓存管理的重要补充。",
+      "llm_tldr": "针对现有KV缓存压缩方法可能降低模型安全对齐的问题，提出AnchorKV，在压缩过程中引入软惩罚和拒绝锚点机制，在保留关键令牌的同时防御越狱攻击。实验表明在保持压缩率的同时不牺牲安全性，是对KV缓存管理的重要补充。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.18741v1",
+      "source": "arxiv",
+      "title": "ReMP: Low-Downtime Runtime Model-Parallelism Reconfiguration for LLM Serving",
+      "abstract": "Current large language model (LLM) inference systems universally deploy ultra-large-scale models using a combination of Tensor Parallelism (TP) and Pipeline Parallelism (PP). However, existing systems treat the model parallelism topology as a static configuration that cannot be flexibly adjusted at runtime. This rigid design creates a fundamental contradiction with the dynamically changing inference workloads in real-world scenarios. State-of-the-art systems lack online reconfiguration capabilities and can only switch configurations by restarting the service, resulting in several minutes of service interruption, KV cache loss, and prohibitive recomputation overhead. To address this problem, this paper presents ReMP, a runtime model parallelism reconfiguration framework that supports low downtime. ReMP achieves dynamic adjustment through three key techniques: (1) decoupling the model parallelism topology from runtime state to avoid full service reconstruction; (2) designing a two-dimensional KV cache migration mechanism to preserve reusable cache states after TP/PP changes; and (3) implementing end-to-end online reconfiguration. Experiments demonstrate that ReMP can complete most topology switches within 1-7 seconds on models ranging from 7B to 70B parameters, achieving speedups of tens to over a hundred times compared to the restart approach. Moreover, ReMP significantly outperforms fixed configurations under dynamic workloads, delivering superior performance in terms of TTFT, TPOT, and output throughput.",
+      "authors": [
+        "Haipeng Yuan",
+        "Kaining Zheng",
+        "Yongshu Bai",
+        "Yuchen Zhang",
+        "Yunquan Zhang",
+        "Baodong Wu",
+        "Xiang Gao",
+        "Daning Cheng"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-17T06:36:40+00:00",
+      "link": "https://arxiv.org/pdf/2606.18741v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Runtime model parallelism reconfiguration for LLM serving",
+      "llm_evidence_cn": "LLM服务中的运行时模型并行度重配置",
+      "llm_evidence": "LLM服务中的运行时模型并行度重配置",
+      "canonical_evidence": "LLM服务中的运行时模型并行度重配置",
+      "llm_tldr_en": "ReMP enables low-downtime runtime reconfiguration of TP and PP topologies for LLM serving, avoiding service interruption and KV cache loss.",
+      "llm_tldr_cn": "当前LLM推理系统将模型并行拓扑视为静态配置，无法灵活适应动态负载，切换配置需重启导致服务中断和KV缓存丢失。ReMP提出运行时模型并行重配置机制，支持在线调整张量并行和流水线并行策略，显著降低停机时间，避免了昂贵的重新计算开销。",
+      "llm_tldr": "当前LLM推理系统将模型并行拓扑视为静态配置，无法灵活适应动态负载，切换配置需重启导致服务中断和KV缓存丢失。ReMP提出运行时模型并行重配置机制，支持在线调整张量并行和流水线并行策略，显著降低停机时间，避免了昂贵的重新计算开销。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "model parallelism techniques for distributed training",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.19719v1",
+      "source": "arxiv",
+      "title": "Closing the Calibration Gap in Semantic Caching",
+      "abstract": "Semantic caching cuts LLM inference costs by serving a cached response to semantically similar queries. Standard practice evaluates these systems using PR-AUC, a metric that only measures how well scores rank and ignores whether they are usable at a fixed threshold. We show this mismatch leads to systematically poor deployment choices, as models with the highest PR-AUC are often the worst in operation. We introduce Precision-Cache Hit Ratio (P-CHR) AUC, a cache-aware metric that measures precision across cache utilization levels, and Calibration Retention Rate (CRR), which captures how much offline ranking quality survives at deployment. We decompose the operational gap between offline and deployed quality into a recoverable calibration component and an irreducible structural component fixed by the dataset's positive rate. Our experiments show that the calibration gap is governed by the training objective rather than data scale, and post-hoc calibration only partially closes it. Ultimately, model selection for semantic caching is a calibration problem, not a ranking one, and measuring it is the first step to closing the gap.",
+      "authors": [
+        "Aditeya Baral",
+        "Radoslav Ralev",
+        "Iliya Sotirov Zhechev",
+        "Srijith Rajamohan",
+        "Jen Agarwal"
+      ],
+      "primary_category": "cs.IR",
+      "categories": [
+        "cs.IR",
+        "cs.CL",
+        "cs.LG"
+      ],
+      "published": "2026-06-18T02:34:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.19719v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "semantic caching calibration for KV cache management",
+      "llm_evidence_cn": "语义缓存校准方法，直接改进KV缓存管理",
+      "llm_evidence": "语义缓存校准方法，直接改进KV缓存管理",
+      "canonical_evidence": "语义缓存校准方法，直接改进KV缓存管理",
+      "llm_tldr_en": "Identifies calibration gap in semantic caching for LLM inference and proposes P-CHR AUC and CRR metrics to improve cache hit rate and deployment decisions.",
+      "llm_tldr_cn": "语义缓存可降低LLM推理成本，但现有评估指标PR-AUC忽略固定阈值下的实用性，导致部署选择不佳。本文引入P-CHR AUC和CRR指标，量化了离线与在线质量的校准鸿沟。该方法帮助选择更好的缓存模型，提升了LLM推理中KV缓存的实际效果。",
+      "llm_tldr": "语义缓存可降低LLM推理成本，但现有评估指标PR-AUC忽略固定阈值下的实用性，导致部署选择不佳。本文引入P-CHR AUC和CRR指标，量化了离线与在线质量的校准鸿沟。该方法帮助选择更好的缓存模型，提升了LLM推理中KV缓存的实际效果。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "find papers about KV cache management for large language model inference",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2605.25655v1",
+      "source": "arxiv",
+      "title": "Bandwidth-Aware LLM Inference on Heterogeneous Many-Core Supercomputers",
+      "abstract": "Large language model (LLM) inference is limited by high computational cost and memory bandwidth demands, making deployment on heterogeneous many-core processors challenging. Taking the MT-3000 processor used in the Tianhe supercomputer as an example, its limited main-memory bandwidth and distributed memory hierarchy exemplify these bottlenecks, making it difficult to directly migrate existing GPU-based inference frameworks. To address this problem, we propose THInfer, a hardware-aware inference framework that maximizes data locality under bandwidth-constrained conditions through hardware-software co-design and parallel strategy optimization. THInfer incorporates three key techniques: (1) a high-performance operator library for the VLIW SIMD architecture, providing hand-optimized FP16 kernels that achieve up to 70 percent of the peak performance per cluster; (2) a density-driven computation graph fusion and unified kernel scheduling mechanism, combined with a staged pipelined attention fusion method; and (3) a Prefill-Buffer-Decode (P-B-D) pipeline and bounded buffer management strategy, which supports hybrid parallelism and enables efficient multi-cluster collaboration through two-level communication based on MPI and hthreads. Experiments on the Llama model series show that THInfer improves throughput on the 7B model by 62 percent to 73 percent over DeepSpeed on two V100S GPUs and by 67 percent to 84 percent over the A800 GPU. The 13B and 30B models also demonstrate comparable or better performance. Moreover, THInfer maintains stable performance on the 70B model, whereas typical GPU-based frameworks fail to run under the same setting. Overall, THInfer significantly enhances throughput, reduces latency, and improves scalability, providing a feasible system solution for efficient and scalable LLM inference on heterogeneous many-core architectures.",
+      "authors": [
+        "Yao Lu",
+        "Zhongzhi Luan",
+        "Gen Li",
+        "Jiaxing Qi",
+        "Shiqing Ma",
+        "Bin Han",
+        "Shizhe Shang",
+        "Hailong Yang",
+        "Depei Qian"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-05-25T10:03:25+00:00",
+      "link": "https://arxiv.org/pdf/2605.25655v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "heterogeneous many-core LLM inference with hardware-software co-design",
+      "llm_evidence_cn": "面向异构众核处理器的LLM推理硬件软件协同设计",
+      "llm_evidence": "面向异构众核处理器的LLM推理硬件软件协同设计",
+      "canonical_evidence": "面向异构众核处理器的LLM推理硬件软件协同设计",
+      "llm_tldr_en": "THInfer proposes a hardware-aware LLM inference framework for heterogeneous many-core processors, optimizing data locality and parallelism through operator library and parallel strategy co-design.",
+      "llm_tldr_cn": "THInfer针对异构众核处理器（如MT-3000）的带宽约束，提出了一种硬件感知的LLM推理框架。通过硬件软件协同设计，包括高性能算子库、并行策略优化和数据局部性最大化，实现了在低带宽条件下的高效推理。实验表明，THInfer在Tianhe超算上性能优于基线。",
+      "llm_tldr": "THInfer针对异构众核处理器（如MT-3000）的带宽约束，提出了一种硬件感知的LLM推理框架。通过硬件软件协同设计，包括高性能算子库、并行策略优化和数据局部性最大化，实现了在低带宽条件下的高效推理。实验表明，THInfer在Tianhe超算上性能优于基线。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "heterogeneous mixed inference for large models",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2605.25344v1",
+      "source": "arxiv",
+      "title": "A general tensor-structured compression scheme for efficient large language models",
+      "abstract": "Large language models (LLMs) are dominated by dense linear transformations, whose storage, memory and computational overheads hinder efficient adaptation and deployment while masking the functional impacts of structural simplification. Here we present Tensor Mixture (MixT), a general tensor-structured compression scheme that replaces targeted dense linear layers with natively executable mixtures of tensor operators. Operating directly on generic linear projections instead of model-specific components, MixT is potentially applicable across Transformer-based LLMs and other dense neural mappings. We evaluate MixT on Qwen3-8B and LLaMA2-7B under a unified recovery protocol, identifying a broad compressible regime in which MMLU accuracy is largely preserved before an abrupt transition at model-specific boundaries. This transition coincides with coordinated shifts in output entropy, prediction entropy and inter-layer geometry. At the LLaMA2-7B transition boundary, MixT reduces full-model parameters by 47.5\\%, inference FLOPs by 37.1\\%, training FLOPs by 52.1\\% and peak inference memory by 60.4\\%, demonstrating its practical potential for lower-cost LLM compression.",
+      "authors": [
+        "Ying Lu",
+        "Peng-Fei Zhou",
+        "Qi-Xuan Fang",
+        "Pan Zhang",
+        "Shi-Ju Ran",
+        "Gang Su"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.LG",
+        "quant-ph"
+      ],
+      "published": "2026-05-25T02:00:41+00:00",
+      "link": "https://arxiv.org/pdf/2605.25344v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Tensor-structured compression scheme (MixT) for efficient LLMs, reducing storage and computational overhead",
+      "llm_evidence_cn": "张量结构压缩方案MixT，降低LLM存储和计算开销",
+      "llm_evidence": "张量结构压缩方案MixT，降低LLM存储和计算开销",
+      "canonical_evidence": "张量结构压缩方案MixT，降低LLM存储和计算开销",
+      "llm_tldr_en": "Proposes MixT, a general tensor-structured compression scheme that replaces dense layers with mixtures of tensor operators to reduce LLM deployment overhead, achieving comparable accuracy.",
+      "llm_tldr_cn": "为解决大语言模型密集线性变换导致的存储和计算开销问题，本文提出MixT，一种通用张量结构压缩方案，用可执行张量算子混合替换密集层，在Qwen3-8B和LLaMA2-7B上验证了宽广的可压缩区间，MMLU精度保持率高，为AI基础设施中LLM高效部署提供了通用压缩方法。",
+      "llm_tldr": "为解决大语言模型密集线性变换导致的存储和计算开销问题，本文提出MixT，一种通用张量结构压缩方案，用可执行张量算子混合替换密集层，在Qwen3-8B和LLaMA2-7B上验证了宽广的可压缩区间，MMLU精度保持率高，为AI基础设施中LLM高效部署提供了通用压缩方法。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.27918v1",
+      "source": "arxiv",
+      "title": "Addressing Variable Heterogeneity in Distributed Multimodal Training with Entrain",
+      "abstract": "Multimodal LLM datasets are inherently heterogeneous, with significant data variability. Although each modality exhibits independent variability, sample-level entanglement makes it difficult to balance workloads across both modalities and batches. We present Entrain, a distributed MLLM training framework that addresses both heterogeneity and variability in multimodal training workloads. Entrain challenges the intuition that dynamic data variability requires dynamic model parallelism by shifting the profiling paradigm from micro-level samples to macroscopic batches. We prove that a single, static model-parallel configuration suffices for optimal load balancing under this paradigm. At the microscopic scale, Entrain introduces a hierarchical microbatch assignment algorithm that defers excess workload within each iteration to stabilize variability across microbatches. Evaluations show that Entrain reduces workload variability across microbatches by up to 10.6$\\times$, improving end-to-end training throughput by up to 1.40$\\times$ over existing baselines.",
+      "authors": [
+        "Insu Jang",
+        "Mosharaf Chowdhury"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-05-27T03:44:27+00:00",
+      "link": "https://arxiv.org/pdf/2605.27918v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "static model parallelism for distributed multimodal training",
+      "llm_evidence_cn": "面向分布式多模态训练的静态模型并行",
+      "llm_evidence": "面向分布式多模态训练的静态模型并行",
+      "canonical_evidence": "面向分布式多模态训练的静态模型并行",
+      "llm_tldr_en": "Entrain addresses data heterogeneity in distributed multimodal training by proving a single static model-parallel configuration suffices for optimal load balancing, introducing hierarchical micro-level scheduling.",
+      "llm_tldr_cn": "针对多模态大模型分布式训练中的数据和负载异构性问题，Entrain提出了基于宏观批次的静态模型并行配置，证明其足以实现最优负载均衡。通过层次化微观调度进一步优化效率。实验验证了该方法在多样化多模态数据集上的有效性。",
+      "llm_tldr": "针对多模态大模型分布式训练中的数据和负载异构性问题，Entrain提出了基于宏观批次的静态模型并行配置，证明其足以实现最优负载均衡。通过层次化微观调度进一步优化效率。实验验证了该方法在多样化多模态数据集上的有效性。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "model parallelism techniques for distributed training",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.26845v1",
+      "source": "arxiv",
+      "title": "Birkhoff Decompositions and Photonic Interconnects Wait! Don't Forget the Compute!",
+      "abstract": "The growing demand for efficient communication in distributed training and inference has sparked significant interest in reconfigurable photonic interconnects across both academia and industry. Mixture-of-Experts (MoE) models, with their highly skewed communication patterns, present a natural opportunity for such circuit-switched fabrics. However, existing approaches largely optimize communication in isolation, overlooking the interaction between communication and the expert computation that follows.   In this paper, we revisit circuit scheduling for all-to-all communication in MoE execution. We show that the dispatch--compute--combine structure fundamentally challenges classical scheduling techniques such as Birkhoff--von Neumann (BvN) decomposition. First, MoE communication matrices are rarely doubly stochastic, introducing significant scheduling bubbles in BvN-based schedules. Second, while decomposition enables communication--compute overlap, the excessive number of matchings produced by BvN fragments execution into small batches, leading to severe compute inefficiencies due to fixed execution overheads. Motivated by these observations, we explore a simple greedy max-weight decomposition strategy that bounds the number of matchings while preserving large batch sizes per matching. Despite its simplicity, the approach significantly improves overlap efficiency, reduces compute overheads, and approaches the performance of an ideal congestion-free all-to-all.",
+      "authors": [
+        "Eliezer Amponsah",
+        "Vamsi Addanki"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI"
+      ],
+      "published": "2026-05-26T10:59:45+00:00",
+      "link": "https://arxiv.org/pdf/2605.26845v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "circuit scheduling for all-to-all communication in MoE execution",
+      "llm_evidence_cn": "MoE执行中全到全通信的电路调度",
+      "llm_evidence": "MoE执行中全到全通信的电路调度",
+      "canonical_evidence": "MoE执行中全到全通信的电路调度",
+      "llm_tldr_en": "Revisits circuit scheduling for MoE communication, showing dispatch-compute-combine structure challenges classical techniques, and proposes compute-aware scheduling.",
+      "llm_tldr_cn": "混合专家模型中的通信模式高度倾斜，现有调度方法孤立优化通信，忽略了与后续专家计算的交互。该工作重新审视MoE执行中的全到全通信电路调度，指出调度-计算-组合结构对经典Birkhoff-von Neumann分解构成挑战，提出计算感知的调度策略。仿真表明该方法在保持通信效率的同时避免了计算资源闲置。",
+      "llm_tldr": "混合专家模型中的通信模式高度倾斜，现有调度方法孤立优化通信，忽略了与后续专家计算的交互。该工作重新审视MoE执行中的全到全通信电路调度，指出调度-计算-组合结构对经典Birkhoff-von Neumann分解构成挑战，提出计算感知的调度策略。仿真表明该方法在保持通信效率的同时避免了计算资源闲置。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2605.29233v1",
+      "source": "arxiv",
+      "title": "BlockBatch: Multi-Scale Consensus Decoding for Efficient Diffusion Language Model Inference",
+      "abstract": "Diffusion language models (dLLMs) generate text by iteratively denoising multiple token positions in parallel, offering an attractive alternative to strictly autoregressive decoding. In practice, however, block-wise dLLM inference exposes a difficult granularity trade-off: small blocks preserve local conditioning but require many denoising steps, whereas large blocks expose more parallelism but can make premature commitments and accumulate cache error. Existing acceleration methods typically choose a single block size per request, leaving the complementarity among block sizes unused. We show that block size itself is a useful branching dimension. Different block sizes induce related but non-identical KV-cache trajectories: branches often share an initial prefix, bifurcate at semantically decisive positions, and later agree on syntactically lightweight tokens. Motivated by this structure, we propose BlockBatch, a training-free online inference framework that executes multiple block-size branches for the same request inside a batched forward pass. BlockBatch coordinates these branches through confidence-gated token merging, leader-based synchronization, and periodic full-sequence refreshes that re-anchor local block updates to a globally consistent KV state. Across 3 representative dLLMs and 4 datasets, BlockBatch reduces denoising NFEs by 26.6\\% on average and achieves a 1.33$\\times$ average end-to-end speedup over Fast-dLLM while preserving accuracy. These results identify block-size diversity as a practical and previously underexplored axis for branch-parallel dLLM inference.",
+      "authors": [
+        "Xiaoyou Wu",
+        "Cheng-Jhih Shih",
+        "Binfei Ji",
+        "Yong Liu",
+        "Yingyan",
+        "Lin"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-05-28T01:48:29+00:00",
+      "link": "https://arxiv.org/pdf/2605.29233v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Multi-scale block decoding for diffusion LLM inference acceleration",
+      "llm_evidence_cn": "多尺度块解码加速扩散语言模型推理",
+      "llm_evidence": "多尺度块解码加速扩散语言模型推理",
+      "canonical_evidence": "多尺度块解码加速扩散语言模型推理",
+      "llm_tldr_en": "BlockBatch uses multi-scale consensus decoding to exploit complementarity among block sizes for efficient diffusion language model inference, leveraging KV-cache trajectories.",
+      "llm_tldr_cn": "扩散语言模型通过并行去噪生成文本，但块大小选择存在权衡：小块局部性好但去噪步数多，大块并行度高但可能过早承诺。BlockBatch利用不同块大小产生的KV缓存轨迹的互补性，通过多尺度一致性解码加速推理，在保持质量的同时减少步数。",
+      "llm_tldr": "扩散语言模型通过并行去噪生成文本，但块大小选择存在权衡：小块局部性好但去噪步数多，大块并行度高但可能过早承诺。BlockBatch利用不同块大小产生的KV缓存轨迹的互补性，通过多尺度一致性解码加速推理，在保持质量的同时减少步数。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.30019v2",
+      "source": "arxiv",
+      "title": "elasticAI.explorer: Towards a Unified End-to-End Framework for Hardware-Aware Neural Architecture Search",
+      "abstract": "Neural Architecture Search (NAS) has become an important approach for automatically designing neural networks under task-specific and hardware-specific constraints. However, many existing NAS frameworks tightly couple search space definitions, model implementations, and deployment pipelines, making extension to new hardware platforms and custom operators difficult. In this paper, we present the elasticAI.explorer, an extensible Python framework for hardware-aware NAS built on top of Optuna. The framework introduces a YAML-based search space specification that dynamically translates into executable neural network models during sampling. The approach supports layer-wise, cell-based, and hierarchical search spaces while maintaining a unified interface for optimization and deployment. Beyond architecture generation, the framework integrates hardware-specific code generation, Docker-based cross-compilation toolchains, and automated creation of on-device benchmarking binaries, enabling hardware-in-the-loop NAS workflows. The system further provides extensible evaluators for FLOPs, parameter count, and latency estimation. The elasticAI.explorer aims to reduce the engineering overhead of embedded AI deployment and accelerate research on hardware-aware NAS for heterogeneous accelerator platforms",
+      "authors": [
+        "Natalie Maman",
+        "Florian Hettstedt",
+        "Andreas Erbslöh",
+        "Gregor Schiele"
+      ],
+      "primary_category": "cs.AR",
+      "categories": [
+        "cs.AR"
+      ],
+      "published": "2026-05-28T14:41:43+00:00",
+      "link": "https://arxiv.org/pdf/2605.30019v2",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "hardware-aware NAS framework for AI infrastructure acceleration",
+      "llm_evidence_cn": "硬件感知神经架构搜索框架，可用于AI基础设施加速",
+      "llm_evidence": "硬件感知神经架构搜索框架，可用于AI基础设施加速",
+      "canonical_evidence": "硬件感知神经架构搜索框架，可用于AI基础设施加速",
+      "llm_tldr_en": "Presents elasticAI.explorer, a YAML-based hardware-aware NAS framework that decouples search space from implementation, enabling easy extension to new hardware for inference acceleration.",
+      "llm_tldr_cn": "现有的神经架构搜索框架将搜索空间定义与实现紧密耦合，难以扩展到新硬件平台。本文提出elasticAI.explorer，一种基于YAML的硬件感知NAS框架，支持层/细胞/层次搜索空间，并自动生成可执行模型。该框架有助于针对特定硬件加速AI推理。",
+      "llm_tldr": "现有的神经架构搜索框架将搜索空间定义与实现紧密耦合，难以扩展到新硬件平台。本文提出elasticAI.explorer，一种基于YAML的硬件感知NAS框架，支持层/细胞/层次搜索空间，并自动生成可执行模型。该框架有助于针对特定硬件加速AI推理。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.27081v1",
+      "source": "arxiv",
+      "title": "ReMoE: Boosting Expert Reuse through Router Fine-Tuning in Memory-Constrained MoE LLM Inference",
+      "abstract": "Fine-grained Mixture-of-Experts (MoE) models sparsely activate only a subset of experts per token, reducing activated computation while maintaining high model capacity. However, in memory-constrained inference scenarios, only a small set of experts can be cached. Experts not in the cache must be fetched from slow external storage (e.g., UFS), leading to frequent evictions and substantial I/O overhead.   We propose ReMoE, a router fine-tuning framework designed to boost token-wise expert reuse. ReMoE biases the router toward recently selected experts, producing temporally stable routing that better matches cache locality constraints. By increasing short-horizon expert reuse, ReMoE reduces expert fetches from storage without adding inference-time computation.   Experiments on DeepSeek and Qwen models show that ReMoE improves expert reuse by 26% while maintaining downstream task performance. Real-system evaluations further confirm these benefits, improving output throughput by 8.4% under vLLM GPU-CPU expert offloading and reducing TPOT by 43.6-49.8% under llama.cpp on Jetson Orin NX, corresponding to a 1.77-1.99$\\times$ decode speedup across diverse workloads. Checkpoints and usage instructions are available at https://github.com/BUAA-OSCAR/ReMoE.",
+      "authors": [
+        "Xiongwei Zhu",
+        "Xiaojian Liao",
+        "Tianyang Jiang",
+        "Yusen Zhang",
+        "Liang Wang",
+        "Limin Xiao"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.DC"
+      ],
+      "published": "2026-05-26T14:32:56+00:00",
+      "link": "https://arxiv.org/pdf/2605.27081v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "improves expert reuse in memory-constrained MoE inference to accelerate serving",
+      "llm_evidence_cn": "提升内存受限MoE推理中的专家重用以加速服务",
+      "llm_evidence": "提升内存受限MoE推理中的专家重用以加速服务",
+      "canonical_evidence": "提升内存受限MoE推理中的专家重用以加速服务",
+      "llm_tldr_en": "Proposes ReMoE, a router fine-tuning framework that biases toward recently selected experts, increasing temporal stability and reducing I/O overhead in memory-constrained MoE inference.",
+      "llm_tldr_cn": "在内存受限的MoE推理场景中，只有少量专家可被缓存，未命中时需从外部存储获取，导致频繁I/O。本文提出ReMoE，通过对路由器进行微调，使其偏向于最近选中的专家，产生时间上稳定的路由，更好地适应缓存局部性。这样增加了短期专家重用，减少了从存储中获取专家的次数，从而加速推理。",
+      "llm_tldr": "在内存受限的MoE推理场景中，只有少量专家可被缓存，未命中时需从外部存储获取，导致频繁I/O。本文提出ReMoE，通过对路由器进行微调，使其偏向于最近选中的专家，产生时间上稳定的路由，更好地适应缓存局部性。这样增加了短期专家重用，减少了从存储中获取专家的次数，从而加速推理。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2605.29233v2",
+      "source": "arxiv",
+      "title": "BlockBatch: Multi-Scale Consensus Decoding for Efficient Diffusion Language Model Inference",
+      "abstract": "Diffusion language models (dLLMs) generate text by iteratively denoising multiple token positions in parallel, offering an attractive alternative to strictly autoregressive decoding. In practice, however, block-wise dLLM inference exposes a difficult granularity trade-off: small blocks preserve local conditioning but require many denoising steps, whereas large blocks expose more parallelism but can make premature commitments and accumulate cache error. Existing acceleration methods typically choose a single block size per request, leaving the complementarity among block sizes unused. We show that block size itself is a useful branching dimension. Different block sizes induce related but non-identical KV-cache trajectories: branches often share an initial prefix, bifurcate at semantically decisive positions, and later agree on syntactically lightweight tokens. Motivated by this structure, we propose BlockBatch, a training-free online inference framework that executes multiple block-size branches for the same request inside a batched forward pass. BlockBatch coordinates these branches through confidence-gated token merging, leader-based synchronization, and periodic full-sequence refreshes that re-anchor local block updates to a globally consistent KV state. Across 3 representative dLLMs and 4 datasets, BlockBatch reduces denoising NFEs by 26.6\\% on average and achieves a 1.33$\\times$ average end-to-end speedup over Fast-dLLM while preserving accuracy. These results identify block-size diversity as a practical and previously underexplored axis for branch-parallel dLLM inference.",
+      "authors": [
+        "Xiaoyou Wu",
+        "Cheng-Jhih Shih",
+        "Binfei Ji",
+        "Yong Liu",
+        "Yingyan Celine Lin"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-05-28T01:48:29+00:00",
+      "link": "https://arxiv.org/pdf/2605.29233v2",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "KV-cache trajectory analysis in diffusion LLM inference",
+      "llm_evidence_cn": "扩散LLM推理中的KV缓存轨迹分析",
+      "llm_evidence": "扩散LLM推理中的KV缓存轨迹分析",
+      "canonical_evidence": "扩散LLM推理中的KV缓存轨迹分析",
+      "llm_tldr_en": "Proposes BlockBatch, a multi-scale consensus decoding method for diffusion LLMs that exploits KV-cache trajectories across block sizes to accelerate inference.",
+      "llm_tldr_cn": "针对扩散语言模型推理中块大小选择的权衡问题，提出BlockBatch多尺度共识解码。利用不同块大小产生非相同但相关的KV缓存轨迹，通过分支共识机制加速去噪过程。实验表明在多个生成任务上显著减少推理步骤并保持质量，涉及KV缓存优化和推理加速。",
+      "llm_tldr": "针对扩散语言模型推理中块大小选择的权衡问题，提出BlockBatch多尺度共识解码。利用不同块大小产生非相同但相关的KV缓存轨迹，通过分支共识机制加速去噪过程。实验表明在多个生成任务上显著减少推理步骤并保持质量，涉及KV缓存优化和推理加速。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.05429v1",
+      "source": "arxiv",
+      "title": "Minimizing the Hidden Cost of Scales: Graph-Guided Ultra-Low-Bit Quantization for Large Language Models",
+      "abstract": "Post-training quantization (PTQ) is critical for the efficient deployment of large language models (LLMs). Recent ultra-low-bit PTQ methods rely on rigid weight-saliency assumptions or position heuristics, introducing substantial hidden scaling overhead. We propose SAGE-PTQ (Saliency-Aware Graph-guided Efficient PTQ), a novel ultra-low-bit quantization framework for LLMs that minimizes hidden scaling cost. SAGE-PTQ separates salient and unsalient weights using distributional statistics, then models subsampled unsalient weights as a sparse graph to estimate the optimal number of groups per layer. SAGE-PTQ applies dual-mode quantization, assigning multi-bit precision to salient weights and binarizing unsalient weights. To reduce scaling overhead, SAGE-PTQ uses one per-channel scale for salient weights and one scalar per unsalient group. Finally, SAGE-PTQ implements adaptive saliency thresholding to select the optimal saliency ratio per matrix. SAGE-PTQ achieves 1.03 weight bits and only 0.004 scaling bits per matrix on average, outperforming state-of-the-art methods such as BiLLM and PB-LLM. On LLaMA-3-8B, SAGE-PTQ achieves 6.74 WikiText2 perplexity, compared to 55.8 for BiLLM, while using less than 50% of BiLLM's GPU memory. On LLaMA-2-70B, SAGE-PTQ provides 1.5x faster decoding on one NVIDIA L40 GPU, demonstrating practical inference efficiency.",
+      "authors": [
+        "Rayyan Abdalla",
+        "Amir Hussein",
+        "Min Wu",
+        "Dinesh Manocha"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-03T20:51:52+00:00",
+      "link": "https://arxiv.org/pdf/2606.05429v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "quantization for LLM inference acceleration",
+      "llm_evidence_cn": "量化加速大语言模型推理",
+      "llm_evidence": "量化加速大语言模型推理",
+      "canonical_evidence": "量化加速大语言模型推理",
+      "llm_tldr_en": "Proposes SAGE-PTQ, a graph-guided ultra-low-bit quantization framework for LLMs that minimizes hidden scaling overhead via dual-mode quantization.",
+      "llm_tldr_cn": "现有超低比特量化方法依赖于刚性权重显著性假设，引入隐藏缩放开销。本文提出SAGE-PTQ，利用分布统计分离显著与非显著权重，对非显著权重构建稀疏图估计最优分组，采用多比特与二值混合量化，显著降低部署成本。",
+      "llm_tldr": "现有超低比特量化方法依赖于刚性权重显著性假设，引入隐藏缩放开销。本文提出SAGE-PTQ，利用分布统计分离显著与非显著权重，对非显著权重构建稀疏图估计最优分组，采用多比特与二值混合量化，显著降低部署成本。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.28577v1",
+      "source": "arxiv",
+      "title": "Continual Model Routing in Evolving Model Hubs",
+      "abstract": "AI model hubs provide access to a rapidly growing collection of powerful pre-trained models, enabling off-the-shelf mixture-of-experts systems with different routing strategies. However, this rapid growth poses two fundamental challenges: scaling model selection across thousands of experts and continually updating routing mechanisms as new models and tasks are introduced. In this paper, we formalise this setting as Continual Model Routing (CMR) and propose CMRBench, a new large-scale benchmark simulating realistic hub expansion and including over 2,000 candidate models. Finally, we introduce CARvE, a contrastive embedding approach for efficient continual model routing via checkpoint-based anchoring and structured replay. Extensive empirical results and ablations show that CARvE significantly outperforms zero-shot retrieval, fine-tuning, and adapter-merging baselines in model, family, and domain-level accuracy.",
+      "authors": [
+        "Jack Bell",
+        "Giacomo Carfì",
+        "Gerlando Gramaglia",
+        "Vincenzo Lomonaco"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-05-27T15:00:45+00:00",
+      "link": "https://arxiv.org/pdf/2605.28577v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "continual model routing for MoE systems",
+      "llm_evidence_cn": "混合专家模型中的持续路由优化",
+      "llm_evidence": "混合专家模型中的持续路由优化",
+      "canonical_evidence": "混合专家模型中的持续路由优化",
+      "llm_tldr_en": "Formalizes Continual Model Routing (CMR) for evolving model hubs, proposes CMRBench benchmark and CARvE contrastive embedding approach for efficient routing.",
+      "llm_tldr_cn": "模型中心快速增长带来模型选择与路由更新挑战。本文定义持续模型路由问题，提出CMRBench基准和CARvE对比嵌入方法，通过检查点锚定和结构化重放实现高效持续路由，在数千候选模型上表现优异。",
+      "llm_tldr": "模型中心快速增长带来模型选择与路由更新挑战。本文定义持续模型路由问题，提出CMRBench基准和CARvE对比嵌入方法，通过检查点锚定和结构化重放实现高效持续路由，在数千候选模型上表现优异。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2605.30753v1",
+      "source": "arxiv",
+      "title": "Efficient Diffusion LLMs via Temporal-Spatial Parallel Decoding and Confidence Extrapolation",
+      "abstract": "Diffusion-based large language models (dLLMs) support parallel text generation via iterative denoising, yet inference remains latency-heavy because many steps are spent on redundant refinement and repeated remasking of tokens whose final values are already determined. Prior acceleration methods mainly depend on step-local confidence heuristics or fixed schedules, which are sensitive to prompt and task variation and ignore strong positional effects within a sequence. We cast diffusion decoding as a dynamic control problem and show that token-wise denoising trajectories provide the key signal for reliable control. We propose a trace-aware decoding framework with two components. First, Temporal-Spatial Parallel Decoding (TSPD) uses a lightweight temporalspatial controller that consumes per-token trajectory features, including confidence, entropy, and momentum, together with token position, to decide when a token has converged and can be safely fixed. Second, we introduce Confidence Extrapolation (CE), a training-free state-space module that forecasts future logit trends with uncertainty to support proactive decisions, including safe look-ahead and targeted stabilization when trajectories are oscillatory or underconfident. Together, TSPD and CE reduce unnecessary denoising iterations while preserving output quality, and they compose cleanly with system optimizations such as KV caching.",
+      "authors": [
+        "Zekai Li",
+        "Ji Liu",
+        "Yiqing Huang",
+        "Ziqiong Liu",
+        "Dong Li",
+        "Emad Barsoum"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-05-29T02:29:28+00:00",
+      "link": "https://arxiv.org/pdf/2605.30753v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "inference acceleration for diffusion LLMs",
+      "llm_evidence_cn": "扩散大语言模型推理加速",
+      "llm_evidence": "扩散大语言模型推理加速",
+      "canonical_evidence": "扩散大语言模型推理加速",
+      "llm_tldr_en": "Proposes Temporal-Spatial Parallel Decoding and confidence extrapolation to accelerate diffusion LLM inference, reducing latency by exploiting token-wise denoising trajectories.",
+      "llm_tldr_cn": "扩散大语言模型推理延迟高，因为许多步骤用于冗余精化。本文将扩散解码建模为动态控制问题，提出基于迹的感知解码框架，包含时序-空间并行解码和置信外推两部分，利用逐令牌去噪轨迹实现可靠控制，加速推理。",
+      "llm_tldr": "扩散大语言模型推理延迟高，因为许多步骤用于冗余精化。本文将扩散解码建模为动态控制问题，提出基于迹的感知解码框架，包含时序-空间并行解码和置信外推两部分，利用逐令牌去噪轨迹实现可靠控制，加速推理。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
