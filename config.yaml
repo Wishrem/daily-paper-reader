@@ -25,3 +25,65 @@ subscriptions:
     stage: A
     diff_threshold_pct: 15
   keyword_recall_mode: or
+  intent_profiles:
+    - tag: ai-infra
+      description: kvcache、hpc、ai infra这几个关键词相关的，包括但不限于异构混合推理、moe通信优化等任何涉及ai基础设施加速的
+      enabled: true
+      paper_sources:
+        - arxiv
+      keywords:
+        - keyword: key value cache
+          keyword_cn: 键值缓存
+          query: KV cache optimization for large language models
+        - keyword: AI infrastructure
+          keyword_cn: 人工智能基础设施
+          query: AI infrastructure acceleration techniques
+        - keyword: heterogeneous inference
+          keyword_cn: 异构推理
+          query: heterogeneous mixed inference for large models
+        - keyword: mixture of experts communication
+          keyword_cn: 专家混合通信
+          query: communication optimization in mixture of experts models
+        - keyword: inference acceleration
+          keyword_cn: 推理加速
+          query: inference acceleration for AI infrastructure
+        - keyword: model parallelism
+          keyword_cn: 模型并行
+          query: model parallelism techniques for distributed training
+      intent_queries:
+        - query: find AI infrastrcutre acceleration
+          query_cn: 查找关于AI基础设施加速的论文
+          enabled: true
+          source: manual
+          note: ''
+        - query: find papers about KV cache management for large language model inference
+          query_cn: 查找关于大语言模型推理中KV缓存管理的论文
+          enabled: true
+          source: manual
+          note: ''
+        - query: search for heterogeneous computing in AI infrastructure
+          query_cn: 搜索AI基础设施中的异构计算
+          enabled: true
+          source: manual
+          note: ''
+        - query: look up communication optimization for mixture of experts models
+          query_cn: 查找专家混合模型的通信优化
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-06-23T03:32:32.854Z'
+source_backends:
+  arxiv:
+    papers_table: arxiv_papers
+    use_vector_rpc: true
+    vector_rpc: match_arxiv_papers
+    vector_rpc_exact: match_arxiv_papers_exact
+    use_bm25_rpc: true
+    bm25_rpc: match_arxiv_papers_bm25
+    sync_table: arxiv_sync_status
+    sync_success_value: success
+    schema: public
+    kind: supabase
+    enabled: true
+    url: https://lyucdwgefyfbmaiopjbk.supabase.co
+    anon_key: sb_publishable_lX-oi64Uxyd7SIVv3_w2Uw_MTOojeKq
