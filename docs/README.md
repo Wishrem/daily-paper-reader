@@ -6,91 +6,73 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-23
-- 运行时间：2026-06-23 22:25:52 UTC
+- 最新运行日期：2026-06-24
+- 运行时间：2026-06-24 22:04:51 UTC
 - 运行状态：成功
-- 本次总论文数：23
-- 精读区：12
+- 本次总论文数：17
+- 精读区：6
 - 速读区：11
 
 ### 今日简报（AI）
-今日推荐23篇论文，精读12篇，其中《UltraQuant: 4-bit KV Caching for Context-Heavy Agents》获满分10分。  
-最值得关注：4-bit KV缓存优化上下文密集型智能体，以及MoE结构聚合与可微最优传输方法。  
-建议优先精读UltraQuant，并关注DAG-MoE和DOT-MoE对MoE架构的创新。
-- 详情：[/202606/23/README](/202606/23/README)
+今日推荐17篇论文，精读聚焦LLM在NPU系统的延迟预测与尾延迟感知调度，速读覆盖异构边缘部署、跨层值混合及MoE量化对齐。  
+最值得关注的方向是LLM推理性能优化（NPU延迟建模与调度策略），以及边缘/雾环境下的高效服务方法。  
+建议深入阅读两篇精读论文，并跟进异构边缘计算与模型量化融合的实践。
+- 详情：[/202606/24/README](/202606/24/README)
 
 ### 精读区论文标签
-1. [UltraQuant: 4-bit KV Caching for Context-Heavy Agents](/202606/23/2606.20474v1-ultraquant-4-bit-kv-caching-for-context-heavy-agents)  
-   标签：评分：10.0/10、query:ai-infra
-   evidence：直接针对LLM智能体的4位KV缓存压缩
-2. [UltraQuant: 4-bit KV Caching for Context-Heavy Agents](/202606/23/2606.20474v2-ultraquant-4-bit-kv-caching-for-context-heavy-agents)  
-   标签：评分：10.0/10、query:ai-infra
-   evidence：针对上下文密集型智能体的4比特KV缓存压缩
-3. [Keyless Attention: Value-Space Routing and Value-Only Caching for Efficient Transformers](/202606/23/2606.21848v1-keyless-attention-value-space-routing-and-value-only-caching-for-efficient-transformers)  
-   标签：评分：10.0/10、query:ai-infra
-   evidence：Keyless Attention通过仅值缓存将KV缓存减少50%
-4. [Geometry-Aware Online Scheduling for LLM Serving: From Theoretical Bound to System Practice](/202606/23/2606.22327v1-geometry-aware-online-scheduling-for-llm-serving-from-theoretical-bound-to-system-practice)  
-   标签：评分：10.0/10、query:ai-infra
-   evidence：LLM推理中KV缓存内存管理的几何感知调度
-5. [SMEPilot: Characterizing and Optimizing LLM Inference with Scalable Matrix Extensions](/202606/23/2606.16332v1-smepilot-characterizing-and-optimizing-llm-inference-with-scalable-matrix-extensions)  
+1. [Latency Prediction for LLM Inference on NPU Systems](/202606/24/2606.18042v2-latency-prediction-for-llm-inference-on-npu-systems)  
    标签：评分：9.0/10、query:ai-infra
-   evidence：利用SME和CPU异构计算优化LLM推理
-6. [Tangram: Hiding GPU Heterogeneity for Efficient LLM Parallelization](/202606/23/2606.16907v1-tangram-hiding-gpu-heterogeneity-for-efficient-llm-parallelization)  
+   evidence：面向NPU系统的LLM推理延迟预测，支持部署优化
+2. [Beyond Prediction: Tail-Aware Scheduling for LLM Inference](/202606/24/2606.18431v1-beyond-prediction-tail-aware-scheduling-for-llm-inference)  
    标签：评分：9.0/10、query:ai-infra
-   evidence：隐藏GPU异构性实现大语言模型并行化，支持高效异构混合推理
-7. [Grouped Query Experts: Mixture-of-Experts on GQA Self-Attention](/202606/23/2606.20945v1-grouped-query-experts-mixture-of-experts-on-gqa-self-attention)  
+   evidence：缓存感知抢断与KV缓存协同优化的调度框架
+3. [Forget Without Compromise: Nexus Sampling for Streaming KV-Cache Eviction Under Fixed Budgets](/202606/24/2606.23961v1-forget-without-compromise-nexus-sampling-for-streaming-kv-cache-eviction-under-fixed-budgets)  
    标签：评分：9.0/10、query:ai-infra
-   evidence：在分组查询注意力上应用MoE，优化通信与计算
-8. [Recency/Frequency Adaptive KV Caching for Large Language Model Serving](/202606/23/2606.21238v1-recencyfrequency-adaptive-kv-caching-for-large-language-model-serving)  
+   evidence：流式KV缓存淘汰方法
+4. [CompressKV: Semantic-Retrieval-Guided KV-Cache Compression for Resource-Efficient Long-Context LLM Inference](/202606/24/2606.24467v1-compresskv-semantic-retrieval-guided-kv-cache-compression-for-resource-efficient-long-context-llm-inference)  
    标签：评分：9.0/10、query:ai-infra
-   evidence：自适应KV缓存管理提升命中率和降低延迟
-9. [Fast-TurboQuant: A Multiplier-Free Online Vector Quantization Approach](/202606/23/2606.21448v1-fast-turboquant-a-multiplier-free-online-vector-quantization-approach)  
-   标签：评分：9.0/10、query:ai-infra
-   evidence：面向大语言模型的无乘法器键值缓存量化方法
-10. [BatchGen: An Architecture for Scalable and Efficient Batch Inference](/202606/23/2606.21712v1-batchgen-an-architecture-for-scalable-and-efficient-batch-inference)  
-   标签：评分：9.0/10、query:ai-infra
-   evidence：批推理架构用于AI基础设施加速
-11. [ASAP: A Disaggregated and Asynchronous Inference System for MoE Prefill](/202606/23/2606.22541v1-asap-a-disaggregated-and-asynchronous-inference-system-for-moe-prefill)  
-   标签：评分：9.0/10、query:ai-infra
-   evidence：针对MoE预填充的异步推理系统，减少同步阻塞
-12. [SpotAttention: Plug-In Block-Sparse Routing for Pretrained Long-Context Transformers](/202606/23/2606.22874v1-spotattention-plug-in-block-sparse-routing-for-pretrained-long-context-transformers)  
-   标签：评分：9.0/10、query:ai-infra
-   evidence：通过块稀疏注意力路由降低KV缓存开销
+   evidence：面向长上下文LLM推理的KV缓存压缩
+5. [Demystifying Pipeline Parallelism: First Theory for PipeDream](/202606/24/2606.03498v1-demystifying-pipeline-parallelism-first-theory-for-pipedream)  
+   标签：评分：8.0/10、query:ai-infra
+   evidence：PipeDream流水线并行的首个理论分析
+6. [MIVE: A Minimalist Integer Vector Engine for Softmax LayerNorm and RMSNorm Acceleration](/202606/24/2606.17781v1-mive-a-minimalist-integer-vector-engine-for-softmax-layernorm-and-rmsnorm-acceleration)  
+   标签：评分：8.0/10、query:ai-infra
+   evidence：针对LLM归一化操作的专用硬件加速引擎
 
 ### 速读区论文标签
-1. [DAG-MoE: From Simple Mixture to Structural Aggregation in Mixture-of-Experts](/202606/23/2606.01062v1-dag-moe-from-simple-mixture-to-structural-aggregation-in-mixture-of-experts)  
+1. [E2LLM: Towards Efficient LLM Serving in Heterogeneous Edge/Fog Environments](/202606/24/2606.03770v1-e2llm-towards-efficient-llm-serving-in-heterogeneous-edgefog-environments)  
    标签：评分：8.0/10、query:ai-infra
-   evidence：解决MoE通信中的路由开销
-2. [DOT-MoE: Differentiable Optimal Transport for MoEfication](/202606/23/2606.01666v1-dot-moe-differentiable-optimal-transport-for-moefication)  
+   evidence：在异构边缘/雾环境中高效部署LLM
+2. [Depth-Attention: Cross-Layer Value Mixing for Language Models](/202606/24/2606.05014v1-depth-attention-cross-layer-value-mixing-for-language-models)  
    标签：评分：8.0/10、query:ai-infra
-   evidence：利用可微最优传输将稠密模型转换为MoE
-3. [Fast Transformer Inference on ARM-Based HMPSoCs](/202606/23/2606.02836v1-fast-transformer-inference-on-arm-based-hmpsocs)  
+   evidence：通过跨层值混合改进注意力机制，涉及KV缓存重用
+3. [Value-and-Structure Alignment for Routing-Consistent Quantization of Mixture-of-Experts Models](/202606/24/2606.05688v1-value-and-structure-alignment-for-routing-consistent-quantization-of-mixture-of-experts-models)  
    标签：评分：8.0/10、query:ai-infra
-   evidence：在异构ARM SoC上加速Transformer推理
-4. [TGV-KV: Text-Grounded KV Eviction for Vision-Language Models](/202606/23/2606.03075v1-tgv-kv-text-grounded-kv-eviction-for-vision-language-models)  
+   evidence：面向MoE推理加速的路由一致性量化
+4. [WhiFlash: Accelerating Speculative Decoding with Token-Level Cross-Paradigm Routing](/202606/24/2606.07710v1-whiflash-accelerating-speculative-decoding-with-token-level-cross-paradigm-routing)  
    标签：评分：8.0/10、query:ai-infra
-   evidence：面向视觉语言模型的KV缓存驱逐方法
-5. [Stepwise Token Selection for Efficient Multimodal Large Language Models](/202606/23/2606.16067v1-stepwise-token-selection-for-efficient-multimodal-large-language-models)  
+   evidence：令牌级跨范式路由用于投机解码加速
+5. [Towards Scalable Customization and Deployment of Multi-Agent Systems for Enterprise Applications](/202606/24/2606.18502v1-towards-scalable-customization-and-deployment-of-multi-agent-systems-for-enterprise-applications)  
    标签：评分：7.0/10、query:ai-infra
-   evidence：视觉标记剪枝以加速多模态大模型推理
-6. [From Tokens to Regions: CUDA-Sensitive Instruction Tuning for GPU Kernel Generation](/202606/23/2606.16231v1-from-tokens-to-regions-cuda-sensitive-instruction-tuning-for-gpu-kernel-generation)  
+   evidence：基于推测解码的LLM服务推理优化
+6. [Closing the Calibration Gap in Semantic Caching](/202606/24/2606.19719v2-closing-the-calibration-gap-in-semantic-caching)  
    标签：评分：7.0/10、query:ai-infra
-   evidence：CUDA内核生成以加速AI系统
-7. [ADaPT: Token-Level Decoupling for Efficient Large Reasoning Models](/202606/23/2606.19919v1-adapt-token-level-decoupling-for-efficient-large-reasoning-models)  
+   evidence：面向LLM推理的语义缓存，降低推理成本
+7. [Breaking chains with trees: Deep learning with $\mathcal{O}(\log N)$ parallel time complexity](/202606/24/2606.21497v1-breaking-chains-with-trees-deep-learning-with-mathcalolog-n-parallel-time-complexity)  
    标签：评分：7.0/10、query:ai-infra
-   evidence：面向大推理模型的token级双过程框架，降低计算成本
-8. [Demystifying Numerical Instability in LLM Inference: Achieving Reproducible Inference for Mission-Critical Tasks with HEAL](/202606/23/2606.21023v1-demystifying-numerical-instability-in-llm-inference-achieving-reproducible-inference-for-mission-critical-tasks-with-heal)  
+   evidence：层次块局部学习减少锁定和通信开销以支持并行训练
+8. [StickyInvoc: Rethinking Task Models for High-throughput Workflows in the LLM Era](/202606/24/2606.22175v1-stickyinvoc-rethinking-task-models-for-high-throughput-workflows-in-the-llm-era)  
    标签：评分：7.0/10、query:ai-infra
-   evidence：解决大模型推理在异构GPU上的输出不一致问题
-9. [AIA: A 16nm Multicore SoC for Approximate Inference Acceleration Exploiting Non-normalized Knuth-Yao Sampling and Inter-Core Register Sharing](/202606/23/2606.16148v1-aia-a-16nm-multicore-soc-for-approximate-inference-acceleration-exploiting-non-normalized-knuth-yao-sampling-and-inter-core-register-sharing)  
+   evidence：通过跨任务复用计算状态降低LLM推理开销
+9. [ARIADNE: Agnostic Routing for Inference-time Adapter DyNamic sElection](/202606/24/2606.19079v1-ariadne-agnostic-routing-for-inference-time-adapter-dynamic-selection)  
    标签：评分：6.0/10、query:ai-infra
-   evidence：用于近似推理加速的多核SoC
-10. [SPRI: SVD-Partitioned Residual Initialization for Data-Constrained MoE Upcycling](/202606/23/2606.16456v1-spri-svd-partitioned-residual-initialization-for-data-constrained-moe-upcycling)  
+   evidence：推理时动态适配器路由加速
+10. [Mix-QVLA: Task-Evidence-Aware Mixed-Precision Quantization of Vision-Language-Action Models](/202606/24/2606.19565v1-mix-qvla-task-evidence-aware-mixed-precision-quantization-of-vision-language-action-models)  
    标签：评分：6.0/10、query:ai-infra
-   evidence：数据受限下基于SVD分区残差的MoE升级初始化
-11. [Online LLM Selection via Constrained Bandits with Time-Varying Demand](/202606/23/2606.17489v1-online-llm-selection-via-constrained-bandits-with-time-varying-demand)  
+   evidence：混合精度量化用于推理加速
+11. [DPIFrame: A Dual-Level Parallelism Acceleration Framework for CTR Model Inference](/202606/24/2606.21101v1-dpiframe-a-dual-level-parallelism-acceleration-framework-for-ctr-model-inference)  
    标签：评分：6.0/10、query:ai-infra
-   evidence：在资源约束下为异构边缘-云推理在线选择大语言模型
+   evidence：面向CTR模型推理的双层级并行加速框架
 
 
 <div class="dpr-home-promo-card">

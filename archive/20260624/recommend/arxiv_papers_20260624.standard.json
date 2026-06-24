@@ -1,0 +1,695 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-24T21:55:13.597177+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 26,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 31,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2606.18042v2",
+      "source": "arxiv",
+      "title": "Latency Prediction for LLM Inference on NPU Systems",
+      "abstract": "Deploying Large Language Models (LLMs) requires exploring a large configuration space spanning parallelization strategies, batching techniques, and scheduling policies. Exhaustive measurement across this space is impractical, making latency prediction essential for system optimization. While NPUs have emerged as accelerators designed for LLM inference, no prediction methodology has been established for them. Specifically, applying prior work to LLM inference latency prediction on NPUs faces three challenges: undisclosed microarchitecture of commercial NPUs, unpredictable compiler optimizations, and latency non-linearity induced by bucketing.   We present LENS, a latency estimator that predicts NPU inference latency without information on the microarchitecture or compiler, and captures the non-linear latency induced by bucketing. LENS profiles each bucket with two end-to-end (E2E) measurements and composes the results to predict latency for arbitrary input-output length combinations. We validate LENS across NPUs from multiple vendors, several LLMs, and diverse workloads, achieving a mean prediction error of 2.15\\%. We further compare LENS against two methodologically related baselines, confirming the validity of its approach.",
+      "authors": [
+        "Juhyun Park",
+        "Seungwoo Jeong",
+        "Jingyu Lee",
+        "Kyungyong Lee"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-16T15:18:53+00:00",
+      "link": "https://arxiv.org/pdf/2606.18042v2",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "latency prediction for LLM inference on NPU systems enabling deployment optimization",
+      "llm_evidence_cn": "面向NPU系统的LLM推理延迟预测，支持部署优化",
+      "llm_evidence": "面向NPU系统的LLM推理延迟预测，支持部署优化",
+      "canonical_evidence": "面向NPU系统的LLM推理延迟预测，支持部署优化",
+      "llm_tldr_en": "LENS is a latency estimator for LLM inference on NPUs that predicts latency without microarchitecture or compiler details, addressing non-linearity and bucketing effects to enable efficient system optimization.",
+      "llm_tldr_cn": "LLM在NPU上的部署面临配置空间大、微架构不公开等挑战，难以直接测量延迟。LENS提出了一种无需微架构或编译器信息的延迟预测方法，通过建模分桶导致的非线性效应，准确估计NPU推理延迟。该方法无需了解底层硬件细节，即可为并行化策略、批处理等优化提供依据，显著加速了配置探索过程。",
+      "llm_tldr": "LLM在NPU上的部署面临配置空间大、微架构不公开等挑战，难以直接测量延迟。LENS提出了一种无需微架构或编译器信息的延迟预测方法，通过建模分桶导致的非线性效应，准确估计NPU推理延迟。该方法无需了解底层硬件细节，即可为并行化策略、批处理等优化提供依据，显著加速了配置探索过程。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.18431v1",
+      "source": "arxiv",
+      "title": "Beyond Prediction: Tail-Aware Scheduling for LLM Inference",
+      "abstract": "LLM serving exhibits extreme length variability, making size-based scheduling difficult in practice. Recent LLM schedulers approximate SJF/SRPT using predicted decode lengths or ranks and primarily report mean-centric metrics such as TTFT and TBT. We show that these prediction-driven policies can be fragile under distribution shifts, bursty arrivals, and GPU memory pressure, while offering limited control over the tail latency (P90-P99) that dominates user experience, even with perfect decode-length knowledge. We introduce a distribution-aware, prediction-free scheduling framework that replaces explicit length prediction with soft priority boosting driven by lightweight statistical signals. Our design co-optimizes scheduling and cache-aware preemption to account for memory-coupled decode dynamics across workload mixes. Evaluated on production and open-source traces, our method reduces P99 TTLT by up to 35-50% relative to SRPT with perfect length knowledge and reduces TTFT by 34-47% across workloads, including reasoning-heavy and chat-heavy tasks. These results demonstrate a robust alternative for optimizing tail latency in online LLM serving.",
+      "authors": [
+        "Yueying Li",
+        "Yuanfan Chen",
+        "Jiayang Chen",
+        "Esha Choukse",
+        "Haoran Qiu",
+        "G. Edward Suh",
+        "Rodrigo Fonseca",
+        "Ziv Scully",
+        "Udit Gupta"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.DC"
+      ],
+      "published": "2026-06-16T19:25:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.18431v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "cache-aware preemption and scheduling co-optimized with KV cache",
+      "llm_evidence_cn": "缓存感知抢断与KV缓存协同优化的调度框架",
+      "llm_evidence": "缓存感知抢断与KV缓存协同优化的调度框架",
+      "canonical_evidence": "缓存感知抢断与KV缓存协同优化的调度框架",
+      "llm_tldr_en": "A prediction-free scheduling framework for LLM inference that co-optimizes scheduling and cache-aware preemption to reduce tail latency, addressing KV cache management.",
+      "llm_tldr_cn": "当前LLM推理调度依赖预测解码长度，对分布变化和内存压力脆弱且尾延迟控制差。本文提出无预测调度框架，用轻量统计信号替代长度预测，并联合优化调度与缓存感知抢断，显著降低P90-P99尾延迟同时保持平均性能。",
+      "llm_tldr": "当前LLM推理调度依赖预测解码长度，对分布变化和内存压力脆弱且尾延迟控制差。本文提出无预测调度框架，用轻量统计信号替代长度预测，并联合优化调度与缓存感知抢断，显著降低P90-P99尾延迟同时保持平均性能。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.23961v1",
+      "source": "arxiv",
+      "title": "Forget Without Compromise: Nexus Sampling for Streaming KV-Cache Eviction Under Fixed Budgets",
+      "abstract": "Long-context and agentic LLM workloads push the KV cache past any fixed memory budget, forcing the inference stack to permanently evict tokens at every step of a continuous-inference stream. Existing methods all share the same template, a per-step direct-attention score followed by deterministic top-$K$ selection, which converts a single below-cutoff step into an irreversible verdict and permanently erases any subtly important token that direct attention cannot single out from noise. To address this challenge, we propose Nexus Sampling, a training-free eviction method that pairs Nexus scoring, an iterative walk over direct attention that surfaces bridge tokens, with weighted reservoir sampling, which retains tokens with inclusion probability in place of deterministic top-$K$. Theoretically, we show that Nexus Sampling dominates deterministic top-$K$ in long-run survival of subtly important tokens. Empirically, at 80% KV cache eviction, Nexus Sampling matches dense attention within 1% on LongBench while outperforming top-$K$ baselines on retrieval-heavy tasks, with up to 10x smaller per-sequence cache memory.",
+      "authors": [
+        "Duc Duong",
+        "Hoang Anh Duy Le",
+        "Jianwen Xie",
+        "Anshumali Shrivastava",
+        "Zhaozhuo Xu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-22T21:42:51+00:00",
+      "link": "https://arxiv.org/pdf/2606.23961v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "streaming KV-cache eviction method",
+      "llm_evidence_cn": "流式KV缓存淘汰方法",
+      "llm_evidence": "流式KV缓存淘汰方法",
+      "canonical_evidence": "流式KV缓存淘汰方法",
+      "llm_tldr_en": "Proposes Nexus Sampling, a training-free KV cache eviction method that uses iterative attention scoring and reservoir sampling to retain important tokens under fixed budgets, improving long-context inference.",
+      "llm_tldr_cn": "现有KV缓存淘汰方法采用直接注意力分数加确定性Top-K选择，容易忽略间接重要的token。本文提出Nexus采样方法，通过迭代遍历注意力图发现桥接token，并结合加权蓄水池采样保留重要token，无需训练即可在固定预算下显著提升长上下文推理的缓存效率，为LLM连续推理提供了高效缓存管理方案。",
+      "llm_tldr": "现有KV缓存淘汰方法采用直接注意力分数加确定性Top-K选择，容易忽略间接重要的token。本文提出Nexus采样方法，通过迭代遍历注意力图发现桥接token，并结合加权蓄水池采样保留重要token，无需训练即可在固定预算下显著提升长上下文推理的缓存效率，为LLM连续推理提供了高效缓存管理方案。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.24467v1",
+      "source": "arxiv",
+      "title": "CompressKV: Semantic-Retrieval-Guided KV-Cache Compression for Resource-Efficient Long-Context LLM Inference",
+      "abstract": "Long-context large language model (LLM) inference is increasingly constrained by the memory footprint and decoding cost of key-value (KV) caches, limiting sustainable deployment on resource-constrained hardware. Existing KV cache eviction methods typically apply heuristic token scoring over all heads in GQA-based LLMs. These methods ignore the different functionalities of attention heads, leading to the eviction of critical tokens and thus degrading the performance of LLMs. To address this issue, we propose CompressKV, a resource-efficient KV-cache compression framework for GQA-based LLMs. Instead of aggregating attention scores from all heads, CompressKV identifies Semantic Retrieval Heads (SRHs) that capture both the initial and final tokens of a prompt and semantically important mid-context evidence, and uses them to select tokens whose KV pairs should be retained. Furthermore, CompressKV allocates cache budgets across layers according to offline estimates of layer-wise eviction error. Experiments on LongBench and Needle-in-a-Haystack show that CompressKV consistently outperforms existing KV-cache eviction methods across memory budgets. Notably, it preserves over 97\\% of full-cache performance using only 3\\% of the KV cache on LongBench question-answering tasks and achieves 90\\% accuracy with just 0.7\\% KV storage on Needle-in-a-Haystack. These results demonstrate an improved resource--performance trade-off for long-context LLM inference. Our code is publicly available at: https://github.com/TUDa-HWAI/CompressKV",
+      "authors": [
+        "Xiaolin Lin",
+        "Jingcun Wang",
+        "Olga Kondrateva",
+        "Yiyu Shi",
+        "Bing Li",
+        "Grace Li Zhang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-23T11:59:46+00:00",
+      "link": "https://arxiv.org/pdf/2606.24467v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "KV cache compression for long-context LLM inference",
+      "llm_evidence_cn": "面向长上下文LLM推理的KV缓存压缩",
+      "llm_evidence": "面向长上下文LLM推理的KV缓存压缩",
+      "canonical_evidence": "面向长上下文LLM推理的KV缓存压缩",
+      "llm_tldr_en": "CompressKV uses semantic retrieval heads to guide KV-cache eviction in GQA-based LLMs, reducing memory footprint and decoding cost for long-context inference.",
+      "llm_tldr_cn": "长上下文LLM推理中KV缓存内存和计算开销大，现有方法忽略注意力头功能差异。本文提出CompressKV，识别语义检索头（SRH）并基于其得分进行缓存驱逐，在GQA架构LLM上实现资源高效的KV缓存压缩，降低内存占用，保持模型性能。",
+      "llm_tldr": "长上下文LLM推理中KV缓存内存和计算开销大，现有方法忽略注意力头功能差异。本文提出CompressKV，识别语义检索头（SRH）并基于其得分进行缓存驱逐，在GQA架构LLM上实现资源高效的KV缓存压缩，降低内存占用，保持模型性能。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.17781v1",
+      "source": "arxiv",
+      "title": "MIVE: A Minimalist Integer Vector Engine for Softmax LayerNorm and RMSNorm Acceleration",
+      "abstract": "The rapid growth of Large Language Models (LLMs) has intensified the need for specialized hardware accelerators that can satisfy stringent inference latency and power constraints. Although matrix multiplications dominate the overall computational workload, non-linear vector normalization operations, such as LayerNorm, RMSNorm and Softmax can become critical hardware bottlenecks. Existing accelerators typically implement these functions using dedicated hardware blocks, leading to duplicated resources and inefficient silicon utilization. To address this limitation, we propose a Minimalist Integer Vector Engine (MIVE), a programmable architecture capable of executing all three operations within a unified datapath. By exploiting common computational patterns across LayerNorm, RMSNorm and Softmax the proposed vector engine maximizes hardware sharing while reducing implementation overhead. Physical ASIC implementation results show that MIVE provides comprehensive multi-function support while achieving higher area and hardware efficiency than most state-of-the-art standalone accelerators.",
+      "authors": [
+        "Kosmas Alexandridis",
+        "Giorgos Dimitrakopoulos"
+      ],
+      "primary_category": "cs.AR",
+      "categories": [
+        "cs.AR",
+        "cs.AI"
+      ],
+      "published": "2026-06-16T10:58:02+00:00",
+      "link": "https://arxiv.org/pdf/2606.17781v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "specialized hardware engine for LLM normalization acceleration",
+      "llm_evidence_cn": "针对LLM归一化操作的专用硬件加速引擎",
+      "llm_evidence": "针对LLM归一化操作的专用硬件加速引擎",
+      "canonical_evidence": "针对LLM归一化操作的专用硬件加速引擎",
+      "llm_tldr_en": "MIVE is a programmable integer vector engine that accelerates Softmax, LayerNorm, and RMSNorm in a unified datapath for LLM inference.",
+      "llm_tldr_cn": "针对大型语言模型推理中归一化操作（LayerNorm、RMSNorm、Softmax）成为硬件瓶颈的问题，本文提出MIVE（极简整数向量引擎），一种可编程架构，在统一数据路径内执行这三种操作。它利用整数计算替代浮点运算，减少资源冗余和硅面积。实验表明，MIVE在保持精度的同时显著降低延迟和功耗，为AI基础设施中的推理加速提供了高效的硬件解决方案。",
+      "llm_tldr": "针对大型语言模型推理中归一化操作（LayerNorm、RMSNorm、Softmax）成为硬件瓶颈的问题，本文提出MIVE（极简整数向量引擎），一种可编程架构，在统一数据路径内执行这三种操作。它利用整数计算替代浮点运算，减少资源冗余和硅面积。实验表明，MIVE在保持精度的同时显著降低延迟和功耗，为AI基础设施中的推理加速提供了高效的硬件解决方案。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.03498v1",
+      "source": "arxiv",
+      "title": "Demystifying Pipeline Parallelism: First Theory for PipeDream",
+      "abstract": "Training modern machine learning models increasingly requires computation to be distributed across many accelerators. Data parallelism remains the default choice and is often paired with tensor-parallel sharding, but model parallelism becomes unavoidable once parameters, activations, or optimizer states no longer fit on a single device. This paper studies pipeline model parallelism through the lens of PipeDream (PD) (Harlap et al., 2018). Our first contribution is theoretical: we introduce Randomized PipeDream (RPD), a stale block-SGD abstraction that yields, to our knowledge, the first clean nonconvex convergence guarantee for a PD-style method. Our second contribution is a scaling diagnosis: we prove that the delay induced by steady-state PD grows as $S^2 - S/2 + O(1)$ for $S$ stages, so the stale-read contribution in the convergence theorem scales as $Θ(γ^2 S^4)$, equivalently as $Θ(S^4/K)$ in the tuned-rate form. Our third contribution is a comparison with LocalSGD, whose periodic model averaging trades weight staleness for synchronization bubbles. In our reported simulated-time experiments, the better-performing method depends on the objective: PD performs better on the quadratic objective and on a small language-modeling training-loss task, while for logistic regression LocalSGD becomes superior as the number of stages increases.",
+      "authors": [
+        "Ivan Ilin",
+        "Peter Richtárik"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.DC"
+      ],
+      "published": "2026-06-02T11:14:57+00:00",
+      "link": "https://arxiv.org/pdf/2606.03498v1",
+      "tags": [
+        "keyword:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "First theoretical analysis of PipeDream pipeline parallelism",
+      "llm_evidence_cn": "PipeDream流水线并行的首个理论分析",
+      "llm_evidence": "PipeDream流水线并行的首个理论分析",
+      "canonical_evidence": "PipeDream流水线并行的首个理论分析",
+      "llm_tldr_en": "Provides first nonconvex convergence guarantee for PipeDream-style pipeline parallelism and diagnoses scaling delay, contributing to model parallelism theory.",
+      "llm_tldr_cn": "针对流水线模型并行中的训练效率问题，首次为PipeDream提供非凸收敛保证，并导出了稳态延迟与阶段数的平方关系。理论结果指导了更优的并行配置，对分布式训练中的模型并行技术具有重要价值。",
+      "llm_tldr": "针对流水线模型并行中的训练效率问题，首次为PipeDream提供非凸收敛保证，并导出了稳态延迟与阶段数的平方关系。理论结果指导了更优的并行配置，对分布式训练中的模型并行技术具有重要价值。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "model parallelism techniques for distributed training",
+      "matched_requirement_id": "req-6",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.03498v1"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.03770v1",
+      "source": "arxiv",
+      "title": "E2LLM: Towards Efficient LLM Serving in Heterogeneous Edge/Fog Environments",
+      "abstract": "Large Language Models (LLMs) have become integral to modern applications, yet their deployment remains challenging. Beyond executing the models themselves, practical deployment must address cost efficiency, low latency, and optimal resource utilization. Conventional approaches typically assume that an entire model can be hosted on a single device, which does not hold in many real-world scenarios, particularly in Edge and Fog environments where device resources are constrained. In this paper, we introduce E2LLM, a framework designed to enable efficient LLM deployment in such resource limited settings. Rather than simply partitioning a single model across all available devices, E2LLM replicates the full model across multiple groups of devices (replicas) and applies model parallelism within each replica. Each replica is assigned a specialized role PREFILL or DECODER based on its efficiency in handling input and output tokens. This separation leverages the inherent differences between these two phases of LLM inference. To effectively organize devices, we utilize a Genetic Algorithm to form clusters that maximize system performance. Within each cluster, we apply Dynamic Programming to determine an optimal partitioning strategy that minimizes bottlenecks in model-parallel execution. Experimental results demonstrate that our approach adapts robustly to varying workloads, including scenarios with significant variation in input and output token lengths. Compared to the Splitwise baseline, E2LLM reduces average waiting time by over 50% under high-demand conditions",
+      "authors": [
+        "Truong-Thanh Le",
+        "Amir Taherkordi",
+        "Hoang-Loc La",
+        "Frank Eliassen",
+        "Phuong Hoai Ha",
+        "Peiyuan Guan"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.AI"
+      ],
+      "published": "2026-06-02T15:23:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.03770v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "efficient LLM serving in heterogeneous edge/fog environments",
+      "llm_evidence_cn": "在异构边缘/雾环境中高效部署LLM",
+      "llm_evidence": "在异构边缘/雾环境中高效部署LLM",
+      "canonical_evidence": "在异构边缘/雾环境中高效部署LLM",
+      "llm_tldr_en": "Introduces E2LLM, a framework for efficient LLM deployment across heterogeneous edge/fog devices by replicating full model across device groups.",
+      "llm_tldr_cn": "在边缘和雾环境中，设备资源受限且异构，传统整模型部署假设不成立。本文提出E2LLM框架，将完整模型复制到多组设备上（而非分片），通过组内协作和组间负载均衡实现高效服务。实验表明在异构设备组中E2LLM能有效降低延迟，提高资源利用率。",
+      "llm_tldr": "在边缘和雾环境中，设备资源受限且异构，传统整模型部署假设不成立。本文提出E2LLM框架，将完整模型复制到多组设备上（而非分片），通过组内协作和组间负载均衡实现高效服务。实验表明在异构设备组中E2LLM能有效降低延迟，提高资源利用率。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "heterogeneous mixed inference for large models",
+      "matched_requirement_id": "req-3",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.03770v1",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.18502v1",
+      "source": "arxiv",
+      "title": "Towards Scalable Customization and Deployment of Multi-Agent Systems for Enterprise Applications",
+      "abstract": "Large language model (LLM)-based multi-agent systems demonstrate strong performance on complex reasoning and task execution, enabling broad enterprise applications. However, production deployment remains challenging due to domain-specific customization requirements and high latency and inference costs in agentic workflows. We propose a unified framework for customization and efficient deployment of multi-agent systems in real-world settings. The first stage, Agentic Model Customization, combines continual pretraining, supervised fine-tuning, and preference optimization to adapt a compact model to specialized domains while retaining strong agentic capabilities. The second stage, Inference Optimization, integrates speculative decoding and FP8 quantization with targeted calibration to enable cost-efficient serving with minimal quality loss. Across enterprise workloads, our framework enables rapid domain adaptation and achieves a 4.48x speedup in throughput while maintaining performance and improving robustness on long-tail scenarios.",
+      "authors": [
+        "Paresh Dashore",
+        "Shreyas Kulkarni",
+        "Uttam Gurram",
+        "Nadia Bathaee",
+        "Kartik Balasubramaniam",
+        "Genta Indra Winata",
+        "Sambit Sahu",
+        "Shi-Xiong Zhang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-16T21:30:10+00:00",
+      "link": "https://arxiv.org/pdf/2606.18502v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "inference optimization with speculative decoding for LLM serving",
+      "llm_evidence_cn": "基于推测解码的LLM服务推理优化",
+      "llm_evidence": "基于推测解码的LLM服务推理优化",
+      "canonical_evidence": "基于推测解码的LLM服务推理优化",
+      "llm_tldr_en": "Proposes a unified framework for multi-agent system deployment with inference optimization via speculative decoding, reducing latency and cost.",
+      "llm_tldr_cn": "针对多智能体系统生产部署的高延迟和高推理成本问题，本文提出一个统一的定制化与高效部署框架，包括代理模型定制和推理优化两阶段。推理优化阶段集成了推测解码等加速技术以降低延迟。实验表明该方法在保持代理性能的同时显著加速推理，为AI基础设施的推理加速提供了实用方案。",
+      "llm_tldr": "针对多智能体系统生产部署的高延迟和高推理成本问题，本文提出一个统一的定制化与高效部署框架，包括代理模型定制和推理优化两阶段。推理优化阶段集成了推测解码等加速技术以降低延迟。实验表明该方法在保持代理性能的同时显著加速推理，为AI基础设施的推理加速提供了实用方案。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.19079v1",
+      "source": "arxiv",
+      "title": "ARIADNE: Agnostic Routing for Inference-time Adapter DyNamic sElection",
+      "abstract": "The increasing deployment of parameter-efficient fine-tuning (PEFT) has led to model ecosystems in which a single backbone is paired with many task-specialized adapters. In this setting, inference-time queries often arrive without task labels, requiring the system to automatically select the most appropriate adapter from a growing and heterogeneous adapter pool. Existing routing methods either depend on access to adapter internals, such as weight decompositions or gradient-based statistics, or require additional router training, which limits scalability and portability as new adapters are added. We introduce ARIADNE, a training-free, adapter-agnostic routing framework for dynamic adapter selection at inference time. ARIADNE represents each adapter through a set of centroids computed from embeddings of its training set, capturing the data distribution associated with that adapter. Given an unlabeled input, it selects an adapter by measuring proximity to these centroids in latent space. Because routing is performed entirely in the input embedding space, ARIADNE is compatible with arbitrary PEFT methods and requires no modification to the adapters or training procedures. Primarily evaluated with Llama 3.2 1B Instruct on 23 diverse NLP tasks, ARIADNE recovers 97.44% of the upper bound performance. Scaling to 44 tasks, it achieves 89.7% average selection accuracy, without additional training or access to adapter internals.",
+      "authors": [
+        "Enrico Cassano",
+        "Michał Brzozowski",
+        "Zuzanna Dubanowska",
+        "Paolo Mandica",
+        "Neo Christopher Chung"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-17T13:50:51+00:00",
+      "link": "https://arxiv.org/pdf/2606.19079v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "dynamic adapter routing for inference acceleration",
+      "llm_evidence_cn": "推理时动态适配器路由加速",
+      "llm_evidence": "推理时动态适配器路由加速",
+      "canonical_evidence": "推理时动态适配器路由加速",
+      "llm_tldr_en": "ARIADNE is a training-free framework for dynamic adapter selection at inference time, enabling efficient routing without internals access.",
+      "llm_tldr_cn": "针对大规模微调模型生态系统中的推理路由问题，本文提出ARIADNE，一种无需训练、与适配器无关的动态路由框架。它在推理时自动选择最合适的适配器，无需访问适配器内部结构或额外训练路由器，支持异构适配器池的高效扩展。实验表明，ARIADNE在多个任务上实现了高效且准确的路由，显著降低推理开销，为AI基础设施中的推理加速提供了轻量级解决方案。",
+      "llm_tldr": "针对大规模微调模型生态系统中的推理路由问题，本文提出ARIADNE，一种无需训练、与适配器无关的动态路由框架。它在推理时自动选择最合适的适配器，无需访问适配器内部结构或额外训练路由器，支持异构适配器池的高效扩展。实验表明，ARIADNE在多个任务上实现了高效且准确的路由，显著降低推理开销，为AI基础设施中的推理加速提供了轻量级解决方案。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.05014v1",
+      "source": "arxiv",
+      "title": "Depth-Attention: Cross-Layer Value Mixing for Language Models",
+      "abstract": "Self-attention selects information freely across the sequence, but across depth, Transformers merely add each layer's output to the residual stream, so later layers cannot selectively reuse earlier-layer representations. Recent cross-layer methods improve this flow but operate on hidden states outside attention, adding state beyond the key-value cache at inference--a cost that becomes increasingly salient as modern LLMs compress the cache with grouped-query and multi-head latent attention. We introduce Depth-Attention, which performs this selection inside the attention module itself: before a layer attends over the sequence, its query attends over the keys of earlier layers at the same token position and mixes their values into the value that self-attention then reads. Because Depth-Attention reuses the standard attention queries, keys, and value-cache slots, storing depth-mixed values in place of the original values, it adds no parameters and introduces no persistent inference state beyond the standard key-value cache--the same cache size as a vanilla decoder and less than hidden-state-based cross-layer methods. On Qwen3-style decoders at 1.5B and 3B parameters, Depth-Attention attains the lowest perplexity and the highest average downstream accuracy, improving over the vanilla Transformer by up to 2.3 accuracy points and surpassing strong cross-layer baselines in perplexity and average accuracy, while adding under 0.01% extra arithmetic FLOPs and no additional persistent inference state. The gains hold from 360M to 3B parameters and extend to looped Transformers.",
+      "authors": [
+        "Boyi Zeng",
+        "Yiqin Hao",
+        "Zitong Wang",
+        "Shixiang Song",
+        "He Li",
+        "Feichen Song",
+        "Yifan Liu",
+        "Ziwei He",
+        "Xinbing Wang",
+        "Zhouhan Lin"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-03T15:33:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.05014v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "cross-layer value mixing via Key-Value cache reuse for LLM inference",
+      "llm_evidence_cn": "通过跨层值混合改进注意力机制，涉及KV缓存重用",
+      "llm_evidence": "通过跨层值混合改进注意力机制，涉及KV缓存重用",
+      "canonical_evidence": "通过跨层值混合改进注意力机制，涉及KV缓存重用",
+      "llm_tldr_en": "Introduces Depth-Attention, which allows attention layers to selectively reuse earlier layers' keys and values, improving representational efficiency without extra cache overhead.",
+      "llm_tldr_cn": "自注意力在序列内自由选择信息，但层间只能残差相加，无法重用早期层表示。本文提出深度注意力机制，在注意力模块内，让当前层的查询关注同位置早期层的键并混合其值，无需增加KV缓存。实验表明该方法提升了模型性能和推理效率，直接优化了LLM的KV缓存利用。",
+      "llm_tldr": "自注意力在序列内自由选择信息，但层间只能残差相加，无法重用早期层表示。本文提出深度注意力机制，在注意力模块内，让当前层的查询关注同位置早期层的键并混合其值，无需增加KV缓存。实验表明该方法提升了模型性能和推理效率，直接优化了LLM的KV缓存利用。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.05014v1",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.19719v2",
+      "source": "arxiv",
+      "title": "Closing the Calibration Gap in Semantic Caching",
+      "abstract": "Semantic caching cuts LLM inference costs by serving a cached response to semantically similar queries. Standard practice evaluates these systems using PR-AUC, a metric that only measures how well scores rank and ignores whether they are usable at a fixed threshold. We show this mismatch leads to systematically poor deployment choices, as models with the highest PR-AUC are often the worst in operation. We introduce Precision-Cache Hit Ratio (P-CHR) AUC, a cache-aware metric that measures precision across cache utilization levels, and Calibration Retention Rate (CRR), which captures how much offline ranking quality survives at deployment. We decompose the operational gap between offline and deployed quality into a recoverable calibration component and an irreducible structural component fixed by the dataset's positive rate. Our experiments show that the calibration gap is governed by the training objective rather than data scale, and post-hoc calibration only partially closes it. Ultimately, model selection for semantic caching is a calibration problem, not a ranking one, and measuring it is the first step to closing the gap.",
+      "authors": [
+        "Aditeya Baral",
+        "Radoslav Ralev",
+        "Iliya Sotirov Zhechev",
+        "Srijith Rajamohan",
+        "Jen Agarwal"
+      ],
+      "primary_category": "cs.IR",
+      "categories": [
+        "cs.IR",
+        "cs.CL",
+        "cs.LG"
+      ],
+      "published": "2026-06-18T02:34:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.19719v2",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "semantic caching for LLM inference cost reduction",
+      "llm_evidence_cn": "面向LLM推理的语义缓存，降低推理成本",
+      "llm_evidence": "面向LLM推理的语义缓存，降低推理成本",
+      "canonical_evidence": "面向LLM推理的语义缓存，降低推理成本",
+      "llm_tldr_en": "This paper identifies a calibration gap in semantic caching for LLMs and introduces new metrics (P-CHR AUC, CRR) to bridge offline evaluation and deployed performance, enabling more effective cost-accuracy trade-offs.",
+      "llm_tldr_cn": "针对语义缓存在LLM推理中的实际部署问题，论文揭示了离线排名质量与在线操作性能之间的校准差距。提出了缓存相关指标P-CHR AUC和CRR，用于衡量不同缓存利用率下的精度及校准保持率。通过分解可恢复的校准组件，该方法指导选择更适合固定阈值的缓存模型，从而在推理加速中实现更优的成本效益权衡。",
+      "llm_tldr": "针对语义缓存在LLM推理中的实际部署问题，论文揭示了离线排名质量与在线操作性能之间的校准差距。提出了缓存相关指标P-CHR AUC和CRR，用于衡量不同缓存利用率下的精度及校准保持率。通过分解可恢复的校准组件，该方法指导选择更适合固定阈值的缓存模型，从而在推理加速中实现更优的成本效益权衡。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.19565v1",
+      "source": "arxiv",
+      "title": "Mix-QVLA: Task-Evidence-Aware Mixed-Precision Quantization of Vision-Language-Action Models",
+      "abstract": "We propose Mix-QVLA, a task-evidence-aware mixed-precision PTQ framework for VLA models. Mix-QVLA anchors each quantized variant to the full-precision action-token reference decision and evaluates whether quantization preserves task-relevant evidence across key VLA functional boundaries. It computes normalized gradient-weighted task-evidence maps from boundary activations and compares full-precision and quantized maps using evidence-mass and attribution-distribution distortion, capturing changes in both the strength and allocation of decision-supporting evidence. A soft-bottleneck objective aggregates boundary-level degradation into layer-wise sensitivity scores. Mix-QVLA further models sensitivity throughout task execution, capturing phase-dependent shifts in layer importance rather than assuming a fixed sensitivity profile. The resulting evidence- and time-aware scores guide mixed-precision bit allocation under model-size and BitOps budgets. Extensive evaluations on OpenVLA-style policies show that Mix-QVLA improves the accuracy-efficiency trade-off of low-bit VLA deployment. On LIBERO, Mix-QVLA reduces OpenVLA-OFT memory from 15.4 GB to 4.1 GB, retains 96.3 average success compared with 97.1 for the BF16 model, and achieves a 1.52x inference speedup.",
+      "authors": [
+        "Navin Ranjan",
+        "Andreas Savakis"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-17T20:08:14+00:00",
+      "link": "https://arxiv.org/pdf/2606.19565v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "mixed-precision quantization for inference acceleration",
+      "llm_evidence_cn": "混合精度量化用于推理加速",
+      "llm_evidence": "混合精度量化用于推理加速",
+      "canonical_evidence": "混合精度量化用于推理加速",
+      "llm_tldr_en": "Mix-QVLA proposes a task-evidence-aware mixed-precision quantization framework for VLA models, preserving task-relevant evidence while reducing computational cost.",
+      "llm_tldr_cn": "针对视觉-语言-动作模型推理部署中的量化精度损失问题，Mix-QVLA提出任务证据感知的混合精度量化框架，通过评估量化对决策证据的影响来分配精度，在保证任务性能的同时加速推理。",
+      "llm_tldr": "针对视觉-语言-动作模型推理部署中的量化精度损失问题，Mix-QVLA提出任务证据感知的混合精度量化框架，通过评估量化对决策证据的影响来分配精度，在保证任务性能的同时加速推理。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.05688v1",
+      "source": "arxiv",
+      "title": "Value-and-Structure Alignment for Routing-Consistent Quantization of Mixture-of-Experts Models",
+      "abstract": "Mixture-of-Experts (MoE) models scale foundation models efficiently by activating only a subset of experts for each token, but their large number of expert parameters still makes quantization essential for practical deployment. Unlike dense models, however, MoE models are sensitive to routing instability: small quantization-induced perturbations can change the top-$k$ expert selection, altering the computation path and degrading model quality. We propose Value-and-Structure Routing Alignment for Quantization (VSRAQ), a MoE-specific post-training quantization objective that preserves pre-quantization expert-selection behavior under quantization. VSRAQ combines two complementary objectives that jointly preserve expert-selection behavior: value alignment, which matches routing-relevant logits or scores, and structure alignment, which preserves expert ordering and top-$k$ decision boundaries. By maintaining routing consistency, VSRAQ reduces quantization-induced degradation without introducing any inference-time overhead and can be integrated into existing quantization frameworks. Experiments on recent MoE foundation models show that VSRAQ improves expert-selection consistency and consistently outperforms reconstruction-only and router-aware baselines.",
+      "authors": [
+        "Hancheol Park",
+        "Geonho Lee",
+        "Tairen Piao",
+        "Tae-Ho Kim"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-06-04T04:13:05+00:00",
+      "link": "https://arxiv.org/pdf/2606.05688v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Routing-consistent quantization for MoE inference acceleration",
+      "llm_evidence_cn": "面向MoE推理加速的路由一致性量化",
+      "llm_evidence": "面向MoE推理加速的路由一致性量化",
+      "canonical_evidence": "面向MoE推理加速的路由一致性量化",
+      "llm_tldr_en": "VSRAQ preserves pre-quantization expert-selection behavior under quantization, addressing routing instability in MoE models for robust low-bit deployment.",
+      "llm_tldr_cn": "MoE模型对量化敏感，量化引起的路由扰动可能导致专家选择变化，影响模型质量。VSRAQ通过值结构与路由对齐的目标，在量化过程中保持专家选择行为的一致性，使得低比特量化MoE模型在部署中保持性能，提升了推理效率。",
+      "llm_tldr": "MoE模型对量化敏感，量化引起的路由扰动可能导致专家选择变化，影响模型质量。VSRAQ通过值结构与路由对齐的目标，在量化过程中保持专家选择行为的一致性，使得低比特量化MoE模型在部署中保持性能，提升了推理效率。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.05688v1",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.21497v1",
+      "source": "arxiv",
+      "title": "Breaking chains with trees: Deep learning with $\\mathcal{O}(\\log N)$ parallel time complexity",
+      "abstract": "Modern deep neural network architectures are trained via backpropagation, which requires errors to be sequentially propagated through all layers before parameters can be updated. This introduces two limitations: locking, where layer-wise updates are strictly interdependent and cannot proceed in parallel, and the weight transport problem, which requires symmetric forward and backward pathways for exact gradient computation. These constraints restrict parallelism, increase memory and communication overhead, and pose challenges for scalable learning. In this work, we propose Hierarchical Block-Local Learning (HBLL), a framework that decomposes deep neural networks into hierarchically linked blocks trained using local learning objectives derived from variational principles, eliminating the need for full end-to-end backpropagation while maintaining effective information propagation across the network. HBLL is the first algorithm that is able to train deep neural networks in $\\mathcal{O}(\\log N)$ parallel time complexity, where $N$ is the number of network layers. We show that HBLL implicitly defines a family of subnetworks corresponding to different hierarchical paths, enabling flexible inference with different effective numbers of layers. We evaluate HBLL on a set of challenging vision and language modeling tasks, achieving competitive performance. We also extend HBLL to recurrent sequence architectures, applying to settings that otherwise rely on backpropagation through time.",
+      "authors": [
+        "Neeraj Mohan Sushma",
+        "Aditya Nagarsekar",
+        "Cabrel Teguemne Fokam",
+        "Robin Schiewer",
+        "Amit Kumar Pal",
+        "Anand Subramoney",
+        "David Kappel"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.DS"
+      ],
+      "published": "2026-06-19T14:44:07+00:00",
+      "link": "https://arxiv.org/pdf/2606.21497v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "hierarchical block-local learning reduces locking and communication overhead for parallel training",
+      "llm_evidence_cn": "层次块局部学习减少锁定和通信开销以支持并行训练",
+      "llm_evidence": "层次块局部学习减少锁定和通信开销以支持并行训练",
+      "canonical_evidence": "层次块局部学习减少锁定和通信开销以支持并行训练",
+      "llm_tldr_en": "HBLL decomposes deep networks into hierarchically linked blocks trained with local objectives, enabling O(log N) parallel time complexity and reducing memory/communication overhead.",
+      "llm_tldr_cn": "反向传播导致层间锁定和权重传输问题，限制并行性并增加通信开销。HBLL将网络分解为层次链接的块，使用局部学习目标训练，实现对数并行时间复杂度。该方法消除了锁定和对称权重需求，极大降低了通信和内存开销。在多个网络架构上验证了可扩展性。该工作为模型并行训练提供了新思路。",
+      "llm_tldr": "反向传播导致层间锁定和权重传输问题，限制并行性并增加通信开销。HBLL将网络分解为层次链接的块，使用局部学习目标训练，实现对数并行时间复杂度。该方法消除了锁定和对称权重需求，极大降低了通信和内存开销。在多个网络架构上验证了可扩展性。该工作为模型并行训练提供了新思路。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "model parallelism techniques for distributed training",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.21101v1",
+      "source": "arxiv",
+      "title": "DPIFrame: A Dual-Level Parallelism Acceleration Framework for CTR Model Inference",
+      "abstract": "Deep learning technology has enhanced the ability of Click-through rate (CTR) prediction models to learn features and improve prediction accuracy. However, it is challenging to deploy CTR models on GPU smoothly and perform inference efficiently, because there is a huge mismatch between the serial computational pattern and the parallel model structure. In this paper, we propose DPIFrame, the first dual parallelizable framework to accelerate CTR model inference. In DPIFrame, a) a dual parallelizable architecture is proposed to perform parallel CTR model inference in both intra-module and inter-module; b) an efficient multi-table lookup algorithm is presented for embedding operations through anticipating the whole workload in advance; c) a breadth-first stream scheduling strategy is designed for fine-grained management of parallel computation on GPU to further supporting the dual parallel execution. Extensive experiments are conducted on two real-world datasets, and the results highlight that DPIFrame can reduce the embedding latency efficiently by \\textbf{23.0$\\times$} compared to PyTorch. Compared with PyTorch, TorchRec, HugeCTR, and OneFlow, DPIFrame can achieve state-of-the-art inference performance on GPU with speedups of \\textbf{5.83$\\times$}, \\textbf{4.29$\\times$}, \\textbf{2.15$\\times$}, and \\textbf{2.0$\\times$}, respectively.",
+      "authors": [
+        "Dezhi Yi",
+        "Huifeng Guo",
+        "Kunpeng Xie",
+        "Zhaolong Jian",
+        "Haochi Yu",
+        "Wenxuan He",
+        "Zhenhua Dong",
+        "Ruiming Tang",
+        "Ye Lu"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-19T05:05:40+00:00",
+      "link": "https://arxiv.org/pdf/2606.21101v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "dual-level parallel acceleration framework for CTR model inference on GPU",
+      "llm_evidence_cn": "面向CTR模型推理的双层级并行加速框架",
+      "llm_evidence": "面向CTR模型推理的双层级并行加速框架",
+      "canonical_evidence": "面向CTR模型推理的双层级并行加速框架",
+      "llm_tldr_en": "A dual-level parallelism framework for CTR model inference acceleration on GPUs, addressing the mismatch between serial computation and parallel structure.",
+      "llm_tldr_cn": "CTR模型推理由嵌入表查找和串行计算组成，难以在GPU上高效并行化。本文提出DPIFrame，在模块内和模块间两个层次实现并行，并设计高效多表查找算法，实验表明在多个数据集上推理速度提升数倍。",
+      "llm_tldr": "CTR模型推理由嵌入表查找和串行计算组成，难以在GPU上高效并行化。本文提出DPIFrame，在模块内和模块间两个层次实现并行，并设计高效多表查找算法，实验表明在多个数据集上推理速度提升数倍。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.07710v1",
+      "source": "arxiv",
+      "title": "WhiFlash: Accelerating Speculative Decoding with Token-Level Cross-Paradigm Routing",
+      "abstract": "The autoregressive nature of large language models (LLMs) remains a significant bottleneck for inference, particularly in complex agentic workloads. While speculative decoding (SD) accelerates inference, current approaches rely on static drafting paradigms, utilising either autoregressive drafting models for reasoning or diffusion-based parallel drafting models for structured outputs. We empirically find that drafting accuracy fluctuates dramatically within a single sequence, leaving significant performance unrealised by static paradigms and coarse-grained routing. To address this volatility, we introduce WhiFlash, the first cross-paradigm SD method that unifies autoregressive and diffusion-based parallel drafting under a single token-level controller. WhiFlash adopts a fine-grained routing mechanism that employs either a lightweight entropy-based or a learned neural policy, both parametrised to provide a tunable balance between expected token gain and latency. To make high-frequency switching computationally viable, we introduce novel cache-management optimisations, Lazy Catch-up and KV-only Prefill, reducing switching overhead to below 7% of per-round latency. By capitalising on the complementary strengths of fundamentally distinct drafting architectures, WhiFlash achieves significantly higher acceptance lengths, yielding category-specific throughput gains of up to 69.6% over the state-of-the-art autoregressive EAGLE-3 and 37.3% over the diffusion-based DFlash.",
+      "authors": [
+        "Young D. Kwon",
+        "Miles Williams",
+        "Rui Li",
+        "Alexandros Kouris",
+        "Stylianos I. Venieris"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-05T13:23:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.07710v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "token-level cross-paradigm routing for speculative decoding acceleration",
+      "llm_evidence_cn": "令牌级跨范式路由用于投机解码加速",
+      "llm_evidence": "令牌级跨范式路由用于投机解码加速",
+      "canonical_evidence": "令牌级跨范式路由用于投机解码加速",
+      "llm_tldr_en": "WhiFlash unifies autoregressive and diffusion-based drafting models under token-level routing, dynamically selecting the best drafting paradigm per token to accelerate LLM inference.",
+      "llm_tldr_cn": "投机解码加速LLM推理，但现有方法使用静态草稿范式。实验发现草稿精度在序列内剧烈波动。WhiFlash提出首个跨范式投机解码方法，在令牌级别统一自回归和扩散并行草稿模型，动态路由选择最优草稿范式。在多种任务上评估显示，WhiFlash显著加速了推理速度。",
+      "llm_tldr": "投机解码加速LLM推理，但现有方法使用静态草稿范式。实验发现草稿精度在序列内剧烈波动。WhiFlash提出首个跨范式投机解码方法，在令牌级别统一自回归和扩散并行草稿模型，动态路由选择最优草稿范式。在多种任务上评估显示，WhiFlash显著加速了推理速度。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.07710v1",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.22175v1",
+      "source": "arxiv",
+      "title": "StickyInvoc: Rethinking Task Models for High-throughput Workflows in the LLM Era",
+      "abstract": "The integration of LLMs into high-throughput workflows is creating a new class of workloads on HPC clusters that promises to accelerate advances in scientific discovery with unprecedented generative capabilities. However, the traditional task model imposes a prohibitive overhead in this new domain: each task must create its computational state from scratch and destroy it upon completion. For each LLM inference task, this \"create-destroy\" model forces the repeated and costly transfer of multi-gigabyte model parameters from a long-term, reliable storage to a compute node's local disk, its CPU memory, and finally its GPU memory. This overhead, compounded by the inherently high startup cost of LLM inference, the typical scale of thousands of tasks in high-throughput workflows, and the heterogeneous and preemptible nature of high-throughput resources, presents a significant performance barrier.   To overcome this barrier, this paper presents StickyInvoc: a symbiotic relationship between two new task models for high-throughput workflows. Specifically, a \"sticky\" task creates a persistent state on a compute node from a user-provided template, but doesn't execute any goodput computation by itself. Instead, this state is then inherited by subsequent \"invocation\" tasks, which perform the actual computation without incurring the state creation overhead or destroying the state upon exit. StickyInvoc thus allows the decoupling of the creation and destruction of computational states, allowing the computational state of LLM models to be created once per sticky task and its cost amortized over many subsequent invocation tasks. Our evaluation shows that when rewritten in the StickyInvoc paradigm, a claim verification workflow consisting of 150k inferences achieves a 3.6x speedup on a stable testbed with 20 GPUs, and completes in just 784 seconds by incrementally scaling out to 186 otherwise idle GPUs.",
+      "authors": [
+        "Thanh Son Phung",
+        "Douglas Thain"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-20T18:02:59+00:00",
+      "link": "https://arxiv.org/pdf/2606.22175v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "reduces overhead of LLM inference by reusing computational state across tasks",
+      "llm_evidence_cn": "通过跨任务复用计算状态降低LLM推理开销",
+      "llm_evidence": "通过跨任务复用计算状态降低LLM推理开销",
+      "canonical_evidence": "通过跨任务复用计算状态降低LLM推理开销",
+      "llm_tldr_en": "A new task model that reuses LLM inference state across tasks to eliminate repeated parameter loading, significantly accelerating high-throughput LLM workflows.",
+      "llm_tldr_cn": "传统HPC任务模型在LLM推理中每次任务都需从零加载模型参数，造成巨大开销。本文提出StickyInvoc，通过保留GPU内存中的计算状态并在后续任务中复用，减少参数移动。实验表明在高吞吐LLM工作流中，加速比可达数倍。",
+      "llm_tldr": "传统HPC任务模型在LLM推理中每次任务都需从零加载模型参数，造成巨大开销。本文提出StickyInvoc，通过保留GPU内存中的计算状态并在后续任务中复用，减少参数移动。实验表明在高吞吐LLM工作流中，加速比可达数倍。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
