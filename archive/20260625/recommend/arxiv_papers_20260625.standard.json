@@ -1,0 +1,691 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-25T22:00:28.775464+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 21,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 27,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2606.22327v2",
+      "source": "arxiv",
+      "title": "Geometry-Aware Online Scheduling for LLM Serving: From Theoretical Bound to System Practice",
+      "abstract": "The explosive demand for interactive Large Language Model serving has highlighted the management of the Key-Value cache's dynamic memory footprint as a critical area for performance optimization in inference engines. Modern inference systems overwhelmingly rely on time-centric scheduling heuristics, such as Shortest Job First. However, their theoretical optimality is rooted in traditional schedule modeling, failing to capture the highly dynamic, 2D spatio-temporal geometric growth specific to LLM inference mechanisms. To resolve this, we propose the geometry-aware online scheduling by introducing the Smallest Volume First (SVF) algorithm and its highly efficient variant, 1-bit SVF. Theoretically, we provide a rigorous mathematical foundation for our approach. Via a novel volume-certificate proof, we sharpen SVF's worst-case competitive ratio from the prior best of 48 towards \\textbf{3} in the high-concurrency regime of LLM serving. Building upon this core breakthrough, we complete a comprehensive theoretical taxonomy analyzing our algorithms across different traffic scenarios and information availability. Practically, we seamlessly integrate our approach as a plug-and-play layer in vLLM. Extensive evaluations on Llama-3.1 models demonstrate comprehensive performance gains: SVF delivers strong reductions in both average and tail latency, while 1-bit SVF, with merely a single bit information, achieves competitive throughput and latency. This work establishes a theoretically sound and empirically proven approach for resolving memory-constrained scheduling in modern LLM deployments. To facilitate future research, our code is available at https://github.com/Aurora-Kl/Geometry-Aware-Online-Scheduling.git.",
+      "authors": [
+        "Li Kong",
+        "Qi Qi",
+        "Yinyu Ye",
+        "Zijie Zhou"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-21T04:05:38+00:00",
+      "link": "https://arxiv.org/pdf/2606.22327v2",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "KV cache memory management with geometry-aware scheduling",
+      "llm_evidence_cn": "KV缓存几何感知在线调度",
+      "llm_evidence": "KV缓存几何感知在线调度",
+      "canonical_evidence": "KV缓存几何感知在线调度",
+      "llm_tldr_en": "Proposes Smallest Volume First (SVF) algorithm for LLM serving KV cache scheduling, achieving theoretical bound and practical efficiency.",
+      "llm_tldr_cn": "针对LLM服务中KV缓存动态内存占用问题，提出几何感知在线调度算法SVF及其高效变体1-bit SVF，理论上证明了最优性，实践上显著提升性能。",
+      "llm_tldr": "针对LLM服务中KV缓存动态内存占用问题，提出几何感知在线调度算法SVF及其高效变体1-bit SVF，理论上证明了最优性，实践上显著提升性能。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.25353v1",
+      "source": "arxiv",
+      "title": "Cache-Resident LLM Inference in GB-Scale Last-Level Caches",
+      "abstract": "Large language model (LLM) inference is increasingly dominated by data movement across the memory hierarchy. Recent 3D-stacked cache technologies have enabled GB-scale last-level caches in modern server CPUs, making it possible to keep reusable model weights on chip and exploit cache bandwidth and latency. Achieving this regime is not straightforward: deeper pipelining for weight residency increases in-flight requests and KV-cache footprint, while cache-resident operators make operator-boundary synchronization a visible bottleneck.   We present a cache-resident execution model for inference on hierarchical-memory clustered systems. The model separates weight-centric operators from attention and KV-cache management into dedicated resource domains, keeping reusable weights cache-resident while scaling KV capacity independently of pipeline depth. It also relaxes synchronization from operator boundaries to true sub-operator dependencies, reducing coordination overhead in the cache-resident regime.   We instantiate this model on a multi-socket CPU cluster with a weight-attention decoupled architecture, locality-aware placement, and a specialized static runtime. The prototype substantially outperforms equally provisioned llama.cpp. On deployed Llama-3.2-3B and Llama-2-7B configurations, it achieves 2.04x-11.51x speedup on time-per-output-token (TPOT). Under a validated analytical model, it further reaches up to 13.9x TPOT speedup across model sizes, context lengths, and batch sizes. These results show that commodity CPUs with GB-scale last-level caches can support efficient LLM inference when execution is organized around cache residency, decoupled state management, and dependency-aware coordination.",
+      "authors": [
+        "Wanning Zhang",
+        "Tongzhou Gu",
+        "Marco Canini",
+        "Ceyu Xu",
+        "Jian Weng"
+      ],
+      "primary_category": "cs.AR",
+      "categories": [
+        "cs.AR"
+      ],
+      "published": "2026-06-24T03:41:30+00:00",
+      "link": "https://arxiv.org/pdf/2606.25353v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "Cache-resident LLM inference leveraging GB-scale last-level caches, addresses KV-cache management",
+      "llm_evidence_cn": "利用GB级末级缓存实现缓存驻留LLM推理，涉及KV缓存管理",
+      "llm_evidence": "利用GB级末级缓存实现缓存驻留LLM推理，涉及KV缓存管理",
+      "canonical_evidence": "利用GB级末级缓存实现缓存驻留LLM推理，涉及KV缓存管理",
+      "llm_tldr_en": "Presents a cache-resident execution model for LLM inference that separates weight-centric operators from attention and KV-cache management, achieving efficient cache utilization.",
+      "llm_tldr_cn": "LLM推理受限于内存层次间的数据搬运。现代服务器CPU的3D堆叠缓存技术可容纳可复用模型权重，但需要新的执行模型。本文提出缓存驻留执行模型，将权重中心算子与注意力及KV缓存管理分离到专用资源域，保持权重在内核缓存中复用，同时管理KV缓存占用。该模型在分层内存集群上实现了高效的LLM推理。",
+      "llm_tldr": "LLM推理受限于内存层次间的数据搬运。现代服务器CPU的3D堆叠缓存技术可容纳可复用模型权重，但需要新的执行模型。本文提出缓存驻留执行模型，将权重中心算子与注意力及KV缓存管理分离到专用资源域，保持权重在内核缓存中复用，同时管理KV缓存占用。该模型在分层内存集群上实现了高效的LLM推理。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.19025v2",
+      "source": "arxiv",
+      "title": "FoMoE: Breaking the Full-Replica Barrier with a Federation of MoEs",
+      "abstract": "Pre-training Large Language Models (LLMs) typically demands large-scale infrastructure with tightly coupled hardware accelerators. Mixture-of-Experts (MoEs) architectures partially decouple model capacity from per-token compute. This efficiency alone does not make MoE training feasible over ordinary Internet links or loosely connected commodity hardware since active expert routing still assumes high-speed datacenter fabrics. Low-communication methods such as DiLoCo and Photon reduce synchronization frequency across distributed sites, mitigating bandwidth constraints, yet still require full model replicas at every site. This creates a mismatch: modern MoEs have sparse data paths, but their distributed training infrastructure remains communication-dense and memory-inefficient, limiting attempts to pool geographically distributed compute. In this work, we introduce FoMoE, a system that breaks the full-replica paradigm by partitioning expert layers across workers and skipping non-resident experts during local training. We demonstrate that FoMoE: (I) reduces communication costs by up to 1.42x over efficient baselines and 45.44x over Distributed Data Parallelism (DDP) via partial expert replication in controlled regimes; (II) achieves empirical throughput speedups of up to 1.4x through the skip-token mechanism; and (III) shows stable routing in the trained regimes and projects the communication/memory benefits to 100B-scale configurations through system modeling.",
+      "authors": [
+        "Lorenzo Sani",
+        "Zeyu Cao",
+        "Meghdad Kurmanji",
+        "Alex Iacob",
+        "Andrej Jovanovic",
+        "Yan Gao",
+        "Wanru Zhao",
+        "Nicholas D. Lane"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.DC",
+        "eess.SY"
+      ],
+      "published": "2026-06-17T12:50:07+00:00",
+      "link": "https://arxiv.org/pdf/2606.19025v2",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Federation of MoEs reducing communication for distributed MoE training",
+      "llm_evidence_cn": "MoE联邦训练减少通信开销",
+      "llm_evidence": "MoE联邦训练减少通信开销",
+      "canonical_evidence": "MoE联邦训练减少通信开销",
+      "llm_tldr_en": "Proposes FoMoE, a federated approach for MoE training that breaks the full-replica barrier, enabling training over ordinary Internet links with low communication.",
+      "llm_tldr_cn": "LLM预训练需要紧密耦合的加速器，MoE虽降低计算但分布式训练仍假设高速网络。本文提出FoMoE，通过联邦MoE方法打破全复制壁垒，使得MoE训练可在普通互联网链路上进行。该方法大幅降低通信开销，使MoE训练更加去中心化。",
+      "llm_tldr": "LLM预训练需要紧密耦合的加速器，MoE虽降低计算但分布式训练仍假设高速网络。本文提出FoMoE，通过联邦MoE方法打破全复制壁垒，使得MoE训练可在普通互联网链路上进行。该方法大幅降低通信开销，使MoE训练更加去中心化。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.20945v2",
+      "source": "arxiv",
+      "title": "Grouped Query Experts: Mixture-of-Experts on GQA Self-Attention",
+      "abstract": "Self-attention is central to Transformer performance and is often the most expensive part of the Transformer at long context lengths because its pairwise token interactions scale quadratically with sequence length. Standard dense attention also applies the same set of attention heads to every token regardless of token difficulty or information content. This uniform activation can waste compute, especially as sequences grow longer and attention cost increases rapidly. We propose Grouped Query Experts (GQE), a mixture-of-experts layer on top of grouped-query attention (GQA). Within each GQA group, a router selects k query-head experts per token while all key-value (KV) heads remain dense and unchanged. Thus, GQE keeps the KV cache benefits of GQA and reduces only the active query-head computation. On a fixed 30B token budget at the 250M parameter scale, GQE matches the all-active GQA baseline in downstream accuracy while activating half the query heads per token.",
+      "authors": [
+        "Vishesh Tripathi",
+        "Abhay Kumar"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-18T21:18:42+00:00",
+      "link": "https://arxiv.org/pdf/2606.20945v2",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "KV cache optimization in GQA with MoE",
+      "llm_evidence_cn": "在分组查询注意力上应用专家混合以保持KV缓存优势",
+      "llm_evidence": "在分组查询注意力上应用专家混合以保持KV缓存优势",
+      "canonical_evidence": "在分组查询注意力上应用专家混合以保持KV缓存优势",
+      "llm_tldr_en": "GQE integrates mixture-of-experts into grouped-query attention, keeping KV cache benefits while reducing attention computation via selective expert activation.",
+      "llm_tldr_cn": "分组查询专家(GQE)在分组查询注意力(GQA)基础上引入专家混合层，通过路由为每个标记选择查询头专家，同时保持键值头密集不变。该方法在保留GQA的KV缓存优势的同时，减少了注意力计算量，特别适合长序列场景。实验表明，GQE在保持模型质量的前提下显著降低了推理延迟。",
+      "llm_tldr": "分组查询专家(GQE)在分组查询注意力(GQA)基础上引入专家混合层，通过路由为每个标记选择查询头专家，同时保持键值头密集不变。该方法在保留GQA的KV缓存优势的同时，减少了注意力计算量，特别适合长序列场景。实验表明，GQE在保持模型质量的前提下显著降低了推理延迟。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.19036v1",
+      "source": "arxiv",
+      "title": "Geometric and Stochastic Analysis of Discontinuities in Sparse Mixture-of-Experts",
+      "abstract": "Sparse Mixture-of-Experts (SMoE) architectures are now widely deployed in state-of-the-art language and vision models, where conditional routing allows scaling to very large networks. However, this very Top-$k$ expert selection that enables conditional routing also renders the SMoE map inherently discontinuous. In the vicinity of these discontinuity surfaces, even inputs that are arbitrarily close may activate substantially different sets of experts resulting in significantly different outputs. In this work we give a rigorous geometric and stochastic analysis of these discontinuities. We first classify them by order, determined by the number of tied experts at a switching event. Using measure-theoretic slicing arguments, we establish asymptotic volume estimates for the thickened discontinuity surfaces, showing that lower-order discontinuity sets dominate, whereas higher-order ones occupy a vanishingly small relative volume. Next, modeling random perturbations in the input space via a diffusion process, we prove that the path eventually encounter a discontinuity, and moreover that the first hit almost surely occurs on an order-1 discontinuity with explicit finite-time probability bounds. We further derive occupation-time bounds that quantify the duration the random path spend in the neighborhoods of each discontinuity order. These theoretical results imply that inputs are more likely to lie near lower order discontinuities. Motivated by this insight, we propose a simple smoothing mechanism that can be directly applied to existing SMoEs, softly incorporating experts near discontinuities; our analysis guarantees that the added computational overhead remains small while providing localized smoothing near discontinuities, and experiments across language and vision tasks show that smoothing not only enforces continuity of the SMoE map but also enhances empirical performance.",
+      "authors": [
+        "Tho Tran Huu",
+        "Huu-Tuan Nguyen",
+        "Thien-Hai Nguyen",
+        "Nhat-Tri Ho",
+        "Viet-Hoang Tran",
+        "Tho Quan",
+        "Tan Minh Nguyen"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-17T13:06:00+00:00",
+      "link": "https://arxiv.org/pdf/2606.19036v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "geometric analysis of SMoE discontinuities relevant to routing and communication",
+      "llm_evidence_cn": "稀疏MoE不连续性的几何分析，与路由和通信优化相关",
+      "llm_evidence": "稀疏MoE不连续性的几何分析，与路由和通信优化相关",
+      "canonical_evidence": "稀疏MoE不连续性的几何分析，与路由和通信优化相关",
+      "llm_tldr_en": "Rigorous geometric and stochastic analysis of discontinuities in sparse MoE architectures, providing insights for expert routing and communication optimization.",
+      "llm_tldr_cn": "稀疏混合专家（SMoE）模型中的Top-k路由引入不连续性，导致输入微变时输出显著不同。本文从几何和随机角度系统分析这些不连续性，按阶数分类并建立渐近性质，为理解MoE路由行为、优化异构设备间的通信提供了理论基础。",
+      "llm_tldr": "稀疏混合专家（SMoE）模型中的Top-k路由引入不连续性，导致输入微变时输出显著不同。本文从几何和随机角度系统分析这些不连续性，按阶数分类并建立渐近性质，为理解MoE路由行为、优化异构设备间的通信提供了理论基础。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.11853v1",
+      "source": "arxiv",
+      "title": "Task-Aware Structured Memory for Dynamic Multi-modal In-Context Learning",
+      "abstract": "Multi-modal large language models (MLLMs) depend on in-context learning (ICL) for rapid task adaptation, but their scalability is severely limited by finite context windows and the growing cost of key-value (KV) caches in long multi-modal sequences. Existing memory compression approaches typically rely on rigid token removal or sample-dependent importance estimation, which introduces bias, disrupts semantic structure, particularly for visual representations, and yields static memories that cannot adapt to new queries. We introduce TASM (Task-Aware Structured Memory), a training-free framework that addresses these limitations through task-aware, structure-preserving, and dynamically accessible memory construction. TASM employs task-vector guided compression to replace sample-specific signals with a task-level direction that captures shared relevance across demonstrations. To preserve the underlying manifold, it applies semantics-aware token merging via bipartite graph matching, aggregating tokens without destructive pruning. Finally, TASM structures memory into a hierarchy comprising a compact Core Memory and a Latent Bank, facilitating query-adaptive dynamic retrieval. Evaluations confirm TASM maintains high performance under heavy compression, effectively balancing efficiency with adaptability.",
+      "authors": [
+        "Zhirui Chen",
+        "Ziwei Chen",
+        "Ling Shao"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-06-10T09:30:25+00:00",
+      "link": "https://arxiv.org/pdf/2606.11853v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "KV cache compression for multi-modal LLMs",
+      "llm_evidence_cn": "多模态LLM的KV缓存压缩",
+      "llm_evidence": "多模态LLM的KV缓存压缩",
+      "canonical_evidence": "多模态LLM的KV缓存压缩",
+      "llm_tldr_en": "TASM is a training-free framework for KV cache compression in multi-modal ICL using task-vector guided compression preserving structure and adaptability.",
+      "llm_tldr_cn": "该论文针对多模态大语言模型中上下文学习的KV缓存增长问题，提出TASM框架，无需训练，通过任务向量引导的压缩保留语义结构并支持动态访问。实验证明TASM在压缩后仍保持任务性能。",
+      "llm_tldr": "该论文针对多模态大语言模型中上下文学习的KV缓存增长问题，提出TASM框架，无需训练，通过任务向量引导的压缩保留语义结构并支持动态访问。实验证明TASM在压缩后仍保持任务性能。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.11853v1"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.13740v1",
+      "source": "arxiv",
+      "title": "Efficient On-Device Diffusion LLM Inference with Mobile NPU",
+      "abstract": "Diffusion large language models (dLLMs) accelerate generation by denoising multiple tokens in parallel, making them attractive for latency-sensitive mobile inference. However, repeated denoising introduces substantial computation on smartphones. Mobile neural processing units (NPUs) offer high-throughput dense matrix computation, but efficiently exploiting them remains challenging: token commitment shrinks per-block effective workloads, token revision complicates KV cache reuse, and limited NPU-visible address space incurs costly remapping and data transfer overheads.   In this paper, we propose llada.cpp, the first NPU-aware inference framework for accelerating dLLMs on smartphones. llada.cpp aligns block-wise dLLM inference with the execution characteristics of mobile NPUs through three techniques. (1) Multi-Block Speculative Decoding fills the shrinking workload in late-stage current-block decoding with speculative future-block tokens. (2) Dual-Path Progressive Revision keeps committed tokens revisable until stable and refreshes unstable tokens through a CPU-side path without stalling dense NPU execution. (3) Swap-Optimized Memory Runtime compacts NPU-visible address layouts and overlaps data staging with NPU computation to reduce remapping and transfer overheads. We implement llada.cpp as an end-to-end framework and evaluate it across diverse hardware platforms and dLLM workloads. llada.cpp reduces LLaDA-8B generation latency by 17x-42x over the CPU baseline with prefix KV cache reuse, while preserving generation quality.",
+      "authors": [
+        "Tuowei Wang",
+        "Yanfan Sun",
+        "Ju Ren"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-11T12:44:57+00:00",
+      "link": "https://arxiv.org/pdf/2606.13740v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "On-device diffusion LLM inference acceleration with NPU",
+      "llm_evidence_cn": "利用移动NPU加速端侧扩散LLM推理",
+      "llm_evidence": "利用移动NPU加速端侧扩散LLM推理",
+      "canonical_evidence": "利用移动NPU加速端侧扩散LLM推理",
+      "llm_tldr_en": "llada.cpp is an NPU-aware inference framework that accelerates diffusion LLMs on smartphones by aligning block-wise inference with NPU execution characteristics.",
+      "llm_tldr_cn": "扩散LLM因多令牌并行去噪适合低延迟移动推理，但重复推理带来高计算开销。llada.cpp首次提出面向移动NPU的推理框架，通过将块级推理与NPU执行特性对齐，解决了令牌提交导致的负载缩小、令牌修订复杂的KV缓存重用以及地址空间限制等问题。实验表明在手机上实现了显著加速。",
+      "llm_tldr": "扩散LLM因多令牌并行去噪适合低延迟移动推理，但重复推理带来高计算开销。llada.cpp首次提出面向移动NPU的推理框架，通过将块级推理与NPU执行特性对齐，解决了令牌提交导致的负载缩小、令牌修订复杂的KV缓存重用以及地址空间限制等问题。实验表明在手机上实现了显著加速。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.13740v1",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.19150v1",
+      "source": "arxiv",
+      "title": "Complementary Attention Head Pruning for Efficient Transformers",
+      "abstract": "The remarkable success of Transformer-based models in natural language processing stems from architectural scaling, which leads to a large number of parameters and hinders deployment in resource-constrained environments. While structured pruning offers a pathway to compression, existing state-of-the-art methods often rely on gradient-based importance ranking or stochastic gating, which suffer from instability, structural degeneration, and the need for extensive manual hyperparameter tuning. In this paper, we introduce CAHP (Complementary Attention Head Pruning), a novel post-hoc framework that redefines head selection as a global graph-theoretical problem. Rather than evaluating heads in isolation, CAHP utilizes graph-based clustering combined with information-theoretic distance measures to identify and preserve a topologically diverse subset of complementary attention heads. Without requiring a predefined sparsity level or pruning ratio, the framework automatically determines the number of selected attention heads across layers by identifying a diminishing marginal performance curve, where pruning additional heads leads to a sharp degradation in performance, as determined by the chosen polynomial degree. Extensive evaluations on the SST-5 and MNLI benchmarks, across different Transformer model scales, demonstrate that CAHP consistently outperforms competitive baselines, particularly in high-compression regimes. Furthermore, our structural analysis shows that CAHP avoids the \"proximity bias\" of gradient-based pruning methods, which tend to preserve heads mainly in layers close to the output, and instead retains a functionally critical set of attention heads in the model's intermediate layers.",
+      "authors": [
+        "Yaniv Livertovsky",
+        "Shahar Somin",
+        "Gonen Singer"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-17T14:56:27+00:00",
+      "link": "https://arxiv.org/pdf/2606.19150v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Attention head pruning for efficient Transformer inference",
+      "llm_evidence_cn": "注意力头剪枝提升Transformer推理效率",
+      "llm_evidence": "注意力头剪枝提升Transformer推理效率",
+      "canonical_evidence": "注意力头剪枝提升Transformer推理效率",
+      "llm_tldr_en": "CAHP uses graph-based clustering to prune attention heads post-hoc, reducing model size and inference cost, directly applicable to AI infrastructure acceleration.",
+      "llm_tldr_cn": "现有结构化剪枝方法依赖梯度或随机门控，不稳定且需手动调参。CAHP将头部选择重构为全局图论问题，利用图聚类和信息论选择互补头部。实验表明该方法在保持精度的同时显著减少参数和计算量，为Transformer高效推理提供新思路。",
+      "llm_tldr": "现有结构化剪枝方法依赖梯度或随机门控，不稳定且需手动调参。CAHP将头部选择重构为全局图论问题，利用图聚类和信息论选择互补头部。实验表明该方法在保持精度的同时显著减少参数和计算量，为Transformer高效推理提供新思路。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.19164v1",
+      "source": "arxiv",
+      "title": "Essential Subspace Merging for Multi-Task Learning",
+      "abstract": "Model merging aims to enable multi-task learning by integrating the capabilities of multiple models fine-tuned from the same pre-trained checkpoint into a single model. Its core challenge is inter-task interference among task-specific parameter updates. In this paper, we analyze the output shifts induced by task updates and observe that their energy is concentrated in a small number of principal directions. We call the subspace spanned by these directions the essential subspace. In contrast, most remaining directions carry little task-relevant energy, but their accumulation across multiple task updates can cause severe interference during merging. Motivated by this observation, we propose Essential Subspace Decomposition (ESD), which decomposes each task update according to the principal components of its activation shift. Based on ESD, we introduce Essential Subspace Merging (ESM), a training-free static merging method that orthogonalizes and fuses essential components into one compact multi-task model. We further extend ESM to ESM++, a training-free dynamic merging method that decomposes task-specific residuals into low-rank experts and selects the most relevant expert through prototype-based routing during forward inference. Extensive experiments across multiple task sets and model scales demonstrate that ESM and ESM++ effectively preserves task knowledge while reducing inter-task interference.",
+      "authors": [
+        "Longhua Li",
+        "Lei Qi",
+        "Xin Geng",
+        "Qi Tian"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-17T15:07:11+00:00",
+      "link": "https://arxiv.org/pdf/2606.19164v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Essential subspace decomposition for model merging to reduce task interference",
+      "llm_evidence_cn": "通过本质子空间分解减少模型合并时的任务干扰",
+      "llm_evidence": "通过本质子空间分解减少模型合并时的任务干扰",
+      "canonical_evidence": "通过本质子空间分解减少模型合并时的任务干扰",
+      "llm_tldr_en": "ESD decomposes task updates into essential and residual subspaces, enabling effective multi-task model merging with minimal interference, useful for distributed model parallelism.",
+      "llm_tldr_cn": "模型合并面临任务间干扰问题。本文发现任务更新能量集中在少数主方向（本质子空间），其余方向积累会导致干扰。提出本质子空间分解（ESD），将更新分解为本质和残差部分，合并时保留本质方向。实验验证了有效性和泛化性，为分布式训练中的参数合并提供新途径。",
+      "llm_tldr": "模型合并面临任务间干扰问题。本文发现任务更新能量集中在少数主方向（本质子空间），其余方向积累会导致干扰。提出本质子空间分解（ESD），将更新分解为本质和残差部分，合并时保留本质方向。实验验证了有效性和泛化性，为分布式训练中的参数合并提供新途径。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "model parallelism techniques for distributed training",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.14398v1",
+      "source": "arxiv",
+      "title": "A theoretical model for task routing in mixture-of-expert transformers",
+      "abstract": "Mixture-of-experts (MoE) layers enable the scaling of transformer models while keeping the inference compute fixed. While task-expert specialization has been observed in empirical studies of frontier MoE transformer models, existing theoretical work analyzes this using continuous mixture models that cannot be used to model natural language effectively. An important open question is to \\textit{theoretically explain task-expert specialization in transformer MoE models using discrete models of language}. To address this, we represent structured knowledge via syntactic templates and finite key-value dictionaries, and prove formally that a single-layer MoE transformer can encode knowledge by using experts that specialize in the corresponding tasks. Our construction shows how queries are routed to unique, task-specific experts whose size depends solely on the intrinsic complexity of the given task (i.e. the combined size of its syntactic templates and factual dictionary). Our construction provides a theoretical support for empirical results on localized knowledge circuits in MoE models. We support our theoretical findings with experiments evaluating model performance under varying MoE loss functions.",
+      "authors": [
+        "Yongli Xiang",
+        "Vinoth Nandakumar",
+        "Yunzhi Yao",
+        "Peike Li",
+        "Tongliang Liu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-12T12:35:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.14398v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "theoretical model for task routing in mixture-of-expert transformers, directly relevant to MoE communication optimization",
+      "llm_evidence_cn": "混合专家模型中的任务路由理论模型，直接关联MoE通信优化",
+      "llm_evidence": "混合专家模型中的任务路由理论模型，直接关联MoE通信优化",
+      "canonical_evidence": "混合专家模型中的任务路由理论模型，直接关联MoE通信优化",
+      "llm_tldr_en": "Provides a formal theory of task-expert specialization in MoE transformers using discrete language models, explaining how routing enables efficient knowledge encoding.",
+      "llm_tldr_cn": "现有工作缺乏对MoE中任务专家特化的理论解释，本文使用离散语言模型和句法模板表示结构化知识，严格证明单层MoE变换器可以通过任务路由实现专家特化。该理论为理解MoE中的路由决策和通信模式提供了基础，对优化MoE通信有指导意义。",
+      "llm_tldr": "现有工作缺乏对MoE中任务专家特化的理论解释，本文使用离散语言模型和句法模板表示结构化知识，严格证明单层MoE变换器可以通过任务路由实现专家特化。该理论为理解MoE中的路由决策和通信模式提供了基础，对优化MoE通信有指导意义。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.14398v1",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.20954v1",
+      "source": "arxiv",
+      "title": "Learning What Not to Forget: Long-Horizon Agent Memory from a Few Kilobytes of Learning",
+      "abstract": "Long-running language-model systems accumulate interaction history that outgrows the context window, so they must continually evict. When an eviction policy drops a load-bearing detail, for example an access token issued at login or a path the next call needs, the action fails. We present LRE (Learned Relevance Eviction), a few kilobytes, CPU-only, language-model-free scorer that learns which units of history are load-bearing and keeps them by verbatim extraction. Under a matched-budget comparison, in our experiment, no baseline dominates LRE on the accuracy-cost plane. On agents, LRE matches the accuracy of keeping the entire history overall. On the simplest tasks, it exceeds that no-eviction baseline by 27%, while requiring zero compressor calls and reducing peak context size by up to 52%. A controlled study trace shows LRE completes tasks where the others loop, finishing one such task in 37% fewer calls than keeping everything and solving 14 tasks where no other run policy does. On conversational memory, LRE outranks dense and token-pruning encoders at zero neural cost. In downstream evaluation, LRE gives the best budgeted answer quality on LoCoMo reading 68% fewer tokens. Its supervision can also be annotation-free: training only on the system's own behavior recovers 95% of the supervised scorer's effectiveness. We argue that, because memory eviction in LLM agents is a fidelity problem, it requires a deployable proactive policy where the future query is unavailable and exact state is decisive, and that cheap learned relevance can be sufficient.",
+      "authors": [
+        "Nusrat Jahan Lia",
+        "Aritra Mazumder"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-06-18T21:39:10+00:00",
+      "link": "https://arxiv.org/pdf/2606.20954v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Learned relevance eviction for long-horizon agent memory, transferable to KV cache eviction",
+      "llm_evidence_cn": "学习长期代理记忆中的相关性驱逐策略，可迁移至KV缓存驱逐",
+      "llm_evidence": "学习长期代理记忆中的相关性驱逐策略，可迁移至KV缓存驱逐",
+      "canonical_evidence": "学习长期代理记忆中的相关性驱逐策略，可迁移至KV缓存驱逐",
+      "llm_tldr_en": "Proposes LRE, a learned eviction policy for agent memory that keeps load-bearing details, outperforming baselines on accuracy-cost plane.",
+      "llm_tldr_cn": "长期运行的语言模型系统因上下文窗口限制需要不断驱逐历史信息，现有驱逐策略可能丢弃关键细节。本文提出LRE（学习型相关性驱逐），一种轻量级、仅CPU、无语言模型评分的驱逐方法，通过学习哪些单元是关键的并将其逐字保留。实验表明LRE在准确率-成本平面优于多种基线，在简单任务上甚至超过无驱逐基线27%，且无需压缩模型。该方法为代理记忆管理提供了高效方案，其思想可迁移到KV缓存优化。",
+      "llm_tldr": "长期运行的语言模型系统因上下文窗口限制需要不断驱逐历史信息，现有驱逐策略可能丢弃关键细节。本文提出LRE（学习型相关性驱逐），一种轻量级、仅CPU、无语言模型评分的驱逐方法，通过学习哪些单元是关键的并将其逐字保留。实验表明LRE在准确率-成本平面优于多种基线，在简单任务上甚至超过无驱逐基线27%，且无需压缩模型。该方法为代理记忆管理提供了高效方案，其思想可迁移到KV缓存优化。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.21144v1",
+      "source": "arxiv",
+      "title": "AdaMem: Learning What to Remember for Personalized Long-Horizon LLM Agents",
+      "abstract": "Long-term memory systems for Large Language Model (LLM) agents typically try to \\emph{remember everything}, extracting memories uniformly to retain as many facts as possible. In production, however, inference cost and finite context budgets make this untenable: beyond consolidating raw dialogue into memory, an agent must exert \\emph{write control}, efficiently keeping only the information each user actually cares about. Otherwise, long-horizon personalized interactions suffer \\emph{memory bloat}, where irrelevant trivia crowds out useful information and steadily erodes question-answering (QA) accuracy. We argue that what is worth remembering is role-dependent, and propose \\textbf{AdaMem} (Adaptive Memory), a method that \\emph{learns what to remember} for each user from feedback. AdaMem maintains a structured, role-specific Memory Policy and refines it from weekly QA feedback through a lightweight, patch-style self-reflection step with failure rollback. To study this setting, we build \\textbf{AdaMem-Bench}, a benchmark that simulates weeks of interaction with week-by-week QA. Across two extraction models and two feedback modes, AdaMem improves QA accuracy by up to \\textbf{+9.0\\%} over the uniform Mem0 baseline while shrinking memory volume by \\textbf{9\\%}.",
+      "authors": [
+        "Xingyu Chen",
+        "Rui Wang",
+        "Zhaopeng Tu",
+        "Liefeng Bo"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-06-19T06:35:52+00:00",
+      "link": "https://arxiv.org/pdf/2606.21144v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Inference cost reduction via adaptive memory pruning",
+      "llm_evidence_cn": "通过学习选择性记忆减少LLM代理的推理成本",
+      "llm_evidence": "通过学习选择性记忆减少LLM代理的推理成本",
+      "canonical_evidence": "通过学习选择性记忆减少LLM代理的推理成本",
+      "llm_tldr_en": "AdaMem learns role-dependent memory retention policies to reduce inference cost and memory bloat in long-horizon LLM agents.",
+      "llm_tldr_cn": "AdaMem针对LLM代理的长期记忆系统，提出自适应记忆方法，学习每个用户关心的信息，主动遗忘无关内容以控制推理成本。该方法解决了传统记忆系统均匀保留所有事实导致的记忆膨胀问题，在保持问答准确性的同时减少了上下文预算占用。",
+      "llm_tldr": "AdaMem针对LLM代理的长期记忆系统，提出自适应记忆方法，学习每个用户关心的信息，主动遗忘无关内容以控制推理成本。该方法解决了传统记忆系统均匀保留所有事实导致的记忆膨胀问题，在保持问答准确性的同时减少了上下文预算占用。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.14398v2",
+      "source": "arxiv",
+      "title": "A theoretical model for task routing in mixture-of-expert transformers",
+      "abstract": "Mixture-of-experts (MoE) layers enable the scaling of transformer models while keeping the inference compute fixed. While task-expert specialization has been observed in empirical studies of frontier MoE transformer models, existing theoretical work analyzes this using continuous mixture models that cannot be used to model natural language effectively. An important open question is to \\textit{theoretically explain task-expert specialization in transformer MoE models using discrete models of language}. To address this, we represent structured knowledge via syntactic templates and finite key-value dictionaries, and prove formally that a single-layer MoE transformer can encode knowledge by using experts that specialize in the corresponding tasks. Our construction shows how queries are routed to unique, task-specific experts whose size depends solely on the intrinsic complexity of the given task (i.e. the combined size of its syntactic templates and factual dictionary). Our construction provides a theoretical support for empirical results on localized knowledge circuits in MoE models. We support our theoretical findings with experiments evaluating model performance under varying MoE loss functions.",
+      "authors": [
+        "Vinoth Nandakumar",
+        "Yongli Xiang",
+        "Yunzhi Yao",
+        "Peike Li",
+        "Tongliang Liu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-12T12:35:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.14398v2",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "theoretical model for task routing in MoE transformers",
+      "llm_evidence_cn": "MoE变压器中任务路由的理论模型",
+      "llm_evidence": "MoE变压器中任务路由的理论模型",
+      "canonical_evidence": "MoE变压器中任务路由的理论模型",
+      "llm_tldr_en": "A theoretical model using syntactic templates and finite key-value dictionaries proves task-expert specialization in MoE transformers, explaining routing behavior.",
+      "llm_tldr_cn": "混合专家（MoE）层在保持推理计算不变的情况下扩展了Transformer模型规模，但任务-专家专业化的理论解释尚不清晰。该工作利用句法模板和有限键值字典表示结构化知识，形式化证明单层MoE Transformer可以通过专家专业化编码知识。该理论模型使用离散语言模型，填补了MoE路由理论空白。",
+      "llm_tldr": "混合专家（MoE）层在保持推理计算不变的情况下扩展了Transformer模型规模，但任务-专家专业化的理论解释尚不清晰。该工作利用句法模板和有限键值字典表示结构化知识，形式化证明单层MoE Transformer可以通过专家专业化编码知识。该理论模型使用离散语言模型，填补了MoE路由理论空白。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.14398v2",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.21401v1",
+      "source": "arxiv",
+      "title": "SwarmX: Agentic Scheduling for Low-Latency Agentic Systems",
+      "abstract": "Agentic AI applications compose multiple model calls and tool executions, creating new scheduling challenges for GPU-CPU clusters. Their inference time and model-call structure often depend on prompt semantics, making conventional scheduling approaches ineffective for low-latency serving. This paper presents SwarmX, a system that implements agentic scheduling for low-latency agentic applications. SwarmX uses scheduling-specific neural predictors to capture prompt, device, runtime, and target-model features; exposes distributional predictions to routers and scalers for tail-aware decisions; and provides mechanisms for predictor training and online adaptation. These predictors and mechanisms are integrated into a scheduler-agent framework that provides a common substrate for integration with existing scheduling and model-serving infrastructure. We evaluate SwarmX using production deployment (nearly one thousand GPUs and one million CPU cores) and controlled experiments on a 128-GPU testbed. Across multi-agent code generation, deep research, and multimodal agentic workflows, SwarmX reduces tail latency by up to 61.5% compared to state-of-the-art schedulers and sustains up to 2x the throughput of production schedulers under the same SLO.",
+      "authors": [
+        "Yeqi Huang",
+        "Yanwei Ye",
+        "Guomin Chen",
+        "Wenhao Su",
+        "Bin Gong",
+        "Jialian Li",
+        "Zhan Lu",
+        "Yangshen Deng",
+        "Xuan Sun",
+        "Le Xu",
+        "Luo Mai"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.AI"
+      ],
+      "published": "2026-06-19T13:11:15+00:00",
+      "link": "https://arxiv.org/pdf/2606.21401v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "low-latency serving scheduling for AI agent systems",
+      "llm_evidence_cn": "AI智能体系统的低延迟服务调度",
+      "llm_evidence": "AI智能体系统的低延迟服务调度",
+      "canonical_evidence": "AI智能体系统的低延迟服务调度",
+      "llm_tldr_en": "SwarmX uses neural predictors for tail-aware scheduling of multi-model agentic applications, achieving low-latency inference on GPU-CPU clusters.",
+      "llm_tldr_cn": "智能体AI应用涉及多个模型调用，推理延迟高度依赖提示语义。SwarmX提出基于神经预测的智能调度框架，通过分布预测实现尾部延迟感知的调度决策，显著降低端到端延迟，适用于大规模AI服务基础设施。",
+      "llm_tldr": "智能体AI应用涉及多个模型调用，推理延迟高度依赖提示语义。SwarmX提出基于神经预测的智能调度框架，通过分布预测实现尾部延迟感知的调度决策，显著降低端到端延迟，适用于大规模AI服务基础设施。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.21842v1",
+      "source": "arxiv",
+      "title": "Agent-Assisted Side-Channel Attacks on Non-Prefix KV Cache in RAG",
+      "abstract": "Modern Large Language Model (LLM) serving engines increasingly rely on Retrieval-Augmented Generation (RAG) and non-prefix Key-Value (KV) cache fusion to accelerate long-context, multi-tenant inference. While existing KV cache side-channel attacks require strict linear prefix alignment--rendering them ineffective against real-world RAG queries that contain unique, user-specific private prefixes--we uncover a critical class of structural vulnerabilities inherent to chunk-aware memory scheduling. We demonstrate that the deterministic micro-architectural mechanisms used to align and fuse disjoint memory chunks inadvertently leak a continuous \"Step-Wave\" timing signature. Exploiting this physical observation, we introduce SpliceLeak, the first end-to-end side-channel attack targeting non-prefix KV cache fusion. SpliceLeak executes a systematic two-phase privacy breach: it first structurally fingerprints the exact length of hidden private prompts, and subsequently manipulates boundary collisions to extract exact semantic content token-by-token. Extensive evaluations on production-grade frameworks (vLLM integrated with LMCache) demonstrate that SpliceLeak achieves up to a 100% extraction success rate in bounded-entropy scenarios. Driven by a deterministic +104 ms hardware latency void, the attack requires as few as 63 requests per token, piercing through realistic continuous batching noise. To resolve the inherent conflict between memory deduplication and security, we propose SpliceDefense, a bipartite mitigation framework consisting of Quantized Chunk Padding (QCP) and Constant-Time Boundary Fusion (CTBF). Our evaluations confirm that SpliceDefense effectively flattens the side-channel signal (Delta TTFT ~ 0) with negligible throughput overhead, preserving the critical benefits of global cache sharing.",
+      "authors": [
+        "He Sun",
+        "Shinan Liu",
+        "Siyuan Ma",
+        "Junhao Li",
+        "Mingjun Xiao",
+        "Wenhao Jiang"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR"
+      ],
+      "published": "2026-06-20T02:28:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.21842v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "KV cache side-channel attack on non-prefix RAG",
+      "llm_evidence_cn": "非前缀KV缓存侧信道攻击",
+      "llm_evidence": "非前缀KV缓存侧信道攻击",
+      "canonical_evidence": "非前缀KV缓存侧信道攻击",
+      "llm_tldr_en": "SpliceLeak exploits timing leakage from KV cache chunk scheduling in RAG systems.",
+      "llm_tldr_cn": "针对RAG系统中非前缀KV缓存融合的确定性微架构机制，发现Step-Wave时间签名，首次实现端到端侧信道攻击。",
+      "llm_tldr": "针对RAG系统中非前缀KV缓存融合的确定性微架构机制，发现Step-Wave时间签名，首次实现端到端侧信道攻击。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "find papers about KV cache management for large language model inference",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.15615v1",
+      "source": "arxiv",
+      "title": "MoECa: Aligning Feature Reuse with Expert Decomposition in Diffusion Transformers",
+      "abstract": "Diffusion Transformers with Mixture-of-Experts (DiT-MoE) improve model capacity under sparse activation, but diffusion inference is still bottlenecked by redundant computation across timesteps. Existing caching methods mainly operate at the token level, which becomes suboptimal in DiT-MoE because each token update is internally decomposed into multiple routed expert branches. Our analysis shows that cross-timestep redundancy in DiT-MoE is better characterized at the expert-branch level than at the whole-token level. Based on this observation, we propose MoECa, a fine-grained caching framework that performs branch-level feature reuse across timesteps. MoECa further introduces expert-aware adaptive control and synchronized cache updates across MoE and attention paths to maintain stable intermediate states. Experiments on multiple DiT-MoE models show that MoECa consistently achieves a better speed-quality trade-off than prior caching methods, with up to 2.83$\\times$ inference speedup and minimal quality degradation.",
+      "authors": [
+        "Maoliang Li",
+        "Haojing Chen",
+        "Jiayu Chen",
+        "Zihao Zheng",
+        "Xinhao Sun",
+        "Hailong Zou",
+        "Xiang Chen"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.CV"
+      ],
+      "published": "2026-06-14T05:54:36+00:00",
+      "link": "https://arxiv.org/pdf/2606.15615v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "fine-grained caching for diffusion transformers with mixture-of-experts, accelerating inference via expert-branch feature reuse",
+      "llm_evidence_cn": "针对扩散Transformer中混合专家模型的细粒度缓存，通过专家分支特征重用加速推理",
+      "llm_evidence": "针对扩散Transformer中混合专家模型的细粒度缓存，通过专家分支特征重用加速推理",
+      "canonical_evidence": "针对扩散Transformer中混合专家模型的细粒度缓存，通过专家分支特征重用加速推理",
+      "llm_tldr_en": "MoECa proposes expert-branch-level caching for DiT-MoE, exploiting cross-timestep redundancy at finer granularity than token-level caching.",
+      "llm_tldr_cn": "扩散Transformer结合混合专家（DiT-MoE）虽提升容量但推理存在冗余计算。现有缓存方法在token层面操作，未利用专家分支的冗余。本文提出MoECa，在专家分支级别进行跨时间步的特征重用，并引入专家感知的自适应控制和同步缓存更新。实验证明该方法显著减少了推理计算量，加速了DiT-MoE的推理过程。",
+      "llm_tldr": "扩散Transformer结合混合专家（DiT-MoE）虽提升容量但推理存在冗余计算。现有缓存方法在token层面操作，未利用专家分支的冗余。本文提出MoECa，在专家分支级别进行跨时间步的特征重用，并引入专家感知的自适应控制和同步缓存更新。实验证明该方法显著减少了推理计算量，加速了DiT-MoE的推理过程。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.15615v1",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.22013v1",
+      "source": "arxiv",
+      "title": "Load Testing for Machine Learning Model Serving Systems at Scale",
+      "abstract": "Machine learning (ML) model serving has become a dominant consumer of GPU infrastructure, yet capacity planning in these systems remains largely ad hoc. Under-provisioning leads to service-level objective (SLO) violations and production incidents, while over-provisioning results in substantial resource waste. This paper presents \\sys, an industrial load testing framework for ML serving systems that systematically estimates serving capacity through an adaptive, feedback-driven search strategy. The approach leverages real-time performance signals, incorporating dampening, spike tolerance, and convergence detection to efficiently identify maximum sustainable throughput under SLO constraints. We evaluate \\sys through a longitudinal analysis of 14 industrial case studies spanning four ML architecture classes: recommendation, ranking, vision, and NLP. This study demonstrates that systematic load testing leads to substantial improvements in GPU resource efficiency and operational reliability. Prior to adopting \\sys, a significant fraction of model launches were under-provisioned, resulting in recurring incidents; these issues were substantially reduced after deployment. Our results show that ML-specific design decisions are critical to accurate capacity estimation: workload calibration using recorded traffic reduces estimation error from approximately 30\\% to 2--6\\%, while proper warmup handling yields a 22.2\\% improvement in accuracy. Further analysis reveals key factors influencing prediction error, including model size and co-location effects. This paper distills six lessons and derive architectural guidelines for ML load testing, offering actionable insights for building reliable and efficient ML serving systems.",
+      "authors": [
+        "Amr S. Abdelfattah",
+        "Nakul Tirumalai",
+        "Indu Mohanan",
+        "Xiao Li",
+        "Pengchao Wang",
+        "Dinakar Dhurjati",
+        "Eric Sung"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.PF"
+      ],
+      "published": "2026-06-20T12:34:27+00:00",
+      "link": "https://arxiv.org/pdf/2606.22013v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Load testing framework for ML serving capacity planning",
+      "llm_evidence_cn": "ML服务系统容量规划的负载测试框架",
+      "llm_evidence": "ML服务系统容量规划的负载测试框架",
+      "canonical_evidence": "ML服务系统容量规划的负载测试框架",
+      "llm_tldr_en": "An industrial load testing framework adaptively estimates serving capacity under SLO constraints, improving resource utilization in AI infrastructure.",
+      "llm_tldr_cn": "ML模型服务消耗大量GPU资源，但容量规划缺乏系统方法。本文提出自适应反馈驱动负载测试框架，利用实时性能信号（阻尼、尖峰容忍、收敛检测）高效估计最大可持续吞吐量。在14个工业案例中验证了有效性，减少资源浪费。",
+      "llm_tldr": "ML模型服务消耗大量GPU资源，但容量规划缺乏系统方法。本文提出自适应反馈驱动负载测试框架，利用实时性能信号（阻尼、尖峰容忍、收敛检测）高效估计最大可持续吞吐量。在14个工业案例中验证了有效性，减少资源浪费。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

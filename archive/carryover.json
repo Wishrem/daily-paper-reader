@@ -1,134 +1,12 @@
 {
-  "generated_at": "2026-06-24T21:55:13.599262+00:00",
-  "updated_date": "20260624",
+  "generated_at": "2026-06-25T22:00:28.777074+00:00",
+  "updated_date": "20260625",
   "carryover_days": 9,
   "tag_states": {
     "ai-infra": {
-      "updated_date": "20260624",
+      "updated_date": "20260625",
       "carryover_days": 9,
       "items": [
-        {
-          "id": "2606.11853v1",
-          "source": "arxiv",
-          "title": "Task-Aware Structured Memory for Dynamic Multi-modal In-Context Learning",
-          "abstract": "Multi-modal large language models (MLLMs) depend on in-context learning (ICL) for rapid task adaptation, but their scalability is severely limited by finite context windows and the growing cost of key-value (KV) caches in long multi-modal sequences. Existing memory compression approaches typically rely on rigid token removal or sample-dependent importance estimation, which introduces bias, disrupts semantic structure, particularly for visual representations, and yields static memories that cannot adapt to new queries. We introduce TASM (Task-Aware Structured Memory), a training-free framework that addresses these limitations through task-aware, structure-preserving, and dynamically accessible memory construction. TASM employs task-vector guided compression to replace sample-specific signals with a task-level direction that captures shared relevance across demonstrations. To preserve the underlying manifold, it applies semantics-aware token merging via bipartite graph matching, aggregating tokens without destructive pruning. Finally, TASM structures memory into a hierarchy comprising a compact Core Memory and a Latent Bank, facilitating query-adaptive dynamic retrieval. Evaluations confirm TASM maintains high performance under heavy compression, effectively balancing efficiency with adaptability.",
-          "authors": [
-            "Zhirui Chen",
-            "Ziwei Chen",
-            "Ling Shao"
-          ],
-          "primary_category": "cs.CV",
-          "categories": [
-            "cs.CV",
-            "cs.AI"
-          ],
-          "published": "2026-06-10T09:30:25+00:00",
-          "link": "https://arxiv.org/pdf/2606.11853v1",
-          "tags": [
-            "keyword:ai-infra",
-            "query:ai-infra"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "KV cache compression for multi-modal LLMs",
-          "llm_evidence_cn": "多模态LLM的KV缓存压缩",
-          "llm_evidence": "多模态LLM的KV缓存压缩",
-          "canonical_evidence": "多模态LLM的KV缓存压缩",
-          "llm_tldr_en": "TASM is a training-free framework for KV cache compression in multi-modal ICL using task-vector guided compression preserving structure and adaptability.",
-          "llm_tldr_cn": "该论文针对多模态大语言模型中上下文学习的KV缓存增长问题，提出TASM框架，无需训练，通过任务向量引导的压缩保留语义结构并支持动态访问。实验证明TASM在压缩后仍保持任务性能。",
-          "llm_tldr": "该论文针对多模态大语言模型中上下文学习的KV缓存增长问题，提出TASM框架，无需训练，通过任务向量引导的压缩保留语义结构并支持动态访问。实验证明TASM在压缩后仍保持任务性能。",
-          "llm_tags": [
-            "query:ai-infra"
-          ],
-          "matched_query_tag": "query:ai-infra",
-          "matched_query_text": "KV cache optimization for large language models",
-          "matched_requirement_id": "req-1",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.11853v1",
-          "carry_days": 2
-        },
-        {
-          "id": "2606.14398v1",
-          "source": "arxiv",
-          "title": "A theoretical model for task routing in mixture-of-expert transformers",
-          "abstract": "Mixture-of-experts (MoE) layers enable the scaling of transformer models while keeping the inference compute fixed. While task-expert specialization has been observed in empirical studies of frontier MoE transformer models, existing theoretical work analyzes this using continuous mixture models that cannot be used to model natural language effectively. An important open question is to \\textit{theoretically explain task-expert specialization in transformer MoE models using discrete models of language}. To address this, we represent structured knowledge via syntactic templates and finite key-value dictionaries, and prove formally that a single-layer MoE transformer can encode knowledge by using experts that specialize in the corresponding tasks. Our construction shows how queries are routed to unique, task-specific experts whose size depends solely on the intrinsic complexity of the given task (i.e. the combined size of its syntactic templates and factual dictionary). Our construction provides a theoretical support for empirical results on localized knowledge circuits in MoE models. We support our theoretical findings with experiments evaluating model performance under varying MoE loss functions.",
-          "authors": [
-            "Yongli Xiang",
-            "Vinoth Nandakumar",
-            "Yunzhi Yao",
-            "Peike Li",
-            "Tongliang Liu"
-          ],
-          "primary_category": "cs.LG",
-          "categories": [
-            "cs.LG"
-          ],
-          "published": "2026-06-12T12:35:09+00:00",
-          "link": "https://arxiv.org/pdf/2606.14398v1",
-          "tags": [
-            "keyword:ai-infra",
-            "query:ai-infra"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "theoretical model for task routing in mixture-of-expert transformers, directly relevant to MoE communication optimization",
-          "llm_evidence_cn": "混合专家模型中的任务路由理论模型，直接关联MoE通信优化",
-          "llm_evidence": "混合专家模型中的任务路由理论模型，直接关联MoE通信优化",
-          "canonical_evidence": "混合专家模型中的任务路由理论模型，直接关联MoE通信优化",
-          "llm_tldr_en": "Provides a formal theory of task-expert specialization in MoE transformers using discrete language models, explaining how routing enables efficient knowledge encoding.",
-          "llm_tldr_cn": "现有工作缺乏对MoE中任务专家特化的理论解释，本文使用离散语言模型和句法模板表示结构化知识，严格证明单层MoE变换器可以通过任务路由实现专家特化。该理论为理解MoE中的路由决策和通信模式提供了基础，对优化MoE通信有指导意义。",
-          "llm_tldr": "现有工作缺乏对MoE中任务专家特化的理论解释，本文使用离散语言模型和句法模板表示结构化知识，严格证明单层MoE变换器可以通过任务路由实现专家特化。该理论为理解MoE中的路由决策和通信模式提供了基础，对优化MoE通信有指导意义。",
-          "llm_tags": [
-            "query:ai-infra"
-          ],
-          "matched_query_tag": "query:ai-infra",
-          "matched_query_text": "communication optimization in mixture of experts models",
-          "matched_requirement_id": "req-4",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.14398v1",
-          "carry_days": 2
-        },
-        {
-          "id": "2606.15615v1",
-          "source": "arxiv",
-          "title": "MoECa: Aligning Feature Reuse with Expert Decomposition in Diffusion Transformers",
-          "abstract": "Diffusion Transformers with Mixture-of-Experts (DiT-MoE) improve model capacity under sparse activation, but diffusion inference is still bottlenecked by redundant computation across timesteps. Existing caching methods mainly operate at the token level, which becomes suboptimal in DiT-MoE because each token update is internally decomposed into multiple routed expert branches. Our analysis shows that cross-timestep redundancy in DiT-MoE is better characterized at the expert-branch level than at the whole-token level. Based on this observation, we propose MoECa, a fine-grained caching framework that performs branch-level feature reuse across timesteps. MoECa further introduces expert-aware adaptive control and synchronized cache updates across MoE and attention paths to maintain stable intermediate states. Experiments on multiple DiT-MoE models show that MoECa consistently achieves a better speed-quality trade-off than prior caching methods, with up to 2.83$\\times$ inference speedup and minimal quality degradation.",
-          "authors": [
-            "Maoliang Li",
-            "Haojing Chen",
-            "Jiayu Chen",
-            "Zihao Zheng",
-            "Xinhao Sun",
-            "Hailong Zou",
-            "Xiang Chen"
-          ],
-          "primary_category": "cs.LG",
-          "categories": [
-            "cs.LG",
-            "cs.CV"
-          ],
-          "published": "2026-06-14T05:54:36+00:00",
-          "link": "https://arxiv.org/pdf/2606.15615v1",
-          "tags": [
-            "keyword:ai-infra",
-            "query:ai-infra"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "fine-grained caching for diffusion transformers with mixture-of-experts, accelerating inference via expert-branch feature reuse",
-          "llm_evidence_cn": "针对扩散Transformer中混合专家模型的细粒度缓存，通过专家分支特征重用加速推理",
-          "llm_evidence": "针对扩散Transformer中混合专家模型的细粒度缓存，通过专家分支特征重用加速推理",
-          "canonical_evidence": "针对扩散Transformer中混合专家模型的细粒度缓存，通过专家分支特征重用加速推理",
-          "llm_tldr_en": "MoECa proposes expert-branch-level caching for DiT-MoE, exploiting cross-timestep redundancy at finer granularity than token-level caching.",
-          "llm_tldr_cn": "扩散Transformer结合混合专家（DiT-MoE）虽提升容量但推理存在冗余计算。现有缓存方法在token层面操作，未利用专家分支的冗余。本文提出MoECa，在专家分支级别进行跨时间步的特征重用，并引入专家感知的自适应控制和同步缓存更新。实验证明该方法显著减少了推理计算量，加速了DiT-MoE的推理过程。",
-          "llm_tldr": "扩散Transformer结合混合专家（DiT-MoE）虽提升容量但推理存在冗余计算。现有缓存方法在token层面操作，未利用专家分支的冗余。本文提出MoECa，在专家分支级别进行跨时间步的特征重用，并引入专家感知的自适应控制和同步缓存更新。实验证明该方法显著减少了推理计算量，加速了DiT-MoE的推理过程。",
-          "llm_tags": [
-            "query:ai-infra"
-          ],
-          "matched_query_tag": "query:ai-infra",
-          "matched_query_text": "communication optimization in mixture of experts models",
-          "matched_requirement_id": "req-4",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.15615v1",
-          "carry_days": 2
-        },
         {
           "id": "2606.17104v1",
           "source": "arxiv",
@@ -167,7 +45,7 @@
           "matched_requirement_id": "req-5",
           "selection_source": "carryover_cache",
           "paper_id": "2606.17104v1",
-          "carry_days": 2
+          "carry_days": 3
         },
         {
           "id": "2606.16352v1",
@@ -210,7 +88,7 @@
           "matched_requirement_id": "req-5",
           "selection_source": "carryover_cache",
           "paper_id": "2606.16352v1",
-          "carry_days": 2
+          "carry_days": 3
         },
         {
           "id": "2606.18304v1",
@@ -253,132 +131,7 @@
           "matched_requirement_id": "req-4",
           "selection_source": "carryover_cache",
           "paper_id": "2606.18304v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2606.13740v1",
-          "source": "arxiv",
-          "title": "Efficient On-Device Diffusion LLM Inference with Mobile NPU",
-          "abstract": "Diffusion large language models (dLLMs) accelerate generation by denoising multiple tokens in parallel, making them attractive for latency-sensitive mobile inference. However, repeated denoising introduces substantial computation on smartphones. Mobile neural processing units (NPUs) offer high-throughput dense matrix computation, but efficiently exploiting them remains challenging: token commitment shrinks per-block effective workloads, token revision complicates KV cache reuse, and limited NPU-visible address space incurs costly remapping and data transfer overheads.   In this paper, we propose llada.cpp, the first NPU-aware inference framework for accelerating dLLMs on smartphones. llada.cpp aligns block-wise dLLM inference with the execution characteristics of mobile NPUs through three techniques. (1) Multi-Block Speculative Decoding fills the shrinking workload in late-stage current-block decoding with speculative future-block tokens. (2) Dual-Path Progressive Revision keeps committed tokens revisable until stable and refreshes unstable tokens through a CPU-side path without stalling dense NPU execution. (3) Swap-Optimized Memory Runtime compacts NPU-visible address layouts and overlaps data staging with NPU computation to reduce remapping and transfer overheads. We implement llada.cpp as an end-to-end framework and evaluate it across diverse hardware platforms and dLLM workloads. llada.cpp reduces LLaDA-8B generation latency by 17x-42x over the CPU baseline with prefix KV cache reuse, while preserving generation quality.",
-          "authors": [
-            "Tuowei Wang",
-            "Yanfan Sun",
-            "Ju Ren"
-          ],
-          "primary_category": "cs.LG",
-          "categories": [
-            "cs.LG"
-          ],
-          "published": "2026-06-11T12:44:57+00:00",
-          "link": "https://arxiv.org/pdf/2606.13740v1",
-          "tags": [
-            "keyword:ai-infra",
-            "query:ai-infra"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "On-device diffusion LLM inference acceleration with NPU",
-          "llm_evidence_cn": "利用移动NPU加速端侧扩散LLM推理",
-          "llm_evidence": "利用移动NPU加速端侧扩散LLM推理",
-          "canonical_evidence": "利用移动NPU加速端侧扩散LLM推理",
-          "llm_tldr_en": "llada.cpp is an NPU-aware inference framework that accelerates diffusion LLMs on smartphones by aligning block-wise inference with NPU execution characteristics.",
-          "llm_tldr_cn": "扩散LLM因多令牌并行去噪适合低延迟移动推理，但重复推理带来高计算开销。llada.cpp首次提出面向移动NPU的推理框架，通过将块级推理与NPU执行特性对齐，解决了令牌提交导致的负载缩小、令牌修订复杂的KV缓存重用以及地址空间限制等问题。实验表明在手机上实现了显著加速。",
-          "llm_tldr": "扩散LLM因多令牌并行去噪适合低延迟移动推理，但重复推理带来高计算开销。llada.cpp首次提出面向移动NPU的推理框架，通过将块级推理与NPU执行特性对齐，解决了令牌提交导致的负载缩小、令牌修订复杂的KV缓存重用以及地址空间限制等问题。实验表明在手机上实现了显著加速。",
-          "llm_tags": [
-            "query:ai-infra"
-          ],
-          "matched_query_tag": "query:ai-infra",
-          "matched_query_text": "inference acceleration for AI infrastructure",
-          "matched_requirement_id": "req-5",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.13740v1",
           "carry_days": 2
-        },
-        {
-          "id": "2606.14398v2",
-          "source": "arxiv",
-          "title": "A theoretical model for task routing in mixture-of-expert transformers",
-          "abstract": "Mixture-of-experts (MoE) layers enable the scaling of transformer models while keeping the inference compute fixed. While task-expert specialization has been observed in empirical studies of frontier MoE transformer models, existing theoretical work analyzes this using continuous mixture models that cannot be used to model natural language effectively. An important open question is to \\textit{theoretically explain task-expert specialization in transformer MoE models using discrete models of language}. To address this, we represent structured knowledge via syntactic templates and finite key-value dictionaries, and prove formally that a single-layer MoE transformer can encode knowledge by using experts that specialize in the corresponding tasks. Our construction shows how queries are routed to unique, task-specific experts whose size depends solely on the intrinsic complexity of the given task (i.e. the combined size of its syntactic templates and factual dictionary). Our construction provides a theoretical support for empirical results on localized knowledge circuits in MoE models. We support our theoretical findings with experiments evaluating model performance under varying MoE loss functions.",
-          "authors": [
-            "Vinoth Nandakumar",
-            "Yongli Xiang",
-            "Yunzhi Yao",
-            "Peike Li",
-            "Tongliang Liu"
-          ],
-          "primary_category": "cs.LG",
-          "categories": [
-            "cs.LG"
-          ],
-          "published": "2026-06-12T12:35:09+00:00",
-          "link": "https://arxiv.org/pdf/2606.14398v2",
-          "tags": [
-            "keyword:ai-infra",
-            "query:ai-infra"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "theoretical model for task routing in MoE transformers",
-          "llm_evidence_cn": "MoE变压器中任务路由的理论模型",
-          "llm_evidence": "MoE变压器中任务路由的理论模型",
-          "canonical_evidence": "MoE变压器中任务路由的理论模型",
-          "llm_tldr_en": "A theoretical model using syntactic templates and finite key-value dictionaries proves task-expert specialization in MoE transformers, explaining routing behavior.",
-          "llm_tldr_cn": "混合专家（MoE）层在保持推理计算不变的情况下扩展了Transformer模型规模，但任务-专家专业化的理论解释尚不清晰。该工作利用句法模板和有限键值字典表示结构化知识，形式化证明单层MoE Transformer可以通过专家专业化编码知识。该理论模型使用离散语言模型，填补了MoE路由理论空白。",
-          "llm_tldr": "混合专家（MoE）层在保持推理计算不变的情况下扩展了Transformer模型规模，但任务-专家专业化的理论解释尚不清晰。该工作利用句法模板和有限键值字典表示结构化知识，形式化证明单层MoE Transformer可以通过专家专业化编码知识。该理论模型使用离散语言模型，填补了MoE路由理论空白。",
-          "llm_tags": [
-            "query:ai-infra"
-          ],
-          "matched_query_tag": "query:ai-infra",
-          "matched_query_text": "communication optimization in mixture of experts models",
-          "matched_requirement_id": "req-4",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.14398v2",
-          "carry_days": 2
-        },
-        {
-          "id": "2606.21401v1",
-          "source": "arxiv",
-          "title": "SwarmX: Agentic Scheduling for Low-Latency Agentic Systems",
-          "abstract": "Agentic AI applications compose multiple model calls and tool executions, creating new scheduling challenges for GPU-CPU clusters. Their inference time and model-call structure often depend on prompt semantics, making conventional scheduling approaches ineffective for low-latency serving. This paper presents SwarmX, a system that implements agentic scheduling for low-latency agentic applications. SwarmX uses scheduling-specific neural predictors to capture prompt, device, runtime, and target-model features; exposes distributional predictions to routers and scalers for tail-aware decisions; and provides mechanisms for predictor training and online adaptation. These predictors and mechanisms are integrated into a scheduler-agent framework that provides a common substrate for integration with existing scheduling and model-serving infrastructure. We evaluate SwarmX using production deployment (nearly one thousand GPUs and one million CPU cores) and controlled experiments on a 128-GPU testbed. Across multi-agent code generation, deep research, and multimodal agentic workflows, SwarmX reduces tail latency by up to 61.5% compared to state-of-the-art schedulers and sustains up to 2x the throughput of production schedulers under the same SLO.",
-          "authors": [
-            "Yeqi Huang",
-            "Yanwei Ye",
-            "Guomin Chen",
-            "Wenhao Su",
-            "Bin Gong",
-            "Jialian Li",
-            "Zhan Lu",
-            "Yangshen Deng",
-            "Xuan Sun",
-            "Le Xu",
-            "Luo Mai"
-          ],
-          "primary_category": "cs.DC",
-          "categories": [
-            "cs.DC",
-            "cs.AI"
-          ],
-          "published": "2026-06-19T13:11:15+00:00",
-          "link": "https://arxiv.org/pdf/2606.21401v1",
-          "tags": [
-            "keyword:ai-infra",
-            "query:ai-infra"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "agentic scheduling for low-latency inference",
-          "llm_evidence_cn": "智能调度用于低延迟推理",
-          "llm_evidence": "智能调度用于低延迟推理",
-          "canonical_evidence": "智能调度用于低延迟推理",
-          "llm_tldr_en": "SwarmX introduces agentic scheduling using neural predictors for low-latency agentic AI applications, enabling tail-aware decisions and online adaptation in GPU-CPU clusters.",
-          "llm_tldr_cn": "当前智能体AI应用面临调度挑战，因为推理时间和调用结构依赖于提示语义。SwarmX提出基于神经预测器的智能调度框架，通过捕捉提示、设备和运行时特征实现尾部感知决策。该系统集成调度器-智能体框架，支持在线自适应，显著降低推理延迟。该工作为AI基础设施推理加速提供了新的调度方法论。",
-          "llm_tldr": "当前智能体AI应用面临调度挑战，因为推理时间和调用结构依赖于提示语义。SwarmX提出基于神经预测器的智能调度框架，通过捕捉提示、设备和运行时特征实现尾部感知决策。该系统集成调度器-智能体框架，支持在线自适应，显著降低推理延迟。该工作为AI基础设施推理加速提供了新的调度方法论。",
-          "llm_tags": [
-            "query:ai-infra"
-          ],
-          "matched_query_tag": "query:ai-infra",
-          "matched_query_text": "inference acceleration for AI infrastructure",
-          "matched_requirement_id": "req-5",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.21401v1",
-          "carry_days": 1
         },
         {
           "id": "2606.16384v1",
@@ -421,7 +174,7 @@
           "matched_requirement_id": "req-6",
           "selection_source": "carryover_cache",
           "paper_id": "2606.16384v1",
-          "carry_days": 2
+          "carry_days": 3
         },
         {
           "id": "2606.17952v1",
@@ -461,7 +214,7 @@
           "matched_requirement_id": "req-4",
           "selection_source": "carryover_cache",
           "paper_id": "2606.17952v1",
-          "carry_days": 1
+          "carry_days": 2
         },
         {
           "id": "2606.16497v1",
@@ -506,7 +259,7 @@
           "matched_requirement_id": "req-2",
           "selection_source": "carryover_cache",
           "paper_id": "2606.16497v1",
-          "carry_days": 2
+          "carry_days": 3
         },
         {
           "id": "2606.20869v1",
@@ -530,19 +283,19 @@
             "query:ai-infra"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "holistic co-design of AI algorithms and accelerators for heterogeneous and memory-intensive workloads",
-          "llm_evidence_cn": "异构、内存密集型AI工作负载的算法与加速器协同设计",
-          "llm_evidence": "异构、内存密集型AI工作负载的算法与加速器协同设计",
-          "canonical_evidence": "异构、内存密集型AI工作负载的算法与加速器协同设计",
-          "llm_tldr_en": "A framework for joint optimization of neural network architectures and hardware accelerators, targeting heterogeneous and memory-intensive AI infrastructure needs.",
-          "llm_tldr_cn": "传统AI部署将模型设计与硬件映射分离，导致异构、内存密集型工作负载下的系统次优。本文提出A3C3，参数化算法与加速器设计空间并联合搜索，自动生成匹配的神经网络架构与硬件实现，在多个AI基准上显著提升能效和吞吐。",
-          "llm_tldr": "传统AI部署将模型设计与硬件映射分离，导致异构、内存密集型工作负载下的系统次优。本文提出A3C3，参数化算法与加速器设计空间并联合搜索，自动生成匹配的神经网络架构与硬件实现，在多个AI基准上显著提升能效和吞吐。",
+          "llm_evidence_en": "holistic AI algorithm and accelerator co-design",
+          "llm_evidence_cn": "AI算法与加速器协同设计",
+          "llm_evidence": "AI算法与加速器协同设计",
+          "canonical_evidence": "AI算法与加速器协同设计",
+          "llm_tldr_en": "Proposes A3C3 methodology for joint co-design, co-search, and co-generation of neural architectures and hardware implementations.",
+          "llm_tldr_cn": "提出A3C3全流程方法论，联合优化神经网络架构与硬件实现，解决传统前后端分离导致的次优系统问题，适用于异构、内存密集型AI工作负载。",
+          "llm_tldr": "提出A3C3全流程方法论，联合优化神经网络架构与硬件实现，解决传统前后端分离导致的次优系统问题，适用于异构、内存密集型AI工作负载。",
           "llm_tags": [
             "query:ai-infra"
           ],
           "matched_query_tag": "query:ai-infra",
-          "matched_query_text": "search for heterogeneous computing in AI infrastructure",
-          "matched_requirement_id": "req-9",
+          "matched_query_text": "AI infrastructure acceleration techniques",
+          "matched_requirement_id": "req-2",
           "selection_source": "carryover_cache",
           "paper_id": "2606.20869v1",
           "carry_days": 1
@@ -584,7 +337,7 @@
           "matched_requirement_id": "req-2",
           "selection_source": "carryover_cache",
           "paper_id": "2606.18042v1",
-          "carry_days": 1
+          "carry_days": 2
         },
         {
           "id": "2606.23087v1",
@@ -621,13 +374,13 @@
             "query:ai-infra"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "flow-based decoupled training for VLMs enabling independent progress of encoder and backbone",
-          "llm_evidence_cn": "基于流的解耦训练方法，使编码器和骨干网络独立训练",
-          "llm_evidence": "基于流的解耦训练方法，使编码器和骨干网络独立训练",
-          "canonical_evidence": "基于流的解耦训练方法，使编码器和骨干网络独立训练",
-          "llm_tldr_en": "FlowTrain proposes a flow-based decoupled training framework that reformulates VLM training as a producer-consumer dataflow, allowing heterogeneous modules to progress independently over a global virtual address space, significantly improving distributed training efficiency.",
-          "llm_tldr_cn": "针对工业级视觉-语言模型分布式训练效率低下的问题，论文提出了FlowTrain框架，将训练过程重构为生产者-消费者数据流，通过统一内存池协调编码器和骨干网络的独立执行。该方法解决了传统流水线并行中的同步依赖，实现了异构模块的异步解耦训练。实验表明，FlowTrain显著提升了训练吞吐量，为大规模多模态模型训练提供了高效的并行方案。",
-          "llm_tldr": "针对工业级视觉-语言模型分布式训练效率低下的问题，论文提出了FlowTrain框架，将训练过程重构为生产者-消费者数据流，通过统一内存池协调编码器和骨干网络的独立执行。该方法解决了传统流水线并行中的同步依赖，实现了异构模块的异步解耦训练。实验表明，FlowTrain显著提升了训练吞吐量，为大规模多模态模型训练提供了高效的并行方案。",
+          "llm_evidence_en": "Decoupled training for vision-language models with producer-consumer dataflow",
+          "llm_evidence_cn": "视觉语言模型的解耦训练，生产者-消费者数据流",
+          "llm_evidence": "视觉语言模型的解耦训练，生产者-消费者数据流",
+          "canonical_evidence": "视觉语言模型的解耦训练，生产者-消费者数据流",
+          "llm_tldr_en": "FlowTrain decouples VLM training into independent encoder and backbone flows via a unified memory pool, enabling asynchronous parallelism and reducing communication bottlenecks.",
+          "llm_tldr_cn": "现有视觉语言模型分布式训练采用统一并行或解耦部署，但效率仍低。FlowTrain提出流式解耦训练框架，将训练视为生产者-消费者数据流，通过统一内存池协调，编码器和骨干网络可独立前进。实验证明该方法加速训练并减少通信开销，适用于异构推理场景。",
+          "llm_tldr": "现有视觉语言模型分布式训练采用统一并行或解耦部署，但效率仍低。FlowTrain提出流式解耦训练框架，将训练视为生产者-消费者数据流，通过统一内存池协调，编码器和骨干网络可独立前进。实验证明该方法加速训练并减少通信开销，适用于异构推理场景。",
           "llm_tags": [
             "query:ai-infra"
           ],
@@ -636,6 +389,79 @@
           "matched_requirement_id": "req-6",
           "selection_source": "carryover_cache",
           "paper_id": "2606.23087v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.24722v1",
+          "source": "arxiv",
+          "title": "Decentralised AI Training and Inference with BlockTrain",
+          "abstract": "Frontier AI training is increasingly shaped by access to dense, centrally controlled accelerator clusters. This creates a structural advantage for hyperscalers and large centralized laboratories, and makes open or independent AI efforts depend on scarce capital, privileged infrastructure, and data-center geography. We present Spheroid BlockTrain, a decentralized training protocol in which a model is partitioned into independently trainable blocks, each optimized on a local objective derived from the same global target and composed at inference into one model. On byte-level WikiText, BlockTrain reaches cross entropy 1.359 (perplexity 3.89), within about 0.04 CE of a same-setup end-to-end Transformer reference, while each active worker trains only one block and avoids full-model optimizer state. A shared six-worker block training run reaches CE 1.385 by averaging same-block updates into one assembled model. HTTP/TCP transport experiments move real serialized checkpoints and updates, including a public-IP three-host run that improves CE from 5.580 to 1.811 while moving 15.22 GB. For inference, the current BlockTrain path uses one block-stack traversal per full output and serves over direct TCP across three public-network GPU hosts up to a 75.80B-parameter logical fp16 shape, outperforming a matched plain-autoregressive TCP pipeline baseline because it emits a full sequence per WAN pipeline traversal rather than one token per traversal.",
+          "authors": [
+            "Peter Toth"
+          ],
+          "primary_category": "cs.AI",
+          "categories": [
+            "cs.AI"
+          ],
+          "published": "2026-06-23T15:47:33+00:00",
+          "link": "https://arxiv.org/pdf/2606.24722v1",
+          "tags": [
+            "keyword:ai-infra",
+            "query:ai-infra"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "decentralized training with model partitioning into blocks",
+          "llm_evidence_cn": "将模型划分为独立训练块的去中心化训练协议",
+          "llm_evidence": "将模型划分为独立训练块的去中心化训练协议",
+          "canonical_evidence": "将模型划分为独立训练块的去中心化训练协议",
+          "llm_tldr_en": "BlockTrain partitions a model into independently trainable blocks for decentralized training, achieving near-reference perplexity while each worker trains only one block.",
+          "llm_tldr_cn": "针对集中式AI训练的资源垄断问题，本文提出BlockTrain去中心化训练协议。将模型划分为独立可训练的块，每个工作节点仅训练一个块，通过全局目标协调局部优化。在字节级WikiText上，模型困惑度仅比端到端参考模型高0.04，同时减少了单节点计算和通信负担，为分布式模型并行训练提供了新思路。",
+          "llm_tldr": "针对集中式AI训练的资源垄断问题，本文提出BlockTrain去中心化训练协议。将模型划分为独立可训练的块，每个工作节点仅训练一个块，通过全局目标协调局部优化。在字节级WikiText上，模型困惑度仅比端到端参考模型高0.04，同时减少了单节点计算和通信负担，为分布式模型并行训练提供了新思路。",
+          "llm_tags": [
+            "query:ai-infra"
+          ],
+          "matched_query_tag": "query:ai-infra",
+          "matched_query_text": "model parallelism techniques for distributed training",
+          "matched_requirement_id": "req-6",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.24722v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.22249v1",
+          "source": "arxiv",
+          "title": "On the Expressive Power of Weight Quantization in Large Language Models",
+          "abstract": "In recent years, weight quantization that encodes the learnable parameters of large language models in an $n$-bit format has garnered significant attention due to its potential for model compression and inference acceleration. Many practical techniques have been developed; however, the theoretical understanding of many aspects, especially the approximation and degradation of expressive power as the number of quantization bits decreases, remains unclear. In this paper, we provide a theoretical investigation into the expressive capability of large language models relative to the number of quantization bits. We argue that 1.58-bit is the limiting precision for weight quantization by establishing the universal approximation and expressive collapse properties of weight-quantized models with respect to the number of quantization bits. Additionally, we confirm that weight quantization leads to expressive degradation, in which the expressive capacity of weight-quantized models degrades polynomially as the number of quantization bits decreases. These theoretical findings provide a solid foundation for advancing weight quantization in the context of scaling laws and shed insights for future research in model compression and inference acceleration.",
+          "authors": [
+            "Shao-Qun Zhang"
+          ],
+          "primary_category": "cs.LG",
+          "categories": [
+            "cs.LG",
+            "cs.AI"
+          ],
+          "published": "2026-06-20T22:22:26+00:00",
+          "link": "https://arxiv.org/pdf/2606.22249v1",
+          "tags": [
+            "keyword:ai-infra",
+            "query:ai-infra"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "Weight quantization for LLM compression and inference acceleration",
+          "llm_evidence_cn": "权重量化用于大语言模型压缩与推理加速",
+          "llm_evidence": "权重量化用于大语言模型压缩与推理加速",
+          "canonical_evidence": "权重量化用于大语言模型压缩与推理加速",
+          "llm_tldr_en": "Theoretically investigates expressiveness of weight quantization in LLMs, establishing 1.58-bit as limiting precision with universal approximation properties.",
+          "llm_tldr_cn": "权重量化是LLM压缩和推理加速的重要技术，但其理论理解不足。本文从理论上研究了LLM相对于量化比特数的表达能力，指出1.58比特是权重量化的极限精度，并建立了通用近似和表达能力坍缩性质。该工作为量化方法的进一步发展提供了理论基础。",
+          "llm_tldr": "权重量化是LLM压缩和推理加速的重要技术，但其理论理解不足。本文从理论上研究了LLM相对于量化比特数的表达能力，指出1.58比特是权重量化的极限精度，并建立了通用近似和表达能力坍缩性质。该工作为量化方法的进一步发展提供了理论基础。",
+          "llm_tags": [
+            "query:ai-infra"
+          ],
+          "matched_query_tag": "query:ai-infra",
+          "matched_query_text": "inference acceleration for AI infrastructure",
+          "matched_requirement_id": "req-5",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.22249v1",
           "carry_days": 1
         }
       ]
