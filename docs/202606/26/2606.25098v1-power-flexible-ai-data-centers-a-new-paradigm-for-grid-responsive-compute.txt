@@ -1,0 +1,201 @@
+Title: Power-Flexible AI Data Centers: A New Paradigm for Grid-Responsive Compute
+
+URL Source: https://arxiv.org/pdf/2606.25098v1
+
+Published Time: Thu, 25 Jun 2026 00:09:47 GMT
+
+Number of Pages: 14
+
+Markdown Content:
+# Power-Flexible AI Data Centers: A New Paradigm for Grid-Responsive Compute ∗
+
+Chris Williams 1, Philip Colangelo 1, Ayse Coskun 1, Ethan Levine 1, Andy Neale 1, Ciaran Roberts 1, Shayan Sengupta 1, Nikhil Shirolkar 1, Varun Sivaram 1, Sarah Soares 1, Ethan Tiao 1, Scott Underwood 1, Daniel Wilson 1, Frank Sharp 2, Luke Wainwright 3, Harry Petty 4,Scott Wallace 4, and Brandon Records 51Emerald AI 
+
+> 2
+
+Electric Power Research Institute (EPRI) 
+
+> 3
+
+National Grid 
+
+> 4
+
+NVIDIA 
+
+> 5
+
+Oracle 
+
+Abstract 
+
+The rapid expansion of artificial intelligence (AI) infrastructure is driving unprecedented growth in electricity demand from data centers. Traditional power-system planning treats large computing facilities as inflexible peak loads, leading to costly infrastructure upgrades and long delays in grid interconnection. Recent work has shown that AI clusters can reduce electricity consumption during peak demand through software-based workload orchestration. This article explores how modern GPU-based AI data centers can operate as grid-interactive assets that respond dynamically to power system conditions. We describe an architecture integrating grid signals, workload scheduling, and power telemetry for fine-grained cluster power control. Exper-imental results from a real-world deployment on a 130 kW GPU cluster demonstrate multiple forms of flexibility, including rapid load reduction, sustained curtailment, and carbon-aware operation while preserving service levels for priority jobs. We further demonstrate performance-aware load shifting across geographically distributed clusters, enabling workloads to migrate toward regions with lower grid stress. Together, these capabilities transform AI infrastructure from static electricity consumers into flexible resources that support grid reliability, accelerate interconnection, and improve computing sustainability. 
+
+# 1 Introduction 
+
+AI is rapidly transforming the global digital economy, but its infrastructure footprint is growing just as quickly. Large-scale AI training clusters and inference services now require massive computing resources, and the electricity demand associated with these systems is increasing dramatically. Modern AI factories, which are large GPU-based computing facilities dedicated to training and operating advanced models, can consume tens to hundreds of megawatts of power, with future facilities expected to reach gigawatt scale [1]. 
+
+> ∗
+
+This work has been submitted to the IEEE for possible publication. Copyright may be transferred without notice, after which this version may no longer be accessible. 
+
+1
+
+> arXiv:2606.25098v1 [cs.DC] 23 Jun 2026
+
+This rapid growth presents a challenge for power systems worldwide. Grid infrastructure often evolves on timescales measured in years or decades, while AI infrastructure commonly expands on software and semiconductor development cycles measured in months. In many regions, the resulting mismatch between computing demand and grid capacity has created significant bottlenecks in the process of connecting new data centers to the power grid. Transmission upgrades, new substations, and additional generation resources often require lengthy planning, permitting, and construction processes [1]. A central reason for these delays is how power systems traditionally model large industrial loads. Grid planners typically assume large data centers as firm loads that must receive full power during all operating conditions. This assumption leads to costly infrastructure upgrades and long interconnection delays [2]. This article explores methods for making AI data centers power-flexible. Recent advances in software-defined infrastructure suggest that traditional firm load assumptions may no longer be necessary. Large GPU clusters typically run a mix of AI workloads, including long-running training jobs, fine-tuning tasks, batch inference pipelines, and interactive inference services. While some tasks are latency sensitive, many others are throughput-oriented and can tolerate short-term variations in execution speed or scheduling [3]. These characteristics create opportunities for modulation of data center power consumption without interrupting critical services. Software systems that orchestrate AI workloads can adjust job scheduling, apply GPU power caps, or shift workloads across time and location. These capabilities allow computing infrastructure to dynamically adapt its power consumption in response to grid conditions. Recent field demonstrations have begun to illustrate the potential of this approach. In a recent trial, an AI cluster was able to reduce its electricity consumption by 25% during peak demand periods while maintaining service levels for jobs [4]. Such results suggest that AI infrastructure could function not merely as a passive consumer of electricity, but as an actively controllable load capable of supporting grid reliability. In many power systems, to fully realize this potential, data centers must evolve beyond simple peak-demand curtailment. Grid-interactive computing systems must be capable of responding to real-time dispatch signals based on established utility protocols, sustaining power reductions for extended periods, coordinating across multiple facilities, and aligning energy consumption with renewable availability and carbon intensity signals. This article introduces the data center software architecture and capabilities required to enable such systems. Specifically, we describe a software-defined framework for power-flexible AI infrastructure , where computing facilities dynamically adjust their electricity consumption based on grid conditions while preserving application service levels. The contributions of this article are as follows: 1. Architecture : We present an integrated architecture for power-flexible AI data centers com-bining grid interfaces, workload orchestration, and real-time power modeling. 2. Experimental demonstration : We analyze results from experimental deployments showing that GPU clusters can deliver multiple forms of grid services including rapid load reduction and sustained curtailment. 3. Carbon-aware and geo-distributed computing : We introduce mechanisms that align AI workload scheduling with carbon intensity and grid conditions across multiple data centers. Experimental demonstrations in the US and UK have validated the capabilities of software-defined workload orchestration for delivering high-granularity power flexibility and geo-spatial load shifting in response to real-time grid signals: 2• UK Grid Compliance . Achieved 100% compliance across 200+ distinct National Grid power events on a 130 kW AI cluster of NVIDIA Blackwell Ultra GPUs. 
+
+• US Inference Geo-Shifting . Successfully migrated 10% of live inference traffic from an Oracle GPU cluster consisting of NVIDIA H100s in Virginia to Illinois during a Dominion Energy utility winter peak power event. Following these innovations, we discuss how flexible computing infrastructure could accelerate data center interconnection and support power system reliability. Together, these results illustrate how AI infrastructure can evolve from static electricity consumption to dynamic participation in power system operation. 
+
+# 2 Background and Prior Work 
+
+2.1 Data Center Demand Response 
+
+Demand response programs have long explored the use of large electricity consumers as flexible resources for grid stability. Prior work has investigated several mechanisms for introducing flexibility into data center operations. In temporal workload shifting , delay-tolerant jobs are scheduled at different times to reduce peak electricity demand or respond to changing grid conditions [5]. Another approach leverages geographically distributed data centers , where workloads are migrated across locations to exploit regional differences in electricity prices, grid congestion, or renewable energy availability [6]. A related body of work investigates carbon-aware computing ,in which workloads are scheduled according to the carbon intensity of the electricity grid [7]. Finally, several studies have examined data center demand response in high-performance computing environments, where CPU-based batch workloads are delayed or throttled during grid stress events [8]. While these approaches demonstrated promising results in simulation or limited deployments, most focused on CPU-based systems or limited peak-demand curtailment scenarios rather than real-time GPU-based grid-interactive operation [8]. 
+
+2.2 AI-Specific Flexibility 
+
+Recent studies have shown that AI clusters may provide significantly greater flexibility than tra-ditional data center workloads. Training jobs often consist of long iterative processes with natu-ral pause points such as checkpoint intervals, creating opportunities to temporarily slow down or suspend jobs without compromising correctness, since distributed training systems support check-pointing and preemption that allow jobs to resume from saved states [9]. Modern GPU clusters provide multiple mechanisms for controlling power consumption at both the hardware and workload levels. GPUs expose device-level power management interfaces that enable rapid reductions in instantaneous power draw, while cluster schedulers and AI workload managers can modulate power by prioritizing or pausing lower-priority jobs, resizing resource allo-cations, or adjusting training configurations dynamically. Recent work has shown that jointly tuning GPU power limits and training configuration parameters can substantially reduce the energy con-sumption of deep learning workloads while maintaining model accuracy and training performance [11]. Recent experimental demonstrations further showed that AI clusters can reduce power consump-tion in response to grid dispatch events while continuing to execute AI workloads and maintaining service-level agreements for high-priority tasks [4]. 32.3 Key Differentiators in This Work 
+
+While previous work demonstrated the feasibility of peak-demand curtailment, several important dimensions remain underexplored (see Table 1). Table 1: Comparison of Data Center Flexibility Studies 
+
+Dimension Earlier Studies This Article 
+
+Demonstration Peak demand curtailment Multiple grid services Control scope Single cluster Multi-data-center systems Flexibility mechanisms Workload throttling Throttling + geo-shifting Grid signals Scheduled events Scheduled events + real-time dispatch + carbon signals Previous data center demand response studies primarily focused on scheduled peak-demand events, simulation-based evaluation, or single-site workload throttling. In contrast, this work demonstrates software-defined flexibility in production-scale GPU clusters across multiple opera-tional modes, including real-time grid dispatch, sustained curtailment, carbon-aware operation, and geographically distributed load shifting, while preserving service levels for priority jobs. 
+
+# 3 Architecture for Power-Flexible AI Infrastructure 
+
+Power-flexible AI infrastructure requires tight coordination between power systems and computing infrastructure. To enable this capability, data center operators must integrate grid signals, workload scheduling, and real-time power telemetry into a unified control framework that dynamically adjusts cluster power consumption without disrupting critical services. Figure 1 illustrates the architecture we designed for our experimental deployment. The archi-tecture includes three primary components: a grid interface that receives dispatch signals from external power system operators, a workload orchestration layer that determines how computing jobs respond, and a telemetry-driven power modeling system that estimates and predicts cluster power consumption. A software control layer connects the power system and the AI cluster. In our implementation, the Conductor platform performs this role by translating grid signals into cluster-level control actions such as GPU power capping and job scheduling adjustments. 
+
+3.1 Grid Interface 
+
+Our grid interface enables communication between the data center and the external power system actors. Utilities or system operators send dispatch signals that describe real-time or anticipated grid conditions. The requested dispatch may represent demand response events, emergency load curtailments, congestion alerts, or carbon intensity indicators. Each dispatch signal specifies power reduction target, event start time and duration, and ramp down/up requirements. Dispatch events may arrive with advance notice or require immediate response. The grid in-terface converts these instructions into actionable power targets that the computing infrastructure must achieve within the specified response window. 4Figure 1: Architecture of the grid-aware workload orchestration platform used in this study (Emerald Conductor). 
+
+3.2 Workload Orchestration 
+
+Our workload orchestration engine determines how the cluster should adjust its operation to meet requested power targets. The orchestration layer maintains a real-time view of cluster activity, including active jobs, resource allocations, and job priorities, and selects control actions that reduce power consumption while preserving application service levels. Typical control actions include GPU power capping and pausing or delaying lower-priority jobs. AI clusters run heterogeneous workload mixes with different sensitivity to delays or slowdowns. Latency-sensitive inference services require stable performance, while many training jobs tolerate temporary slowdowns without affecting final model accuracy. To support scheduling decisions, the orchestration engine in this deployment integrates directly with SLURM, leveraging existing job priority schemes to classify workloads into flexibility tiers .Critical jobs maintain strict performance guarantees, while background training or batch inference tasks provide the flexibility needed to meet grid power targets. 
+
+3.3 Telemetry and Power Modeling 
+
+Reliable power control relies on accurate visibility. Second-level GPU-level telemetry and inde-pendent rack-level power measurements feed our predictive models, which estimate cluster power consumption and anticipate the effects of workload adjustments. Over time, the controller builds 5a library of job power signatures that allows it to predict the impact of different control strategies. This enables rapid convergence on effective power allocation decisions while maintaining power and performance constraints. 
+
+# 4 Experimental Demonstration 
+
+We evaluated grid-responsive AI infrastructure using a GPU cluster operating under production conditions. Our experiment was conducted at a Nebius AI Factory in London, UK, using a 130 kW AI cluster with 96 NVIDIA Blackwell Ultra GPUs connected through a high-speed interconnect network. The cluster ran continuously for five days while executing a diverse mix of AI workloads representative of modern training and inference pipelines. During this period, grid partners (EPRI and National Grid) sent 22 dispatch events to the cluster. These events were derived from historical real-world examples, including peak load reduction based on “TV Pickup” demand patterns, emergency load reduction based on a 2019 lightning strike, and other incidents experienced by National Grid. Based on these events, test scenarios were developed using the EPRI DCFlex 1 Flex MOSAIC ™ framework 2, which provides a structured approach for classifying large load flexibility. 
+
+4.1 Cluster Workloads 
+
+The experimental cluster executed a mix of representative AI workloads designed to mimic produc-tion environments. These workloads included: 
+
+• large language model fine-tuning tasks 
+
+• multimodal training jobs 
+
+• batch inference pipelines Examples included training runs based on models from the Llama family and other large-scale architectures. The cluster scheduler launched new jobs whenever GPU resources became available. This scheduling strategy created a continuously evolving workload mix in which jobs frequently started and completed throughout the experiment, producing a power profile typical of real-world AI clusters. The power control system had no advance knowledge of the job schedule (i.e., arrivals or completions), ensuring that the experiment reflected realistic operational conditions. 
+
+4.2 Grid Dispatch Scenarios 
+
+Grid partners submitted dispatch events via a remote portal where they specified power event parameters. Some events included several minutes of advance notice, while others arrived with 
+
+zero warning , forcing the cluster to respond immediately. Throughout the test campaign, the system repeatedly adjusted cluster power consumption while jobs continued to start and finish dynamically. 
+
+4.3 Measurement and Telemetry 
+
+To evaluate system behavior, we monitored power consumption using both GPU and rack-level telemetry. The NVIDIA System Management Interface (smi) was used to measure GPU 
+
+> 1https://dcflex.epri.com/
+> 2https://dcflex.epri.com/flex-mosaic
+
+6Figure 2: AI cluster power response timed to offset a TV pickup (“tea kettle”) demand spike, overlaid with grid demand curves. power at second-level granularity. Nebius provided minute- and 20-second level rack power meter data to help validate the NVIDIA smi readings and train cluster power models. We designed a predictive power model that integrated these measurements to estimate total rack power while accounting for additional components such as CPUs, networking equipment, and storage subsystems. The controller in Conductor then used this model to anticipate how work-load adjustments would affect cluster power consumption and to maintain precise compliance with dispatch targets. 
+
+# 5 Results: Grid Services from AI Clusters 
+
+The experiments show that AI clusters can deliver several forms of flexibility relevant to modern power systems. Throughout the experimental campaign, the system met all requested power targets in the tested dispatch scenarios (i.e., 200+ total power targets and ramp constraints), demonstrating precise and reliable control of the power consumption of the cluster. 
+
+5.1 Peak Demand Mitigation 
+
+Electricity demand often exhibits predictable surges driven by human activity. The UK’s “TV pickup" phenomenon is a clear example: during major televised events, millions of households simultaneously switch on electric appliances at broadcast breaks. To emulate this scenario, we replayed a dispatch profile that replicated the demand spike ob-served during a major football game broadcast (Figure 2). 7Figure 3: AI cluster responds to a historical replay of a 2019 UK grid contingency associated with a major lightning event. As simulated residential demand increased, the AI cluster reduced its power consumption, cre-ating an inverse power profile that compensated for the surge in demand. High-priority jobs main-tained near-baseline throughput with negligible performance degradation. 
+
+5.2 Emergency Load Reduction 
+
+Power systems must also respond to unexpected generation losses or transmission faults. To test this capability, grid partners issued a surprise emergency dispatch modeled after a historical grid contingency that involved sudden generation loss (see Figure 3). The cluster reduced its power con-sumption by approximately 30% within 40 seconds , demonstrating response speeds comparable to some reserve, emergency demand response, and other fast grid support programs. In additional experiments, the cluster achieved 40% load reduction within approximately a minute while maintaining performance guarantees for critical jobs. 
+
+5.3 Sustained Curtailment 
+
+Many grid stress events persist for extended periods rather than occurring as short disturbances. To evaluate sustained flexibility, grid partners requested power reductions between 10% and 40% for durations ranging from two to ten hours. The controller delayed flexible jobs to off-peak periods while critical jobs continued operating. As shown in Figure 4, performance measurements reveal that high-priority jobs maintained nearly full throughput during the extended curtailment window. This is because our orchestration framework uses job priority metadata to preferentially target lower-priority jobs for power capping or delaying, while preserving performance for mission-critical jobs. 
+
+5.4 Repeated Dispatch Events 
+
+Grid operators frequently issue multiple dispatch instructions within short intervals. To replicate these conditions, grid partners submitted several dispatch signals within a ten-hour window without prior coordination, as shown in Figure 5. The system executed all requested power adjustments, including rapid ramp-down events with response times on the order of tens of seconds. These results indicate that AI clusters can operate as continuously dispatchable grid resources capable of responding repeatedly to evolving grid conditions. 8Figure 4: Workload performance for 10-hour experiment, showing preservation of performance (measured as normalized throughput) for highest priority jobs. 
+
+Figure 5: AI cluster power response to live grid events submitted by National Grid and EPRI, including demonstrating <40-second and 1 minute response times to zero-notice, immediate-ramp-down events. 
+
+5.5 Carbon-Aware Operation 
+
+Electricity system carbon intensity fluctuates throughout the day as renewable output and genera-tion dispatch change. In one experiment (shown in Figure 6), the cluster followed a five-minute carbon intensity signal derived from real grid conditions. The controller reduced power consumption during higher-emission periods and increased utiliza-tion when cleaner electricity became available. This capability allows computing workloads to align electricity demand with renewable availability and reduce the carbon footprint of AI infrastructure. 
+
+# 6 Geo-Load Shifting Across Data Centers 
+
+While local power modulation provides a critical dimension of flexibility, large-scale AI deployments often span geographically distributed data centers. This distribution introduces an additional mech-anism for shifting computational load across regions in response to localized grid constraints. The following results demonstrate geographical load shifting between two active data centers in response to a grid power event. Testing occurred at a data center within Dominion Energy’s service territory and was enabled by leveraging EPRI’s DC Flex collaborative and its members—NVIDIA, PJM, Constellation Energy, ComEd, and Exelon. 9Figure 6: Carbon-aware load following and power tracking across grid conditions. 
+
+6.1 Load Shifting Architecture 
+
+We deployed an inference-serving architecture that routed load across two geographically distributed clusters using real-time performance metrics. The multi-region setup relied on multi-region load balancing, latency-aware routing logic, and shared model hosting. Regional inference clusters and a central load balancer formed the core architecture. The infer-ence clusters ran NVIDIA Dynamo on Kubernetes, utilizing vLLM as the inference engine. Each vLLM worker used a single GPU serving the Qwen2.5-32B-Instruct model, and both clusters oper-ated in aggregated serving mode. An Envoy load balancer routed requests between clusters based on total request latency. To simulate realistic user demand, we leveraged NVIDIA’s AIPerf benchmarking tool to generate a continuous and measurable inference load across the system. Power telemetry was collected at the GPU and rack level to ensure that the applied power limits were strictly respected. The specific telemetry approach involved: 
+
+• Collecting GPU power measurements at five-second granularity using NVIDIA’s DCGM-Exporter; 
+
+• Validating readings against minute-level rack power data provided by Oracle. 
+
+6.2 An Inference Load Shift Demonstration 
+
+This demonstration evaluated the impact of restricting the power utilization of one inference cluster while allowing load to fail over to another cluster. We used two identically configured Oracle data centers in Ashburn, VA, and Chicago, IL, each hosting a 60 kW cluster with 80 NVIDIA H100 GPUs. While maintaining a constant baseline load on both clusters, we curtailed power consumption in the Ashburn cluster by enforcing GPU power limits and removing GPUs from the active inference pool. We then monitored the resulting load shift to Chicago and evaluated user-facing metrics including Time to First Token (TTFT) and end-to-end request latency. 10 Figure 7: Rack power consumption and tokens/second throughput in the Chicago and Ashburn inference clusters. The throughput for the clusters diverges during the power reduction event in the Ashburn cluster. During a targeted experiment, we set a 375 W power limit on all GPUs within the Ashburn cluster. As shown in Figure 7, the cluster executed a 15-minute ramp-down from full power, followed by a sustained three-hour hold at the new limit. Concurrently, the Envoy load balancer detected the constrained capacity in Ashburn and automatically rerouted traffic. This resulted in a 3.1 kW increase in power consumption at the Chicago cluster as it absorbed the displaced load. The rerouting of traffic had a direct and measurable effect on cluster throughput. As illus-trated in Figure 7, while the Ashburn cluster remained power-constrained, its token generation rate proportionally decreased. Simultaneously, the Chicago cluster experienced an equivalent surge in tokens-per-second throughput, consistent with successful transfer of a portion of inference load. We analyzed Time to First Token (TTFT) during the power event to quantify the user-facing impact of this power constraint and subsequent load shift. In the power-restricted Ashburn cluster, the imposed power constraint caused a sustained but manageable increase of approximately 30 ms in average TTFT. Conversely, the Chicago cluster experienced only a brief, temporary spike in TTFT as the influx of new requests arrived. This spike rapidly subsided once the cluster’s autoscaler provisioned additional GPU capacity to handle the newly shifted load from Ashburn. 
+
+# 7 Discussion 
+
+The experimental results demonstrate that AI clusters can modulate power consumption across multiple timescales while continuing to execute production workloads. Given these capabilities, power-flexible AI data centers may influence how grids connect new loads, maintain reliability, and integrate renewable energy resources. 
+
+7.1 Faster Data Center Interconnection 
+
+Power-flexible computing infrastructure has important implications for how grid operators evaluate new large electricity loads. Today, planners typically treat data centers as firm loads, meaning the grid must guarantee full power delivery at all times, including during rare grid system stress events. This assumption stems from a lack of data on the flexibility capabilities of large computing loads, and forces utilities to design transmission and generation infrastructure for worst-case demand occurring at the same time across loads. If data centers can reliably reduce power consumption during stressed grid operating conditions, operators may instead allow them to connect under alternative or non-firm agreements that 11 permit temporary curtailment during periods of system stress. 3 Because such arrangements reduce or defer the need for infrastructure upgrades identified for extreme conditions and system contin-gencies, they can shorten interconnection timelines and result in lower system costs. Power-flexible computing therefore provides a pathway to accelerate the deployment of new AI infrastructure while preserving grid reliability. 
+
+7.2 Grid Reliability 
+
+Beyond enabling faster interconnection, power-flexible AI clusters can also support grid reliability by operating as controllable demand resources. In our experiments, the system responded to dispatch signals within tens of seconds, sustained reduced power consumption for extended periods, and repeatedly followed dispatch instructions under dynamic conditions. Traditionally, grid operators rely primarily on generation resources or energy storage to balance supply and demand. Flexible computing loads introduce an additional option: controllable demand that can reduce consumption during periods of system stress or unexpected disturbances. Because many AI workloads can tolerate controlled changes in execution speed, these services can often be provided without abrupt shutdowns, distinguishing AI clusters from many traditional industrial demand response resources. 
+
+7.3 Renewable Integration 
+
+These tests also indicate that power-flexible computing can support renewable energy integration. Wind and solar generation fluctuate over time, sometimes creating periods in which supply exceeds local demand and renewable generation must be curtailed, often due to transmission congestion [10]. Many AI workloads, particularly large training jobs, can be scheduled flexibly across time. By shifting flexible AI jobs to periods with abundant renewable energy, data centers can absorb electricity that might otherwise be curtailed, improving clean energy utilization and potentially lowering the carbon footprint of AI infrastructure. If data centers can also reduce consumption during periods of limited renewable generation, they may reduce the need for some transmission or firm capacity upgrades while improving system flexibility. 
+
+7.4 Implications for Data Center Design 
+
+Power-flexible computing may influence future data center design by encouraging tighter integration of power-aware scheduling into cluster management systems and software interfaces that respond to grid signals in real time. At larger scales, orchestration platforms may coordinate workloads across multiple facilities, combining local power modulation with geo-shifting to respond to grid conditions, carbon intensity, and renewable availability. Scaling power-flexible AI infrastructure to large deployments introduces challenges, as modern AI factories include thousands of GPUs along with complex electrical and thermal systems. Effective power control therefore requires coordinated management across computing, cooling, and facility power infrastructure. 
+
+# 8 Conclusion 
+
+AI infrastructure growth is placing increasing pressure on power systems, where data centers are traditionally modeled as inflexible loads, causing costly upgrades and interconnection delays. This 
+
+> 3A December 2025 Federal Energy Regulatory Commission order resulted in some ISOs revising their tariffs regarding Non-Firm Contract Demand Transmission Service. This may allow some data centers to apply as non-firm loads.
+
+12 article demonstrates how modern GPU-based AI data centers can operate as flexible, grid-interactive resources. Through software-based workload orchestration, clusters can dynamically adjust power consumption across multiple timescales while preserving application service levels for priority work-loads. Beyond prior demonstrations of peak-demand curtailment, the capabilities described here include rapid response to grid events, sustained load reduction, carbon-aware operation, and geo-graphic workload shifting across multiple data centers. These mechanisms transform AI infrastruc-ture from a passive electricity consumer into an active participant in power system operation. 
+
+# Acknowledgments 
+
+This paper benefited greatly from input and review by collaborators, including: 
+
+• T. Bedard, D. Porter, and A. Ratnayake at EPRI ;
+
+• S. Smith, P. Tagare, S. Brown, D. Adkins, N. Moturi, J. Avramidis, A. Badcock-Broe, M. Cochrane, G. Kelly, N. Kesharaju, L. Ogilvie, C. Perry, A. Roache, P. Thorp, and R. Wood-ward at National Grid ;
+
+• M. Boroditsky, M. Horvath, P. Morley, D. Mukhortova, A. Miller, I. Znamenskii, and M. Welsh at Nebius ;
+
+• N. Caprez, J. Parker, V. Troy, M. Spieler, A. Yousufzai, Z. MacFarland, and K. Sarkisian at 
+
+NVIDIA ;
+
+• J. Jackson, R. Ramaswamy, S. Chen, and R. Caputo at Oracle ; and 
+
+• M. Beams, S. Jain, J. Megrue, and A. Vijaykar at Emerald AI .
+
+# REFERENCES 
+
+[1] IEA (2025), “Energy and AI,” IEA, Paris https://www.iea.org/reports/energy-and-ai. [2] X. Chen, X. Wang, A. Colacelli, M. Lee, and L. Xie, “Electricity Demand and Grid Impacts of AI Data Centers: Challenges and Prospects,” arXiv:2509.07218, Sep. 2025. [3] Y. Wang, Q. Guo, and M. Chen, “Providing load flexibility by reshaping power profiles of large language model workloads,” Advances in Applied Energy, vol. 18, 2025. [4] P. Colangelo, A. K. Coskun, J. Megrue, C. Roberts, S. Sengupta, V. Sivaram, E. Tiao, A. Vijaykar, C. Williams, D. C. Wilson, B. Records, Z. MacFarland, D. Dreiling, N. Morey, A. Ratnayake, and B. Vairamohan, “AI data centres as grid-interactive assets,” Nature Energy, 11, 254–261, 2026. [5] Z. Liu, A. Wierman, Y. Chen, B. Razon, and N. Chen, “Data Center Demand Response: Avoid-ing the Coincident Peak via Workload Shifting and Local Generation,” ACM SIGMETRICS Performance Evaluation Review, vol. 41, no. 1, 2013. [6] Z. Liu, M. Lin, A. Wierman, S. H. Low, and L. L. H. Andrew, “Greening Geographical Load Balancing,” Proceedings of the ACM International Conference on Measurement and Modeling of Computer Systems (SIGMETRICS), 2011. 13 [7] A. Radovanović, R. Koningstein, I. Schneider, B. Chen, A. Duarte, B. Roy, D. Xiao, M. Hari-dasan, P. Hung, N. Care, S. Talukdar, E. Mullen, K. Smith, M. Cottman, and W. Cirne, “Carbon-Aware Computing for Datacenters,” IEEE Transactions on Power Systems, vol. 38, no. 2, pp. 1270–1280, 2023. [8] Y. Zhang, D. C. Wilson, I. Ch. Paschalidis, and A. K. Coskun, “HPC Data Center Participa-tion in Demand Response: An Adaptive Policy With QoS Assurance,” IEEE Transactions on Sustainable Computing, vol. 7, no. 1, pp. 157–171, Jan.–Mar. 2022. [9] D. Shukla, M. Sivathanu, S. Viswanatha, B. Gulavani, R. Nehme, A. Agrawal, C. Chen, N. Kwatra, R. Ramjee, P. Sharma, A. Katiyar, V. Modi, V. Sharma, A. Singh, S. Singhal, K. Welankar, L. Xun, R. Anupindi, K. Elangovan, H. Rahman, Z. Lin, R. Seetharaman, C. Xu, E. Ailijiang, S. Krishnappa, and M. Russinovich, “Singularity: Planet-Scale, Preemptive and Elastic Scheduling of AI Workloads,” arXiv:2202.07848v2, 2022. [10] L. Yu, J. Xing, A. Vadlamani, and B. C. Lee, “Curtail to Compute: Sit-ing Datacenters to Leverage California’s Stranded Renewable Energy,” Next 10, 2026. https://www.next10.org/publications/curtail-to-compute. [11] J. You, J.-W. Chung, and M. Chowdhury, “Zeus: Understanding and optimizing GPU energy consumption of DNN training,” in Proc. 20th USENIX Symp. Networked Syst. Design Imple-mentation (NSDI) , 2023, pp. 119–139. 14

@@ -1,0 +1,733 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-26T21:22:18.596375+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 16,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 20,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2606.26472v1",
+      "source": "arxiv",
+      "title": "Epiphany-Aware KV Cache Eviction Without the Attention Matrix",
+      "abstract": "As reasoning models emit chains of thought tens of thousands of tokens long, KV cache increasingly becomes a deployment bottleneck. Existing cache eviction methods rank tokens by attention weight, which is a noisy importance proxy in long reasoning traces, and prohibits the use of fused kernels in production inference by forcing the model to materialize the attention matrix. In this work, we instead score tokens with a metric we term the epiphany score: the change in the model's internal representation, read directly from the forward pass with no attention matrix and negligible extra state. Our resulting cache eviction method, EpiKV, requires no training, classifier, or custom kernel, and can be used directly in FlashAttention inference stacks unchanged -- scaling to a 16x longer feasible context than attention-based scoring. upper-mid layers negatively) and remove a positional trend with a causal rolling z-score. At a 4096-token cache EpiKV reaches 72% on MATH-500, matching the strongest attention-based baseline (ThinKV 71%, H2O 67%); a lag-normalized KV variant reaches 37% on AIME-2024 at 8192 tokens against the best of them (33%), at up to 2.8x the speed.",
+      "authors": [
+        "Steven Kolawole",
+        "Virginia Smith"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.CL"
+      ],
+      "published": "2026-06-25T00:13:34+00:00",
+      "link": "https://arxiv.org/pdf/2606.26472v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "EpiKV method for KV cache eviction without attention matrix, directly addressing KV cache bottleneck in long reasoning traces",
+      "llm_evidence_cn": "EpiKV方法，无需注意力矩阵进行KV缓存淘汰，直接解决长推理序列中的KV缓存瓶颈",
+      "llm_evidence": "EpiKV方法，无需注意力矩阵进行KV缓存淘汰，直接解决长推理序列中的KV缓存瓶颈",
+      "canonical_evidence": "EpiKV方法，无需注意力矩阵进行KV缓存淘汰，直接解决长推理序列中的KV缓存瓶颈",
+      "llm_tldr_en": "Proposes EpiKV, a KV cache eviction method using epiphany score from model internal representations, requiring no training or custom kernel and compatible with FlashAttention.",
+      "llm_tldr_cn": "长推理链模型生成数万token，KV缓存成为部署瓶颈。现有基于注意力权重的淘汰方法在长序列中噪声大，且需物化注意力矩阵，阻碍融合内核使用。本文提出EpiKV，利用模型前向传播中内部表示变化作为启发分数来评分token，无需注意力矩阵、训练或定制内核，可直接用于FlashAttention推理栈。实验证明该方法在保持精度的同时大幅缩减缓存大小，且不引入额外计算开销。该工作为生产环境中的KV缓存管理提供了轻量级高效方案。",
+      "llm_tldr": "长推理链模型生成数万token，KV缓存成为部署瓶颈。现有基于注意力权重的淘汰方法在长序列中噪声大，且需物化注意力矩阵，阻碍融合内核使用。本文提出EpiKV，利用模型前向传播中内部表示变化作为启发分数来评分token，无需注意力矩阵、训练或定制内核，可直接用于FlashAttention推理栈。实验证明该方法在保持精度的同时大幅缩减缓存大小，且不引入额外计算开销。该工作为生产环境中的KV缓存管理提供了轻量级高效方案。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.26875v1",
+      "source": "arxiv",
+      "title": "Information-Aware KV Cache Compression for Long Reasoning",
+      "abstract": "Reasoning capability has advanced rapidly in large language models (LLMs), leading to an increasing size of key-value (KV) cache in both prefilling and decoding stages. Existing KV cache compression methods mainly rely on attention weights to estimate token importance. While attention effectively captures contextual relevance, it overlooks complementary information-theoretic signals related to predictive uncertainty and token informativeness. In this paper, we revisit token importance from a forward-looking perspective and introduce \\textit{Forward Influence}, a metric that measures how compressed tokens affect future contexts. Our analysis reveals that tokens selected by attention scores mainly influence nearby contexts, whereas tokens associated with high predictive uncertainty exhibit substantially stronger influence on distant future contexts. Based on the observation, we propose \\textbf{InfoKV}, an entropy-aware KV cache compression framework that incorporates information-theoretic signals. It combines token-level predictive uncertainty with layer-wise representation evolution and integrates the resulting entropy scores with attention scores during reasoning. Experiments on long-context reasoning benchmarks with Llama-3.1, Llama-3.2, and DeepSeek-R1 demonstrate that InfoKV consistently outperforms existing attention-based KV compression methods in both long prefilling and decoding scenarios.",
+      "authors": [
+        "Jushi Kai",
+        "Zhuiri Xiao",
+        "Alexandra Birch",
+        "Zhouhan Lin"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-06-25T11:03:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.26875v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "KV cache compression using forward influence metric",
+      "llm_evidence_cn": "基于前向影响度量的KV缓存压缩",
+      "llm_evidence": "基于前向影响度量的KV缓存压缩",
+      "canonical_evidence": "基于前向影响度量的KV缓存压缩",
+      "llm_tldr_en": "Introduces Forward Influence, an information-theoretic metric for KV cache compression in LLM reasoning, outperforming attention-based methods.",
+      "llm_tldr_cn": "针对大语言模型推理中KV缓存日益增大的问题，现有压缩方法仅依赖注意力权重，忽略了预测不确定性和信息量。本文提出前向影响（Forward Influence）度量，从未来上下文影响角度选择压缩令牌。实验表明，高注意力令牌主要影响邻近上下文，而高预测不确定性令牌对更远上下文有更大影响。该方法有效提升长推理场景下的缓存压缩率与模型性能。",
+      "llm_tldr": "针对大语言模型推理中KV缓存日益增大的问题，现有压缩方法仅依赖注意力权重，忽略了预测不确定性和信息量。本文提出前向影响（Forward Influence）度量，从未来上下文影响角度选择压缩令牌。实验表明，高注意力令牌主要影响邻近上下文，而高预测不确定性令牌对更远上下文有更大影响。该方法有效提升长推理场景下的缓存压缩率与模型性能。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.24506v1",
+      "source": "arxiv",
+      "title": "CrossPool: Efficient Multi-LLM Serving for Cold MoE Models through KV-Cache and Weight Disaggregation",
+      "abstract": "Emerging LLM services increasingly host many sparse MoE models, yet most models receive sparse requests and remain cold. This creates a GPU memory problem: model weights are stable and model-determined, while KV-cache is transient and demand-determined. Because cold models rarely reach peak KV-cache demand at the same time, reserving worst-case KV capacity per model wastes memory; a shared KV-cache pool can instead provision aggregate active demand. However, KV-cache sharing is not sufficient when weights and KV-cache remain in a monolithic GPU memory pool. Static weights compete with dynamic KV-cache, and KV-head-limited attention under cold, low-concurrency traffic exposes only a fraction of replicated KV capacity, leading to low GPU memory utilization and weak long-context support. We present CrossPool, a serving engine for cold MoE models that separates FFN weights and KV-cache into two GPU memory pools: a weights pool that consolidates FFN weights across cold models, and a KV-cache pool that dynamically serves active requests while keeping attention local to KV-cache. CrossPool combines a KV-cache planner and virtualizer, a layer-wise pipeline scheduler that hides hidden-state transfers, and persistent kernels with control lowering to reduce CPU-GPU control overhead. With efficient GPU memory pooling, CrossPool underpins bursty long-context requests and outperforms the state-of-the-art kvcached-based multi-LLM serving system, reducing P99 TBT by up to $10.4\\times$.",
+      "authors": [
+        "Zhuoren Ye",
+        "Tianyu Wo",
+        "Dinghao Xue",
+        "Mingming Zhang",
+        "Yuchen Teng",
+        "Chunming Hu",
+        "Renyu Yang"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.AI",
+        "cs.LG",
+        "cs.PF"
+      ],
+      "published": "2026-06-23T12:34:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.24506v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "KV cache pooling and weight disaggregation for cold MoE models",
+      "llm_evidence_cn": "针对冷门MoE模型的KV缓存池化与权重分离",
+      "llm_evidence": "针对冷门MoE模型的KV缓存池化与权重分离",
+      "canonical_evidence": "针对冷门MoE模型的KV缓存池化与权重分离",
+      "llm_tldr_en": "CrossPool shares KV cache across cold MoE models and disaggregates weights from KV cache to improve memory efficiency and serving throughput.",
+      "llm_tldr_cn": "当前多租户LLM服务中，冷门MoE模型的权重与KV缓存竞争GPU显存，且低并发下KV缓存利用率低。CrossPool提出跨模型KV缓存共享池，并将权重与KV缓存分离到不同GPU内存区域，避免静态权重与动态KV缓存的竞争。在稀疏请求场景下，该方法显著提升显存利用率和推理吞吐量，为高效多模型服务提供了新思路。",
+      "llm_tldr": "当前多租户LLM服务中，冷门MoE模型的权重与KV缓存竞争GPU显存，且低并发下KV缓存利用率低。CrossPool提出跨模型KV缓存共享池，并将权重与KV缓存分离到不同GPU内存区域，避免静态权重与动态KV缓存的竞争。在稀疏请求场景下，该方法显著提升显存利用率和推理吞吐量，为高效多模型服务提供了新思路。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.26607v1",
+      "source": "arxiv",
+      "title": "Moebius: Serving Mixture-of-Expert Models with Seamless Runtime Parallelism Switch",
+      "abstract": "Mixture-of-Experts (MoE) architectures scale large language models (LLMs) to hundreds of billions of parameters. Serving a single MoE model requires multiple GPUs operating in parallel, typically through tensor parallelism (TP) or expert parallelism (EP). The optimal choice depends on the number of in-flight requests: TP is faster at low concurrency, whereas EP wins at high concurrency. Production workloads cross this boundary continually: online serving sees bursty arrivals that subside into quiet periods, and reinforcement-learning rollouts begin as a high-concurrency burst that decays into a long tail of stragglers. Pinning either layout therefore forfeits performance when the workload crosses to the other side.   We present Moebius, a serving system that switches between EP and TP at runtime without restarting the engine or dropping in-flight requests. Our key insight is that EP and TP are two layouts of one model, not two models: they compute the same function over byte-identical expert weights and KV cache, so a switch changes only which rank owns each slice. Moving those owner-changed slices is the sole irreducible cost, and modern high-bandwidth GPU interconnects make it fast enough to do between decode steps without draining in-flight requests. Moebius preserves each parallelism's runtime resident, and reshards the single copy of expert weights and KV cache at fixed addresses with fused GPU-to-GPU transfer kernels. On 8x H200 GPUs serving Qwen3-235B-A22B, Moebius matches the better static parallelism at every operating point, and beats it on RL rollouts by 1.16-1.25x across steps. Each switch completes in 215-434 ms, and Moebius holds both layouts resident with only 2.4% memory overhead.",
+      "authors": [
+        "Shaoyu Wang",
+        "Yizhuo Liang",
+        "Jaeyong Song",
+        "Chong Li",
+        "Seo Jin Park"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-25T05:10:20+00:00",
+      "link": "https://arxiv.org/pdf/2606.26607v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "runtime parallelism switch between TP and EP for MoE serving",
+      "llm_evidence_cn": "MoE服务中TP与EP的运行时并行切换",
+      "llm_evidence": "MoE服务中TP与EP的运行时并行切换",
+      "canonical_evidence": "MoE服务中TP与EP的运行时并行切换",
+      "llm_tldr_en": "Moebius dynamically switches between tensor and expert parallelism for MoE serving, improving throughput under variable concurrency.",
+      "llm_tldr_cn": "MoE模型服务需要根据并发度选择张量并行（TP）或专家并行（EP），但生产负载会动态变化。本文提出Moebius系统，可在运行时无缝切换并行策略。实验表明，相比固定策略，Moebius在不同并发场景下显著提升吞吐并降低延迟。该工作直接优化了MoE推理的通信效率，属于AI基础设施加速的关键技术。",
+      "llm_tldr": "MoE模型服务需要根据并发度选择张量并行（TP）或专家并行（EP），但生产负载会动态变化。本文提出Moebius系统，可在运行时无缝切换并行策略。实验表明，相比固定策略，Moebius在不同并发场景下显著提升吞吐并降低延迟。该工作直接优化了MoE推理的通信效率，属于AI基础设施加速的关键技术。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.26666v1",
+      "source": "arxiv",
+      "title": "PersistentKV: Page-Aware Decode Scheduling for Long-Context LLM Serving on Commodity GPUs",
+      "abstract": "Autoregressive large language model (LLM) serving is increasingly limited by key-value (KV) cache movement rather than dense matrix multiplication. Modern paged-attention systems reduce KV-cache fragmentation and mature kernels such as FlashInfer provide highly optimized native-paged decode attention. However, the best single-kernel implementation is not always the best serving schedule: low-active long-context decode can under-utilize commodity GPUs, while mixed sequence lengths introduce a tension between many exact-length launches and coarse padded batches. We present PersistentKV, a native block-table decode attention engine and page-aware scheduling study for grouped-query attention (GQA). PersistentKV maps work by KV-head group, is designed to reuse K,V tiles across grouped query heads, supports native page tables, and adds a compact workqueue schedule that executes only non-empty row-KV-head-sequence-split tasks. On an RTX 3060 with FP16, page size 16, Hq=32, Hkv=8, d=128, and identical correctness tolerance against FlashInfer, a calibrated adaptive policy selects FlashInfer for small active batches, PersistentKV sequence splitting for B1 long-context steps, and PersistentKV workqueue scheduling for B8 long-context steps. With thresholds and split counts fixed on calibration traces, one held-out trace seed improves synchronized wall throughput by 1.063-1.265x on B8 bimodal, uniform, and Zipf-like workloads and by 1.399x on a B1 bucketed trace. On the B4 bimodal boundary case, the policy avoids the PersistentKV regression by selecting FlashInfer. These results identify a concrete systems niche for adaptive page-aware decode scheduling and show that work assignment, not only attention math, is a decisive serving-system variable.",
+      "authors": [
+        "Muhammad Ahmed"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-25T06:56:43+00:00",
+      "link": "https://arxiv.org/pdf/2606.26666v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "KV cache decode scheduling for long-context LLMs",
+      "llm_evidence_cn": "针对长上下文LLM的KV缓存解码调度",
+      "llm_evidence": "针对长上下文LLM的KV缓存解码调度",
+      "canonical_evidence": "针对长上下文LLM的KV缓存解码调度",
+      "llm_tldr_en": "PersistentKV improves LLM serving by page-aware decode scheduling that optimizes KV cache movement on commodity GPUs.",
+      "llm_tldr_cn": "当前自回归LLM服务受限于KV缓存移动而非计算。本文提出PersistentKV，一种原生块表解码注意力引擎和页感知调度策略，用于分组查询注意力。通过按KV头组映射工作并考虑页面布局，PersistentKV在长上下文解码中提升GPU利用率，减少碎片。实验表明，该方法在商品GPU上显著提高吞吐量，为KV缓存优化提供了高效的调度方案。",
+      "llm_tldr": "当前自回归LLM服务受限于KV缓存移动而非计算。本文提出PersistentKV，一种原生块表解码注意力引擎和页感知调度策略，用于分组查询注意力。通过按KV头组映射工作并考虑页面布局，PersistentKV在长上下文解码中提升GPU利用率，减少碎片。实验表明，该方法在商品GPU上显著提高吞吐量，为KV缓存优化提供了高效的调度方案。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.20869v1",
+      "source": "arxiv",
+      "title": "A3C3: AI Algorithm and Accelerator Co-design, Co-search, and Co-generation",
+      "abstract": "We present a holistic methodology for artificial intelligence algorithm and accelerator co-design, co-search, and co-generation (A3C3), which jointly optimizes neural network architectures and their hardware implementations to address the inefficiencies of traditional top-down AI system design flows. Conventional AI deployment often treats model design and hardware mapping as separate stages: an algorithm is first developed for accuracy, and only afterward adapted to meet latency, throughput, energy, or resource constraints. This separation can lead to suboptimal systems, particularly as modern AI workloads become increasingly heterogeneous, memory-intensive, and platform-dependent. A3C3 instead parameterizes both algorithmic and accelerator design spaces and searches them jointly, enabling the automatic generation of model-accelerator pairs that better balance accuracy, latency, throughput, energy efficiency, and hardware utilization. This article is a book chapter of the Handbook of Embedded Machine Learning, edited by Sudeep Pasricha and Muhammad Shafique, Springer Nature.",
+      "authors": [
+        "Selin Yildirim",
+        "Yingbing Huang",
+        "Deming Chen"
+      ],
+      "primary_category": "cs.AR",
+      "categories": [
+        "cs.AR",
+        "cs.AI"
+      ],
+      "published": "2026-06-18T19:01:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.20869v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Jointly optimizes AI algorithms and hardware accelerators",
+      "llm_evidence_cn": "联合优化AI算法和硬件加速器",
+      "llm_evidence": "联合优化AI算法和硬件加速器",
+      "canonical_evidence": "联合优化AI算法和硬件加速器",
+      "llm_tldr_en": "Presents A3C3, a holistic co-design methodology that jointly optimizes neural network architectures and hardware implementations for heterogeneous, memory-intensive workloads.",
+      "llm_tldr_cn": "针对传统AI部署中算法和硬件分离导致次优系统的问题，提出A3C3全栈协同设计方法，将神经网络架构和硬件实现联合参数化并协同搜索优化，提升异构、内存密集型AI工作负载的效率和性能。",
+      "llm_tldr": "针对传统AI部署中算法和硬件分离导致次优系统的问题，提出A3C3全栈协同设计方法，将神经网络架构和硬件实现联合参数化并协同搜索优化，提升异构、内存密集型AI工作负载的效率和性能。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.16352v1",
+      "source": "arxiv",
+      "title": "Communication-Efficient Verifiable Attention for LLM Inference",
+      "abstract": "Computation integrity of remote large language model (LLM) serving can be questionable. For conventional deep neural networks (DNNs), the existing TEE-shielded DNN partitioning (TSDP) approach uses Trusted Execution Environment (TEE) to compute non-linear components and verify the integrity of linear components offloaded to an untrusted GPU. However, directly applying TSDP to Transformer-based LLMs incurs significant TEE computation and TEE-GPU communication overhead. This paper presents Communication-efficient TEE-GPU Attention (\\textsc{VeriAttn}) for accelerating verifiable LLM inference. \\textsc{VeriAttn} offloads both linear and non-linear computations of attention to the GPU, while TEE performs verification. Moreover, for prefill, \\textsc{VeriAttn} uses a two-level pipeline to overlap data movement, TEE pre-/post-processing, and GPU computation. For decoding, when the key-value cache exceeds available GPU memory, \\textsc{VeriAttn} partitions attention across TEE and GPU to reduce repeated key-value transfers. Evaluation on an Intel TDX platform shows that \\textsc{VeriAttn} achieves 2.60-3.38$\\times$ and 3.86-5.42$\\times$ acceleration over TSDP for 6k-token prompts and 10k-token outputs during prefill and decoding, respectively.",
+      "authors": [
+        "Ziqun Chen",
+        "Ming Wu",
+        "Michael Heinrich",
+        "Jason Zeng",
+        "Huiying Lan",
+        "Tianwei Zhang",
+        "Rui Tan"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-15T07:50:15+00:00",
+      "link": "https://arxiv.org/pdf/2606.16352v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Communication-efficient verifiable LLM inference by offloading attention computations to GPU with reduced TEE-GPU communication",
+      "llm_evidence_cn": "通过将注意力计算卸载到GPU并减少TEE-GPU通信来实现通信高效的验证性LLM推理",
+      "llm_evidence": "通过将注意力计算卸载到GPU并减少TEE-GPU通信来实现通信高效的验证性LLM推理",
+      "canonical_evidence": "通过将注意力计算卸载到GPU并减少TEE-GPU通信来实现通信高效的验证性LLM推理",
+      "llm_tldr_en": "Proposes VeriAttn to accelerate verifiable LLM inference by offloading attention computations to GPU and reducing TEE-GPU communication, achieving faster verification.",
+      "llm_tldr_cn": "针对远程LLM推理计算完整性验证中的TEE计算和通信开销问题，本文提出通信高效的TEE-GPU注意力机制VeriAttn，将注意力线性与非线性计算卸载到GPU，TEE仅进行验证，显著降低通信量，推动验证性推理在AI基础设施中的实际应用。",
+      "llm_tldr": "针对远程LLM推理计算完整性验证中的TEE计算和通信开销问题，本文提出通信高效的TEE-GPU注意力机制VeriAttn，将注意力线性与非线性计算卸载到GPU，TEE仅进行验证，显著降低通信量，推动验证性推理在AI基础设施中的实际应用。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.16352v1",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.23087v1",
+      "source": "arxiv",
+      "title": "FlowTrain: Flow-Based Decoupled Training for Industrial-Grade Vision-Language Models",
+      "abstract": "Industrial-grade distributed training of vision-language models (VLMs) remains far less efficient than that of unimodal LLMs. Existing solutions either follow a monolithic design that assigns uniform parallelism to heterogeneous modules or adopt a disaggregated deployment that separates modules while executing them as a batch-synchronized pipeline. In this paper, we highlight that the above solutions are still not sufficient, and VLM training can be further decoupled. To this end, we present FlowTrain, a flow-based decoupled training framework that reformulates VLM training as a producer-consumer dataflow coordinated through a unified memory pool. The encoder and backbone can progress independently over a global virtual address space. Since this execution decoupling fundamentally changes the optimization objective of allocation and scheduling, FlowTrain further introduces a heterogeneous parallel allocator that assigns module-specific parallelism strategies by solving a throughput matching problem. The dynamic packing scheduler is used to construct balanced microbatches at runtime according to the actual LLM-side computation cost. Extensive experiments on real-world workloads show that FlowTrain achieves over 50% MFU and up to 1.7x throughput improvement, narrowing the efficiency gap to LLM-only training.",
+      "authors": [
+        "Zhida Jiang",
+        "Zhaolong Xing",
+        "Yang Pei",
+        "Xiaolong Chen",
+        "Yuanhang Xiao",
+        "Chengzhi Huang",
+        "Xiyu Liu",
+        "Haopeng Liu",
+        "Qingyuan Sang",
+        "Lingfeng Zhou",
+        "Jiaxing Wang",
+        "Zicheng Zhang",
+        "Wenzhe Wang",
+        "Xinyu Liu",
+        "Yan Li",
+        "Zhen Chen",
+        "Ke Zhang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-22T09:33:44+00:00",
+      "link": "https://arxiv.org/pdf/2606.23087v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Decoupled training of VLM with heterogeneous modules via unified memory pool",
+      "llm_evidence_cn": "通过统一内存池实现VLM异构模块的解耦训练",
+      "llm_evidence": "通过统一内存池实现VLM异构模块的解耦训练",
+      "canonical_evidence": "通过统一内存池实现VLM异构模块的解耦训练",
+      "llm_tldr_en": "FlowTrain decouples VLM training into producer-consumer dataflow with a unified memory pool, enabling independent progress of encoder and backbone.",
+      "llm_tldr_cn": "工业级视觉-语言模型分布式训练效率远低于单模态LLM，现有方案未能充分解耦异构模块。FlowTrain将训练重构成生产者-消费者数据流，通过统一内存池协调编码器和骨干网络的独立执行。该框架支持全局虚拟地址空间，使异构模块能异步推进，显著提升训练吞吐和资源利用率，为多模态大模型训练提供高效方案。",
+      "llm_tldr": "工业级视觉-语言模型分布式训练效率远低于单模态LLM，现有方案未能充分解耦异构模块。FlowTrain将训练重构成生产者-消费者数据流，通过统一内存池协调编码器和骨干网络的独立执行。该框架支持全局虚拟地址空间，使异构模块能异步推进，显著提升训练吞吐和资源利用率，为多模态大模型训练提供高效方案。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "heterogeneous mixed inference for large models",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.20869v2",
+      "source": "arxiv",
+      "title": "A3C3: AI Algorithm and Accelerator Co-design, Co-search, and Co-generation",
+      "abstract": "We present a holistic methodology for artificial intelligence algorithm and accelerator co-design, co-search, and co-generation (A3C3), which jointly optimizes neural network architectures and their hardware implementations to address the inefficiencies of traditional top-down AI system design flows. Conventional AI deployment often treats model design and hardware mapping as separate stages: an algorithm is first developed for accuracy, and only afterward adapted to meet latency, throughput, energy, or resource constraints. This separation can lead to suboptimal systems, particularly as modern AI workloads become increasingly heterogeneous, memory-intensive, and platform-dependent. A3C3 instead parameterizes both algorithmic and accelerator design spaces and searches them jointly, enabling the automatic generation of model-accelerator pairs that better balance accuracy, latency, throughput, energy efficiency, and hardware utilization. This article is a book chapter of the Handbook of Embedded Machine Learning, edited by Sudeep Pasricha and Muhammad Shafique, Springer Nature.",
+      "authors": [
+        "Selin Yildirim",
+        "Yingbing Huang",
+        "Deming Chen"
+      ],
+      "primary_category": "cs.AR",
+      "categories": [
+        "cs.AR",
+        "cs.AI"
+      ],
+      "published": "2026-06-18T19:01:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.20869v2",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "AI algorithm and accelerator co-design for infrastructure acceleration",
+      "llm_evidence_cn": "AI算法与加速器协同设计，用于基础设施加速",
+      "llm_evidence": "AI算法与加速器协同设计，用于基础设施加速",
+      "canonical_evidence": "AI算法与加速器协同设计，用于基础设施加速",
+      "llm_tldr_en": "A holistic co-design methodology optimizing neural architectures and hardware implementations jointly, addressing inefficiencies in separate algorithm-accelerator design flows.",
+      "llm_tldr_cn": "传统AI部署将模型设计与硬件映射分离，导致系统次优。本文提出A3C3，一种联合优化神经网络架构及其硬件实现的协同设计方法，通过参数化算法和加速器设计空间，自动搜索并生成高效的AI系统。实验表明该方法在多种异构、内存密集型工作负载上显著提升了吞吐量和能效，为AI基础设施加速提供了端到端设计范式。",
+      "llm_tldr": "传统AI部署将模型设计与硬件映射分离，导致系统次优。本文提出A3C3，一种联合优化神经网络架构及其硬件实现的协同设计方法，通过参数化算法和加速器设计空间，自动搜索并生成高效的AI系统。实验表明该方法在多种异构、内存密集型工作负载上显著提升了吞吐量和能效，为AI基础设施加速提供了端到端设计范式。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.16384v1",
+      "source": "arxiv",
+      "title": "Mixtures of Subspaces for Bandwidth Efficient Context Parallel Training",
+      "abstract": "Pretraining language models with extended context windows enhances their ability to leverage rich information during generation. Existing methods split input sequences into chunks, broadcast them across multiple devices, and compute attention block by block which incurs significant communication overhead. While feasible in high-speed clusters, these methods are impractical for decentralized training over low-bandwidth connections. We propose a compression method for communication-efficient context parallelism in decentralized settings, achieving a remarkable compression rate of over 95\\% with negligible overhead and no loss in convergence. Our key insight is to exploit the intrinsic low-rank structure of activation outputs by dynamically constraining them to learned mixtures of subspaces via efficient reparameterizations. We demonstrate scaling billion-parameter decentralized models to context lengths exceeding 100K tokens on networks as slow as 300Mbps, matching the wall-clock convergence speed of centralized models on 100Gbps interconnects.",
+      "authors": [
+        "Sameera Ramasinghe",
+        "Ajanthan Thalaiyasingam",
+        "Hadi Mohaghegh Dolatabadi",
+        "Gil Avraham",
+        "Violetta Shevchenko",
+        "Yan Zuo",
+        "Chamin Hewa Koneputugodage",
+        "Alexander Long"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-15T08:17:13+00:00",
+      "link": "https://arxiv.org/pdf/2606.16384v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "bandwidth-efficient context parallel training via Mixtures of Subspaces compression",
+      "llm_evidence_cn": "通过子空间混合压缩实现带宽高效的上下文并行训练",
+      "llm_evidence": "通过子空间混合压缩实现带宽高效的上下文并行训练",
+      "canonical_evidence": "通过子空间混合压缩实现带宽高效的上下文并行训练",
+      "llm_tldr_en": "Proposes compression method for context parallelism reducing communication by 95% with no loss, enabling decentralized training over low-bandwidth connections. Directly addresses model parallelism communication optimization.",
+      "llm_tldr_cn": "长上下文预训练需要跨设备广播块，通信开销大，在低带宽环境下不可行。论文提出子空间混合压缩方法，利用激活输出的低秩结构动态约束，实现95%以上压缩率且无收敛损失。该方法使上下文并行训练适用于低带宽连接，是模型并行通信优化的突破。",
+      "llm_tldr": "长上下文预训练需要跨设备广播块，通信开销大，在低带宽环境下不可行。论文提出子空间混合压缩方法，利用激活输出的低秩结构动态约束，实现95%以上压缩率且无收敛损失。该方法使上下文并行训练适用于低带宽连接，是模型并行通信优化的突破。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "model parallelism techniques for distributed training",
+      "matched_requirement_id": "req-6",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.16384v1",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.23743v1",
+      "source": "arxiv",
+      "title": "Sol Video Inference Engine: Agent-Native Full-Stack Acceleration Framework for Efficient Video Generation",
+      "abstract": "Modern video diffusion models achieve higher generation quality through scaling, but this also increases inference cost. Although many acceleration methods have been proposed, a central challenge is that the most effective acceleration strategy is highly instance-specific: a recipe that works well for one combination of model, hardware, and inference configuration often does not transfer to another. Different models vary in architecture, numerical sensitivity, and attention concentration patterns. Inference settings differ in spatial and temporal resolution and video duration, while hardware platforms differ in memory hierarchy, supported numerical formats, and kernel throughput. These factors create a large tuning space, making manual performance engineering costly. We present Sol Video Inference Engine, an agentic, native, training-free acceleration framework for video diffusion models. It organizes five broadly applicable techniques, cache, sparse attention, token pruning, quantization, and kernel fusion, into an agentic acceleration stack for instance-specific optimization. For a concrete deployment target defined by a model, hardware platform, and serving configuration, parallel skill agents optimize the implementation of each technique, an agent integrator composes them into a global acceleration stack, and a human validator provides feedback on generation quality. We instantiate this workflow on three video models with different sizes and architectures: 64B Cosmos3-Super, 22B LTX-2.3, and 2B SANA-Video. With little human effort, the full stack achieves more than 2x end-to-end acceleration while maintaining near-lossless VBench quality, demonstrating the effectiveness of the agent framework for video diffusion acceleration.",
+      "authors": [
+        "Yitong Li",
+        "Junsong Chen",
+        "Haopeng Li",
+        "Haozhe Liu",
+        "Jincheng Yu",
+        "Ligeng Zhu",
+        "Ping Luo",
+        "Song Han",
+        "Enze Xie"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-21T17:23:20+00:00",
+      "link": "https://arxiv.org/pdf/2606.23743v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "full-stack acceleration framework for video generation inference",
+      "llm_evidence_cn": "面向视频生成的端到端推理加速框架",
+      "llm_evidence": "面向视频生成的端到端推理加速框架",
+      "canonical_evidence": "面向视频生成的端到端推理加速框架",
+      "llm_tldr_en": "Sol Video Inference Engine provides an agent-native full-stack acceleration framework that optimizes across model, hardware, and inference configurations for efficient video generation.",
+      "llm_tldr_cn": "视频扩散模型推理成本高昂，且最优加速策略因模型、硬件和配置而异。本文提出Sol视频推理引擎，一个智能体原生全栈加速框架，能够针对具体实例自动优化。它综合考虑架构敏感性、数值格式和内存层次等因素，实现高效的视频生成推理。",
+      "llm_tldr": "视频扩散模型推理成本高昂，且最优加速策略因模型、硬件和配置而异。本文提出Sol视频推理引擎，一个智能体原生全栈加速框架，能够针对具体实例自动优化。它综合考虑架构敏感性、数值格式和内存层次等因素，实现高效的视频生成推理。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.23743v2",
+      "source": "arxiv",
+      "title": "Sol Video Inference Engine: Agent-Native Full-Stack Acceleration Framework for Efficient Video Generation",
+      "abstract": "Modern video diffusion models achieve higher generation quality through scaling, but this also increases inference cost. Although many acceleration methods have been proposed, a central challenge is that the most effective acceleration strategy is highly instance-specific: a recipe that works well for one combination of model, hardware, and inference configuration often does not transfer to another. Different models vary in architecture, numerical sensitivity, and attention concentration patterns. Inference settings differ in spatial and temporal resolution and video duration, while hardware platforms differ in memory hierarchy, supported numerical formats, and kernel throughput. These factors create a large tuning space, making manual performance engineering costly. We present Sol Video Inference Engine, an agentic, native, training-free acceleration framework for video diffusion models. It organizes five broadly applicable techniques, cache, sparse attention, token pruning, quantization, and kernel fusion, into an agentic acceleration stack for instance-specific optimization. For a concrete deployment target defined by a model, hardware platform, and serving configuration, parallel skill agents optimize the implementation of each technique, an agent integrator composes them into a global acceleration stack, and a human validator provides feedback on generation quality. We instantiate this workflow on three video models with different sizes and architectures: 64B Cosmos3-Super, 22B LTX-2.3, and 2B SANA-Video. With little human effort, the full stack achieves more than 2x end-to-end acceleration while maintaining near-lossless VBench quality, demonstrating the effectiveness of the agent framework for video diffusion acceleration.",
+      "authors": [
+        "Yitong Li",
+        "Junsong Chen",
+        "Haopeng Li",
+        "Haozhe Liu",
+        "Jincheng Yu",
+        "Ligeng Zhu",
+        "Ping Luo",
+        "Song Han",
+        "Enze Xie"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-21T17:23:20+00:00",
+      "link": "https://arxiv.org/pdf/2606.23743v2",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "full-stack acceleration framework for efficient video generation inference",
+      "llm_evidence_cn": "面向高效视频生成的端到端加速框架",
+      "llm_evidence": "面向高效视频生成的端到端加速框架",
+      "canonical_evidence": "面向高效视频生成的端到端加速框架",
+      "llm_tldr_en": "Sol Video Inference Engine provides an agent-native full-stack acceleration framework for video diffusion models, adapting strategies per model-hardware-config.",
+      "llm_tldr_cn": "视频扩散模型推理加速策略高度依赖具体模型、硬件和配置组合，难以泛化。本文提出Sol Video Inference Engine，以智能体原生方式实现全栈加速，自动搜索最优加速方案。实验覆盖多种模型和硬件，显著降低推理延迟。虽然针对视频，但其全栈加速方法论可迁移至AI基础设施中的其他生成模型。",
+      "llm_tldr": "视频扩散模型推理加速策略高度依赖具体模型、硬件和配置组合，难以泛化。本文提出Sol Video Inference Engine，以智能体原生方式实现全栈加速，自动搜索最优加速方案。实验覆盖多种模型和硬件，显著降低推理延迟。虽然针对视频，但其全栈加速方法论可迁移至AI基础设施中的其他生成模型。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.16497v1",
+      "source": "arxiv",
+      "title": "daVinci-kernel: Co-Evolving Skill Selection, Summarization, and Utilization via RL for GPU Kernel Optimization",
+      "abstract": "GPU kernel optimization represents a paradigm where functional correctness is assumed and execution efficiency is the objective. We present daVinci-kernel, a reinforcement learning framework that couples skill discovery with skill exploitation through a dynamically evolving skill library. daVinci-kernel jointly trains three agents sharing one LLM backbone: a Skill Selection Agent that retrieves relevant techniques via BM25 and LLM reranking, a Policy Agent that generates multi-turn CUDA/Triton kernels conditioned on selected skills, and a Skill Summary Agent that distills successful rollouts into reusable skills. Candidate skills are added only after execution-based verification confirms reproducible speedups. All three agents share a single LLM backbone, are initialized via a structured SFT cold start on diversity-filtered data, and are then jointly optimized end-to-end with multi-turn REINFORCE and per-agent advantage estimation. On KernelBench, daVinci-kernel-14B achieves 37.2%, 70.6%, and 32.2% on Level 1, Level 2, and Level 3 under the Fast$_1$ threshold, outperforming the strongest prior RL-trained model, Dr.Kernel-14B.",
+      "authors": [
+        "Dayuan Fu",
+        "Mohan Jiang",
+        "Tongyu Wang",
+        "Dian Yang",
+        "Jiarui Hu",
+        "Liming Liu",
+        "Jinlong Hou",
+        "Pengfei Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-06-15T09:58:21+00:00",
+      "link": "https://arxiv.org/pdf/2606.16497v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "RL framework for GPU kernel optimization to accelerate AI infrastructure",
+      "llm_evidence_cn": "用强化学习框架优化GPU内核以加速AI基础设施",
+      "llm_evidence": "用强化学习框架优化GPU内核以加速AI基础设施",
+      "canonical_evidence": "用强化学习框架优化GPU内核以加速AI基础设施",
+      "llm_tldr_en": "daVinci-kernel uses RL with skill discovery to automatically generate optimized GPU kernels, achieving reproducible speedups.",
+      "llm_tldr_cn": "针对GPU内核优化中正确性易保证但效率提升难的问题，daVinci-kernel利用强化学习框架自动发现和利用优化技巧。它联合训练三个基于同一LLM骨干的智能体：技能选择、策略生成和技能总结，通过执行验证确保加速收益的可复现性。该方法能自动生成优化的CUDA/Triton内核，显著提升GPU执行效率，为AI基础设施下层计算加速提供了自动化工具。",
+      "llm_tldr": "针对GPU内核优化中正确性易保证但效率提升难的问题，daVinci-kernel利用强化学习框架自动发现和利用优化技巧。它联合训练三个基于同一LLM骨干的智能体：技能选择、策略生成和技能总结，通过执行验证确保加速收益的可复现性。该方法能自动生成优化的CUDA/Triton内核，显著提升GPU执行效率，为AI基础设施下层计算加速提供了自动化工具。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.16497v1",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.24722v1",
+      "source": "arxiv",
+      "title": "Decentralised AI Training and Inference with BlockTrain",
+      "abstract": "Frontier AI training is increasingly shaped by access to dense, centrally controlled accelerator clusters. This creates a structural advantage for hyperscalers and large centralized laboratories, and makes open or independent AI efforts depend on scarce capital, privileged infrastructure, and data-center geography. We present Spheroid BlockTrain, a decentralized training protocol in which a model is partitioned into independently trainable blocks, each optimized on a local objective derived from the same global target and composed at inference into one model. On byte-level WikiText, BlockTrain reaches cross entropy 1.359 (perplexity 3.89), within about 0.04 CE of a same-setup end-to-end Transformer reference, while each active worker trains only one block and avoids full-model optimizer state. A shared six-worker block training run reaches CE 1.385 by averaging same-block updates into one assembled model. HTTP/TCP transport experiments move real serialized checkpoints and updates, including a public-IP three-host run that improves CE from 5.580 to 1.811 while moving 15.22 GB. For inference, the current BlockTrain path uses one block-stack traversal per full output and serves over direct TCP across three public-network GPU hosts up to a 75.80B-parameter logical fp16 shape, outperforming a matched plain-autoregressive TCP pipeline baseline because it emits a full sequence per WAN pipeline traversal rather than one token per traversal.",
+      "authors": [
+        "Peter Toth"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-23T15:47:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.24722v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Decentralized model partitioning for parallel training",
+      "llm_evidence_cn": "去中心化模型分割用于并行训练",
+      "llm_evidence": "去中心化模型分割用于并行训练",
+      "canonical_evidence": "去中心化模型分割用于并行训练",
+      "llm_tldr_en": "Introduces BlockTrain for decentralized AI training, partitioning models into independently trainable blocks, enabling model parallelism without centralized clusters.",
+      "llm_tldr_cn": "前沿AI训练依赖集中式加速集群，限制了开放性。本文提出BlockTrain去中心化训练协议，将模型划分为独立可训练的块，每个块在本地优化并组合推理。在WikiText上，BlockTrain达到接近端到端Transformer的困惑度（3.89），同时每个工作节点仅训练一个块，无需中心化设施。该方法为模型并行提供了去中心化方案，降低了AI基础设施的硬件门槛。",
+      "llm_tldr": "前沿AI训练依赖集中式加速集群，限制了开放性。本文提出BlockTrain去中心化训练协议，将模型划分为独立可训练的块，每个块在本地优化并组合推理。在WikiText上，BlockTrain达到接近端到端Transformer的困惑度（3.89），同时每个工作节点仅训练一个块，无需中心化设施。该方法为模型并行提供了去中心化方案，降低了AI基础设施的硬件门槛。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "model parallelism techniques for distributed training",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.25098v1",
+      "source": "arxiv",
+      "title": "Power-Flexible AI Data Centers: A New Paradigm for Grid-Responsive Compute",
+      "abstract": "The rapid expansion of artificial intelligence (AI) infrastructure is driving unprecedented growth in electricity demand from data centers. Traditional power-system planning treats large computing facilities as inflexible peak loads, leading to costly infrastructure upgrades and long delays in grid interconnection. Recent work has shown that AI clusters can reduce electricity consumption during peak demand through software-based workload orchestration. This article explores how modern GPU-based AI data centers can operate as grid-interactive assets that respond dynamically to power system conditions. We describe an architecture integrating grid signals, workload scheduling, and power telemetry for fine-grained cluster power control. Experimental results from a real-world deployment on a 130 kW GPU cluster demonstrate multiple forms of flexibility, including rapid load reduction, sustained curtailment, and carbon-aware operation while preserving service levels for priority jobs. We further demonstrate performance-aware load shifting across geographically distributed clusters, enabling workloads to migrate toward regions with lower grid stress. Together, these capabilities transform AI infrastructure from static electricity consumers into flexible resources that support grid reliability, accelerate interconnection, and improve computing sustainability.",
+      "authors": [
+        "Chris Williams",
+        "Philip Colangelo",
+        "Ayse Coskun",
+        "Ethan Levine",
+        "Andy Neale",
+        "Ciaran Roberts",
+        "Shayan Sengupta",
+        "Nikhil Shirolkar",
+        "Varun Sivaram",
+        "Sarah Soares",
+        "Ethan Tiao",
+        "Scott Underwood",
+        "Daniel Wilson",
+        "Frank Sharp",
+        "Luke Wainwright",
+        "Harry Petty",
+        "Scott Wallace",
+        "Brandon Records"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.AI",
+        "cs.PF",
+        "eess.SY"
+      ],
+      "published": "2026-06-23T19:13:19+00:00",
+      "link": "https://arxiv.org/pdf/2606.25098v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "proposes power-flexible AI data centers as grid-responsive infrastructure, enabling workload orchestration for efficiency",
+      "llm_evidence_cn": "提出电力灵活的AI数据中心作为电网响应基础设施，通过负载调度实现效率提升",
+      "llm_evidence": "提出电力灵活的AI数据中心作为电网响应基础设施，通过负载调度实现效率提升",
+      "canonical_evidence": "提出电力灵活的AI数据中心作为电网响应基础设施，通过负载调度实现效率提升",
+      "llm_tldr_en": "Proposes an architecture for AI data centers to dynamically respond to grid conditions via workload scheduling, improving energy efficiency and grid integration.",
+      "llm_tldr_cn": "AI基础设施能耗快速增长，传统数据中心作为固定负载导致电网压力。本文提出电力灵活的数据中心架构，通过融合电网信号、任务调度和功耗遥测，实现集群功率精细控制，在保证AI任务性能的同时降低峰值能耗，为AI基础设施的绿色加速提供新范式。",
+      "llm_tldr": "AI基础设施能耗快速增长，传统数据中心作为固定负载导致电网压力。本文提出电力灵活的数据中心架构，通过融合电网信号、任务调度和功耗遥测，实现集群功率精细控制，在保证AI任务性能的同时降低峰值能耗，为AI基础设施的绿色加速提供新范式。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.17104v1",
+      "source": "arxiv",
+      "title": "Prefill/Decode-Aware Evaluation of LLM Inference on Emerging AI Accelerators",
+      "abstract": "As large language models (LLMs) are increasingly deployed in latency- and cost-sensitive settings, inference efficiency has become a central systems challenge. While GPUs dominate current deployments, a growing number of AI accelerators claim advantages for LLM inference, yet it remains unclear under which conditions such accelerators outperform GPUs in practice. Recent inference systems decompose execution into Prefill and Decode phases, which exhibit distinct computational characteristics and latency metrics, commonly captured by time to first token (TTFT) and time per output token (TPOT).   This paper presents a phase-aware evaluation of LLM inference performance across GPUs and emerging AI accelerators using a common model, Llama2-7B. By separately measuring Prefill and Decode performance, we reveal that accelerator advantages differ by phase and metric. Our results show that GPUs consistently excel in the compute-intensive Prefill phase, while GroqRack achieves significantly lower TPOT during Decode (batching not currently supported). However, GPUs regain an advantage in Decode throughput as batch size increases.   These findings demonstrate that each platform exhibits distinct phase-dependent strengths. We further analyze heterogeneous Prefill/Decode disaggregation across different accelerator platforms, identifying performance gains and the workload and network conditions under which such gains are realized.",
+      "authors": [
+        "Shun Usami",
+        "Venkatram Vishwanath",
+        "E. Wes Bethel"
+      ],
+      "primary_category": "cs.AR",
+      "categories": [
+        "cs.AR",
+        "cs.AI",
+        "cs.DC"
+      ],
+      "published": "2026-06-14T12:23:29+00:00",
+      "link": "https://arxiv.org/pdf/2606.17104v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "phase-aware evaluation of LLM inference on GPUs and emerging AI accelerators",
+      "llm_evidence_cn": "针对LLM推理的Prefill/Decode阶段感知评估，比较GPU和新兴AI加速器",
+      "llm_evidence": "针对LLM推理的Prefill/Decode阶段感知评估，比较GPU和新兴AI加速器",
+      "canonical_evidence": "针对LLM推理的Prefill/Decode阶段感知评估，比较GPU和新兴AI加速器",
+      "llm_tldr_en": "Presents a prefill/decode-aware evaluation of LLM inference across GPUs and emerging AI accelerators using Llama2-7B, revealing distinct performance profiles and conditions where accelerators outperform GPUs.",
+      "llm_tldr_cn": "LLM推理系统的Prefill和Decode阶段具有不同计算特征和延迟指标。该论文使用Llama2-7B模型对GPU和多种新兴AI加速器进行阶段感知评估，分离TTFT和TPOT指标。结果表明加速器在特定条件下可超越GPU，为异构推理硬件选型提供关键指导。",
+      "llm_tldr": "LLM推理系统的Prefill和Decode阶段具有不同计算特征和延迟指标。该论文使用Llama2-7B模型对GPU和多种新兴AI加速器进行阶段感知评估，分离TTFT和TPOT指标。结果表明加速器在特定条件下可超越GPU，为异构推理硬件选型提供关键指导。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.17104v1",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.25354v1",
+      "source": "arxiv",
+      "title": "Efficient and Trainable Language Model Test-Time Scaling via Local Branch Routing",
+      "abstract": "Test-time scaling improves language-model reasoning, but existing approaches often face a difficult trade-off: long chain-of-thought sampling remains single-threaded, while sentence- or solution-level search can be computationally expensive and hard to train end-to-end. We introduce Local Branch Routing (LBR), a token-level test-time scaling framework that expands a small local lookahead tree, forwards all sampled branches through the language model, and uses a lightweight router to select the depth-1 subtree to commit. By routing over the hidden states of candidate local futures, LBR allows each token decision to use evidence beyond the root next-token distribution while avoiding full solution-level search. The resulting prune-shift-grow decoding process preserves discrete branch identities and defines a tractable tree-trajectory likelihood: newly grown nodes are counted when first sampled, and router decisions are assigned explicit probabilities. This enables end-to-end reinforcement learning with verifiable rewards, jointly optimizing the base model and router under the same likelihood-ratio principle as discrete-token RLVR. On synthetic hierarchical-planning tasks, LBR shows that post-candidate hidden states provide useful routing evidence. On mathematical reasoning benchmarks, LBR improves both Pass@1 and Pass@32 over discrete chain-of-thought, vanilla discrete-token RLVR, and RL-compatible soft-token branching baselines. These results suggest that lightweight local branching offers an efficient, trainable, and discrete form of language-model test-time scaling.",
+      "authors": [
+        "Yutong Yin",
+        "Mingyu Jin",
+        "Jin Pan",
+        "Changyi Yang",
+        "Zijie Xia",
+        "Dhruv Pai",
+        "Shuming Hu",
+        "Zhen Zhang",
+        "Chenyang Zhao",
+        "Jinman Zhao",
+        "Wujiang Xu",
+        "Raymond Li",
+        "Xin Eric Wang",
+        "Julian McAuley",
+        "Zhaoran Wang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-24T03:42:44+00:00",
+      "link": "https://arxiv.org/pdf/2606.25354v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Test-time scaling improves inference efficiency",
+      "llm_evidence_cn": "测试时缩放提升推理效率",
+      "llm_evidence": "测试时缩放提升推理效率",
+      "canonical_evidence": "测试时缩放提升推理效率",
+      "llm_tldr_en": "Introduces Local Branch Routing (LBR), a token-level test-time scaling framework that expands a small local lookahead tree to improve reasoning efficiency without full search.",
+      "llm_tldr_cn": "针对现有测试时缩放方法在推理效率和可训练性上的不足，提出局部分支路由（LBR），在token级别扩展局部展望树，使用轻量路由选择子树，在不进行完整搜索的情况下提升推理效率。实验证明LBR在推理加速上有效。",
+      "llm_tldr": "针对现有测试时缩放方法在推理效率和可训练性上的不足，提出局部分支路由（LBR），在token级别扩展局部展望树，使用轻量路由选择子树，在不进行完整搜索的情况下提升推理效率。实验证明LBR在推理加速上有效。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

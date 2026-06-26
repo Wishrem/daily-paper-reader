@@ -1,95 +1,12 @@
 {
-  "generated_at": "2026-06-25T22:00:28.777074+00:00",
-  "updated_date": "20260625",
+  "generated_at": "2026-06-26T21:22:18.597864+00:00",
+  "updated_date": "20260626",
   "carryover_days": 9,
   "tag_states": {
     "ai-infra": {
-      "updated_date": "20260625",
+      "updated_date": "20260626",
       "carryover_days": 9,
       "items": [
-        {
-          "id": "2606.17104v1",
-          "source": "arxiv",
-          "title": "Prefill/Decode-Aware Evaluation of LLM Inference on Emerging AI Accelerators",
-          "abstract": "As large language models (LLMs) are increasingly deployed in latency- and cost-sensitive settings, inference efficiency has become a central systems challenge. While GPUs dominate current deployments, a growing number of AI accelerators claim advantages for LLM inference, yet it remains unclear under which conditions such accelerators outperform GPUs in practice. Recent inference systems decompose execution into Prefill and Decode phases, which exhibit distinct computational characteristics and latency metrics, commonly captured by time to first token (TTFT) and time per output token (TPOT).   This paper presents a phase-aware evaluation of LLM inference performance across GPUs and emerging AI accelerators using a common model, Llama2-7B. By separately measuring Prefill and Decode performance, we reveal that accelerator advantages differ by phase and metric. Our results show that GPUs consistently excel in the compute-intensive Prefill phase, while GroqRack achieves significantly lower TPOT during Decode (batching not currently supported). However, GPUs regain an advantage in Decode throughput as batch size increases.   These findings demonstrate that each platform exhibits distinct phase-dependent strengths. We further analyze heterogeneous Prefill/Decode disaggregation across different accelerator platforms, identifying performance gains and the workload and network conditions under which such gains are realized.",
-          "authors": [
-            "Shun Usami",
-            "Venkatram Vishwanath",
-            "E. Wes Bethel"
-          ],
-          "primary_category": "cs.AR",
-          "categories": [
-            "cs.AR",
-            "cs.AI",
-            "cs.DC"
-          ],
-          "published": "2026-06-14T12:23:29+00:00",
-          "link": "https://arxiv.org/pdf/2606.17104v1",
-          "tags": [
-            "keyword:ai-infra",
-            "query:ai-infra"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "phase-aware evaluation of LLM inference on GPUs and emerging AI accelerators",
-          "llm_evidence_cn": "针对LLM推理的Prefill/Decode阶段感知评估，比较GPU和新兴AI加速器",
-          "llm_evidence": "针对LLM推理的Prefill/Decode阶段感知评估，比较GPU和新兴AI加速器",
-          "canonical_evidence": "针对LLM推理的Prefill/Decode阶段感知评估，比较GPU和新兴AI加速器",
-          "llm_tldr_en": "Presents a prefill/decode-aware evaluation of LLM inference across GPUs and emerging AI accelerators using Llama2-7B, revealing distinct performance profiles and conditions where accelerators outperform GPUs.",
-          "llm_tldr_cn": "LLM推理系统的Prefill和Decode阶段具有不同计算特征和延迟指标。该论文使用Llama2-7B模型对GPU和多种新兴AI加速器进行阶段感知评估，分离TTFT和TPOT指标。结果表明加速器在特定条件下可超越GPU，为异构推理硬件选型提供关键指导。",
-          "llm_tldr": "LLM推理系统的Prefill和Decode阶段具有不同计算特征和延迟指标。该论文使用Llama2-7B模型对GPU和多种新兴AI加速器进行阶段感知评估，分离TTFT和TPOT指标。结果表明加速器在特定条件下可超越GPU，为异构推理硬件选型提供关键指导。",
-          "llm_tags": [
-            "query:ai-infra"
-          ],
-          "matched_query_tag": "query:ai-infra",
-          "matched_query_text": "inference acceleration for AI infrastructure",
-          "matched_requirement_id": "req-5",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.17104v1",
-          "carry_days": 3
-        },
-        {
-          "id": "2606.16352v1",
-          "source": "arxiv",
-          "title": "Communication-Efficient Verifiable Attention for LLM Inference",
-          "abstract": "Computation integrity of remote large language model (LLM) serving can be questionable. For conventional deep neural networks (DNNs), the existing TEE-shielded DNN partitioning (TSDP) approach uses Trusted Execution Environment (TEE) to compute non-linear components and verify the integrity of linear components offloaded to an untrusted GPU. However, directly applying TSDP to Transformer-based LLMs incurs significant TEE computation and TEE-GPU communication overhead. This paper presents Communication-efficient TEE-GPU Attention (\\textsc{VeriAttn}) for accelerating verifiable LLM inference. \\textsc{VeriAttn} offloads both linear and non-linear computations of attention to the GPU, while TEE performs verification. Moreover, for prefill, \\textsc{VeriAttn} uses a two-level pipeline to overlap data movement, TEE pre-/post-processing, and GPU computation. For decoding, when the key-value cache exceeds available GPU memory, \\textsc{VeriAttn} partitions attention across TEE and GPU to reduce repeated key-value transfers. Evaluation on an Intel TDX platform shows that \\textsc{VeriAttn} achieves 2.60-3.38$\\times$ and 3.86-5.42$\\times$ acceleration over TSDP for 6k-token prompts and 10k-token outputs during prefill and decoding, respectively.",
-          "authors": [
-            "Ziqun Chen",
-            "Ming Wu",
-            "Michael Heinrich",
-            "Jason Zeng",
-            "Huiying Lan",
-            "Tianwei Zhang",
-            "Rui Tan"
-          ],
-          "primary_category": "cs.LG",
-          "categories": [
-            "cs.LG",
-            "cs.AI"
-          ],
-          "published": "2026-06-15T07:50:15+00:00",
-          "link": "https://arxiv.org/pdf/2606.16352v1",
-          "tags": [
-            "keyword:ai-infra",
-            "query:ai-infra"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Communication-efficient verifiable LLM inference by offloading attention computations to GPU with reduced TEE-GPU communication",
-          "llm_evidence_cn": "通过将注意力计算卸载到GPU并减少TEE-GPU通信来实现通信高效的验证性LLM推理",
-          "llm_evidence": "通过将注意力计算卸载到GPU并减少TEE-GPU通信来实现通信高效的验证性LLM推理",
-          "canonical_evidence": "通过将注意力计算卸载到GPU并减少TEE-GPU通信来实现通信高效的验证性LLM推理",
-          "llm_tldr_en": "Proposes VeriAttn to accelerate verifiable LLM inference by offloading attention computations to GPU and reducing TEE-GPU communication, achieving faster verification.",
-          "llm_tldr_cn": "针对远程LLM推理计算完整性验证中的TEE计算和通信开销问题，本文提出通信高效的TEE-GPU注意力机制VeriAttn，将注意力线性与非线性计算卸载到GPU，TEE仅进行验证，显著降低通信量，推动验证性推理在AI基础设施中的实际应用。",
-          "llm_tldr": "针对远程LLM推理计算完整性验证中的TEE计算和通信开销问题，本文提出通信高效的TEE-GPU注意力机制VeriAttn，将注意力线性与非线性计算卸载到GPU，TEE仅进行验证，显著降低通信量，推动验证性推理在AI基础设施中的实际应用。",
-          "llm_tags": [
-            "query:ai-infra"
-          ],
-          "matched_query_tag": "query:ai-infra",
-          "matched_query_text": "inference acceleration for AI infrastructure",
-          "matched_requirement_id": "req-5",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.16352v1",
-          "carry_days": 3
-        },
         {
           "id": "2606.18304v1",
           "source": "arxiv",
@@ -131,49 +48,6 @@
           "matched_requirement_id": "req-4",
           "selection_source": "carryover_cache",
           "paper_id": "2606.18304v1",
-          "carry_days": 2
-        },
-        {
-          "id": "2606.16384v1",
-          "source": "arxiv",
-          "title": "Mixtures of Subspaces for Bandwidth Efficient Context Parallel Training",
-          "abstract": "Pretraining language models with extended context windows enhances their ability to leverage rich information during generation. Existing methods split input sequences into chunks, broadcast them across multiple devices, and compute attention block by block which incurs significant communication overhead. While feasible in high-speed clusters, these methods are impractical for decentralized training over low-bandwidth connections. We propose a compression method for communication-efficient context parallelism in decentralized settings, achieving a remarkable compression rate of over 95\\% with negligible overhead and no loss in convergence. Our key insight is to exploit the intrinsic low-rank structure of activation outputs by dynamically constraining them to learned mixtures of subspaces via efficient reparameterizations. We demonstrate scaling billion-parameter decentralized models to context lengths exceeding 100K tokens on networks as slow as 300Mbps, matching the wall-clock convergence speed of centralized models on 100Gbps interconnects.",
-          "authors": [
-            "Sameera Ramasinghe",
-            "Ajanthan Thalaiyasingam",
-            "Hadi Mohaghegh Dolatabadi",
-            "Gil Avraham",
-            "Violetta Shevchenko",
-            "Yan Zuo",
-            "Chamin Hewa Koneputugodage",
-            "Alexander Long"
-          ],
-          "primary_category": "cs.LG",
-          "categories": [
-            "cs.LG"
-          ],
-          "published": "2026-06-15T08:17:13+00:00",
-          "link": "https://arxiv.org/pdf/2606.16384v1",
-          "tags": [
-            "keyword:ai-infra",
-            "query:ai-infra"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "bandwidth-efficient context parallel training via Mixtures of Subspaces compression",
-          "llm_evidence_cn": "通过子空间混合压缩实现带宽高效的上下文并行训练",
-          "llm_evidence": "通过子空间混合压缩实现带宽高效的上下文并行训练",
-          "canonical_evidence": "通过子空间混合压缩实现带宽高效的上下文并行训练",
-          "llm_tldr_en": "Proposes compression method for context parallelism reducing communication by 95% with no loss, enabling decentralized training over low-bandwidth connections. Directly addresses model parallelism communication optimization.",
-          "llm_tldr_cn": "长上下文预训练需要跨设备广播块，通信开销大，在低带宽环境下不可行。论文提出子空间混合压缩方法，利用激活输出的低秩结构动态约束，实现95%以上压缩率且无收敛损失。该方法使上下文并行训练适用于低带宽连接，是模型并行通信优化的突破。",
-          "llm_tldr": "长上下文预训练需要跨设备广播块，通信开销大，在低带宽环境下不可行。论文提出子空间混合压缩方法，利用激活输出的低秩结构动态约束，实现95%以上压缩率且无收敛损失。该方法使上下文并行训练适用于低带宽连接，是模型并行通信优化的突破。",
-          "llm_tags": [
-            "query:ai-infra"
-          ],
-          "matched_query_tag": "query:ai-infra",
-          "matched_query_text": "model parallelism techniques for distributed training",
-          "matched_requirement_id": "req-6",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.16384v1",
           "carry_days": 3
         },
         {
@@ -214,91 +88,7 @@
           "matched_requirement_id": "req-4",
           "selection_source": "carryover_cache",
           "paper_id": "2606.17952v1",
-          "carry_days": 2
-        },
-        {
-          "id": "2606.16497v1",
-          "source": "arxiv",
-          "title": "daVinci-kernel: Co-Evolving Skill Selection, Summarization, and Utilization via RL for GPU Kernel Optimization",
-          "abstract": "GPU kernel optimization represents a paradigm where functional correctness is assumed and execution efficiency is the objective. We present daVinci-kernel, a reinforcement learning framework that couples skill discovery with skill exploitation through a dynamically evolving skill library. daVinci-kernel jointly trains three agents sharing one LLM backbone: a Skill Selection Agent that retrieves relevant techniques via BM25 and LLM reranking, a Policy Agent that generates multi-turn CUDA/Triton kernels conditioned on selected skills, and a Skill Summary Agent that distills successful rollouts into reusable skills. Candidate skills are added only after execution-based verification confirms reproducible speedups. All three agents share a single LLM backbone, are initialized via a structured SFT cold start on diversity-filtered data, and are then jointly optimized end-to-end with multi-turn REINFORCE and per-agent advantage estimation. On KernelBench, daVinci-kernel-14B achieves 37.2%, 70.6%, and 32.2% on Level 1, Level 2, and Level 3 under the Fast$_1$ threshold, outperforming the strongest prior RL-trained model, Dr.Kernel-14B.",
-          "authors": [
-            "Dayuan Fu",
-            "Mohan Jiang",
-            "Tongyu Wang",
-            "Dian Yang",
-            "Jiarui Hu",
-            "Liming Liu",
-            "Jinlong Hou",
-            "Pengfei Li"
-          ],
-          "primary_category": "cs.LG",
-          "categories": [
-            "cs.LG",
-            "cs.AI",
-            "cs.CL"
-          ],
-          "published": "2026-06-15T09:58:21+00:00",
-          "link": "https://arxiv.org/pdf/2606.16497v1",
-          "tags": [
-            "keyword:ai-infra",
-            "query:ai-infra"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "RL framework for GPU kernel optimization to accelerate AI infrastructure",
-          "llm_evidence_cn": "用强化学习框架优化GPU内核以加速AI基础设施",
-          "llm_evidence": "用强化学习框架优化GPU内核以加速AI基础设施",
-          "canonical_evidence": "用强化学习框架优化GPU内核以加速AI基础设施",
-          "llm_tldr_en": "daVinci-kernel uses RL with skill discovery to automatically generate optimized GPU kernels, achieving reproducible speedups.",
-          "llm_tldr_cn": "针对GPU内核优化中正确性易保证但效率提升难的问题，daVinci-kernel利用强化学习框架自动发现和利用优化技巧。它联合训练三个基于同一LLM骨干的智能体：技能选择、策略生成和技能总结，通过执行验证确保加速收益的可复现性。该方法能自动生成优化的CUDA/Triton内核，显著提升GPU执行效率，为AI基础设施下层计算加速提供了自动化工具。",
-          "llm_tldr": "针对GPU内核优化中正确性易保证但效率提升难的问题，daVinci-kernel利用强化学习框架自动发现和利用优化技巧。它联合训练三个基于同一LLM骨干的智能体：技能选择、策略生成和技能总结，通过执行验证确保加速收益的可复现性。该方法能自动生成优化的CUDA/Triton内核，显著提升GPU执行效率，为AI基础设施下层计算加速提供了自动化工具。",
-          "llm_tags": [
-            "query:ai-infra"
-          ],
-          "matched_query_tag": "query:ai-infra",
-          "matched_query_text": "AI infrastructure acceleration techniques",
-          "matched_requirement_id": "req-2",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.16497v1",
           "carry_days": 3
-        },
-        {
-          "id": "2606.20869v1",
-          "source": "arxiv",
-          "title": "A3C3: AI Algorithm and Accelerator Co-design, Co-search, and Co-generation",
-          "abstract": "We present a holistic methodology for artificial intelligence algorithm and accelerator co-design, co-search, and co-generation (A3C3), which jointly optimizes neural network architectures and their hardware implementations to address the inefficiencies of traditional top-down AI system design flows. Conventional AI deployment often treats model design and hardware mapping as separate stages: an algorithm is first developed for accuracy, and only afterward adapted to meet latency, throughput, energy, or resource constraints. This separation can lead to suboptimal systems, particularly as modern AI workloads become increasingly heterogeneous, memory-intensive, and platform-dependent. A3C3 instead parameterizes both algorithmic and accelerator design spaces and searches them jointly, enabling the automatic generation of model-accelerator pairs that better balance accuracy, latency, throughput, energy efficiency, and hardware utilization. This article is a book chapter of the Handbook of Embedded Machine Learning, edited by Sudeep Pasricha and Muhammad Shafique, Springer Nature.",
-          "authors": [
-            "Selin Yildirim",
-            "Yingbing Huang",
-            "Deming Chen"
-          ],
-          "primary_category": "cs.AR",
-          "categories": [
-            "cs.AR",
-            "cs.AI"
-          ],
-          "published": "2026-06-18T19:01:45+00:00",
-          "link": "https://arxiv.org/pdf/2606.20869v1",
-          "tags": [
-            "keyword:ai-infra",
-            "query:ai-infra"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "holistic AI algorithm and accelerator co-design",
-          "llm_evidence_cn": "AI算法与加速器协同设计",
-          "llm_evidence": "AI算法与加速器协同设计",
-          "canonical_evidence": "AI算法与加速器协同设计",
-          "llm_tldr_en": "Proposes A3C3 methodology for joint co-design, co-search, and co-generation of neural architectures and hardware implementations.",
-          "llm_tldr_cn": "提出A3C3全流程方法论，联合优化神经网络架构与硬件实现，解决传统前后端分离导致的次优系统问题，适用于异构、内存密集型AI工作负载。",
-          "llm_tldr": "提出A3C3全流程方法论，联合优化神经网络架构与硬件实现，解决传统前后端分离导致的次优系统问题，适用于异构、内存密集型AI工作负载。",
-          "llm_tags": [
-            "query:ai-infra"
-          ],
-          "matched_query_tag": "query:ai-infra",
-          "matched_query_text": "AI infrastructure acceleration techniques",
-          "matched_requirement_id": "req-2",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.20869v1",
-          "carry_days": 1
         },
         {
           "id": "2606.18042v1",
@@ -337,131 +127,89 @@
           "matched_requirement_id": "req-2",
           "selection_source": "carryover_cache",
           "paper_id": "2606.18042v1",
-          "carry_days": 2
+          "carry_days": 3
         },
         {
-          "id": "2606.23087v1",
+          "id": "2606.26344v1",
           "source": "arxiv",
-          "title": "FlowTrain: Flow-Based Decoupled Training for Industrial-Grade Vision-Language Models",
-          "abstract": "Industrial-grade distributed training of vision-language models (VLMs) remains far less efficient than that of unimodal LLMs. Existing solutions either follow a monolithic design that assigns uniform parallelism to heterogeneous modules or adopt a disaggregated deployment that separates modules while executing them as a batch-synchronized pipeline. In this paper, we highlight that the above solutions are still not sufficient, and VLM training can be further decoupled. To this end, we present FlowTrain, a flow-based decoupled training framework that reformulates VLM training as a producer-consumer dataflow coordinated through a unified memory pool. The encoder and backbone can progress independently over a global virtual address space. Since this execution decoupling fundamentally changes the optimization objective of allocation and scheduling, FlowTrain further introduces a heterogeneous parallel allocator that assigns module-specific parallelism strategies by solving a throughput matching problem. The dynamic packing scheduler is used to construct balanced microbatches at runtime according to the actual LLM-side computation cost. Extensive experiments on real-world workloads show that FlowTrain achieves over 50% MFU and up to 1.7x throughput improvement, narrowing the efficiency gap to LLM-only training.",
+          "title": "Axon: A Synthesizing Superoptimizer for Tensor Programs",
+          "abstract": "Writing high performance kernels for AI accelerators requires deep expertise in tiling, instruction selection, data layout, and operator fusion placing a significant burden on programmers. In this paper, we focus on tile based AI accelerator programs and present Axon, a synthesizing superoptimizer for tensor programs: it uses program synthesis to automatically generate target instructions from semantics specifications, and explores semantically equivalent program variants to select the best performing kernel empirically. Axon discovers algebraic transformations by propagating operators through computation graphs and uses SMT over unbounded tensors to guarantee that all transformations preserve semantics without requiring hand crafted rewrite rules. It then lowers tensor operations to target ISA instructions, explores tiling configurations constrained by hardware descriptions, and fuses operators and instructions to minimize memory traffic.",
           "authors": [
-            "Zhida Jiang",
-            "Zhaolong Xing",
-            "Yang Pei",
-            "Xiaolong Chen",
-            "Yuanhang Xiao",
-            "Chengzhi Huang",
-            "Xiyu Liu",
-            "Haopeng Liu",
-            "Qingyuan Sang",
-            "Lingfeng Zhou",
-            "Jiaxing Wang",
-            "Zicheng Zhang",
-            "Wenzhe Wang",
-            "Xinyu Liu",
-            "Yan Li",
-            "Zhen Chen",
-            "Ke Zhang"
+            "Akash Kothari",
+            "Shaowei Zhu",
+            "Daniel Kroening",
+            "Chungha Sung"
           ],
-          "primary_category": "cs.LG",
+          "primary_category": "cs.PL",
           "categories": [
-            "cs.LG"
+            "cs.PL",
+            "cs.CL",
+            "cs.PF"
           ],
-          "published": "2026-06-22T09:33:44+00:00",
-          "link": "https://arxiv.org/pdf/2606.23087v1",
+          "published": "2026-06-24T19:37:12+00:00",
+          "link": "https://arxiv.org/pdf/2606.26344v1",
           "tags": [
             "keyword:ai-infra",
             "query:ai-infra"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "Decoupled training for vision-language models with producer-consumer dataflow",
-          "llm_evidence_cn": "视觉语言模型的解耦训练，生产者-消费者数据流",
-          "llm_evidence": "视觉语言模型的解耦训练，生产者-消费者数据流",
-          "canonical_evidence": "视觉语言模型的解耦训练，生产者-消费者数据流",
-          "llm_tldr_en": "FlowTrain decouples VLM training into independent encoder and backbone flows via a unified memory pool, enabling asynchronous parallelism and reducing communication bottlenecks.",
-          "llm_tldr_cn": "现有视觉语言模型分布式训练采用统一并行或解耦部署，但效率仍低。FlowTrain提出流式解耦训练框架，将训练视为生产者-消费者数据流，通过统一内存池协调，编码器和骨干网络可独立前进。实验证明该方法加速训练并减少通信开销，适用于异构推理场景。",
-          "llm_tldr": "现有视觉语言模型分布式训练采用统一并行或解耦部署，但效率仍低。FlowTrain提出流式解耦训练框架，将训练视为生产者-消费者数据流，通过统一内存池协调，编码器和骨干网络可独立前进。实验证明该方法加速训练并减少通信开销，适用于异构推理场景。",
+          "llm_evidence_en": "superoptimizer for tensor programs on AI accelerators",
+          "llm_evidence_cn": "AI加速器张量程序超级优化器",
+          "llm_evidence": "AI加速器张量程序超级优化器",
+          "canonical_evidence": "AI加速器张量程序超级优化器",
+          "llm_tldr_en": "Axon uses program synthesis to automatically generate high-performance kernels for AI accelerators, exploring semantically equivalent variants to select the best empirically.",
+          "llm_tldr_cn": "本文提出Axon，一种面向AI加速器的张量程序超级优化器。它利用程序合成从语义规范自动生成目标指令，并通过探索语义等价的程序变体来经验性地选择最高性能的内核。该方法通过传播算子跨计算图发现代数变换，使用SMT保证语义保真，无需手工重写规则。实验表明，Axon能显著提升加速器上的内核性能，降低编程负担。",
+          "llm_tldr": "本文提出Axon，一种面向AI加速器的张量程序超级优化器。它利用程序合成从语义规范自动生成目标指令，并通过探索语义等价的程序变体来经验性地选择最高性能的内核。该方法通过传播算子跨计算图发现代数变换，使用SMT保证语义保真，无需手工重写规则。实验表明，Axon能显著提升加速器上的内核性能，降低编程负担。",
           "llm_tags": [
             "query:ai-infra"
           ],
           "matched_query_tag": "query:ai-infra",
-          "matched_query_text": "model parallelism techniques for distributed training",
-          "matched_requirement_id": "req-6",
+          "matched_query_text": "AI infrastructure acceleration techniques",
+          "matched_requirement_id": "req-2",
           "selection_source": "carryover_cache",
-          "paper_id": "2606.23087v1",
+          "paper_id": "2606.26344v1",
           "carry_days": 1
         },
         {
-          "id": "2606.24722v1",
+          "id": "2606.26287v1",
           "source": "arxiv",
-          "title": "Decentralised AI Training and Inference with BlockTrain",
-          "abstract": "Frontier AI training is increasingly shaped by access to dense, centrally controlled accelerator clusters. This creates a structural advantage for hyperscalers and large centralized laboratories, and makes open or independent AI efforts depend on scarce capital, privileged infrastructure, and data-center geography. We present Spheroid BlockTrain, a decentralized training protocol in which a model is partitioned into independently trainable blocks, each optimized on a local objective derived from the same global target and composed at inference into one model. On byte-level WikiText, BlockTrain reaches cross entropy 1.359 (perplexity 3.89), within about 0.04 CE of a same-setup end-to-end Transformer reference, while each active worker trains only one block and avoids full-model optimizer state. A shared six-worker block training run reaches CE 1.385 by averaging same-block updates into one assembled model. HTTP/TCP transport experiments move real serialized checkpoints and updates, including a public-IP three-host run that improves CE from 5.580 to 1.811 while moving 15.22 GB. For inference, the current BlockTrain path uses one block-stack traversal per full output and serves over direct TCP across three public-network GPU hosts up to a 75.80B-parameter logical fp16 shape, outperforming a matched plain-autoregressive TCP pipeline baseline because it emits a full sequence per WAN pipeline traversal rather than one token per traversal.",
+          "title": "GeMoE: Gating Entropy is All You Need for Uncertainty-aware Adaptive Routing in MoE-based Large Vision-Language Models",
+          "abstract": "With the increase in model parameters and training data, the instruction following and generalization capabilities of Large VisionLanguage Models (LVLMs) have been significantly improved. Based on the Mixture of Experts (MoE) architecture, LVLMs expand their parameter capacity while maintaining the inference cost. However, traditional MoE methods employ a Top-k static routing strategy, which fails to account for variations in the input and adaptively select the number of experts, resulting in suboptimal resource utilization. In this paper, we propose viewing token routing as an information encoding task, framing dynamic routing as a Minimum Description Length (MDL) problem in encoding By validating the connection between MDL and gating entropy in the MoE scenario, we introduce Gating Entropy-based Uncertainty-aware Adaptive Routing (GeMoE) for MoE. Unlike traditional static or heuristic-based dynamic routing methods, GeMoE explicitly models the trade-off between model complexity and performance. By using gating entropy to assess the complexity of tokens, GeMoE adaptively determines the number of experts each token should engage. On a wide range of backbones and benchmarks, our method achieves 99.5% average performance retention compared to the original static routing, while improving average expert activation sparsity by 36.5%.",
           "authors": [
-            "Peter Toth"
+            "Chaoxiang Cai",
+            "Minghe Weng",
+            "Jie Li",
+            "Yibo Jiang",
+            "Longrong Yang",
+            "Zequn Qin",
+            "Xi Li"
           ],
-          "primary_category": "cs.AI",
+          "primary_category": "cs.CV",
           "categories": [
-            "cs.AI"
+            "cs.CV"
           ],
-          "published": "2026-06-23T15:47:33+00:00",
-          "link": "https://arxiv.org/pdf/2606.24722v1",
+          "published": "2026-06-24T18:34:00+00:00",
+          "link": "https://arxiv.org/pdf/2606.26287v1",
           "tags": [
             "keyword:ai-infra",
             "query:ai-infra"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "decentralized training with model partitioning into blocks",
-          "llm_evidence_cn": "将模型划分为独立训练块的去中心化训练协议",
-          "llm_evidence": "将模型划分为独立训练块的去中心化训练协议",
-          "canonical_evidence": "将模型划分为独立训练块的去中心化训练协议",
-          "llm_tldr_en": "BlockTrain partitions a model into independently trainable blocks for decentralized training, achieving near-reference perplexity while each worker trains only one block.",
-          "llm_tldr_cn": "针对集中式AI训练的资源垄断问题，本文提出BlockTrain去中心化训练协议。将模型划分为独立可训练的块，每个工作节点仅训练一个块，通过全局目标协调局部优化。在字节级WikiText上，模型困惑度仅比端到端参考模型高0.04，同时减少了单节点计算和通信负担，为分布式模型并行训练提供了新思路。",
-          "llm_tldr": "针对集中式AI训练的资源垄断问题，本文提出BlockTrain去中心化训练协议。将模型划分为独立可训练的块，每个工作节点仅训练一个块，通过全局目标协调局部优化。在字节级WikiText上，模型困惑度仅比端到端参考模型高0.04，同时减少了单节点计算和通信负担，为分布式模型并行训练提供了新思路。",
+          "llm_evidence_en": "Adaptive routing in MoE to optimize communication and resource utilization",
+          "llm_evidence_cn": "MoE中的自适应路由优化通信和资源利用",
+          "llm_evidence": "MoE中的自适应路由优化通信和资源利用",
+          "canonical_evidence": "MoE中的自适应路由优化通信和资源利用",
+          "llm_tldr_en": "Proposes GeMoE with uncertainty-aware adaptive expert routing using MDL principle, improving resource utilization in MoE-based LVLMs.",
+          "llm_tldr_cn": "传统MoE采用静态Top-k路由，无法适应输入变化导致资源利用次优。本文提出GeMoE，将令牌路由视为信息编码任务，基于最小描述长度（MDL）原则进行动态路由，自适应选择专家数量。在大型视觉语言模型上验证，该方法在保持推理质量的同时显著减少了计算开销，优化了MoE通信和资源利用，直接服务于AI基础设施加速。",
+          "llm_tldr": "传统MoE采用静态Top-k路由，无法适应输入变化导致资源利用次优。本文提出GeMoE，将令牌路由视为信息编码任务，基于最小描述长度（MDL）原则进行动态路由，自适应选择专家数量。在大型视觉语言模型上验证，该方法在保持推理质量的同时显著减少了计算开销，优化了MoE通信和资源利用，直接服务于AI基础设施加速。",
           "llm_tags": [
             "query:ai-infra"
           ],
           "matched_query_tag": "query:ai-infra",
-          "matched_query_text": "model parallelism techniques for distributed training",
-          "matched_requirement_id": "req-6",
+          "matched_query_text": "communication optimization in mixture of experts models",
+          "matched_requirement_id": "req-4",
           "selection_source": "carryover_cache",
-          "paper_id": "2606.24722v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2606.22249v1",
-          "source": "arxiv",
-          "title": "On the Expressive Power of Weight Quantization in Large Language Models",
-          "abstract": "In recent years, weight quantization that encodes the learnable parameters of large language models in an $n$-bit format has garnered significant attention due to its potential for model compression and inference acceleration. Many practical techniques have been developed; however, the theoretical understanding of many aspects, especially the approximation and degradation of expressive power as the number of quantization bits decreases, remains unclear. In this paper, we provide a theoretical investigation into the expressive capability of large language models relative to the number of quantization bits. We argue that 1.58-bit is the limiting precision for weight quantization by establishing the universal approximation and expressive collapse properties of weight-quantized models with respect to the number of quantization bits. Additionally, we confirm that weight quantization leads to expressive degradation, in which the expressive capacity of weight-quantized models degrades polynomially as the number of quantization bits decreases. These theoretical findings provide a solid foundation for advancing weight quantization in the context of scaling laws and shed insights for future research in model compression and inference acceleration.",
-          "authors": [
-            "Shao-Qun Zhang"
-          ],
-          "primary_category": "cs.LG",
-          "categories": [
-            "cs.LG",
-            "cs.AI"
-          ],
-          "published": "2026-06-20T22:22:26+00:00",
-          "link": "https://arxiv.org/pdf/2606.22249v1",
-          "tags": [
-            "keyword:ai-infra",
-            "query:ai-infra"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Weight quantization for LLM compression and inference acceleration",
-          "llm_evidence_cn": "权重量化用于大语言模型压缩与推理加速",
-          "llm_evidence": "权重量化用于大语言模型压缩与推理加速",
-          "canonical_evidence": "权重量化用于大语言模型压缩与推理加速",
-          "llm_tldr_en": "Theoretically investigates expressiveness of weight quantization in LLMs, establishing 1.58-bit as limiting precision with universal approximation properties.",
-          "llm_tldr_cn": "权重量化是LLM压缩和推理加速的重要技术，但其理论理解不足。本文从理论上研究了LLM相对于量化比特数的表达能力，指出1.58比特是权重量化的极限精度，并建立了通用近似和表达能力坍缩性质。该工作为量化方法的进一步发展提供了理论基础。",
-          "llm_tldr": "权重量化是LLM压缩和推理加速的重要技术，但其理论理解不足。本文从理论上研究了LLM相对于量化比特数的表达能力，指出1.58比特是权重量化的极限精度，并建立了通用近似和表达能力坍缩性质。该工作为量化方法的进一步发展提供了理论基础。",
-          "llm_tags": [
-            "query:ai-infra"
-          ],
-          "matched_query_tag": "query:ai-infra",
-          "matched_query_text": "inference acceleration for AI infrastructure",
-          "matched_requirement_id": "req-5",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.22249v1",
+          "paper_id": "2606.26287v1",
           "carry_days": 1
         }
       ]
