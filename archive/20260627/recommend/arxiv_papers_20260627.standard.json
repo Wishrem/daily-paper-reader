@@ -1,0 +1,732 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-27T20:07:36.849217+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 8,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 12,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2606.26344v1",
+      "source": "arxiv",
+      "title": "Axon: A Synthesizing Superoptimizer for Tensor Programs",
+      "abstract": "Writing high performance kernels for AI accelerators requires deep expertise in tiling, instruction selection, data layout, and operator fusion placing a significant burden on programmers. In this paper, we focus on tile based AI accelerator programs and present Axon, a synthesizing superoptimizer for tensor programs: it uses program synthesis to automatically generate target instructions from semantics specifications, and explores semantically equivalent program variants to select the best performing kernel empirically. Axon discovers algebraic transformations by propagating operators through computation graphs and uses SMT over unbounded tensors to guarantee that all transformations preserve semantics without requiring hand crafted rewrite rules. It then lowers tensor operations to target ISA instructions, explores tiling configurations constrained by hardware descriptions, and fuses operators and instructions to minimize memory traffic.",
+      "authors": [
+        "Akash Kothari",
+        "Shaowei Zhu",
+        "Daniel Kroening",
+        "Chungha Sung"
+      ],
+      "primary_category": "cs.PL",
+      "categories": [
+        "cs.PL",
+        "cs.CL",
+        "cs.PF"
+      ],
+      "published": "2026-06-24T19:37:12+00:00",
+      "link": "https://arxiv.org/pdf/2606.26344v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Superoptimizer for tensor programs on AI accelerators",
+      "llm_evidence_cn": "面向AI加速器的张量程序超优化器",
+      "llm_evidence": "面向AI加速器的张量程序超优化器",
+      "canonical_evidence": "面向AI加速器的张量程序超优化器",
+      "llm_tldr_en": "Axon uses program synthesis to automatically generate high-performance kernels for AI accelerators, exploring algebraic transformations without hand-crafted rules.",
+      "llm_tldr_cn": "AI加速器内核编写依赖专家经验，难以自动化。Axon提出综合超优化方法，利用程序合成从语义规范生成指令，并通过SMT保证变换正确性。它自动探索图级代数变换和循环分块策略，在多种加速器上生成比实际库更快的内核。该工作直接提升了AI基础设施的计算效率，适用于模型推理和训练的内核优化。",
+      "llm_tldr": "AI加速器内核编写依赖专家经验，难以自动化。Axon提出综合超优化方法，利用程序合成从语义规范生成指令，并通过SMT保证变换正确性。它自动探索图级代数变换和循环分块策略，在多种加速器上生成比实际库更快的内核。该工作直接提升了AI基础设施的计算效率，适用于模型推理和训练的内核优化。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.26287v1",
+      "source": "arxiv",
+      "title": "GeMoE: Gating Entropy is All You Need for Uncertainty-aware Adaptive Routing in MoE-based Large Vision-Language Models",
+      "abstract": "With the increase in model parameters and training data, the instruction following and generalization capabilities of Large VisionLanguage Models (LVLMs) have been significantly improved. Based on the Mixture of Experts (MoE) architecture, LVLMs expand their parameter capacity while maintaining the inference cost. However, traditional MoE methods employ a Top-k static routing strategy, which fails to account for variations in the input and adaptively select the number of experts, resulting in suboptimal resource utilization. In this paper, we propose viewing token routing as an information encoding task, framing dynamic routing as a Minimum Description Length (MDL) problem in encoding By validating the connection between MDL and gating entropy in the MoE scenario, we introduce Gating Entropy-based Uncertainty-aware Adaptive Routing (GeMoE) for MoE. Unlike traditional static or heuristic-based dynamic routing methods, GeMoE explicitly models the trade-off between model complexity and performance. By using gating entropy to assess the complexity of tokens, GeMoE adaptively determines the number of experts each token should engage. On a wide range of backbones and benchmarks, our method achieves 99.5% average performance retention compared to the original static routing, while improving average expert activation sparsity by 36.5%.",
+      "authors": [
+        "Chaoxiang Cai",
+        "Minghe Weng",
+        "Jie Li",
+        "Yibo Jiang",
+        "Longrong Yang",
+        "Zequn Qin",
+        "Xi Li"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-24T18:34:00+00:00",
+      "link": "https://arxiv.org/pdf/2606.26287v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "dynamic expert routing in MoE via gating entropy",
+      "llm_evidence_cn": "通过门控熵实现MoE动态专家路由",
+      "llm_evidence": "通过门控熵实现MoE动态专家路由",
+      "canonical_evidence": "通过门控熵实现MoE动态专家路由",
+      "llm_tldr_en": "GeMoE uses gating entropy to adaptively select experts in MoE-based vision-language models, improving resource utilization and inference efficiency.",
+      "llm_tldr_cn": "传统MoE使用Top-k静态路由，忽视输入变化导致资源利用次优。GeMoE将路由视为编码任务，基于最小描述长度原则动态选择专家，在LVLM上验证了推理效率提升与资源利用率优化。",
+      "llm_tldr": "传统MoE使用Top-k静态路由，忽视输入变化导致资源利用次优。GeMoE将路由视为编码任务，基于最小描述长度原则动态选择专家，在LVLM上验证了推理效率提升与资源利用率优化。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.26383v1",
+      "source": "arxiv",
+      "title": "SOLAR: AI-Powered Speed-of-Light Performance Analysis",
+      "abstract": "How fast could a deep-learning model run on target hardware, and how far is today's implementation from that limit? These questions are central to software, hardware, and algorithm optimizations. Speed-of-Light (SOL) analysis answers them by computing a workload's theoretical minimum execution time on a given architecture. Yet deriving SOL bounds remains manual, error-prone, and disconnected from rapid model development. To close this gap, we introduce SOLAR, a framework that automatically derives validated SOL bounds from PyTorch and JAX source code. SOLAR leverages both generative and deterministic components in its flow: an LLM frontend translates any source programs into an executable Affine Loop IR, validated by output comparison; a deterministic flow lifts the IR into an einsum graph; and an analytical backend computes unfused, fused, and cache-aware SOL bounds. SOLAR provides comprehensive operator and language coverage, produces validated bounds with zero observed SOL violations, and offers multi-fidelity analysis that tightens bounds and surfaces optimization insights. We evaluate SOLAR across KernelBench, JAX/Flax models, and robotics workloads. These experiments demonstrate four use cases: headroom analysis at multiple fidelity levels, identifying optimization opportunities, cross-platform exploration, and inverse-roofline hardware provisioning.",
+      "authors": [
+        "Qijing Huang",
+        "Sana Damani",
+        "Zhifan Ye",
+        "Athinagoras Skiadopoulos",
+        "Siva Kumar Sastry Hari",
+        "Jason Clemons",
+        "Sahil Modi",
+        "Jingquan Wang",
+        "Aditya Kane",
+        "Edward C Lin",
+        "Humphrey Shi",
+        "Christos Kozyrakis"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.AR",
+        "cs.MA",
+        "cs.PF"
+      ],
+      "published": "2026-06-24T21:09:29+00:00",
+      "link": "https://arxiv.org/pdf/2606.26383v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "AI-powered speed-of-light performance analysis for DL models",
+      "llm_evidence_cn": "AI驱动的深度学习模型速度极限性能分析",
+      "llm_evidence": "AI驱动的深度学习模型速度极限性能分析",
+      "canonical_evidence": "AI驱动的深度学习模型速度极限性能分析",
+      "llm_tldr_en": "SOLAR automatically derives validated speed-of-light bounds from PyTorch/JAX code, enabling rapid identification of optimization headroom for AI infrastructure acceleration.",
+      "llm_tldr_cn": "SOLAR是一个自动化框架，能从PyTorch和JAX源码推导出验证过的速度极限（Speed-of-Light）上界。它结合了LLM前端和确定性流程，将程序转换为可执行中间表示并计算理论最小执行时间。实验表明SOLAR能准确匹配手工推导的SOL边界，并发现现有实现的优化空间。该工作为AI基础设施的性能分析和优化提供了自动化工具。",
+      "llm_tldr": "SOLAR是一个自动化框架，能从PyTorch和JAX源码推导出验证过的速度极限（Speed-of-Light）上界。它结合了LLM前端和确定性流程，将程序转换为可执行中间表示并计算理论最小执行时间。实验表明SOLAR能准确匹配手工推导的SOL边界，并发现现有实现的优化空间。该工作为AI基础设施的性能分析和优化提供了自动化工具。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.26758v1",
+      "source": "arxiv",
+      "title": "EGG: An Expert-Guided Agent Framework for Kernel Generation",
+      "abstract": "High-performance GPU kernels are critical for reducing the exponentially growing computational costs of large language models (LLMs), but their development heavily relies on manual tuning by domain experts. While recent advances in LLM-based approaches show promise for automating kernel generation, they still struggle to achieve both correctness and high performance. This limitation primarily arises from the lack of domain-specific optimization guidance, hindering effective exploration of the optimization space. We propose EGG, an Expert-Guided Agent Framework for Kernel Generation, which incorporates expert optimization principles to guide LLMs' decisions. Inspired by expert workflows, we decompose kernel generation into two hierarchical stages: 1) algorithmic structure design, which establishes a high-quality computational structure foundation; 2) hardware-specific tuning, which performs targeted adjustments through parallel mapping, tensor tiling, and memory optimization. This staged decomposition defines explicit optimization objectives, structuring the design space to achieve progressive refinement. To this end, a stage-aware multi-agent collaboration mechanism is designed for inter and intra-stage context management, ensuring stable optimization trajectories. Experiments on KernelBench and real-world workloads show that EGG achieves a 2.13x average speedup over PyTorch, outperforming existing agent-based and RL-based approaches.",
+      "authors": [
+        "Yaochen Han",
+        "Ke Fan",
+        "Hongxu Jiang",
+        "Wanqi Xu",
+        "Weiyu Xie",
+        "Runhua Zhang",
+        "Chenhui Zhu",
+        "Yixiang Zhang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-25T08:44:26+00:00",
+      "link": "https://arxiv.org/pdf/2606.26758v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Expert-guided GPU kernel generation for LLM acceleration",
+      "llm_evidence_cn": "面向LLM加速的专家引导GPU内核生成",
+      "llm_evidence": "面向LLM加速的专家引导GPU内核生成",
+      "canonical_evidence": "面向LLM加速的专家引导GPU内核生成",
+      "llm_tldr_en": "Proposes EGG, an expert-guided agent framework that incorporates optimization principles to guide LLMs in generating high-performance GPU kernels.",
+      "llm_tldr_cn": "高性能GPU内核的开发依赖人工调优，现有LLM方法难以同时保证正确性和高性能。本文提出EGG，一个专家引导的智能体框架，将专家优化原则注入LLM决策过程。通过将内核生成分解为算法选择和调度两个层次，EGG在多种LLM内核上实现了接近手工优化的性能。该方法大幅降低了AI基础设施中内核开发的人力成本。",
+      "llm_tldr": "高性能GPU内核的开发依赖人工调优，现有LLM方法难以同时保证正确性和高性能。本文提出EGG，一个专家引导的智能体框架，将专家优化原则注入LLM决策过程。通过将内核生成分解为算法选择和调度两个层次，EGG在多种LLM内核上实现了接近手工优化的性能。该方法大幅降低了AI基础设施中内核开发的人力成本。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.17952v1",
+      "source": "arxiv",
+      "title": "SoftMoE: Soft Differentiable Routing for Mixture-of-Experts in LLMs",
+      "abstract": "Sparse Mixture-of-Experts (MoE) architectures enable scaling LLM parameters under a fixed inference budget by activating only a small subset of experts via top-$k$ routing. While this preserves causality and suits autoregressive language models, the discrete top-$k$ operator is not differentiable, forcing a fixed number of active experts per input and resulting in inefficient use of computation. We propose SoftMoE, which replaces discrete routing with a truncated soft top-$k$ LapSum relaxation, allowing gradient-based optimization of expert routing. We further parameterize the mean number of active experts per layer and impose a global budget constraint, enabling the model to learn how to allocate expert capacity across layers. SoftMoE remains fully compatible with autoregressive modeling and achieves performance comparable to or better than sparse MoE on language modeling and downstream tasks, while activating significantly fewer experts. Notably, the learned allocation is highly non-uniform, with later layers activating more experts. The source code is publicly available$^\\dagger$.",
+      "authors": [
+        "Mikołaj Zasada",
+        "Łukasz Struski",
+        "Jacek Tabor",
+        "Marcin Kurdziel"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-16T14:05:41+00:00",
+      "link": "https://arxiv.org/pdf/2606.17952v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "soft differentiable routing for MoE improves communication efficiency",
+      "llm_evidence_cn": "MoE软可微分路由改善通信效率",
+      "llm_evidence": "MoE软可微分路由改善通信效率",
+      "canonical_evidence": "MoE软可微分路由改善通信效率",
+      "llm_tldr_en": "SoftMoE replaces discrete top-k routing with a soft differentiable relaxation, enabling gradient-based optimization and dynamic expert allocation across layers.",
+      "llm_tldr_cn": "稀疏MoE模型中离散top-k路由不可微，导致固定专家数量且计算低效。SoftMoE提出截断软top-k LapSum松弛，支持梯度优化路由。通过参数化每层平均激活专家数并施加全局预算约束，模型可学习跨层分配容量。该方法完全兼容因果语言建模，在多个LLM上展示了更好的计算效率。该工作从根本上提升了MoE的通信和计算优化。",
+      "llm_tldr": "稀疏MoE模型中离散top-k路由不可微，导致固定专家数量且计算低效。SoftMoE提出截断软top-k LapSum松弛，支持梯度优化路由。通过参数化每层平均激活专家数并施加全局预算约束，模型可学习跨层分配容量。该方法完全兼容因果语言建模，在多个LLM上展示了更好的计算效率。该工作从根本上提升了MoE的通信和计算优化。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.17952v1"
+    },
+    {
+      "id": "2606.18042v1",
+      "source": "arxiv",
+      "title": "Latency Prediction for LLM Inference on NPU Systems",
+      "abstract": "Deploying Large Language Models (LLMs) requires exploring a large configuration space spanning parallelization strategies, batching techniques, and scheduling policies. Exhaustive measurement across this space is impractical, making latency prediction essential for system optimization. While NPUs have emerged as accelerators designed for LLM inference, no prediction methodology has been established for them. Specifically, applying prior work to LLM inference latency prediction on NPUs faces three challenges: undisclosed microarchitecture of commercial NPUs, unpredictable compiler optimizations, and latency non-linearity induced by bucketing.   We present LENS, a latency estimator that predicts NPU inference latency without information on the microarchitecture or compiler, and captures the non-linear latency induced by bucketing. LENS profiles each bucket with two end-to-end (E2E) measurements and composes the results to predict latency for arbitrary input-output length combinations. We validate LENS across NPUs from multiple vendors, several LLMs, and diverse workloads, achieving a mean prediction error of 2.15\\%. We further compare LENS against two methodologically related baselines, confirming the validity of its approach.",
+      "authors": [
+        "Juhyun Park",
+        "Seungwoo Jeong",
+        "Jingyu Lee",
+        "Kyungyong Lee"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-16T15:18:53+00:00",
+      "link": "https://arxiv.org/pdf/2606.18042v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Latency prediction for LLM inference on NPU aids system optimization",
+      "llm_evidence_cn": "在NPU上预测LLM推理延迟，辅助系统优化",
+      "llm_evidence": "在NPU上预测LLM推理延迟，辅助系统优化",
+      "canonical_evidence": "在NPU上预测LLM推理延迟，辅助系统优化",
+      "llm_tldr_en": "LENS predicts LLM inference latency on NPUs without microarchitecture knowledge, enabling efficient parallelization and scheduling decisions.",
+      "llm_tldr_cn": "在NPU上部署LLM需要探索巨大配置空间，但缺乏延迟预测工具。本文提出LENS，无需微架构或编译器信息即可预测NPU推理延迟。它解决了非公开微架构、不可预知编译器优化和分段导致的非线性三个挑战。准确预测有助于选择最优并行策略和调度方案，加速AI基础设施部署。",
+      "llm_tldr": "在NPU上部署LLM需要探索巨大配置空间，但缺乏延迟预测工具。本文提出LENS，无需微架构或编译器信息即可预测NPU推理延迟。它解决了非公开微架构、不可预知编译器优化和分段导致的非线性三个挑战。准确预测有助于选择最优并行策略和调度方案，加速AI基础设施部署。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.18042v1"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.18304v1",
+      "source": "arxiv",
+      "title": "Attribution-Guided and Coverage-Maximized Pruning for Structural MoE Compression",
+      "abstract": "Mixture-of-Experts (MoE) models scale compute efficiently, yet remain expensive to deploy due to their substantial memory footprint and inference overhead. Prior compression methods mainly operate at the expert level, either removing entire experts or ranking experts by coarse-grained importance scores. However, such expert-wise decisions are often too coarse to capture fine-grained redundancy, leading to misallocated pruning budgets and limited compression. To address this problem, we observe that information within MoE experts is highly concentrated in a small subset of channels, leaving substantial redundancy even in experts deemed important. Based on this observation, we propose a structural pruning framework tailored for MoE models. Our method reformulates prune-ratio allocation as a channel-score coverage maximization problem and solves it efficiently using an attribution-based approximation. Experiments on DeepSeek and Qwen MoE models show that our method preserves model accuracy under 50% or 25% structured pruning when combined with 4-bit quantization. On Qwen3-30B-A3B, our approach reduces memory footprint by 5.27$\\times$ and consistently outperforms state-of-the-art baselines across diverse benchmarks.",
+      "authors": [
+        "Yifu Ding",
+        "Jiacheng Wang",
+        "Ge Yang",
+        "Yongcheng Jing",
+        "Jinyang Guo",
+        "Xianglong Liu",
+        "Dacheng Tao"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-16T06:53:27+00:00",
+      "link": "https://arxiv.org/pdf/2606.18304v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "structural MoE compression for inference efficiency",
+      "llm_evidence_cn": "结构MoE压缩提升推理效率",
+      "llm_evidence": "结构MoE压缩提升推理效率",
+      "canonical_evidence": "结构MoE压缩提升推理效率",
+      "llm_tldr_en": "Proposes a structural pruning framework for MoE models that uses attribution-guided channel-level pruning to reduce memory and inference overhead while maximizing coverage.",
+      "llm_tldr_cn": "现有MoE模型压缩方法通常在专家级别进行粗粒度剪枝，忽略了通道内的冗余。本文提出一种基于归因引导和覆盖最大化的结构性剪枝框架，通过在通道层面精细剪枝来减少模型内存占用和推理开销。实验表明该方法在保持性能的同时显著提升了压缩率，为MoE模型高效部署提供了新思路。",
+      "llm_tldr": "现有MoE模型压缩方法通常在专家级别进行粗粒度剪枝，忽略了通道内的冗余。本文提出一种基于归因引导和覆盖最大化的结构性剪枝框架，通过在通道层面精细剪枝来减少模型内存占用和推理开销。实验表明该方法在保持性能的同时显著提升了压缩率，为MoE模型高效部署提供了新思路。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "carryover_cache",
+      "paper_id": "2606.18304v1",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.21228v2",
+      "source": "arxiv",
+      "title": "Sakana Fugu Technical Report",
+      "abstract": "The capabilities of frontier Large Language Models (LLMs) continue to advance, with different providers increasingly specializing in distinct domains. This raises a natural next objective: how to combine the individual specializations of various LLMs into a collectively intelligent system. To this end, we report the development of Sakana Fugu, a family of orchestrator models that harness and amplify the capabilities of an LLM agent team. Fugu models are themselves language models trained to understand user queries and dynamically devise agentic scaffolds to solve them. Through these adaptive scaffolds, Fugu accesses performance beyond any individual LLM agent, achieving state-of-the-art results compared to other publicly accessible models across a range of challenging tasks, including SWE-Bench Pro, Terminal Bench, LiveCodeBench, GPQA-Diamond, Humanity's Last Exam, and CharXiv Reasoning. We release two models: Fugu, which balances performance with latency for everyday use, and Fugu-Ultra, which prioritizes answer quality on the hardest problems. We describe our training paradigm, which encompasses large-scale fine-tuning, evolutionary algorithms, and reinforcement learning approaches, along with the infrastructure and core design principles that turn these methods into a production system. We hope this report encourages further research into multi-agent systems and dynamic, query-adaptive agentic scaffolds as a path toward the next frontier of AI capabilities, accessed through collective intelligence.",
+      "authors": [
+        "Yujin Tang",
+        "Edoardo Cetin",
+        "Jinglue Xu",
+        "Qi Sun",
+        "Stefan Nielsen",
+        "Vincent Richard",
+        "Haruto Goda",
+        "Iaroslav Tymchenko",
+        "Nhan Nguyen",
+        "Hyunin Lee",
+        "Mari Ashiga",
+        "Shashank Kotyan",
+        "So Kuroki",
+        "Tarin Clanuwat"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-19T08:47:40+00:00",
+      "link": "https://arxiv.org/pdf/2606.21228v2",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "orchestrator models combining multiple LLM specializations for heterogeneous inference",
+      "llm_evidence_cn": "编排器模型结合多个LLM专长，实现异构推理",
+      "llm_evidence": "编排器模型结合多个LLM专长，实现异构推理",
+      "canonical_evidence": "编排器模型结合多个LLM专长，实现异构推理",
+      "llm_tldr_en": "Sakana Fugu trains orchestrator models that dynamically combine specialized LLMs into agentic teams, achieving SOTA on diverse tasks.",
+      "llm_tldr_cn": "报告了Sakana Fugu系列编排器模型，能够理解用户查询并动态设计智能体团队，组合多个专业LLM的专长，在SWE-Bench等任务上取得领先结果，实现异构大模型混合推理。",
+      "llm_tldr": "报告了Sakana Fugu系列编排器模型，能够理解用户查询并动态设计智能体团队，组合多个专业LLM的专长，在SWE-Bench等任务上取得领先结果，实现异构大模型混合推理。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "heterogeneous mixed inference for large models",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.21955v1",
+      "source": "arxiv",
+      "title": "From RAN Control to Agentic Intelligence: Architecture and Vision for Energy Efficient AI-RAN",
+      "abstract": "Future 6G networks will rely on highly distributed, AI-native Radio Access Networks (RANs), where communication and AI workloads share a common infrastructure. This evolution, combined with increasing deployment density and continuous AI processing, is expected to significantly increase RAN energy consumption. While Open RAN (O-RAN) introduces a programmable and modular control framework through the RAN Intelligent Controller (RIC) and Service Management and Orchestration (SMO), current approaches remain largely policy-driven, limiting adaptive energy-aware coordination across multiple applications. In parallel, AI-RAN promotes the convergence of AI and RAN infrastructures through AI-for-RAN, AI-on-RAN, and AI-and-RAN paradigms, yet efficient mechanisms to jointly orchestrate performance, latency, and energy remain an open challenge. This article proposes an agentic AI-native RAN architecture that bridges O-RAN's structured control with AI-RAN's unified vision. Leveraging semantic intent abstraction and Large Language Model (LLM)-driven coordination, the framework enables adaptive orchestration, conflict resolution, and energy-aware multi-objective optimization across heterogeneous workloads. Through representative AI-for-RAN and AI-on-RAN use cases, we show how such coordination can improve resource efficiency and reduce operational energy consumption, paving the way toward sustainable 6G networks.",
+      "authors": [
+        "Sabrine Aroua",
+        "Alexis I. Aravanis",
+        "Ilias Chatzistefanidis",
+        "Hamza Abbar",
+        "Anh-Khoa Dang",
+        "Anastasios Giovanidis",
+        "Salah-Eddine El Ayoubi",
+        "Stephane Senecal",
+        "Martha Vlachou Konchylaki",
+        "Navid Nikaein"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "cs.AI"
+      ],
+      "published": "2026-06-20T09:04:57+00:00",
+      "link": "https://arxiv.org/pdf/2606.21955v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "AI-RAN infrastructure convergence for energy efficiency",
+      "llm_evidence_cn": "AI-RAN基础设施融合以实现能效",
+      "llm_evidence": "AI-RAN基础设施融合以实现能效",
+      "canonical_evidence": "AI-RAN基础设施融合以实现能效",
+      "llm_tldr_en": "Presents an architecture for energy-efficient AI-RAN in 6G, merging AI and RAN workloads on shared infrastructure.",
+      "llm_tldr_cn": "论文针对6G网络中AI与RAN基础设施融合带来的能耗挑战，提出一种面向能效的AI-RAN架构。该架构通过可编程控制和AI-on-RAN范式实现自适应能量感知协调。研究为未来AI基础设施加速提供了网络侧的新视角，但未直接涉及模型推理或KV缓存优化。",
+      "llm_tldr": "论文针对6G网络中AI与RAN基础设施融合带来的能耗挑战，提出一种面向能效的AI-RAN架构。该架构通过可编程控制和AI-on-RAN范式实现自适应能量感知协调。研究为未来AI基础设施加速提供了网络侧的新视角，但未直接涉及模型推理或KV缓存优化。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.27005v1",
+      "source": "arxiv",
+      "title": "Adaptive Utility driven Resource Orchestration for Resilient AI (AURORA-AI)",
+      "abstract": "Modern AI systems are increasingly deployed under non-stationary computational, demographic, and operational conditions in which static resource allocation strategies degrade both predictive performance and human-centric properties such as fairness and explainability. This paper presents AURORA-AI, an Adaptive Utility-driven Resource Orchestration framework for Resilient AI that unifies Hamilton-Jacobi-Bellman feedback control, Lyapunov-based stability monitoring, and a fairness-aware composite utility into a single closed-loop policy.The framework continuously redistributes computational budget across a population of heterogeneous AI models so that the global utility, defined jointly over predictive performance, demographic parity, cost, latency, robustness, and interpretability, remains maximised under disruption. The framework is evaluated in a stress-rich discrete-time simulation that concurrently injects demographic bias shocks, gradual concept drift, and abrupt black-swan disruptions, and is compared against five established controllers including Static, Round Robin, Greedy, LinUCB, and a deep reinforcement-learning agent based on Proximal Policy Optimisation. AURORA-AI achieves immediate recovery from the black-swan event compared to eighty-eight time steps for the Static baseline and twenty-two for Proximal Policy Optimisation, lifts the alpha-quantile and the super-quantile by twenty-nine and twenty-five percent respectively, simultaneously reduces the mean and maximum demographic parity gap, and increases the fraction of Lyapunov-stable operating steps. These results indicate that fairness-aware adaptive orchestration grounded in stability theory is a practical and theoretically motivated path toward resilient human-centric AI deployment.",
+      "authors": [
+        "Rahul Umesh Mhapsekar",
+        "Ilias Cherkaoui",
+        "Lizy Abraham",
+        "Indrakshi Dey"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-25T13:22:07+00:00",
+      "link": "https://arxiv.org/pdf/2606.27005v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "resource orchestration for heterogeneous AI models under non-stationary conditions",
+      "llm_evidence_cn": "面向异构AI模型的资源编排，适应非平稳条件",
+      "llm_evidence": "面向异构AI模型的资源编排，适应非平稳条件",
+      "canonical_evidence": "面向异构AI模型的资源编排，适应非平稳条件",
+      "llm_tldr_en": "AURORA-AI adaptively redistributes compute across heterogeneous AI models to balance performance, fairness, cost, and latency.",
+      "llm_tldr_cn": "提出AURORA-AI自适应资源编排框架，针对非平稳环境下异构AI模型，通过Hamilton-Jacobi-Bellman反馈控制和Lyapunov稳定性监控，持续优化计算预算分配，兼顾性能、公平性和延迟。",
+      "llm_tldr": "提出AURORA-AI自适应资源编排框架，针对非平稳环境下异构AI模型，通过Hamilton-Jacobi-Bellman反馈控制和Lyapunov稳定性监控，持续优化计算预算分配，兼顾性能、公平性和延迟。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "search for heterogeneous computing in AI infrastructure",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.24165v1",
+      "source": "arxiv",
+      "title": "Spectral Evolution-Guided Token Pruning in Multimodal Large Language Models",
+      "abstract": "Reducing visual token redundancy is critical for accelerating Multimodal Large Language Models (MLLMs) without degrading cross-modal reasoning performance. Existing token pruning methods typically rely on single-layer signals, such as attention scores or token similarities, which overlook the cross-layer transformation of visual representations and may exhibit positional bias in multimodal token sequences. To address this limitation, we propose a training-free token pruning framework based on Cross-Layer Spectral Evolution (CLSE). Instead of measuring token importance from single-layer feature magnitudes, CLSE quantifies how token representations evolve across Transformer layers in the frequency domain. This evolution reflects the transition from high-frequency structural details to low-frequency semantic abstractions. We observe that tokens with stronger spectral redistribution across layers are more likely to be semantically active and should therefore be preserved. By modeling cross-layer token dynamics, CLSE provides a stable importance criterion that mitigates positional bias. Extensive experiments on both image and video benchmarks demonstrate that CLSE achieves a superior trade-off between efficiency and accuracy under aggressive token reduction. Across multiple MLLMs, CLSE reduces FLOPs, KV cache memory, and latency while maintaining competitive or improved performance.",
+      "authors": [
+        "Bin Chen",
+        "Yuxiang Cai",
+        "Yadan Luo",
+        "Yi Zhang",
+        "Jianwei Yin",
+        "Zhi Chen"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-23T05:39:52+00:00",
+      "link": "https://arxiv.org/pdf/2606.24165v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Token pruning for multimodal LLM acceleration",
+      "llm_evidence_cn": "多模态大模型标记剪枝加速",
+      "llm_evidence": "多模态大模型标记剪枝加速",
+      "canonical_evidence": "多模态大模型标记剪枝加速",
+      "llm_tldr_en": "CLSE prunes visual tokens based on cross-layer spectral evolution, accelerating multimodal LLM inference without training.",
+      "llm_tldr_cn": "本文提出基于跨层频谱演化（CLSE）的训练无关标记剪枝框架，用于加速多模态大模型推理。CLSE通过量化视觉表示在Transformer层间的频谱变化来评估标记重要性，克服了单层信号的局限性。实验表明该方法在保持推理质量的同时显著减少了视觉标记数量，从而加速了多模态大模型推理。该工作属于AI基础设施中推理加速技术。",
+      "llm_tldr": "本文提出基于跨层频谱演化（CLSE）的训练无关标记剪枝框架，用于加速多模态大模型推理。CLSE通过量化视觉表示在Transformer层间的频谱变化来评估标记重要性，克服了单层信号的局限性。实验表明该方法在保持推理质量的同时显著减少了视觉标记数量，从而加速了多模态大模型推理。该工作属于AI基础设施中推理加速技术。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.23546v1",
+      "source": "arxiv",
+      "title": "The Energy Consumption of Transformer Fine-Tuning: A Roofline-Inspired Scaling Model",
+      "abstract": "Transformer-based models underpin modern natural language processing but incur rapidly growing computational and energy costs. As training scales in both model size and parallelism, accurately predicting energy consumption has become critical for sustainable and cost-aware system design. We present a framework for modeling the energy consumption of Transformer training on multiple GPUs. Using controlled architectural sweeps of BERT models, we relate measured energy to lightweight proxies for compute, memory traffic, and hardware efficiency. Inspired by roofline models, our approach incorporates a speedup-based hardware-efficiency factor that captures the effects of tensor parallelism and fully sharded data parallelism. We derive a scaling law model that accurately predicts training energy across heterogeneous configurations.",
+      "authors": [
+        "Mansour Zoubeirou a Mayaki"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.AR",
+        "cs.CL",
+        "cs.DC"
+      ],
+      "published": "2026-06-22T16:18:06+00:00",
+      "link": "https://arxiv.org/pdf/2606.23546v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Energy consumption modeling for transformer training with parallelism effects",
+      "llm_evidence_cn": "考虑并行化的变压器训练能耗建模",
+      "llm_evidence": "考虑并行化的变压器训练能耗建模",
+      "canonical_evidence": "考虑并行化的变压器训练能耗建模",
+      "llm_tldr_en": "A roofline-inspired energy model for transformer training, incorporating tensor and data parallelism effects, aiding sustainable AI infrastructure design.",
+      "llm_tldr_cn": "本文提出了一个受roofline模型启发的变压器训练能耗建模框架。通过BERT模型的受控架构扫描，将测量能耗与计算、内存流量和硬件效率的轻量代理关联起来。模型包含了张量并行和全分片数据并行带来的加速效应。该框架可用于预测不同并行策略下的能耗，为AI基础设施的可持续性设计提供指导。属于基础设施加速中的能效优化。",
+      "llm_tldr": "本文提出了一个受roofline模型启发的变压器训练能耗建模框架。通过BERT模型的受控架构扫描，将测量能耗与计算、内存流量和硬件效率的轻量代理关联起来。模型包含了张量并行和全分片数据并行带来的加速效应。该框架可用于预测不同并行策略下的能耗，为AI基础设施的可持续性设计提供指导。属于基础设施加速中的能效优化。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.25488v1",
+      "source": "arxiv",
+      "title": "Distill on a Diet: Efficient Knowledge Distillation via Learnable Data Pruning",
+      "abstract": "Knowledge Distillation (KD) is widely used to obtain compact models for efficient inference in resource-constrained environments. Yet the computational overhead of the distillation process itself is often overlooked, raising the question of whether a better student model can be obtained with less data and less compute via data pruning. However, existing data pruning methods are not designed for KD: some introduce substantial overhead, such as obtaining training dynamics through retraining, while others rely on heuristic selection rules that fail to capture what KD actually requires, often resulting in suboptimal subsets. To address these issues, we propose IF-Beta, an efficient data pruning framework that combines influence functions with a learnable sampling policy. Empirically, we first demonstrate that influence functions can serve as an effective and efficient estimator of sample impact in KD settings, where only a pretrained teacher is available. Building on this, our sampling policy is specifically parameterized by a Beta distribution, whose highly flexible two-parameter family allows the policy to adapt to diverse pruning regimes rather than being tied to fixed heuristic forms. Next, we formulate KD pruning as optimizing this policy through a bilevel objective, where the inner loop operates in the teacher feature space with a KD-aligned objective, enabling fast proxy training, while the outer loop updates the policy parameters to maximize distillation performance. This design ensures that IF-Beta is both computationally efficient and inherently aligned with the goals of KD. Extensive experiments on CIFAR-10/100 and ImageNet show that IF-Beta consistently outperforms other baselines across a wide range of pruning ratios. Remarkably, IF-Beta enables students trained on less data and less compute to surpass the performance of students distilled on the full dataset.",
+      "authors": [
+        "Yifan Wu",
+        "Yiqi Wang",
+        "Xichen Ye",
+        "Wenjing Yan",
+        "Xiaoqiang Li",
+        "Cheng Jin",
+        "Xiangyu Yue",
+        "Weizhong Zhang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-24T07:17:05+00:00",
+      "link": "https://arxiv.org/pdf/2606.25488v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Efficient data pruning for knowledge distillation to accelerate inference",
+      "llm_evidence_cn": "高效数据剪枝加速知识蒸馏以提升推理效率",
+      "llm_evidence": "高效数据剪枝加速知识蒸馏以提升推理效率",
+      "canonical_evidence": "高效数据剪枝加速知识蒸馏以提升推理效率",
+      "llm_tldr_en": "IF-Beta efficiently prunes training data for knowledge distillation using influence functions, reducing distillation cost while improving student model inference speed.",
+      "llm_tldr_cn": "知识蒸馏是获得紧凑推理模型的关键技术，但蒸馏过程本身计算开销大。现有数据剪枝方法不适应蒸馏场景。本文提出IF-Beta框架，结合影响函数与可学习数据剪枝，在降低蒸馏数据量的同时提升学生模型推理性能。实验表明，该方法在多种任务上以更少计算获得更优学生模型，为AI基础设施中的推理加速提供了一种高效的模型压缩前置手段。",
+      "llm_tldr": "知识蒸馏是获得紧凑推理模型的关键技术，但蒸馏过程本身计算开销大。现有数据剪枝方法不适应蒸馏场景。本文提出IF-Beta框架，结合影响函数与可学习数据剪枝，在降低蒸馏数据量的同时提升学生模型推理性能。实验表明，该方法在多种任务上以更少计算获得更优学生模型，为AI基础设施中的推理加速提供了一种高效的模型压缩前置手段。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.24437v1",
+      "source": "arxiv",
+      "title": "ReM-MoA: Reasoning Memory Sustains Mixture-of-Agents Scaling",
+      "abstract": "Mixture-of-Agents (MoA) architectures improve inference-time scaling by organizing multiple LLM agents into layered reasoning pipelines. However, existing MoA variants fail to sustain gains as depth increases, exhibiting degradation, early plateauing, or saturation. We propose ReM-MoA, a memory-augmented MoA framework that sustains scaling through two mechanisms: (1) a Ranked Reasoning Memory that persistently stores and ranks reasoning traces from all layers using a comparative Reviewer Agent, and (2) a Curated Diversified Memory Routing scheme that exposes different agents to distinct combinations of successful and failed traces, preserving exploration diversity while propagating high-quality reasoning. We further introduce an optional multi-domain Reviewer distillation pipeline that improves ranking quality through frontier-model supervision. Across five reasoning benchmarks spanning math, formal logic, code, knowledge, and commonsense, ReM-MoA consistently outperforms prior MoA variants across both depth and width scaling, and its advantage widens with depth, establishing structured cross-layer reasoning memory as a key missing mechanism for scalable multi-agent inference.",
+      "authors": [
+        "Heng Ping",
+        "Arijit Bhattacharjee",
+        "Peiyu Zhang",
+        "Shixuan Li",
+        "Wei Yang",
+        "Ali Jannesari",
+        "Nesreen Ahmed",
+        "Paul Bogdan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-23T11:14:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.24437v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "mixture-of-agents inference-time scaling with memory routing",
+      "llm_evidence_cn": "混合代理推理时扩展与记忆路由",
+      "llm_evidence": "混合代理推理时扩展与记忆路由",
+      "canonical_evidence": "混合代理推理时扩展与记忆路由",
+      "llm_tldr_en": "ReM-MoA introduces ranked reasoning memory and curated diversified memory routing to sustain scaling in mixture-of-agents architectures, improving inference-time performance.",
+      "llm_tldr_cn": "现有MoA架构在深度增加时效果饱和或退化。ReM-MoA通过排序推理记忆和策展多样化路由，持续提升多代理推理性能，支持更大规模推理扩展，属于推理加速创新。",
+      "llm_tldr": "现有MoA架构在深度增加时效果饱和或退化。ReM-MoA通过排序推理记忆和策展多样化路由，持续提升多代理推理性能，支持更大规模推理扩展，属于推理加速创新。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.26002v1",
+      "source": "arxiv",
+      "title": "Hierarchical Reinforcement Learning for Neural Network Compression (HiReLC): Pruning and Quantization",
+      "abstract": "We present HiReLC, a hierarchical ensemble-reinforcement learning framework for automated joint quantization and structured pruning of deep neural networks. The framework decomposes the compression search across two levels of abstraction: low-level agents (LLAs) operate independently per block, selecting per-kernel configurations over a multi-discrete action space spanning bitwidth, pruning keep-ratio, quantization type, and granularity, while high-level agents (HLAs) coordinate global budget allocation via ensemble voting guided by Fisher Information-based sensitivity estimates. To mitigate the computational cost of policy evaluation, an iterative active learning loop interleaves surrogate-guided RL optimization with post-compression fine-tuning, using a lightweight MLP surrogate to amortize expensive evaluations and a logit-MSE proxy during cold-start. The surrogate is used for reward shaping rather than as a replacement for final post-compression evaluation. The controller is architecture-agnostic by design, with a modular layer abstraction decoupling the RL environment from the underlying network topology. Experiments across Vision Transformer and CNN benchmarks demonstrate effective parameter-storage compression ratios of 5.99 - 6.72$\\times$ with a 3.83 % gain in one setting and 0.55 - 5.62 % accuracy drops elsewhere, supporting hierarchical policy decomposition and sensitivity-aware guidance as practical design choices for joint neural network compression.",
+      "authors": [
+        "Kamar Hibatallah Baghdadi",
+        "Kawther Guoual Belhamidi",
+        "Sara Belhadj",
+        "Aissa Boulmerka",
+        "Nadir Farhi"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "math.OC"
+      ],
+      "published": "2026-06-24T16:19:29+00:00",
+      "link": "https://arxiv.org/pdf/2606.26002v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "neural network compression for inference acceleration",
+      "llm_evidence_cn": "神经网络压缩用于推理加速",
+      "llm_evidence": "神经网络压缩用于推理加速",
+      "canonical_evidence": "神经网络压缩用于推理加速",
+      "llm_tldr_en": "HiReLC uses hierarchical reinforcement learning for joint quantization and structured pruning of DNNs, enabling automated model compression to accelerate inference on AI infrastructure.",
+      "llm_tldr_cn": "针对深度神经网络部署中的计算和存储成本问题，提出HiReLC，一种基于分层强化学习的自动联合量化和结构化剪枝框架。低层代理逐块选择核配置，高层代理通过Fisher信息引导的集成投票协调全局预算分配。结合主动学习循环减少策略评估开销。实验表明，HiReLC在多种网络架构上达到高压缩率同时保持精度，从而有效加速推理。该工作为AI基础设施中的模型加速提供了自动化方法。",
+      "llm_tldr": "针对深度神经网络部署中的计算和存储成本问题，提出HiReLC，一种基于分层强化学习的自动联合量化和结构化剪枝框架。低层代理逐块选择核配置，高层代理通过Fisher信息引导的集成投票协调全局预算分配。结合主动学习循环减少策略评估开销。实验表明，HiReLC在多种网络架构上达到高压缩率同时保持精度，从而有效加速推理。该工作为AI基础设施中的模型加速提供了自动化方法。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.25821v1",
+      "source": "arxiv",
+      "title": "SARA: Unlocking Multilingual Knowledge in Mixture-of-Experts via Semantically Anchored Routing Alignment",
+      "abstract": "Sparse Mixture-of-Experts (MoE) architectures have emerged as an increasingly influential paradigm as they offer a strategic balance between parameter scalability and computational efficiency. However, low-resource languages, which suffer from a scarcity of high-quality training data, often have their tokens routed to different experts than those predominantly activated by high-resource inputs, which limits cross-lingual expert sharing. This cross-lingual routing divergence consequently hinders their efficacy in multilingual contexts. To address this issue, we propose SARA (Semantically Anchored Routing Alignment), a framework designed to transfer specialized capabilities from high-resource languages as anchors to low-resource languages. SARA explicitly aligns the routing distribution of multilingual inputs with high-resource semantic anchors using a symmetric Jensen-Shannon (JS) divergence constraint. Unlike traditional distillation methods that operate on output logits, SARA directly aligns the internal routing distributions of MoE layers, encouraging mechanistic consistency in expert selection across languages. We conduct experiments on 2 LLMs across 5 low-resource languages and 3 benchmarks. Experiment results demonstrate that SARA outperforms standard instruction tuning, e.g., +0.8% on Qwen3-30B-A3B and +1.2% on Phi-3.5-MoE-instruct on Global-MMLU. Further analyses show that SARA effectively addresses performance bottlenecks in low-resource languages, providing a scalable pathway to enhance multilingual capabilities in sparse architectures.",
+      "authors": [
+        "Tianyu Dong",
+        "Yangyang Liu",
+        "Jiang Zhou",
+        "Xinwei Wu",
+        "Xiaohu Zhao",
+        "Hao Wang",
+        "Heng Liu",
+        "Linlong Xu",
+        "Longyue Wang",
+        "Weihua Luo",
+        "Shaolin Zhu",
+        "Deyi Xiong"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-06-24T13:36:46+00:00",
+      "link": "https://arxiv.org/pdf/2606.25821v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "MoE routing alignment for multilingual, indirectly improves communication",
+      "llm_evidence_cn": "MoE路由对齐，间接优化通信",
+      "llm_evidence": "MoE路由对齐，间接优化通信",
+      "canonical_evidence": "MoE路由对齐，间接优化通信",
+      "llm_tldr_en": "SARA aligns routing across languages in MoE to improve cross-lingual expert sharing, reducing routing divergence and enhancing multilingual performance.",
+      "llm_tldr_cn": "稀疏MoE架构在多语言场景下存在跨语言路由分歧，导致低资源语言专家利用率低。SARA通过语义锚定路由对齐，将高资源语言的能力迁移到低资源语言。实验表明该方法有效提升了多语言性能，为MoE在跨语言任务中的应用提供了新思路。",
+      "llm_tldr": "稀疏MoE架构在多语言场景下存在跨语言路由分歧，导致低资源语言专家利用率低。SARA通过语义锚定路由对齐，将高资源语言的能力迁移到低资源语言。实验表明该方法有效提升了多语言性能，为MoE在跨语言任务中的应用提供了新思路。",
+      "llm_tags": [
+        "query:ai-infra:composite"
+      ],
+      "matched_query_tag": "query:ai-infra:composite",
+      "matched_query_text": "Papers central to kvcache、hpc、ai infra这几个关键词相关的，包括但不限于异构混合推理、moe通信优化等任何涉及ai基础设施加速的, especially work that connects or combines: KV cache optimization for large language models; AI infrastructure acceleration techniques; heterogeneous mixed inference for large models; communication optimization in mixture of experts models; inference acceleration for AI infrastructure; model parallelism techniques for distributed training; find AI infrastrcutre acceleration; find papers about KV cache management for large language model inference; search for heterogeneous computing in AI infrastructure; look up communication optimization for mixture of experts models.",
+      "matched_requirement_id": "req-composite-ai-infra",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.26633v1",
+      "source": "arxiv",
+      "title": "Simulating Unified Tensor Resharding in heterogeneous AI systems",
+      "abstract": "State-of-the-art AI training simulators assume homogeneous compute and network infrastructure. However, real-world training infrastructure is becoming increasingly heterogeneous since: (a) Model architectures such as multimodal and MoE exploit heterogeneity to improve device utilization, (b) Public cloud platforms often provide limited availability of homogeneous hardware due to fast hardware evolution, and (c) Large enterprises frequently deploy geographically distributed infrastructure that is both diverse and heterogeneous. In this paper, we present Xsim, a heterogeneity-aware simulator for distributed LLM training. Xsim supports: (i) Load balancing through non-uniform workload partitioning across heterogeneous device groups, (ii) Heterogeneity-aware collective communication via customized ring construction and chunk partitioning, (iii) Reusable heterogeneity-aware abstractions for emerging pipeline-parallel algorithms and non-uniform tensor resharding technique, (iv) Flexible input abstractions for specifying deployment plans with custom device groups and custom device-to-parallelism mappings, and (v) Pluggable integration with NS-3 and htsim, allowing users to trade off simulation fidelity for performance and scalability. Our evaluation demonstrates that Xsim accurately predicts training time for real-world heterogeneous deployments, with an error of less than 5% across most heterogeneous data-parallel/tensor-parallel configurations and around 2% error with pipeline-parallel communication modeling. We expose actionable metrics such as pipeline bubble time and straggler waiting time.",
+      "authors": [
+        "Sumit Kumar",
+        "Sayantan Dasgupta",
+        "Kushal Mitra",
+        "Meet Dadhania",
+        "Rohan Sudhir Basugade",
+        "Praveen Tammana",
+        "Satananda Burla",
+        "Abed Mohammad Kamaluddin",
+        "Rinku Shah"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-25T05:50:46+00:00",
+      "link": "https://arxiv.org/pdf/2606.26633v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Heterogeneous AI system simulation for training",
+      "llm_evidence_cn": "面向训练异构AI系统的仿真",
+      "llm_evidence": "面向训练异构AI系统的仿真",
+      "canonical_evidence": "面向训练异构AI系统的仿真",
+      "llm_tldr_en": "Xsim is a heterogeneity-aware simulator for distributed LLM training supporting non-uniform workload partitioning and heterogeneous collective communication.",
+      "llm_tldr_cn": "现有训练模拟器假设同构系统，但实际训练环境日益异构。本文提出Xsim，支持异构设备组间非均匀工作负载划分和异构感知集合通信，准确模拟真实场景。",
+      "llm_tldr": "现有训练模拟器假设同构系统，但实际训练环境日益异构。本文提出Xsim，支持异构设备组间非均匀工作负载划分和异构感知集合通信，准确模拟真实场景。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "search for heterogeneous computing in AI infrastructure",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
