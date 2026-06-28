@@ -1,0 +1,651 @@
+Title: Posterior Refinement: Fast Language Generation via Any-Order Flow Maps
+
+URL Source: https://arxiv.org/pdf/2606.24773v1
+
+Published Time: Wed, 24 Jun 2026 01:16:25 GMT
+
+Number of Pages: 24
+
+Markdown Content:
+# Posterior Refinement: Fast Language Generation via Any-Order Flow Maps 
+
+Manan Agarwal ∗1, Sheel Shah ∗1, Chanhyuk Lee 2, Jaehoon Yoo 2
+
+Jerry Huang 1, Seunghoon Hong 2, Aditi Raghunathan 1
+
+Jinwoo Kim †2, Nicholas M. Boffi †11Carnegie Mellon University, 2KAIST 
+
+> ∗
+
+Equal contribution; order decided by a coin flip , †Equal advising 
+
+Abstract. Non-autoregressive generation offers a powerful paradigm for iterative refinement, allowing models to recursively critique, erase and regenerate arbitrary subsets of tokens. However, existing non-autoregressive models fail to realize this potential. Masked Diffusion Models (MDMs) suffer from factorization error, causing sample quality to collapse when generating multiple tokens simultaneously. Flow Map Language Models (FMLMs) circumvent this bottleneck via joint sequence transport for excellent few-step generation, but sacrifice the inference-time flexibility of MDMs. We introduce FMLM +, a framework that bridges this gap by equipping FMLM with masking-style noise schedules. While generating the full sequence in a single step, FMLM + simultaneously scores the global consistency of each token a posteriori . We leverage this to introduce Posterior Refinement , a novel inference-time refinement strategy that enables the model to adaptively self-correct its outputs, matching the performance of discrete baselines with 32 × fewer NFEs. Across diverse benchmarks, we demonstrate that FMLM + with Posterior Refinement improves the speed–quality tradeoff over both MDM and FMLM families, providing a scalable foundation for high-fidelity language modeling. 
+
+Code: https://github.com/MananAg007/posterior-refinement 
+
+Project Page: https://posterior-refinement.github.io/ 
+
+Correspondence: {mananaga, sheels}@cs.cmu.edu 
+
+## 1 Introduction 1 2 4 8 16 32 64 
+
+> Refinement Rounds (NFE)
+> 0
+> 5
+> 10
+> 15
+> 20
+> 25
+> 30
+> 35
+> GSM8K Accuracy (%)
+> FMLM+
+> FMLM+ (Distill)
+> FMLM+ (Init)
+> Baseline
+
+Figure 1: Iterative refinement. FMLM +
+
+unlocks self-correction capabilities, outper-forming all diffusion baselines with 1024 func-tion evaluations using as few as 32 rounds of Posterior Refinement. Contemporary language models are predominantly autore-gressive (AR), necessitating L sequential forward passes to generate a sequence of length L [ 1–3 ]. While this paradigm has scaled remarkably well, its inherent sequential bottleneck makes inference slow and memory-bound [ 4, 5]. These inef-ficiencies cascade into downstream applications like inference-time scaling, reasoning, and reinforcement learning, which are inference-bottlenecked, ultimately hindering scalability [3]. Masked diffusion models (MDMs) have emerged as the leading non-autoregressive alternative for language modeling [ 6–8 ], with recent efforts scaling them to billions of parameters [ 9–13 ]. In contrast to fixed causal orderings, MDMs model any-order factorizations of the sequence by training on arbitrary masking patterns. During inference, this permits adaptive unmask-and-remask decoding strategies that commit high-confidence tokens first [ 14 – 16 ]. Such a flexible generative procedure has proven useful in planning-oriented tasks [17]. 1
+
+> arXiv:2606.24773v1 [cs.CL] 23 Jun 2026
+
+Complementing discrete formulations, a distinct line of work explores diffusion and flows within continuous representations for non-autoregressive language modeling, spanning fixed embeddings [ 18 –20 ], learned latent spaces [21, 22], and one-hot relaxations [23–25]. Recently, continuous-space approaches have been shown to be competitive with their discrete-diffusion counterparts in language modeling [ 20 , 22 , 26 , 27 ]. In particular, Flow Map Language Models (FMLMs) [ 26 ] train flow maps [ 28 ] over one-hot embeddings in Euclidean space, resolving the inherent factorization error in MDMs [ 29 –31 ] by learning a joint transport from Gaussian noise to one-hot vectors. This allows FMLMs to substantially improve the quality of few-step language generation, including generating text in just a single function evaluation [26]. Beyond fast, parallel inference, non-autoregressive generation offers a more profound theoretical advantage over AR modeling: the capacity for iterative refinement of generated text. While traditional causal language models are fundamentally constrained by a one-way, left-to-right generation, an iterative refinement paradigm allows the model to globally critique, erase, and regenerate arbitrary subsets of tokens to continually improve its output. This capacity directly mirrors human cognition; when composing complex text, humans rarely write perfectly in a single, unyielding left-to-right pass. Instead, we efficiently formulate a rough draft to capture the global context, and then iteratively assess, delete, and rewrite specific parts of text while keeping the overall picture in context [32]. However, existing non-autoregressive paradigms fail to fully realize this potential. While MDMs offer flexible, any-order inference, their quality rapidly degrades when multiple tokens are unmasked simultaneously, rendering few-step generation infeasible [ 26 , 29 –31 ]. On the contrary, FMLMs resolve this factorization error by learning the joint transport from Gaussian noise to one-hot vectors, yet they lack the inference-time flexibility native to MDMs because they evolve all tokens simultaneously. We argue that the respective strengths of these two paradigms constitute the core primitives for effective iterative refinement, which requires both — efficient drafting of coherent multi-token blocks and the flexibility to retain arbitrary token subsets while regenerating the rest. Motivated by this insight, we introduce FMLM +, a unified framework that equips FMLMs with masking-style noise schedules. By coupling single-step sequence generation from FMLMs with flexible conditioning from MDMs, this architecture naturally supports iterative refinement. Crucially, because the entire sequence is transported jointly, our approach yields an a posteriori confidence score for each token conditioned on the full draft . This contrasts sharply with the a priori confidence derived from independent token-wise marginals in MDMs. We leverage this property to develop Posterior Refinement ( PR ) — an iterative refinement strategy that recursively retains high-confidence tokens and regenerates the rest to keep improving sample quality with each additional round of refinement (Figure 1). Subsequently, FMLM + with Posterior Refinement establishes a new state-of-the-art that consistently outperforms both MDM and FMLM baselines across all considered benchmarks with far fewer function evaluations (NFEs). Our contributions are as follows: 1. A unifying framework. We introduce FMLM +, a generalization of FMLMs to masking-style noise schedules that combines the few-step efficiency of FMLMs with the any-order flexibility of MDMs. We further establish a connection between MDMs and FMLM +, providing a direct path to scale FMLM +
+
+leveraging advances in large-scale MDM pre-training [9, 10]. 2. Posterior refinement. We introduce Posterior Refinement , an after-the-fact confidence-based strategy that enables FMLM + to recursively self-correct its output while generating all remaining tokens with 
+
+single function evaluations (Figure 2). We identify how existing a-priori confidence heuristics of MDMs fail on simple toy problems and demonstrate how Posterior Refinement is able to rectify these shortcomings. 3. Extensive evaluation. We demonstrate that FMLM + navigates the speed–quality trade-off more effec-tively than both MDM and FMLM families across four benchmarks: TinyStories [ 33 ], OpenWebText [ 34 ], GSM8K [35], and Sudoku, matching or surpassing the strongest baselines with up to 32 × fewer NFEs. 2Before 
+
+Round 1 Round 2                   
+
+> 271
+> 371
+> 412
+> 7361
+> 68
+> 2974
+> 5378
+> 21
+> 98
+
+Round 3                                                                                                                                                                                                                                                                       
+
+> 8327146
+> 371
+> 41273
+> 73861
+> 671328
+> 128653974
+> 53178
+> 2678341
+> 9846137
+> After
+> 859427193
+> 376158426
+> 412693387
+> 793742651
+> 645915238
+> 125536974
+> 531276849
+> 264899716
+> 986514362
+> 859327146
+> 376148582
+> 412596793
+> 793984651
+> 649714328
+> 128653974
+> 531472869
+> 267839415
+> 984561237
+> 895327146
+> 376148295
+> 412596783
+> 743982651
+> 659714328
+> 128653974
+> 531479862
+> 267835419
+> 984261537
+> 5
+
+Correct + High Confidence 5 Correct + Low Confidence 5 Incorrect + Low Confidence Figure 2: Posterior Refinement with FMLM +. By evaluating token consistency against the full generated sequence, FMLM + effectively identifies its own errors. Crucially, incorrect tokens consistently form a subset of low-confidence generations, allowing Posterior Refinement to reliably filter and revise errors. 
+
+## 2 Background 
+
+Let V denote a vocabulary, with |V| = V , and let y = ( yl)Ll=1 ∈ V L be a sequence of length L drawn from a data distribution p(y).
+
+Autoregressive Models. The AR paradigm models the data distribution through a left-to-right factor-ization p(y) = p(y1)p(y2|y1) . . . p (yL|y<L ), and learns the conditional distributions p(yl | y<l ) over tokens given their preceding context [ 36 – 38 ]. Generation proceeds sequentially by sampling one token at a time conditioned on previously generated tokens. 
+
+Masked Diffusion Models. Masked Diffusion Models (MDMs) [ 6 –8] offer an alternative paradigm for discrete generative modeling, parameterizing marginals over clean tokens given a partially masked input. MDMs extend the vocabulary V with an extra [MASK ] token. A monotonic fraction α(t) of clean tokens y is masked to produce yt. The token-wise marginal pθ (yl | yt) is then trained via a classification loss over the masked positions, 
+
+LMDM (pθ ) = −Et
+
+"
+
+w(t)
+
+> L
+
+X
+
+> l=1
+
+1[ylt = MASK ] log pθ (yl | yt)
+
+#
+
+, (1) where w(t) > 0 is some weighting function. 3At inference, MDMs start from a fully masked sequence and generate tokens via an iterative unmask– remask procedure; at each step they first categorically sample from the marginal distribution for each token independently and then remask some tokens, repeating until all tokens are unmasked. A natural decoding strategy for MDMs is to commit tokens in decreasing order of confidence, usually using the maximum marginal probability max v pθ (yl = v | yt) [15, 16]. 
+
+Flow Matching and Flow Maps. Flow matching [ 39 –41 ] learns a continuous transport from a simple source distribution (e.g., Gaussian noise) to the target data distribution by regressing the velocity field of a probability flow ODE along a prescribed source–target interpolant. We define x1 = f (y) as the one-hot representation of clean data, and sample x0 ∼ N(0 , I ) as isotropic Gaussian noise of matching shape to construct the linear interpolant in Euclidean space: 
+
+It := (1 − t)x0 + tx1, t ∈ [0 , 1] . (2) This interpolant admits a deterministic probability flow ODE 
+
+˙xt = bt(xt), bt(x) = E[ ˙It | It = x] = E[x1 − x0 | It = x], (3) whose solution transports samples from the source distribution to the target data distribution [ 39 –41 ]. In practice, we parameterize the flow velocity bt with a neural network, and inference requires a numerical integration of the probability flow ODE to generate samples. The flow map Xs,t : [0 , 1] 2 × RL×V → RL×V associated with the velocity field bt is defined as the solution operator that transports the state at time s to the state at time t [28]: 
+
+Xs,t (xs) = xs +
+
+Z ts
+
+bτ (xτ )dτ = xs + ( t − s)vs,t (xs), (4) where vs,t (xs) is the average velocity (mean flow) between times s and t [42 ]. In the limit s → t, the average velocity recovers the instantaneous velocity, lim s→t vs,t (x) = bt(x). Crucially, this allows us to arbitrarily jump along the flow, including generating from the target distribution in a single function evaluation ( X0,1) [ 42 , 43 ]. 
+
+Flow Map Language Models. Flow map language models (FMLM) [ 26 ] enable few-step language generation by parameterizing the two-time denoiser (TTD) δs,t : [0 , 1] 2 × RL×V → RL×V ,
+
+δs,t (x) := x + (1 − s)vs,t (x), (5) which extrapolates the flow-map transport to t = 1 and satisfies the boundary identity δt,t (x) = E[x1 | It =
+
+x] [ 26 , 44 , 45 ]. The TTD takes values on the per-token simplex, δs,t (x)l ∈ ∆V −1 for l = 1 , . . . , L , and obeys the semigroup identity 
+
+δs,t (x) = γ δ s,u (x) + (1 − γ) δu,t (Xs,u (x)) , γ = (1 − t)( u − s)(1 − u)( t − s) , (6) for every 0 ≤ s ≤ u ≤ t ≤ 1 [26 ]. In practice, we parameterize δs,t with a token-wise softmax head and train it via a token-wise cross-entropy objective, 
+
+LFMLM (δ) := EtEx0,x1 [CE (δs,s (Is), x1)] 
+
+| {z }
+
+> Ldiag
+
++ Es,u,t Ex0,x1
+
+CE  δs,t (Is), ¯δs,t 
+
+ | {z }
+
+> Loff
+
+, (7) where Xs,u (x) := 1−u 
+
+> 1−s
+
+x + u−s 
+
+> 1−s
+
+δs,u (x), ¯δs,t := stopgrad (γ δ s,u (Is) + (1 − γ) δu,t (Xs,u (Is))) . Intuitively, this loss trains the two-time denoiser to reconstruct clean data along the diagonal s = t (Ldiag ) and to progressively distill a larger off-diagonal jump ( s → t) using two smaller jumps ( s → u, u → t) as a teacher ( Loff ). During inference, we can arbitrarily jump along the flow by recovering the flow map from the TTD, 
+
+Xs,t (x) = 1 − t
+
+1 − s x + t − s
+
+1 − s δs,t (x). (8) This allows us to generate samples in as few as a single function evaluation ( δ0,1). 43 FMLM+ 
+
+Continuous diffusion and flow-based models typically denoise the full sequence in parallel [ 39 , 46 , 47 ]. While effective for unconditional generation, this formulation has no native mechanism for conditioning on clean context. Unlike autoregressive or masked models, where conditioning is a structural primitive, continuous-flow models often require architectural modifications, such as cross-attention or auxiliary guidance models, to incorporate conditional information [ 48 , 49 ]. To address this limitation in flow-based language modeling, we introduce FMLM +, a generalization of FMLMs that natively learns to generate under diverse conditioning patterns (Section 3.1). We show that this allows for flexible decoding strategies at inference time (Section 3.2), such as FMLM- and MDM- like inference, and further unlocks novel iterative refinement schemes (Section 3.3). 
+
+3.1 Training 
+
+The key idea underlying FMLM + is to generalize FMLMs by lifting the noising process to a masking-style design, preserving a set of clean tokens yC at context positions C ⊂ { 1, · · · , L } while noising the rest: 
+
+Ilt := 
+
+(
+
+xl
+
+> 1
+
+, if l ∈ C 
+
+(1 − t)xl 
+
+> 0
+
++ txl
+
+> 1
+
+, else (l ∈ [L] \ C ). (9) This enables FMLM + to condition on arbitrary clean context without additional architectural components. In practice, this is implemented by converting the shared time conditioning in the DiT architecture [ 50 ] to a per-position conditioning with t = 1 for clean positions. For brevity, we drop this implicit conditioning on yC
+
+throughout the remainder of the paper, writing δs,t (·) instead of δs,t (·| yC ).We train the two-time denoiser δs,t with the following progressive self-distillation objective: 
+
+LFMLM +(δ) = EC
+
+h
+
+Et Ex0,x1
+
+CE( δs,s (Is), x1) ⊙ m| {z }
+
+> Ldiag
+
++ Es,u,t Ex0,x1
+
+CE( δs,t (Is), ¯δs,t ) ⊙ m| {z }
+
+> Loff
+
+i
+
+. (10) Compared to the vanilla FMLM objective (7), we have an additional expectation over C, the set of context tokens, and use m ∈ { 0, 1}L with ml = 1[ l / ∈ C ] to mask the loss from tokens that are already clean. To avoid extra complexity, we drop the time reparameterization trick from Lee et al. [26] and use the self-distillation objective (10) instead of the two-stage training in Lee et al. [26] for all FMLM + runs. 
+
+Leveraging Pretrained MDMs. To accelerate the training of FMLM +, we propose a novel method to leverage pretrained MDMs based on the following observation. At s = t = 0 , the off-diagonal term Loff in the FMLM + training objective (10) vanishes and the diagonal term Ldiag reduces to: 
+
+EC [Ex0,x1 [CE (δ0,0(x0), x1) ⊙ m]] . (11) This token-wise classification objective predicts the ground-truth tokens using only the context yC and pure Gaussian noise. Because the model must rely exclusively on the context, this formulation is equivalent to MDM training objective (1), which similarly predicts targets from yC and [MASK ] tokens. We use this equivalence to accelerate FMLM + training in two ways: 1. Distillation. We utilize an MDM as a teacher model, training the FMLM + student to match the MDM’s token probabilities for the same context. This approach reduces gradient variance and accelerates convergence [51]. Concretely, we use: 
+
+LDistill (δ) = LFMLM+ (δ) + λEC Ex0,x1 [CE (δ0,0(I0), p θ (y0))] . (12) 2. Initialization. We initialize FMLM + weights directly from a pretrained MDM checkpoint, leveraging the similarity between the masked diffusion and continuous flow objectives [ 52 ]. We show how the DiT architecture can mechanistically adapt MDM weights to handle noisy input in Section 4.2. 550k 100k 150k 200k 250k        
+
+> Training Steps
+> 0
+> 10
+> 20
+> 30
+> GSM8K Accuracy (%)
+> 050k 100k 150k 200k 250k
+> Training Steps
+> 0.075
+> 0.125
+> 0.175
+> Training Loss
+> FMLM+ FMLM+ (Distill) FMLM+ (Init)
+
+Figure 3: Improved Training Techniques for FMLM +. Left: downstream accuracy ( ↑) with 32 rounds of Posterior Refinement; both teacher-based variants outperform training from scratch. Right: training loss (↓); warm-started training converges faster and achieves a better optimum. Both metrics are smoothened with an exponential moving average ( λ = 0 .99 ). Empirically, both distillation and initialization strategies significantly improve training efficiency and final performance. We find that warm starting from pre-trained MDM weights helps the model converge to a better optimum than training from scratch, highlighting the role of stochasticity and parameter initialization in training FMLMs (Figure 3). 
+
+3.2 Inference 
+
+Algorithm 4 FMLM + Inference. 
+
+> # delta: Two Time Denoiser # C: commit criterion; R rounds x = randn(L, V) s, t = zeros(L), ones(L) for _ in range(R): x_1 = delta(x, s, t, flow_steps) tokens = x_1.argmax(axis=1) commit = C(tokens, x_1) x = where(commit, one_hot(tokens), randn(L, V)) s = where(commit, 1, 0) return x_1
+
+The core advantage of training FMLM + on diverse con-ditioning patterns is that it allows us to flexibly choose between various decoding strategies during inference. As a simple example, we can recover the standard FMLM in-ference by defining a time grid 0 = t0 < t 1 < · · · < t N = 1 
+
+and denoising all unknown tokens simultaneously, jumping in N steps along the flow trajectory via (8). More importantly, this allows us to construct a mechanism for iterative refinement as a loop that performs parallel generation followed by committing a subset of tokens (Algorithm 4). At each iteration i, we propose a candidate 
+
+ˆx1 via FMLM inference. Then, we select a subset U
+
+to retain from this candidate sequence and round them into discrete tokens via an argmax operation. Finally, we add them to our context set C := C ∪ U and re-noise all remaining tokens [L] \ C for the next iteration. This, for example, allows for block-diffusion-style inference [ 53 ] by choosing U as the next contiguous block of B tokens. We may further perform MDM-like, confidence-based inference by noting the equivalence between δ0,0 and MDMs (11) . Consequently, by sampling tokens from δ0,0(x0) and by prioritizing positions with sharper 
+
+δ0,0(x0), we recover MDM’s confidence-based sampling [ 15 –17 ]. We note that this approach, applied either to FMLM + with δ0,0 or MDMs, generates tokens and estimates confidence a priori , using only the partial context available at that step and without knowing what tokens will be generated at other positions. 63.3 Posterior Refinement 
+
+Beyond recovering existing inference schemes as in Section 3.2, we show that FMLM + enables a novel class of after-the-fact refinement strategies native to neither the MDM nor the FMLM paradigms. During inference, FMLM + steps along the flow trajectory to simultaneously decode all positions. At the final integration step, because the model operates on a nearly complete sequence, the model implicitly evaluates the conditional probability of each token given the rest of the generated text. The one-step generation δ0,1
+
+also captures this behavior since, ideally, the flow from t = 0 to t = 1 is equivalent to composing the transport from 0 to t and the flow map jump from t to 1. This enables us to compute token confidence conditioned on the fully generated sequence, effectively evaluating each token’s fit within the global context. Reflecting the 
+
+a-posteriori nature of these estimates, we term our approach Posterior Refinement (PR). PR instantiates the inference loop in Section 3.2, choosing the retained set U using the confidence of the predicted endpoint. Concretely, at each iteration, we use the final flow map jump ˆx1 = δtN −1,1(xtN −1 ) to set 
+
+U = {l ∈ [L] \ C : pl 
+
+> max
+
+> p }, (13) where pl 
+
+> max
+
+:= max v ( ˆx(i)1 )l,v is a measure of the a-posteriori confidence and p is some threshold for selecting confident tokens. To avoid stalling when no position clears the threshold, we commit at least k positions per round, falling back to the top-k by confidence. -2 0 2
+
+x1
+
+> -2
+> -1
+> 0
+> 1
+> 2
+> x2
+
+δ0, 0 (a-priori)      
+
+> (1 ,1)
+> (−1,−1)
+> -2 02
+
+x1
+
+> -2
+> -1
+> 0
+> 1
+> 2
+> x2
+
+δ0, 1 (a-posteriori)         
+
+> (1 ,1)
+> (−1,−1)
+> 0.5 0.6 0.7 0.8 0.9 1.0
+
+pmax 
+
+Figure 5: Two types of confidence. On a 2-mode toy problem, the one-step FMLM δ0,1 outputs high pmax for most inputs. Low-confidence regions concentrate near decision boundaries, where the endpoint is ambiguous, indicating δ0,1 captures the epistemic confidence of the model. In contrast, δ0,0 is flat for all inputs, reflecting its aleatoric nature. 
+
+Interpretation. An ideal FMLM would per-fectly sample from its training distribution, al-ways producing one-hot vectors. In practice, how-ever, the model outputs categorical distributions that are not strictly one-hot. To resolve this, Lee et al. [26] project each token to the nearest ver-tex of the probability simplex via the argmax operator. We interpret the rounding error of this projection as a proxy for the model’s confidence. This interpretation aligns with our empirical ob-servations in Sudoku, where we find that incorrect tokens consistently exhibit high rounding error (Figure 2). Concretely, this rounding error can be quanti-fied using either the ℓ1 distance or the Kullback-Leibler (KL) divergence between the generated distribution and the target one-hot distribution. Under both metrics, the rounding error is a mono-tonically decreasing function of pl
+
+> max
+
+. Conse-quently, applying a threshold to pl 
+
+> max
+
+is mathe-matically equivalent to thresholding the rounding error under these metrics (Proposition A.1). 
+
+Why a-priori confidence fails. Because both the MDM denoiser pθ and the FMLM denoiser δ0,0 predict token-wise marginals, independently sampling high-confidence tokens from these marginals cannot circumvent factorization error. While this heuristic performs well on unimodal target distributions such as unique Sudoku solutions, it catastrophically fails on multi-modal distributions (Table 6). We identify that MDMs, and equivalently δ0,0, conflate aleatoric uncertainty, the inherent randomness of the data distribution, with epistemic uncertainty, the model’s internal confidence [ 54 ]. We hypothesize that by failing to perfectly learn the joint transport from Gaussian noise to clean one-hot data, the FMLM trajectory is able to surface the true epistemic uncertainty of the model through errors in its predictions (Figure 5). 74 Experiments 
+
+We evaluate FMLM + on four benchmarks: TinyStories [ 33 ] and OpenWebText [ 34 ] for unconditional language generation, TinyGSM [ 55 ] for conditional reasoning, and Sudoku for structured constraint satisfaction. Following Kim et al. [17] , we train on code solutions from the synthetic TinyGSM corpus and evaluate zero-shot on the GSM8K [ 35 ] test split. We adopt a DiT [ 50 ] backbone for all baselines; further details on model architecture and datasets are provided in Appendix B. 
+
+Training. We train FMLM + with AdamW under bfloat16 mixed precision, optimizing the Two-Time De-noiser self-distillation objective in (10). For the MDM-distillation and -initialization experiments (Section 4.2), we additionally train an MDLM model [ 8] with the same architecture to act as a teacher and an initialization checkpoint respectively. Appendix B.3 specifies all task-specific training hyperparameters. 
+
+Evaluation. On TinyStories and OpenWebText, we report generative perplexity under GPT-2 Large [ 56 ]together with per-sample unigram entropy; where low entropy signals repetition collapse [ 30 ]. We report solve-rate accuracy using a sampled Python solution graded by execution for GSM8K and a valid completion respecting the clue set for Sudoku. 
+
+4.1 Posterior Refinement                            
+
+> Unconditional Sudoku (%, ↑)Method 13927 81 MDLM (Ancestral) 0007.7 33.8 MDLM (Confidence) 0000.0 97.2 FMLM+ ( δ0,0)0000.0 98.8 FMLM+ ( δ0,1)022.2 87.1 98.8 99.6
+
+Table 6: A-priori confidence fails on multi-modal data. 
+
+On unconditional Sudoku generation, MDLM and FMLM +
+
+with a-priori confidence (Section 3.2) fail catastrophically when sampling multiple tokens at a time. FMLM + with PR (Section 3.3) achieves 87% accuracy with only a few NFEs. We compare Posterior Refinement ( PR ) against a-priori confidence-based sampling methods in Table 6, and against a range of representative language modeling methods in Table 7. PR de-livers large efficiency gains across all considered benchmarks. As a result, FMLM + achieves 71% and 19% accuracy on Hard Sudoku and GSM8K problems with just 4 and 32 NFEs re-spectively, outperforming all non-autoregressive baselines in both speed ( 32 × speedup) and ac-curacy. On TinyStories and OWT, FMLM +
+
+matches or surpasses all baselines with up to 
+
+8× fewer NFEs. We ablate over the choice of hyperparameters for PR in Appendix D and provide qualtitative samples in Appendix E.                                                                                                                     
+
+> TinyStories OpenWebText Sudoku GSM8K
+> Category Method NFE Gen-PPL ↓Ent. NFE Gen-PPL ↓Ent. NFE Easy Med. Hard NFE Acc. (%, ↑)AR Sample 128 8.89 4.01 1024 35.45 5.58 128 13.9 5.1 0.6 512 53.9 Greedy 128 5.34 4.06 1024 1.07 1.65 128 14.6 5.1 1.0 512 63.3 Discrete MDLM 128 18.74 4.03 1024 105.15 5.63 128 92.0 77.1 30.2 1024 18.0 Duo 128 22.73 4.05 1024 77.69 5.55 128 96.3 84.7 58.4 1024 17.2 Continuous CANDI 128 46.32 4.04 1024 143.13 5.71 128 79.3 45.9 16.7 1024 0.2 FLM 128 57.50 4.17 1024 62.23 5.33 128 94.2 82.7 44.5 1024 0.3 S-FLM 128 95.25 4.08 1024 123.87 5.52 128 94.8 85.2 45.0 1024 18.0 FMLM +32 17.53 3.96 128 66.6 5.21 497.9 92.0 71.2 32 19.0
+
+Table 7: Posterior Refinement. Generative perplexity and unigram entropy on unconditional benchmarks, and accuracy (%, ↑) on conditional benchmarks (Sudoku split into Easy/Med./Hard; GSM8K zero-shot). FMLM +, which uses PR , matches or surpasses the strongest baselines with 8–32 × fewer function evaluations. 84.2 Leveraging Pretrained MDMs GSM8K (%, ↑)Method 1 2 4 8 16 32 64 MDLM (Teacher) 0.0 0.0 0.1 0.6 4.7 9.0 13.4 FMLM + 0.0 0.1 2.9 8.7 13.4 19.0 19.1 FMLM + (Distill) 0.3 0.4 3.9 10.3 18.7 21.6 23.4 FMLM + (Init) 0.3 0.7 5.1 15.1 26.1 31.8 33.6 
+
+Table 8: Leveraging pretrained MDMs. Accuracy (%, ↑) on zero-shot GSM8K, comparing three training strategies of FMLM + with Posterior Refinement. In Table 8, we compare the two FMLM + training approaches proposed in Section 3.1 that leverage a pretrained MDM against FMLM + and MDM trained from scratch. We find that distilling and initializing from a pretrained MDM can be highly beneficial. We note that FMLM + in Table 7 are trained from scratch for fair comparison with baselines, although we expect that leveraging MDMs as in Table 8 would lead to further improvements. 0.0 0.2 0.4 0.6 0.8 1.0 
+
+Time t
+
+> 0.1
+> 0.0
+> 0.1
+> 0.2
+> 0.3
+> 0.4
+> 0.5
+> Cosine Similarity
+> [MASK]
+> Others
+
+Figure 9: adaLN activations. At t=0, noisy inputs align with the MDM’s [MASK ] activation while remaining uncorrelated with other tokens. The strong performance of FMLM + (Init) in Table 8 is sur-prising, since it is unclear why pretraining on [MASK ] tokens should benefit processing Gaussian-noise inputs. We explain this by inspecting two components of the DiT backbone, the first adaptive layer normalization (adaLN) [ 57 ] for time con-ditioning, and the token embedding layer, before and after FMLM + training. For the first DiT block, we measure the cosine similarity between FMLM +’s post-adaLN activations and those of the MDM teacher’s (Figure 9). At t= 0 (pure Gaussian noise), FMLM + activations remain highly aligned with the teacher’s [MASK ] activations. Thus, we conclude that the first adaLN layer maps the Gaussian-noise input onto the same representation the teacher produced for [MASK ] tokens, presenting downstream layers with an in-distribution input and preserving the pretrained knowledge. In Table 12, we further compute the per-token cosine similarity between each FMLM + input embedding and its MDM-init counterpart. Every token embedding stays aligned with its initialization after training, indicating that FMLM + adapts the embed-ding layer to be robust to Gaussian noise corruptions. 
+
+## 5 Conclusion 
+
+We introduce FMLM +, a generalization of flow map language models that equips continuous-flow language modeling with the any-order inference flexibility of masked diffusion, paving the way towards effective iterative refinement. We further introduce Posterior Refinement , a novel, after-the-fact refinement strategy that re-noises and regenerates low-confidence tokens to self-correct in parallel. Empirically, FMLM + improves the speed-quality tradeoff over both MDM and FMLM families across unconditional and conditional generation settings, matching or surpassing the strongest baselines with up to 32 × fewer function evaluations. Finally, we show that the masked diffusion objective is equivalent to a boundary case of the FMLM + training objective, and use this correspondence to derive two practical mechanisms based on distillation and transfer learning for accelerating FMLM + training using pretrained MDMs. 
+
+Future directions. The correspondence between MDM and FMLM + offers a path to scale FMLM + to the billion-parameter regime using the growing pool of large pretrained masked diffusion models (LLaDA-8B [ 9], Dream [ 10 ], and others). We also believe that the conditional nature of FMLM + can be leveraged to improve generation quality using techniques such as classifier-free guidance [ 58 ]. Finally, Posterior Refinement exposes a form of inference-time scaling native to FMLM +, and we expect novel test-time strategies can be designed around such posterior-confidence signals. We leave a systematic study of these directions to future work. 9Limitations. Methodologically, we follow the progressive self-distillation objective from Lee et al. [26] and do not explore alternatives such as the Lagrangian, Eulerian and Mean Flow variants [ 28 , 42 ]. We conduct our experiments on a small scale on largely synthetic and small-sized datasets. Thus, the scalability of our approach needs a more broad study with evaluation on downstream tasks. While our current formulation of PR holds committed tokens fixed, alternative formulations can be explored to allow FMLM + to rectify previous errors. Finally, we note that training from scratch is suboptimal compared to initializing with MDM weights, even at convergence. This implies that there is room to improve FMLM + training with better model architecture and low-variance loss functions. 
+
+## Acknowledgements 
+
+The authors would like to thank Modal Labs for their generous compute grants, which proved invaluable in supporting this work. 
+
+## References 
+
+[1] Josh Achiam, Steven Adler, Sandhini Agarwal, Lama Ahmad, Ilge Akkaya, Florencia Leoni Aleman, Diogo Almeida, Janko Altenschmidt, Sam Altman, Shyamal Anadkat, et al. Gpt-4 technical report. 
+
+arXiv preprint arXiv:2303.08774 , 2023. (page 1) [2] Rohan Anil, Sebastian Borgeaud, Jean-Baptiste Alayrac, Jiahui Yu, Radu Soricut, Johan Schalkwyk, Andrew M Dai, Anja Hauth, Katie Millican, et al. Gemini: a family of highly capable multimodal models. arXiv preprint arXiv:2312.11805 , 2023. (page 1) [3] Daya Guo, Dejian Yang, Haowei Zhang, Junxiao Song, Ruoyu Zhang, Runxin Xu, Qihao Zhu, Shirong Ma, Peiyi Wang, Xiao Bi, et al. Deepseek-r1: Incentivizing reasoning capability in llms via reinforcement learning. arXiv preprint arXiv:2501.12948 , 2025. (page 1) [4] Jiatao Gu, James Bradbury, Caiming Xiong, Victor OK Li, and Richard Socher. Non-autoregressive neural machine translation. arXiv preprint arXiv:1711.02281 , 2017. (page 1) [5] Amey Agrawal, Nitin Kedia, Ashish Panwar, Jayashree Mohan, Nipun Kwatra, Bhargav S. Gulavani, Alexey Tumanov, and Ramachandran Ramjee. Taming throughput-latency tradeoff in llm inference with sarathi-serve. In Proceedings of the 18th USENIX Conference on Operating Systems Design and Implementation , OSDI’24, USA, 2024. USENIX Association. ISBN 978-1-939133-40-3. (page 1) [6] Jacob Austin, Daniel D Johnson, Jonathan Ho, Daniel Tarlow, and Rianne Van Den Berg. Structured denoising diffusion models in discrete state-spaces. Advances in neural information processing systems ,34:17981–17993, 2021. (pages 1 and 3) [7] Aaron Lou, Chenlin Meng, and Stefano Ermon. Discrete diffusion modeling by estimating the ratios of the data distribution. arXiv preprint arXiv:2310.16834 , 2023. (pages 1 and 3) [8] Subham Sahoo, Marianne Arriola, Yair Schiff, Aaron Gokaslan, Edgar Marroquin, Justin Chiu, Alexander Rush, and Volodymyr Kuleshov. Simple and effective masked diffusion language models. Advances in Neural Information Processing Systems , 37:130136–130184, 2024. (pages 1, 3, 8, 14, 15, and 16) [9] Shen Nie, Fengqi Zhu, Zebin You, Xiaolu Zhang, Jingyang Ou, Jun Hu, Jun Zhou, Yankai Lin, Ji-Rong Wen, and Chongxuan Li. Large language diffusion models. arXiv preprint arXiv:2502.09992 , 2025. (pages 1, 2, and 9) [10] Jiacheng Ye, Zhihui Xie, Lin Zheng, Jiahui Gao, Zirui Wu, Xin Jiang, Zhenguo Li, and Lingpeng Kong. Dream 7b: Diffusion large language models. arXiv preprint arXiv:2508.15487 , 2025. (pages 1, 2, and 9) 10 [11] Samar Khanna, Siddhant Kharbanda, Shufan Li, Harshit Varma, Eric Wang, Sawyer Birnbaum, Ziyang Luo, Yanis Miraoui, Akash Palrecha, Stefano Ermon, et al. Mercury: Ultra-fast language models based on diffusion. arXiv preprint arXiv:2506.17298 , 1, 2025. (page 1) [12] Google DeepMind. Gemini diffusion. https://deepmind.google/models/gemini-diffusion/ , 2025. Accessed: 2026-01-25. (page 1) [13] Yuxuan Song, Zheng Zhang, Cheng Luo, Pengyang Gao, Fan Xia, Hao Luo, Zheng Li, Yuehang Yang, Hongli Yu, Xingwei Qu, et al. Seed diffusion: A large-scale diffusion language model with high-speed inference. arXiv preprint arXiv:2508.02193 , 2025. (page 1) [14] Huiwen Chang, Han Zhang, Lu Jiang, Ce Liu, and William T Freeman. Maskgit: Masked generative image transformer. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition ,pages 11315–11325, 2022. (page 1) [15] Lin Zheng, Jianbo Yuan, Lei Yu, and Lingpeng Kong. A reparameterized discrete diffusion model for text generation. arXiv preprint arXiv:2302.05737 , 2023. (pages 1, 4, and 6) [16] Jiacheng Ye, Jiahui Gao, Shansan Gong, Lin Zheng, Xin Jiang, Zhenguo Li, and Lingpeng Kong. Beyond autoregression: Discrete diffusion for complex reasoning and planning. arXiv preprint arXiv:2410.14157 ,2024. (pages 1, 4, and 6) [17] Jaeyeon Kim, Kulin Shah, Vasilis Kontonis, Sham Kakade, and Sitan Chen. Train for the worst, plan for the best: Understanding token ordering in masked diffusions. arXiv preprint arXiv:2502.06768 , 2025. (pages 1, 6, and 8) [18] Shansan Gong, Mukai Li, Jiangtao Feng, Zhiyong Wu, and LingPeng Kong. Diffuseq: Sequence to sequence text generation with diffusion models. arXiv preprint arXiv:2210.08933 , 2022. (page 2) [19] Hongyi Yuan, Zheng Yuan, Chuanqi Tan, Fei Huang, and Songfang Huang. Seqdiffuseq: Text diffusion with encoder-decoder transformers. arXiv preprint arXiv:2212.10325 , 2022. (page 2) [20] Keya Hu, Linlu Qiu, Yiyang Lu, Hanhong Zhao, Tianhong Li, Yoon Kim, Jacob Andreas, and Kaiming He. Elf: Embedded language flows. arXiv preprint arXiv:2605.10938 , 2026. (page 2) [21] Sander Dieleman, Laurent Sartran, Arman Roshannai, Nikolay Savinov, Yaroslav Ganin, Pierre H Richemond, Arnaud Doucet, Robin Strudel, Chris Dyer, Conor Durkan, et al. Continuous diffusion for categorical data. arXiv preprint arXiv:2211.15089 , 2022. (page 2) [22] Yuxin Chen, Chumeng Liang, Hangke Sui, Ruihan Guo, Chaoran Cheng, Jiaxuan You, and Ge Liu. Langflow: Continuous diffusion rivals discrete in language modeling. arXiv preprint arXiv:2604.11748 ,2026. (page 2) [23] Rabeeh Karimi Mahabadi, Hamish Ivison, Jaesung Tae, James Henderson, Iz Beltagy, Matthew E Peters, and Arman Cohan. Tess: Text-to-text self-conditioned simplex diffusion. In Proceedings of the 18th Conference of the European Chapter of the Association for Computational Linguistics (Volume 1: Long Papers) , pages 2347–2361, 2024. (page 2) [24] Jaesung Tae, Hamish Ivison, Sachin Kumar, and Arman Cohan. Tess 2: A large-scale generalist diffusion language model. arXiv preprint arXiv:2502.13917 , 2025. (page 2) [25] Oscar Davis, Michael S Albergo, Nicholas M Boffi, Michael M Bronstein, and Avishek Joey Bose. Generalised flow maps for few-step generative modelling on riemannian manifolds. arXiv preprint arXiv:2510.21608 , 2025. (page 2) [26] Chanhyuk Lee, Jaehoon Yoo, Manan Agarwal, Sheel Shah, Jerry Huang, Aditi Raghunathan, Seunghoon Hong, Nicholas M. Boffi, and Jinwoo Kim. Flow map language models: One-step language modeling via continuous denoising, 2026. preprint. (pages 2, 4, 5, 7, 10, 14, and 15) 11 [27] Zhihan Yang, Wei Guo, Shuibai Zhang, Subham Sekhar Sahoo, Yongxin Chen, Arash Vahdat, Morteza Mardani, and John Thickstun. Continuous diffusion scales competitively with discrete diffusion for language. arXiv preprint arXiv:2605.18530 , 2026. (page 2) [28] Nicholas M. Boffi, Michael S. Albergo, and Eric Vanden-Eijnden. Flow map matching with stochastic interpolants: A mathematical framework for consistency models. arXiv:2406.07507 , 2025. (pages 2, 4, and 10) [29] Justin Deschenaux and Caglar Gulcehre. Beyond autoregression: Fast llms via self-distillation through time. arXiv preprint arXiv:2410.21035 , 2024. (pages 2, 14, and 15) [30] Kaiwen Zheng, Yongxin Chen, Hanzi Mao, Ming-Yu Liu, Jun Zhu, and Qinsheng Zhang. Masked diffusion models are secretly time-agnostic masked models and exploit inaccurate categorical sampling. 
+
+arXiv preprint arXiv:2409.02908 , 2024. (pages 2 and 8) [31] Wonjun Kang, Kevin Galim, Seunghyuk Oh, Minjae Lee, Yuchen Zeng, Shuibai Zhang, Coleman Hooper, Yuezhou Hu, Hyung Il Koo, Nam Ik Cho, et al. Parallelbench: Understanding the trade-offs of parallel decoding in diffusion llms. arXiv preprint arXiv:2510.04767 , 2025. (page 2) [32] Linda Flower and John R Hayes. A cognitive process theory of writing. College Composition & Communication , 32(4):365–387, 1981. (page 2) [33] Ronen Eldan and Yuanzhi Li. Tinystories: How small can language models be and still speak coherent english? arXiv preprint arXiv:2305.07759 , 2023. (pages 2, 8, and 14) [34] Aaron Gokaslan and Vanya Cohen. Openwebtext corpus. http://Skylion007.github.io/OpenWebTe xtCorpus , 2019. (pages 2, 8, and 15) [35] Karl Cobbe, Vineet Kosaraju, Mohammad Bavarian, Mark Chen, Heewoo Jun, Lukasz Kaiser, Matthias Plappert, Jerry Tworek, Jacob Hilton, Reiichiro Nakano, et al. Training verifiers to solve math word problems. arXiv preprint arXiv:2110.14168 , 2021. (pages 2 and 8) [36] Michael I Jordan. Attractor dynamics and parallelism in a connectionist sequential machine. In 
+
+Proceedings of the Annual Meeting of the Cognitive Science Society , volume 8, 1986. (page 3) [37] Jeffrey L Elman. Finding structure in time. Cognitive science , 14(2):179–211, 1990. (page 3) [38] Yoshua Bengio, Réjean Ducharme, Pascal Vincent, and Christian Jauvin. A neural probabilistic language model. Journal of machine learning research , 3(Feb):1137–1155, 2003. (page 3) [39] Yaron Lipman, Ricky TQ Chen, Heli Ben-Hamu, Maximilian Nickel, and Matt Le. Flow matching for generative modeling. arXiv preprint arXiv:2210.02747 , 2022. (pages 4 and 5) [40] Xingchao Liu, Chengyue Gong, and Qiang Liu. Flow straight and fast: Learning to generate and transfer data with rectified flow. arXiv preprint arXiv:2209.03003 , 2022. (page 4) [41] Michael S Albergo, Nicholas M Boffi, and Eric Vanden-Eijnden. Stochastic interpolants: A unifying framework for flows and diffusions. arXiv preprint arXiv:2303.08797 , 2023. (page 4) [42] Zhengyang Geng, Mingyang Deng, Xingjian Bai, J Zico Kolter, and Kaiming He. Mean flows for one-step generative modeling. arXiv preprint arXiv:2505.13447 , 2025. (pages 4 and 10) [43] Kevin Frans, Danijar Hafner, Sergey Levine, and Pieter Abbeel. One step diffusion via shortcut models. 
+
+arXiv preprint arXiv:2410.12557 , 2024. (page 4) [44] Yiyang Lu, Susie Lu, Qiao Sun, Hanhong Zhao, Zhicheng Jiang, Xianbang Wang, Tianhong Li, Zhengyang Geng, and Kaiming He. One-step latent-free image generation with pixel mean flows. arXiv preprint arXiv:2601.22158 , 2026. (page 4) 12 [45] Daan Roos, Oscar Davis, Floor Eijkelboom, Michael Bronstein, Max Welling, İsmail İlkan Ceylan, Luca Ambrogioni, and Jan-Willem van de Meent. Categorical flow maps. arXiv preprint arXiv:2602.12233 ,2026. (page 4) [46] Jonathan Ho, Ajay Jain, and Pieter Abbeel. Denoising diffusion probabilistic models. Advances in neural information processing systems , 33:6840–6851, 2020. (page 5) [47] Yang Song, Jascha Sohl-Dickstein, Diederik P Kingma, Abhishek Kumar, Stefano Ermon, and Ben Poole. Score-based generative modeling through stochastic differential equations. arXiv preprint arXiv:2011.13456 , 2020. (page 5) [48] Aditya Ramesh, Prafulla Dhariwal, Alex Nichol, Casey Chu, and Mark Chen. Hierarchical text-conditional image generation with clip latents. arXiv preprint arXiv:2204.06125 , 1(2):3, 2022. (page 5) [49] Black Forest Labs. FLUX.1 [dev]: A 12 billion parameter rectified flow transformer, 2024. Model available on Hugging Face. (page 5) [50] William Peebles and Saining Xie. Scalable diffusion models with transformers. In Proceedings of the IEEE/CVF international conference on computer vision , pages 4195–4205, 2023. (pages 5, 8, 14, and 15) [51] Geoffrey Hinton, Oriol Vinyals, and Jeff Dean. Distilling the knowledge in a neural network. arXiv preprint arXiv:1503.02531 , 2015. (page 5) [52] Sinno Jialin Pan and Qiang Yang. A survey on transfer learning. IEEE Transactions on Knowledge and Data Engineering , 22(10):1345–1359, 2010. doi: 10.1109/TKDE.2009.191. (page 5) [53] Marianne Arriola, Aaron Gokaslan, Justin Chiu, Zhihan Yang, Zhixuan Qi, Jiaqi Han, Subham Sahoo, and Volodymyr Kuleshov. Block diffusion: Interpolating between autoregressive and diffusion language models. In International Conference on Learning Representations , volume 2025, pages 50726–50753, 2025. (page 6) [54] Eyke Hüllermeier and Willem Waegeman. Aleatoric and epistemic uncertainty in machine learning: An introduction to concepts and methods. Machine Learning , 110(3):457–506, 2021. (page 7) [55] Bingbin Liu, Sebastien Bubeck, Ronen Eldan, Janardhan Kulkarni, Yuanzhi Li, Anh Nguyen, Rachel Ward, and Yi Zhang. Tinygsm: achieving> 80% on gsm8k with small language models. arXiv preprint arXiv:2312.09241 , 2023. (pages 8 and 15) [56] Alec Radford, Jeffrey Wu, Rewon Child, David Luan, Dario Amodei, Ilya Sutskever, et al. Language models are unsupervised multitask learners. OpenAI blog , 1(8):9, 2019. (page 8) [57] Ethan Perez, Florian Strub, Harm De Vries, Vincent Dumoulin, and Aaron Courville. Film: Visual reasoning with a general conditioning layer. In Proceedings of the AAAI conference on artificial intelligence , volume 32, 2018. (page 9) [58] Jonathan Ho and Tim Salimans. Classifier-free diffusion guidance. arXiv preprint arXiv:2207.12598 ,2022. (page 9) [59] Justin Deschenaux and Caglar Gulcehre. Language modeling with hyperspherical flows. arXiv preprint arXiv:2605.11125 , 2026. (page 15) 13 A Theoretical details 
+
+A.1 Rounding error in terms of confidence 
+
+In Section 3.3 we interpret the rounding error that occurs when model prediction is projected to its nearest one-hot vertex as a proxy for the model’s confidence. We claim that thresholding this error is equivalent to thresholding the top probability pl 
+
+> max
+
+and show it here. Fix a position l and write q := Ql ∈ ∆|V |− 1 for the predicted categorical distribution, with top probability 
+
+pmax := max v qv attained at ˆv := argmax v qv . Committing the token rounds q to the one-hot vertex eˆv , and the rounding error is the discrepancy between q and eˆv , measured either by the ℓ1 distance or by the KL divergence. 
+
+Proposition A.1 (Rounding error is monotone in confidence) . With the notation above, 
+
+q − eˆv 1 = 2 (1 − pmax ), KL (eˆv ∥ q) = − log pmax . (14) 
+
+Both quantities are strictly decreasing in pmax ∈ (0 , 1] , vanishing exactly at pmax = 1 . Consequently, for any threshold p ∈ (0 , 1] ,
+
+pmax ≥ p ⇐⇒ q − eˆv 1 ≤ 2(1 − p) ⇐⇒ KL (eˆv ∥ q) ≤ − log p, (15) 
+
+so thresholding the confidence pmax and thresholding the rounding error under either metric retain exactly the same set of positions. Proof. The mass that q places off the top token is P  
+
+> v̸=ˆ v
+
+qv = 1 − pmax . For the ℓ1 distance, 
+
+q − eˆv 1 = qˆv − 1 + X 
+
+> v̸=ˆ v
+
+qv = (1 − pmax ) + X 
+
+> v̸=ˆ v
+
+qv = 2 (1 − pmax ). (16) For the KL divergence, only the v = ˆ v term survives, since ev 
+
+> ˆv
+
+= 0 for v̸ = ˆ v:
+
+KL (eˆv ∥ q) = X
+
+> v
+
+ev 
+
+> ˆv
+
+log ev
+
+> ˆv
+
+qv = 1 · log 1
+
+qˆv = − log pmax . (17) Both 2(1 − pmax ) and − log pmax are continuous and strictly decreasing on (0 , 1] , so each is invertible; applying the inverse to either rounding-error threshold recovers the confidence threshold, giving the equivalences in (15). 
+
+## B Setup 
+
+We document the configurations used to produce all reported results (summarized in Appendix B.4). Following prior work [ 8, 26 ], we adopt a DiT [ 50 ] backbone for FMLM +. All experiments are run on 4× NVIDIA H100 GPUs, in bfloat16 mixed precision, with AdamW ( β1= 0.9, β2= 0.999 , ϵ=10 −8), no weight decay, and gradient-norm clipping at 1.0. Learning rates follow a 2.5k-step linear warmup to a constant peak. We evaluate using exponential moving average (EMA, decay 0.9999 ) parameters. 
+
+B.1 Datasets 
+
+TinyStories (unconditional generation). We train on TinyStories [ 33 ], a corpus of GPT-3.5/4-generated short stories restricted to a limited vocabulary. We tokenize with the GPT-2 byte-pair tokenizer and pack examples into length-128 sequences with <EOS> -insertion at sequence boundaries. We report generative perplexity under GPT-2 Large following [ 8, 26 , 29 ], alongside per-sample token entropy as a check against entropy collapse. Results appear in Table 7. 14 OpenWebText (unconditional generation). We also evaluate on OpenWebText [ 34 ], an open reproduc-tion of the WebText corpus used to train GPT-2. We tokenize with the GPT-2 byte-pair tokenizer and pack documents into length-1024 sequences with <EOS> -insertion at document boundaries. As with TinyStories, we report generative perplexity under GPT-2 Large [ 8, 26 , 29 ], alongside per-sample token entropy as a check against entropy collapse. Results appear in Table 7. 
+
+TinyGSM / GSM8K (conditional reasoning). We follow the exact protocol of S-FLM [ 59 ] so that our numbers are directly comparable to its baseline suite (MDLM, Duo, CANDI, FLM, S-FLM). We train on TinyGSM [ 55 ], a synthetic corpus of 12.3M grade-school math word problems generated to imitate the GSM8K distribution. We tokenize with the SmolLM-135M tokenizer and pack each ⟨question , Python solution ⟩ pair to length 512 , with loss supervised only on the solution tokens. Models are evaluated zero-shot on the GSM8K test split by sampling a Python solution conditioned on the prompt and grading by execution accuracy. 
+
+Sudoku (conditional). Following S-FLM [ 59 ], each puzzle is encoded as a length-180 sequence over a 
+
+12 -token vocabulary, with loss supervised only on the solution positions. Models are evaluated on the rate at which they produce a valid completion of the clue set across Easy/Medium/Hard splits. Results appear in Table 7. 
+
+B.2 Architecture 
+
+All models use the Diffusion Transformer (DiT) backbone [ 50 ] with adaLN time conditioning. Following Lee et al. [26] , FMLM + uses a double time embedding ( s and t are both injected through adaLN) so the same transformer can serve as the two-time denoiser at training and as a single-time denoiser at s=t. The MDM baselines and the MDM teachers used for distillation/initialization use the standard single-time DiT. The exact per-task configurations are listed in Appendix B.4; for the warm-start and distillation variants, FMLM +
+
+reuses the architecture of the corresponding MDM so that initialization is a parameter-identity copy. 
+
+B.3 FMLM + training objective 
+
+Algorithm 10 FMLM + Training. 
+
+> mask = random_mask(y.shape) # clean context pinned to t = 1 s, u, t = where(mask, sample_times(), 1.0) x_1 = one_hot(y) x_s = (1- s) * randn(L, V) + s * x_1 # self distillation target d_su = delta(x_s, s, u) X_su = flowmap(x_s, d_su, s, u) d_ut = delta(X_su, u, t) target = lerp(d_su, d_ut, gamma(s, u, t)) diag = CE(delta(x_s, s, s), x_1) offdiag = CE(delta(x_s, s, t), sg(target)) # supervise noised positions only loss = (diag + offdiag) * mask
+
+We train FMLM + with the progressive self-distillation (PSD) objective in (10), instantiated as Algorithm 10. We fix the following across all datasets: 
+
+• Corruption schedule : Noisy positions share a single sampled time t ∼ U [0 , 1] , while the rest are pinned to 
+
+t=1 as clean context. 
+
+• Progressive self-distillation (PSD) : the off-diagonal target uses the PSD construction of Lee et al. [26] with stop-gradient on the teacher branch. 
+
+• Time Reparameterization : we drop the time-reparameterization trick from Lee et al. [26] , and follow a simple linear-schedule. 
+
+• Diagonal fraction : with probability 0.5 a step uses the diagonal cross-entropy term ( s=t); otherwise the off-diagonal semigroup term. Both supervise only the noisy tokens. 
+
+• Antithetic sampling : each minibatch pairs (s, u, t )
+
+with (1 −t, 1−u, 1−s) to reduce variance along the time axis. 15 MDM warm-start and distillation. For the FMLM+ (Init) variant we initialize FMLM + weights from a same-architecture MDM checkpoint trained on the same dataset. The initialization is a parameter-identity copy: the only architectural difference is that FMLM + activates its second time embedding (initialized to zero so the network behaves identically at step zero). For the FMLM+ (Distill) variant we additionally hold a frozen MDM teacher and replace the diagonal target with the teacher’s posterior with probability pdistill .The MDM teachers are trained from scratch with the standard MDLM loss [ 8] on the same data, optimizer, and architecture used by the corresponding FMLM + run. 
+
+B.4 Hyperparameters                                                                    
+
+> TinyStories OpenWebText TinyGSM / GSM8K Sudoku
+> Architecture (DiT)
+> Hidden size 512 768 768 512 adaLN cond. dim 128 128 128 128 Layers 812 12 8Attention heads 812 12 8FFN multiplier 4444Dropout 0.1 0.1 0.1 0.1 Sequence length L128 1024 512 180 Vocabulary |V|50257 (GPT-2) 50257 (GPT-2) 49152 (SmolLM-135M) 12 Parameters (approx.) 80M 170M 168M 29M
+> Optimization
+> Optimizer AdamW ( β1=0 .9,β2=0 .999 ,ϵ=10 −8)Weight decay 0
+> Gradient clipping 1.0
+> Schedule Constant w/ linear warmup Warmup steps 2 500
+> Peak LR 3×10 −43×10 −43×10 −43×10 −4
+> Total steps 100 000 1 000 000 250 000 20 000
+> Global batch size 512 512 512 256 Per-GPU batch size 128 32 64 256 Precision bfloat16 mixed EMA decay 0.9999
+
+Table 11: Per-task hyperparameters. All FMLM + runs reuse the architecture and optimizer of the corresponding MDM baseline; the only per-method difference is the training and inference schedule. 
+
+## C Additional Experiments 
+
+C.1 Leveraging Pretrained MDMs                
+
+> Cosine similarity <0[0 ,0.25) [0 .25 ,0.5) [0 .5,0.75) [0 .75 ,1]
+> % of vocabulary 018 47 28 7
+
+Table 12: Embedding preservation. Distribution of per-token cosine similarities between the learned FMLM + embedding matrix and the corresponding MDM initialization. All 49 ,152 vocabulary embeddings retain positive cosine similarity after training. 16 D Ablations 
+
+Commit threshold. We sweep the commit threshold p ∈ { 0.9, 0.99 , 0.999 } for Posterior Refinement on Sudoku-Hard and GSM8K across NFE budgets. On GSM8K, p=0.9 saturates by 16 NFEs at 8.6%, while 
+
+p=0.999 continues improving through 64 NFEs, reaching 19.1%. Similarly, on Sudoku-Hard, p=0.999 is a better threshold from 4 NFEs onward, reaching 81.4% at 16 NFEs. We use p=0.999 for the headline results in Table 7.                                                       
+
+> Sudoku-Hard (NFE) GSM8K (NFE) Method 124816 124816 32 64 FMLM +(PR = 0.9) 4.1 21.2 20.2 19.9 20.9 01.6 4.6 6.5 7.8 9.0 8.5 FMLM +(PR = 0.99) 4.1 35.6 51.9 54.6 56.3 00.6 5.7 9.7 14.5 16.6 15.0 FMLM +(PR = 0.999) 4.1 26.0 71.2 78.1 81.4 00.1 2.9 8.7 13.4 19.0 19.1
+
+Table 13: Posterior Refinement threshold sweep. Solve-rate accuracy (%, ↑) on Sudoku-Hard and zero-shot GSM8K across NFE budgets, for commit thresholds p ∈ { 0.9, 0.99 , 0.999 }.On TinyStories (Appendix D), the threshold has no effect on small NFE budgets. From 8 NFEs onward, higher thresholds start performing better: p=0.999 reaches Gen. PPL 7.40 at 32 NFEs, versus 7.69 for p= 0.99 
+
+and 9.71 for p=0.9, with entropy stable across all settings ( ≈ 3.8–3.9). We use p=0.999 for the headline TinyStories result in Table 7.                            
+
+> NFE 124816 32 FMLM +(PR = 0.9) 96.28 / 3.97 35.14 / 3.98 16.92 / 3.9 111.58 / 3.86 10.21 / 3.86 9.71 / 3.83 FMLM +(PR = 0.99) 96.28 / 3.97 35.14 / 3.98 17.76 / 3.91 11.42 / 3.86 8.74 / 3.83 7.69 / 3.81 FMLM +(PR = 0.999) 96.28 / 3.97 35.14 / 3.98 17.76 / 3.91 11.57 / 3.86 8.94 / 3.85 7.40 / 3.83
+
+Table 14: Posterior Refinement threshold sweep on TinyStories. Generative perplexity ( ↓) / per-sample entropy ( ↑) under GPT-2 Large across NFE budgets, for commit thresholds p ∈ { 0.9, 0.99 , 0.999 }.
+
+Design choices. We ablate hyperparams of PR sampling on GSM8K (32 NFEs, p=0.999 ). We find that resampling renoised cells from fresh noise is important. Re-using the same initial noise can cause the model to converge to the same (rejected) predictions, affecting accuracy. We also note that setting both threshold and Top-K help improve the performance.            
+
+> Configuration Acc. (%)
+> Renoising
+> Same Initial Noise 14.4
+> New Initial Noise 19.0
+> Commit schedule
+> Threshold 12.8 Top-K 7.8
+> Threshold + Top-K 19.0
+> Top-K Value
+> Top-1 17.8 Top-2 17.8 Top-4 16.1 Top-8 11.4
+> Top-K 19.0
+
+Table 15: Posterior Refinement design ablations. GSM8K accuracy (%, ↑) at 32 NFEs, p=0.999 . Top-K is dynamically set to follow a linear schedule in the remaining number of tokens and budget. 17 E Posterior Refinement: Qualitative Samples 
+
+We show qualitative Posterior Refinement trajectories for FMLM + on TinyGSM, OpenWebText, and TinyStories. For each sample, we snapshot a few refinement rounds and color tokens by their commit state: tokens committed at high confidence (committed) are shown in teal , and tokens still being refined in ochre .For TinyGSM, the conditioning question is shown in black . Each box header reports the refinement round and the number of tokens committed so far. 
+
+FMLM + (PR), Round: 1 Committed: 428/483 
+
+A robe takes 2 bolts of blue fiber and half that much white fiber. How many bolts in total does it take? def simple_math_problem() -> int: """ A robe takes 2 bolts of blue fiber and half that much white fiber. How many bolts in total does it take? """ blue_fiber = 2 white_fiber = blue_fiber / total_bolts = blue_fiber + white_fiber result = total_bolts return result[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD] 
+
+FMLM + (PR), Round: 10 Committed: 465/483 
+
+A robe takes 2 bolts of blue fiber and half that much white fiber. How many bolts in total does it take? def simple_math_problem() -> int: ”’ A robe takes 2 bolts of blue fiber and half that much white fiber. How many bolts in total does it take? ”’ blue_fiber = 2 white_fiber = blue0fiber5 blue_fiber total_bolts = blue_fiber + white_fiber result = total_bolts return result[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD] 
+
+FMLM + (PR), Round: 20 Committed: 482/483 
+
+A robe takes 2 bolts of blue fiber and half that much white fiber. How many bolts in total does it take? def simple_math_problem() -> int: ”’ A robe takes 2 bolts of blue fiber and half that much white fiber. How many bolts in total does it take? ”’ blue_fiber = 2 white_fiber = blue_fiber*0.5 total_bolts = blue_fiber + white_fiber result = total_bolts return result[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD] 
+
+FMLM + (PR), Round: 32 Committed: 483/483 
+
+A robe takes 2 bolts of blue fiber and half that much white fiber. How many bolts in total does it take? def simple_math_problem() -> int: ”’ A robe takes 2 bolts of blue fiber and half that much white fiber. How many bolts in total does it take? ”’ blue_fiber = 2 white_fiber = blue_fiber*0.5 total_bolts = blue_fiber + white_fiber result = total_bolts return result[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD] 
+
+Figure 16: Posterior Refinement trajectory on TinyGSM, Sample-1. 18 FMLM + (PR), Round: 1 Committed: 348/455 
+
+In a dance class of 20 students, 20% enrolled in contemporary dance, 25% of the remaining enrolled in jazz dance, and the rest enrolled in hip-hop dance. What percentage of the entire students enrolled in hip-hop dance? def simple_math_problem() -> int: ”’ In a dance class of 20 students, 20% enrolled in contemporary dance, 25% of the remaining enrolled in jazz dance, and the rest enrolled in hip-hop dance. What percentage of the entire students enrolled in hip-hop dance? ”’ total_students = 20 contemporary_studentsance =(_students * 0.2 remaining remaining_students = total_students - total_students - contemporary_studentsance jazz_dance_studentsstudents 0.225 hip_hop_hop = (hop__students ( jazz_dance_ance_students100/total_students ) hiphop10ance return result[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD] 
+
+FMLM + (PR), Round: 10 Committed: 410/455 
+
+In a dance class of 20 students, 20% enrolled in contemporary dance, 25% of the remaining enrolled in jazz dance, and the rest enrolled in hip-hop dance. What percentage of the entire students enrolled in hip-hop dance? def simple_math_problem() -> int: ”’ In a dance class of 20 students, 20% enrolled in contemporary dance, 25% of the remaining enrolled in jazz dance, and the rest enrolled in hip-hop dance. What percentage of the entire students enrolled in hip-hop dance? ”’ total_students = 20 contemporary_students = total_students * 0.2 remaining_students = total_students - contemporary_students jazz__ance = remaining_students * 0.25 hiphop_students = remainingstudentsstudentsstudents - jazz_studentsance hip_hop_students = (hiphop_students / total_students) * 100 result = hip_hiphop_percentage result[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD] 
+
+FMLM + (PR), Round: 20 Committed: 437/455 
+
+In a dance class of 20 students, 20% enrolled in contemporary dance, 25% of the remaining enrolled in jazz dance, and the rest enrolled in hip-hop dance. What percentage of the entire students enrolled in hip-hop dance? def simple_math_problem() -> int: ”’ In a dance class of 20 students, 20% enrolled in contemporary dance, 25% of the remaining enrolled in jazz dance, and the rest enrolled in hip-hop dance. What percentage of the entire students enrolled in hip-hop dance? ”’ total_students = 20 contemporary_students = total_students * 0.2 remaining_students = total_students - contemporary_students jazz__students = remaining_students * 0.25 hiphop_students = remaining_students - jazz_dance percentage_hiphop_students = (hiphop_students / total_students) * 100 result = percentage_hiphop_students return result[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD] 
+
+FMLM + (PR), Round: 32 Committed: 455/455 
+
+In a dance class of 20 students, 20% enrolled in contemporary dance, 25% of the remaining enrolled in jazz dance, and the rest enrolled in hip-hop dance. What percentage of the entire students enrolled in hip-hop dance? def simple_math_problem() -> int: ”’ In a dance class of 20 students, 20% enrolled in contemporary dance, 25% of the remaining enrolled in jazz dance, and the rest enrolled in hip-hop dance. What percentage of the entire students enrolled in hip-hop dance? ”’ total_students = 20 contemporary_students = total_students * 0.2 remaining_students = total_students - contemporary_students jazz_dance = remaining_students * 0.25 hiphop_students = remaining_students - jazz_dance percentage_hiphop_students = (hiphop_students / total_students) * 100 result = percentage_hiphop_students return result[PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD][PAD] 
+
+Figure 17: Posterior Refinement trajectory on TinyGSM, Sample-2. 19 FMLM + (PR), Round: 1 Committed: 700/1024 
+
+say a quarter of a million, $5,000 shaked on the network by three women—even though its the largest club in the U.S. dollars today, that is a national good. While recognize that garnering money from moms a talk, Bohn said it seemedomed that that is afoot later, given the Top Brother race in the F few Republicans a good analogy and could beat Thorns Ararryl Thess dropping—Caragh said hes happy to be bothered that the shift around presenting of a female character acting under an inside fixed view, not at least one Republican, could become the tour more attractive. If it teaches me wrong, its going to stop working for two years, he said. You think, the leadiest media hosts and meofus look at your lips, passion, and yside you with a grin while dragging it through along? Louis Howdain is also pondilling her talk shows lack of directing around more outrageous satire aimed at children. And frankly, theyre quite obsessedhing why possibly the most sensational, from the source, sort of average creator, I’ve seen with, can one create that. He was concerned about that when she said he expects Warner Bros. to embroep the show. Ofumed, these debates fit into the kind of consistency between a mention of nitwzy humor and the company shes trying to plug on.I rel literally been outraged by your response to had so much needs to budget. I say, Grant, thats me why were just publishing Links for our servers. In my opinion, we have modeled it on their own, and final dollars have been recorded. This post debate callkey Guardian. I remember EL Margaret [sic] 100 years later. When she needed new decision to make higher news, we gave the U.S. Telecommunications and App AdministrationÃÂ when covering 10-20 percent of the gas-lotiling royalty. The news analytics television base of methane requests can exceed any bank. My organization used these rates and benchmarks to the problem during the days of removing BET which has a widespread impact on the 50/share Disney industry. I am sorry for the results of taking this responsibility on. Americans have the right to know with you top league where you stand or we pervert with that version of Thank You, the Globe and Public Media Rich, and get specifics of what you are listening for. We are not prepared for plagiarization of our residential property, and the strength of our sales is truly great. I told anyone talking to me about extras as consumers. why shouldn’t it be okay? ( here’s my response, I’macebook that explains some form inart from the person responsible. Further, I appreciated our national headquarters and companies available for a copy or down when serving an American Broadcasting We Bid network or the "only one of which contained no concern I was disconnected from. I guess it leaves upon fine in every way. Please please continue if you at I feel like. Just know you would like us to advertise as a subsidiary of this business, CLICK to gmark the comments.Russia is not even gossip, by Walter Gois plainly put straight for office at the apex of the spreading-the- news. In Russia, recalling a Russian accent, his five state ministers, Spain and Spain said they spotted and talked about through the Justice Ruan Center. Goisoid phrases such as "Bayandiana" to the US. At overall, the HBO Weekly were dance, stamped on themselves, shuttingled and slighted by a Dom-Christian-old media man from Britain," declares his tweets. "They did then come less from NBC, who purported to understand the specific needs and talked up endlessly about both milk and population." No, we barely hear a damn much about radioactiveomics, from 1985-Japan the only device since the release of MH figures–before latest discoveries have become part of the data. The in order range ? the numbers on Earth by New episode were the majority of the Q1 Six. UMD-36 never +leave No. 1, Channel East and drinking, while losing 11.0 million. Japan represented "No. 26" that it dominated the last air shows in that range, fro the December 2017 report. In 2000 period officialslegally had 2,600 fewer TV channels, and Singapore made roughly 12.2 million per 100minute citiz units. However, Jan 18.25 million developed watching Eyes commercials, the same metric in UK, and a few other fluct much times in that period. But ISIS wat wrapped wound up more like Germans and Chinese: Note: Watch today’s transcript live on > 
+
+FMLM + (PR), Round: 2 Committed: 864/1024 
+
+say a quarter of a degree, $5,000 a year on the network by three women—even though its the only thing in the U.S. network today, that is a national good. But saying that garnering money from movies a law, Badd said it would seem that that is a step later, but the invention of race in the F few is a good beauty and could make Rainns Yellow airl The 2007 uncomfortable—but he said hes happy to be convinced that the building around that of a black character together under an arc of creator, not at least one woman, could become the idea more credible. If it gets me wrong, its going to stop working for two years, he said. You think, the Channel of media producers and meofus men at your nine, crude, and yab you with a bottle while dragging it through along? But Herdan is also annoyed that her own shows lack of diversity around more powerful taught humor at children. And look, theyre quite certainly, why not the most part, from the backgrounds, middle of the world, I have seen with, can one create that. He was asked about that when she said he asked Shirley K. to cut on the show. In turn, these threats get into the air of disconnect between a number of high-lifers and the people shes trying to fire on.I have just been defeated by your response to had so much needs to clear. I say, well, thats me why were just as passionate for our work. In my campaign, we have done it on their own, and the benefits have been positive. This post was a generation thing. I ought to say [1] Ten years later. Because she needed 98 years to make the news, we gave the U.S. Oil and certainty prices growth when only 10-20 percent of the gas-fuel emissions exists. The news to the front of American consumers can improve any time. My organization used these examples and expanded to the problem during the days of fracking, which has a horrible impact on the 50/Coal industry. I am grateful for the image of taking this responsibility on. Americans have the right to know with you top of where you stand or we persevere with that task of calling You, the bill and throwing people out, and get ahead of what you are fighting for. We are not planned for digitization of our Network now, and the strength of our businesses is very great. I told anyone talking to me about that as well. Foul’t it be fine? ( here’s my response, I said yes that showed some compliance in action from the person interviewed. However, I think our national reps and companies called for a up or down when raising an issue. We and Times or the "-" one of which"- no one I was hearing from. I think it is just fine in every way. I will continue if you at I feel like. I know you would like us to, as a part of this business, respond to us without theism.This is not The Price, by Richard Brandis, put off for office at the top of the hit-the- news. In Russia, it a lot tighter, his five state secrets, papers and papers said they announced and talked about through the daily RUS Person. Brandis compared terms such as "menand Development" to the US. "Initially, the government heads were Russian, briefly on stage, but dazzled and eclipsed by a right-of-aligned media blitz from America," wrote his thesis. "They did then learn less from Alm, who came to understand the country, and picked up its about both midnight and digital." No, we’re talking a little much about the data, from 1999-on the only point since the collapse of the CDS, we may have forgotten part of the data. The in particular range of the shows on Radio by New Russians were the majority of the Q1 period. The non-script period landed on Oct. 1, 2012, and aired, while its 11.25 ended. These discussing "Sept. 26" that it were the last air shows in that period, not the whole GDP report. In that period officials proportionally had 2,440 online TV ads, and they made up 12.2 million per 100,000 viewers. However, the 19.25 million didn’t grow further, the same year in 2011, and a few other shows were added in that period. But this season back gives up more like America and Italy: Note: In today’s lineup live on He 
+
+Figure 18: Posterior Refinement trajectory on OpenWebText, Sample-1. 20 FMLM + (PR), Round: 3 Committed: 944/1024 
+
+say a maximum of a contract, $5,000 a year on the network by three women—even though its the only thing in the U.S. network today, that is a national good. But saying that deducting money from miles a race, Bally said it would seem that that is a step later, but the stress of race in the F few is a good thing and could make Wynns Basic él The World reconsider—and he said hes happy to be hopeful that the moving around that of a fictional character together under an array of men, not at least one woman, could become the idea more mainstream. If it gets me wrong, its going to stop working for two years, he said. You think, the amount of media sells and meofus men at your heels,ÃÂÃÂ, and yanking you with a sub while dragging it through along? But Bally is also aware that her own shows lack of campaigns around more is directed directed at children. And yes, theyre quite certainly, why not the most part, from the discussion, most of the world, I have seen with, can one create that. He was asked about that when she said he asked Louis K. to star on the show. In reality, these threats get into the gaps of contention between a number of sea-tainers and the people shes trying to keep on.I have just been surprised by your response to had so much needs to clear. I say, well, thats me why were just as grateful for our work. In my campaign, we have done it on their own, and the results have been positive. This post was a last thing. I want to say [1] 30 years later. When she needed 30 years to make the news, we gave the U.S. news and gave this year when only 10-20 percent of the gas-wingaded covered. The news to the people of this region can change any time. My organization used these weapons and light to the problem during the days of fracking, which has a huge impact on the 50/Coal industry. I am sorry for the process of taking this responsibility on. Americans have the right to know with you top of where you stand or we per side with that first of. You, the reader and other people do, and get ahead of what you are asked for. We are not out for modernization of our industry now, and the strength of our industry is very great. I told anyone write to me about that as well. Fn’t it be fine? ( here’s my response, I said yes that provoked some policy in action from the person I. However, I think our national leaders and companies called for a up or down when said an issue. We and out or the "the one of which was no one I was hearing from. I think it is just fine in every way. I will continue if you at I feel like. I know you would like us to, as a part of this business, listen to us without the news.This is not The Unknown, by Sol Kotis, put off for office at the top of the year-the-news. In Russia, it a lot like, his five statemates, bloggers and politicians said they did and wrote about through the daily RSKT. Komis already claimed such as "candie" to the US. "Apparently, the government cards were flying, not on them, but peddled and stomped by a right-of-center media cover from America," wrote his predecessor. "They did then steal less from I, who tends to understand the country, and made up its about both television and present." No, we’re learning a little much about the data, from then-on the only point since the advent of the Cata, we may have lost part of the data. The in particular range of the shows on Wednesday by New Moscow were the result of the Q1 period. The non-target shows aired on Sept. 1, 11, and 14, while its 11.6 aired. They’re "17. 26" that it were the last air shows in that period, not the GrimIT report. In that period officials informally had 2,000 online TV stations, and they made up 12.2 shows per 100,000 viewers. However, the 19.25 rating didn’t change further, the same year in ON, and a few other shows were added in that period. But this season backends up more like America and Italy: rot: In today’s interview live on He 
+
+FMLM + (PR), Round: 4 Committed: 1024/1024 
+
+say a year of a contract, $5,000 a year on the network by three women—even though its the only thing in the U.S. network today, that is a national good. But saying that deducting money from miles a no, Baca said it would seem that that is a step later, but the issue of race in the F few is a good thing and could make Courns Killingajl The World expert—and he said hes happy to be concerned that the issues around that of a racial character together under an array of men, not at least one woman, could become the idea more popular. If it gets me wrong, its going to stop working for two years, he said. You think, the amount of media company and meofus men at your side, all, and yanking you with a sub while halfway it through along? But Bale is also convinced that her own shows lack of control around more is more directed at children. And yes, theyre quite certainly, why not the most part, from the discussion, most of the world, I have seen with, can one create that. He was asked about that when she said he asked Larry K. to star on the show. In reality, these threats get into the line of questioning between a number of circuit-attackers and the people shes trying to keep on.I have just been surprised by your response to had so much needs to clear. I say, well, thats me why were just as ready for our work. In my campaign, we have done it on their own, and the results have been positive. This post was a last thing. I want to say [1] 30 years later. When she needed 30 years to make the news, we gave the U.S. news and done this year when only 10-20 percent of the gas-use industry is. The news to the people of this region can come any time. My organization used these weapons and lied to the problem during the days of Vietnam, which has a huge impact on the 50/Coal industry. I am glad for the process of taking this responsibility on. Americans have the right to know with you top of where you stand or we per side with that first of. You, the people and other people do, and get ahead of what you are asked for. We are not out for modernization of our industry now, and the strength of our industry is very great. I told anyone listening to me about that as well. Fn’t it be fine? ( here’s my response, I said yes that’s some policy in action from the person I. However, I think our national leaders and companies called for a up or down when said an issue. We and out or the "the one of which was no one I was hearing from. I think it is just fine in every way. I will continue if you at I feel like. I know you would like us to, as a part of this business, listen to us without the news.This is not The Coup, by Robert Aris, put off for office at the top of the year-the- news. In Russia, it a lot like, his five state secretaries, officials and even said they did and wrote about through the daily R.T. Basis already, such as "candaries" to the US. "They, the government, were dependent, not on them, but muffled and disinfected by a right-of-center media cover from America," wrote his friend. "They did then much less from I, who wanted to understand the country, and made up its about both past and present." No, we’re upset a little much about the data, from then-on the only point since the end of the CATE, we may have lost part of the data. The in particular range of the shows on Wednesday by NewTimes were the first of the Q1 period. The non-State shows aired on pp. 1, 11, and 14, while its 11.616. It’s "17. 26" that it were the last air shows in that period, not the first per report. In that period officials provisionally had 2,000 online TV viewers, and they made up 12.2 shows per 100,000 viewers. However, the 19.25 range didn’t change further, the same year in 2012, and a few other shows were added in that period. But this season back it up more like America and Italy: Steve: In today’s interview live on He 
+
+Figure 19: Posterior Refinement trajectory on OpenWebText, Sample-1. (cont.) 21 FMLM + (PR), Round: 1 Committed: 719/1024 
+
+. Pedthan is another man named Zack. He has been practicing on a presidential trap for 9 years, shootingwn nights in opposed parts of Bainbush. I loved Owen’s perspective that after the recent robbery in front of school, many reading of them transformed it into a fountain of grass. Merc afterward, elMW David Larry Macponder directed no return. When talking to the press shortly after the district raid, Elk Cross national SLR Rep Dave Shore tells me the news: To tell it in an office that is like a lake — we remind conversations of our ties with the establishment. It was the first police raid for an owner in strange systems of Pokemon. It was also that Arpaio chose to open dried gas and EP Broadway, and then was, to mute short his successor, Waters, who has served as software analyst for Wireless, Cisco, and Homery Brands. Theres a lot for me to raise with myself that would affect me. I think this is my first things, he says. These were the customer addresses. If nobody refuses to see the new steel Trust was made to disable all of him, ask one of you to think about what each other tomorrow could show. When New Englands State House and V-ins operate, his specialty is focused on capacging growth. Amid the neighborhood health system, Tesla refuses to pass feed-only take of ATfuel and uranium from a friend destructive power, there are checks in on lifes of terrorists, and activists modifying, but not countering, these weapons. That was because of the amount of real arrests and the day preceding the NRAs Feb. 13, 2016 targeting Tamoisin was convicted, because many Terroristees were excluded from collapse victims. 40 percent of the number of dead drug circulation, as well as seangerak and Flooring were all 21-year-old students on their own. I think with all the classified data since Ive worked with David Arehoff, the amount of false sites or what I heard there was; a lot in which a lot aimed more at people other than Brians, but I know, my cost allows us to say yes, Pereanan said. In reality, Im not sure I reallym willing to do that money in Chicago. I was seen to do this to himself and so other areas dont credit them the data. The father didnt fall to fruition, and Powers used to imply that he could make people free to anyone with the yard crisis. One of the guys had teeth on the attack and I was shocked at what was no threat, Eddieyer told Virginia Bharat looking at the viruss recent-media-view, spike against attention. When I asked Owen into a New York bands member at Harvard, at Election Center — something she said had been very effective — dam cited was some encouragement. For the first time, I had to take off the same dyedboy chava. This wasnt welcome as we talked on with Bharat, Student invasion, everything ticker and especially any potential routes. Thats OK. But I know Chuckcarilla stepped in and got a control and the incident was over and its always questions about the nithing per gallon. Before he targeted The official suspect among the constituents was filled but ¯¯¯¯¯¯¯¯ (D-Conn.) appeared a little exasperatory of him. Since such never the CEO he is, Orning said it was not unusual to speculate that Mass Corp could get home to his potent shipiles. The National Security Relations official, Cook, reported after a running for supervisor that newly Creek Fifese was looking to collect energy exams for residency rules in Medical Heights and Hampton environments, changing them to spur future elections, and to assess the validity of the savings. Asked what transpired in a press shop hours early by my hosts, Adams said she had no access to the data. What questioning what the EPA, Seyer told me — yes I did not do that before I opened that nonsense. Since Natbie spent these 70-seven years in prison for felonycore, he sticks to Weed terrorists every imaginable in filing lyings of time with a few chunks of scapegoat here thats been tax for every type of oversight by countlessgun, unmobashed in an airline and by a colleague and lumped in with criminal interrogationbles for whom he testified as a Holocaust survivor. Special Vegas and the environment of Oxyware has is one of the companys most important part of business now. Supporters of Mr Zinyer told Arnold that a possible run for the oil mogul was not too possible. Devine told Park Radios Jill Oaken, Youre 
+
+FMLM + (PR), Round: 2 Committed: 871/1024 
+
+. Ornoon is another prickly photographer. He has been working on a firearms secretary for 9 years, shooting forEMOTE in different parts of New Hampshire. I think it’s just that after the recent project in front of school, many more of them got it into a ton of fashion. Sunday night, Orgal came to Pulp, with no return. In response to the press conference after the combat day, Representative Eastetts (R-NY) told me the news: To find it in an office that is like a office — we still think of our business with the gun. It was the first police sting for an NRA in this time of war. It was also that he came to open the business and its presence, and then was, to cut short his friend, having, who has served as software analyst for Africa, better, and HP for decades. Theres a lot for me to do with myself that would help me. I think this is my first job, he says. These were the real Deal. If you have to see the new structures which was made to accommodate all of him, ask one of you to think about what each other applicant could show. On New Yorks State House and pass-A Hill, his policy is focused on investment and growth. In the public health system, for him to get world-class take of a city and money from a friend to fans, there are people in on lifes of days, and selling drug, but not heroin, these days. It was because of the amount of real pills and the day off the companys eye. Plus, the paying of unin was personal, because many narcist drugs were typical from last dose. 40 percent of the number of recreational drug use, as well as Bi etc. and dieting were all 21-year-old students on their own. I think with all the academic data since Ive worked with David Muum, the amount of truth sites or what I found there was; a lot in which a lot looked more at people other than Davids, but I know, my brain want us to say that, Segal said. In Mississippi, Im not sure I reallym going to do that money in Manhattan. I was going to do this to schools and so other areas dont give them the data. The answers didnt fall to Les, and he used to worry that he could make people arrangements to cope with the 2008 crisis. One of the managers had me on the back and I was looking at what was no floor, Orlor told, brat looking at the auditors lady-in-law, looking against him. And I asked him into a New York Food suite at home, at Roosevelt Center — something she said had been very effective — and there was some chance. For the first time, I had to take off the same shirt and chimes. This didnt happen as we continued on with Tabat, Dr continued, chauner and counting any potential logistics. Thats normal. But I know that eventually you moved in and got a control and the work was over and its always questions about the cost from per se. Where he agreed The official reputation among the researchers was controversial but some (D-state not necessarily a good one) of him. As such never the candidate he is, Orbee said it was not clear to understand that an operation could get home to his first master cause. The National Energy Council official, Per, reported after a running for mayor that Pageday said he was looking to the energy company for industry rules in the cameras and the business, changing them to fit future contracting, and to skew the size of the document. At what was in a course three hours early by my reporter, Larson said she had no access to the data. What triggered what the director, Segal told me — was I did not do that before I opened that tank. To have one of these know- ya years in regulation for energy life, he had to start getting every answer in exchange for respect of background with a few pounds of bureaucrat here thats been tax for every type of activity by multiple people, including health, in an individual and by a stroke and lumped in with criminal activity, for which he serves as a security day. Today, and the type of resources he has is one of the companys most important part of business now. One of his former staffers told me that a possible run for the oil refinery was not too possible. He also told The Posts Barbara Oster, Youre 
+
+Figure 20: Posterior Refinement trajectory on OpenWebText, Sample-2. 22 FMLM + (PR), Round: 3 Committed: 948/1024 
+
+. Cornnie is another prickly guy. He has been working on a wine operation for 9 years, shooting for new in different parts of New York. I think it’s just that after the recent project in front of school, many more of them turned it into a line of driving. That night, Orzan came to crimp, with no return. In response to the press conference after the opening day, Senator Andrew Holmes (R-FL) told me the news: To find it in an office that is like a cart — we still think of our business with the government. It was the first police order for an organization in this time of war. It was also that he came to open the business and its website, and then was, to cut short his successor, Kyle, who has served as software services for IBM, Google, and Microsoft for decades. Theres a lot for me to do with myself that would help me. I think this is my first work, he says. These were the real guys. If you have to see the new JavaScript which was made to replace all of him, ask one of you to think about what each other work could show. On New Yorks State House and Mid-A syndrome, his work is focused on money and growth. In the public health system, for him to get world-class take of a charity and money from a friend to invest, there are people in on lifes of days, and counting fine, but not enough, these days. It was because of the amount of real money and the day off the companys office. Interestingly, the use of ricin was personal, because many reformistencies were typical from last year. 40 percent of the number of illicit drug use, as well as money laundering. and prospecting were all 21-year-old students on their own. I think with all the big data since Ive worked with David Shum, the amount of energy sites or what I found there was; a lot in which a lot was more at people other than Davids, but I know, my brain want us to say that, Seanke said. In fact, Im not sure I reallym going to do that money in David. I was going to do this to schools and so other areas dont give them the data. The share didnt fall to him, and he used to show that he could make people reached to deal with the financial crisis. One of the individuals had me on the back and I was looking at what was no deal, I was told, Seat looking at the companys father-in-law, looking against him. And I asked him into a New York technical office at home, at Rockefeller Center — something she said had been very effective — and there was some competition. For the first time, I had to take off the same shirt and chatted. This didnt change as we continued on with Seat, another person, home eer and anticipating any potential activity. Thats great. But I know that eventually you came in and got a control and the work was over and its always questions about the revenues from per se. Did he? The official perception among the media was times but some (D-wa not always a good one) of him. With such never the prosecutor he is, Orenberg said it was not easy to understand that an operation could get home to his first column ever. The National Security Council official, though, reported after a running for governor that Orlov said he was looking to the energy committees for the rules in the boiler and the business, changing them to fit future trends, and to trim the size of the rolls. At what was in a meeting three hours early by my office, she said she had no access to the data. What — what theacebook, Seat told me — was I did not do that before I opened that office. To have one of these know-how years in line for your life, he had to start getting every day in work for something of sale with a few ounces of Esat here thats been tax for every type of activity by other people, including criminal, in an enterprise and by a company and lumped in with criminal activity, for which he cited as a trial day. That, and the type of remaining he has is one of the companys most important part of business now. One of his closest clients told me that a possible run for the oil company was not too possible. He also told The Hills Peter Oplan, Youre 
+
+FMLM + (PR), Round: 4 Committed: 1024/1024 
+
+. Orchid is another Deathly guy. He has been working on a small field for 9 years, shooting for new in different parts of New York. I think it’s just that after the recent project in front of school, many more of them threw it into a line of business. That night, Ortha came to Dorp, with no return. In response to the press conference after the opening day, Mayor Andrew Cuomo (R-CA) told me the news: To find it in an office that is like a university — we still think of our business with the government. It was the first police raid for an organization in this time of war. It was also that he came to open the business and its website, and then was, to cut short his child, Charles, who has served as software services for Google, Shell, and broadcasting for decades. Theres a lot for me to do with myself that would help me. I think this is my first work, he says. These were the real ones. If you have to see the new culture which was made to help all of him, ask one of you to think about what each other work could show. On New Yorks State House and L-A Major, his work is focused on money and growth. In the public health system, for him to get world-class take of a job and money from a friend to visit, there are people in on lifes of days, and just fine, but not enough, these days. It was because of the amount of real money and the day off the companys office. Then, the use of Lupin was personal, because many reformist students were typical from last year. 40 percent of the number of real drug use, as well as money laundering. and milling were all 21-year-old students on their own. I think with all the big data since Ive worked with David Shum, the amount of energy sites or what I found there was; a lot in which a lot was more at people other than Davids, but I know, my brain want us to say that, Seat said. In fact, Im not sure I reallym going to do that money in something. I was going to do this to schools and so other areas dont give them the data. The people didnt fall to him, and he used to show that he could make people want to deal with the financial crisis. One of the individuals had me on the back and I was looking at what was no deal, I was told, Seat looking at the companys partner-in-chief, looking against him. And I asked him into a New York government office at home, at Rockefeller Center — something she said had been very effective — and there was some competition. For the first time, I had to take off the same shoes and chucks. This didnt change as we continued on with Seat, another person, home eer and dam any potential activity. Thats great. But I know that eventually you got in and got a control and the work was over and its always questions about the intelligence from per se. Is he? The official reaction among the media was times but some (D-, not always a good one) of him. With such never the way he is, Orchin said it was not easy to understand that an operation could get home to his first office ever. The National Security Relations official, though, reported after a running for office that Orchin said he was looking to the energy department for the rules in the business and the business, changing them to fit future threats, and to limit the size of the website. At what was in a meeting three hours early by my office, she said she had no access to the data. What — what the truth, Seat told me — was I did not do that before I opened that office. To have one of these know-nothing years in line for your life, he had to start getting every day in work for something of himself with a few strokes of debat here thats been tax for every type of activity by other people, including mine, in an office and by a company and lumped in with criminal activity, for which he qualifies as a present day. That, and the type of control he has is one of the companys most important part of business now. One of his reporter friends told me that a possible run for the oil company was not too possible. He also told The Hills David Oster, Youre 
+
+Figure 21: Posterior Refinement trajectory on OpenWebText, Sample-2. (cont.) 23 FMLM + (PR), Round: 1 Committed: 72/128 
+
+Once upon a time, there was a little girl named Lily. She loved to play with her rubberade in her backyard. One day, she saw a giant monster in her backyard. The bug was friendly and wanted to make it its friends. But Lily doll Sarah saw the bug and pretended to be kind. "Be no, Lily. I always said it doesn’t want to scare a bird. Leave them." Suddenly, the big lemon crawledounced. Lily and could hurt her friend because it to something dark. The toy fell fromled in the wind, didn’t wanting to be friends by the fake might’ so 
+
+FMLM + (PR), Round: 2 Committed: 95/128 
+
+Once upon a time, there was a little girl named Lily. She loved to play with her red plant in her backyard. One day, she saw a big bird in her backyard. The flower was enthusiastic and wanted to give it a kiss. But the beener saw the pumpkin and started to tease Lily. "Be careful, Lily. The bird said it wasn’t nice to be a big rock for them." Instead, the bird flew stopped to show Lily it could eat her so if it talked and talked. The bird flew high up in the sky. Lily was happy to be friends with the big bird, so 
+
+FMLM + (PR), Round: 3 Committed: 112/128 
+
+Once upon a time, there was a little girl named Lily. She loved to play with her toy hoop in her garden. One day, she saw a big bird in her garden. The bird was hungry and wanted to give it a ride. But the big bird saw the plant and started to tease Lily. "Come in, Lily. The bird said it doesn’t want to be a big friend for them." Instead, the bird sang closer to show Lily it could make her feel before it smiled and jumped. The bird flew high up in the air. Lily was happy to be honest with the big bird, so 
+
+FMLM + (PR), Round: 4 Committed: 128/128 
+
+Once upon a time, there was a little girl named Lily. She loved to play with her toy helicopter in her garden. One day, she saw a big bird in her garden. The bird was hungry and wanted to give it a ride. But the big bird saw the bird and started to tease Lily. "Come down, Lily. The bird said it didn’t want to be a big friend for them." Suddenly, the bird flew back to show Lily it could make her wish before it sang and laughed. The bird flew high up in the sky. Lily was happy to be friends with the big bird, so 
+
+Figure 22: Posterior Refinement trajectory on TinyStories, Sample-1. 
+
+FMLM + (PR), Round: 1 Committed: 71/128 
+
+Once upon a time, there was a little girl called one. Her parents said "No, Lucy. Lucy was feeling very sad. Whenever she should play with toys, the water fam playing, sometimes just like icebows. But Lucy still couldn’t want to ignore it. Mommy and Daddy stopped in the park and suddenly, Lucy saw a giant purrying down! She pointed up pointing at the billboard saying "Ma". Jenny was so excited that she shouted everyYes of the crane." Daddy looked nodded. It was quite expensive, but she saw it just again and asked if it wanted 
+
+FMLM + (PR), Round: 2 Committed: 94/128 
+
+Once upon a time, there was a little girl called Emma. Mommy said "No, baby. Emma was feeling very sad. As she was filled with soap, the water was so happy, it looked like a hug. But M still didn’t want to see it. Mommy started to look in the park and suddenly, she saw a little green bob floating down! She looked up and at it and said "Hello shrimp". She was so excited that she pulled it out of the ground. The fish smiled. It was quiteucky, but she saw it was smiling and asked if it wanted 
+
+FMLM + (PR), Round: 3 Committed: 111/128 
+
+Once upon a time, there was a little girl called baby. Mommy said "No, daddy. She was feeling very sad. As she was playing with water, the water was so big, it looked like a flood. But her daddy wasn’t seem to accept it. Mommy started to look in the park and then, she saw a little boat fishing down! She looked up straight at it and said "Hiuck!" She was so excited that she pulled it out of the water. The girl smiled. It was a surprise, but she saw it was friendly and asked if it wanted 
+
+FMLM + (PR), Round: 4 Committed: 128/128 
+
+Once upon a time, there was a little girl calledmy. Mommy said "No, Sammy. She was feeling very sad. As she was playing with water, the water was so big, it looked like a flood. But her feet couldn’t seem to make it. Mommy started to look in the park and suddenly, she saw a little girl was sliding down! She looked up over at it and said "Hielcome!" She was so excited that she took it out of the water. The girl smiled. It was a cold, but she saw it was smiling and asked if it wanted 
+
+Figure 23: Posterior Refinement trajectory on TinyStories, Sample-2. 24
