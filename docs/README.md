@@ -6,40 +6,46 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-28
-- 运行时间：2026-06-28 21:19:57 UTC
+- 最新运行日期：2026-06-29
+- 运行时间：2026-06-29 21:23:50 UTC
 - 运行状态：成功
-- 本次总论文数：6
-- 精读区：1
-- 速读区：5
+- 本次总论文数：8
+- 精读区：6
+- 速读区：2
 
 ### 今日简报（AI）
-今日研读6篇论文，聚焦混合专家模型自动化搜索、边缘设备LLM剪枝与量化，以及多模态长视频理解三大方向。  
-最值得看：精读的异构4专家MoE自动管道搜索（8.0分）与面向工业物联网的级联多粒度剪枝方法（7.0分），分别揭示了MoE架构设计新思路和端侧推理优化潜力。  
-建议后续关注异构MoE搜索的泛化性验证，以及将量化与剪枝联合部署到实际IoT设备中的性能权衡。
-- 详情：[/202606/28/README](/202606/28/README)
+1) 今日共推荐8篇论文，精读6篇，其中两篇聚焦于MoE模型的高效推理与稀疏化优化，评分均达9.0/10。
+2) 最值得关注的方向是多LLM系统服务（CrossPool通过KV缓存与权重分离提升冷启动效率）以及免训练的滑动窗口注意力适配方法（NLL-Guided层选择策略）。
+3) 建议优先阅读这两篇高分论文，了解如何在不增加训练成本的前提下提升MoE模型的推理速度与内存利用效率。
+- 详情：[/202606/29/README](/202606/29/README)
 
 ### 精读区论文标签
-1. [Systematic Exploration of 4-Expert Heterogeneous Mixture-of-Experts via Automated Pipeline Search](/202606/28/2606.23739v1-systematic-exploration-of-4-expert-heterogeneous-mixture-of-experts-via-automated-pipeline-search)  
+1. [CrossPool: Efficient Multi-LLM Serving for Cold MoE Models through KV-Cache and Weight Disaggregation](/202606/29/2606.24506v2-crosspool-efficient-multi-llm-serving-for-cold-moe-models-through-kv-cache-and-weight-disaggregation)  
+   标签：评分：9.0/10、query:ai-infra
+   evidence：针对冷门MoE模型的KV缓存池化与权重解耦
+2. [NLL-Guided Full-Attention Layer Selection for Training-Free Sliding-Window Adaptation](/202606/29/2606.27791v1-nll-guided-full-attention-layer-selection-for-training-free-sliding-window-adaptation)  
+   标签：评分：9.0/10、query:ai-infra
+   evidence：无训练注意力层选择以优化KV缓存使用
+3. [SARA: Unlocking Multilingual Knowledge in Mixture-of-Experts via Semantically Anchored Routing Alignment](/202606/29/2606.25821v1-sara-unlocking-multilingual-knowledge-in-mixture-of-experts-via-semantically-anchored-routing-alignment)  
    标签：评分：8.0/10、query:ai-infra
-   evidence：通过自动化流水线搜索系统探索异构混合专家架构
+   evidence：混合专家模型路由对齐提升跨语言通信效率
+4. [Bifocal Diffusion Language Models: Asymmetric Bidirectional Context for Parallel Generation](/202606/29/2606.27732v1-bifocal-diffusion-language-models-asymmetric-bidirectional-context-for-parallel-generation)  
+   标签：评分：8.0/10、query:ai-infra
+   evidence：解决扩散LLM中KV缓存不兼容问题，提出不对称双向上下文
+5. [End-to-End Dynamic Sparsity for Resource-Adaptive LLM Inference](/202606/29/2606.27743v1-end-to-end-dynamic-sparsity-for-resource-adaptive-llm-inference)  
+   标签：评分：8.0/10、query:ai-infra
+   evidence：针对动态云基础设施的资源自适应推理
+6. [Phase Matters: Characterizing Heterogeneous Vision-Language Inference on a Mobile SoC](/202606/29/2606.27906v1-phase-matters-characterizing-heterogeneous-vision-language-inference-on-a-mobile-soc)  
+   标签：评分：8.0/10、query:ai-infra
+   evidence：移动SoC上异构视觉语言推理特征化
 
 ### 速读区论文标签
-1. [Cascaded Multi-Granularity Pruning for On-Device LLM Inference in Industrial IoT](/202606/28/2606.26861v1-cascaded-multi-granularity-pruning-for-on-device-llm-inference-in-industrial-iot)  
-   标签：评分：7.0/10、query:ai-infra
-   evidence：用于设备端LLM推理加速的多粒度剪枝
-2. [On the Expressive Power of Weight Quantization in Large Language Models](/202606/28/2606.22249v1-on-the-expressive-power-of-weight-quantization-in-large-language-models)  
+1. [Optimizing Teacher-Student Partitioning for Scalable Knowledge Distillation on HPC Systems](/202606/29/2606.27797v1-optimizing-teacher-student-partitioning-for-scalable-knowledge-distillation-on-hpc-systems)  
    标签：评分：6.0/10、query:ai-infra
-   evidence：权重量化用于推理加速
-3. [Towards Fast and Effective Long Video Understanding of Multimodal Large Language Models via Adaptive Quasi-Gaussian Sampling](/202606/28/2606.24187v2-towards-fast-and-effective-long-video-understanding-of-multimodal-large-language-models-via-adaptive-quasi-gaussian-sampling)  
+   evidence：HPC感知的师生分区方法提升知识蒸馏吞吐量
+2. [FlexMoE: One-for-All Nested Intra-Expert Pruning for MoE Language Models](/202606/29/2606.27866v1-flexmoe-one-for-all-nested-intra-expert-pruning-for-moe-language-models)  
    标签：评分：6.0/10、query:ai-infra
-   evidence：自适应帧采样减少视频多模态大模型的计算和内存，属于推理加速技术
-4. [Posterior Refinement: Fast Language Generation via Any-Order Flow Maps](/202606/28/2606.24773v1-posterior-refinement-fast-language-generation-via-any-order-flow-maps)  
-   标签：评分：6.0/10、query:ai-infra
-   evidence：基于流映射的快速非自回归生成
-5. [BitNet Text Embeddings](/202606/28/2606.25674v1-bitnet-text-embeddings)  
-   标签：评分：6.0/10、query:ai-infra
-   evidence：极端低位文本嵌入实现高效推理和存储，属于AI基础设施加速技术
+   evidence：MoE语言模型的嵌套专家内剪枝，降低部署开销
 
 
 <div class="dpr-home-promo-card">

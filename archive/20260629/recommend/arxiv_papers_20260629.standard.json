@@ -1,0 +1,364 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-29T21:20:08.392092+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 6,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2606.24506v2",
+      "source": "arxiv",
+      "title": "CrossPool: Efficient Multi-LLM Serving for Cold MoE Models through KV-Cache and Weight Disaggregation",
+      "abstract": "Emerging LLM services increasingly host many sparse MoE models, yet most models receive sparse requests and remain cold. This creates a GPU memory problem: model weights are stable and model-determined, while KV-cache is transient and demand-determined. Because cold models rarely reach peak KV-cache demand at the same time, reserving worst-case KV capacity per model wastes memory; a shared KV-cache pool can instead provision aggregate active demand. However, KV-cache sharing is not sufficient when weights and KV-cache remain in a monolithic GPU memory pool. Static weights compete with dynamic KV-cache, and KV-head-limited attention under cold, low-concurrency traffic exposes only a fraction of replicated KV capacity, leading to low GPU memory utilization and weak long-context support. We present CrossPool, a serving engine for cold MoE models that separates FFN weights and KV-cache into two GPU memory pools: a weights pool that consolidates FFN weights across cold models, and a KV-cache pool that dynamically serves active requests while keeping attention local to KV-cache. CrossPool combines a KV-cache planner and virtualizer, a layer-wise pipeline scheduler that hides hidden-state transfers, and persistent kernels with control lowering to reduce CPU-GPU control overhead. With efficient GPU memory pooling, CrossPool underpins bursty long-context requests and outperforms the state-of-the-art kvcached-based multi-LLM serving system, reducing P99 TBT by up to 10.4x.",
+      "authors": [
+        "Zhuoren Ye",
+        "Tianyu Wo",
+        "Dinghao Xue",
+        "Mingming Zhang",
+        "Yuchen Teng",
+        "Chunming Hu",
+        "Renyu Yang"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.AI",
+        "cs.LG",
+        "cs.PF"
+      ],
+      "published": "2026-06-23T12:34:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.24506v2",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "KV-cache pooling and weight disaggregation for cold MoE models",
+      "llm_evidence_cn": "针对冷门MoE模型的KV缓存池化与权重解耦",
+      "llm_evidence": "针对冷门MoE模型的KV缓存池化与权重解耦",
+      "canonical_evidence": "针对冷门MoE模型的KV缓存池化与权重解耦",
+      "llm_tldr_en": "Proposes CrossPool, which disaggregates KV-cache and weights into separate pools, enabling efficient multi-LLM serving for cold MoE models by sharing KV-cache capacity across models and reducing memory waste.",
+      "llm_tldr_cn": "多LLM服务中大量冷门MoE模型造成GPU内存浪费，因为静态权重与动态KV缓存竞争空间。本文提出CrossPool，通过KV缓存与权重解耦，建立一个共享KV缓存池来聚合活跃需求，同时利用权重感知调度避免碎片。实验表明，该方法显著提高了冷模型的服务吞吐量并降低了延迟，为MoE模型的AI基础设施加速提供了新思路。",
+      "llm_tldr": "多LLM服务中大量冷门MoE模型造成GPU内存浪费，因为静态权重与动态KV缓存竞争空间。本文提出CrossPool，通过KV缓存与权重解耦，建立一个共享KV缓存池来聚合活跃需求，同时利用权重感知调度避免碎片。实验表明，该方法显著提高了冷模型的服务吞吐量并降低了延迟，为MoE模型的AI基础设施加速提供了新思路。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.27791v1",
+      "source": "arxiv",
+      "title": "NLL-Guided Full-Attention Layer Selection for Training-Free Sliding-Window Adaptation",
+      "abstract": "Hybrid attention models that mix full and sliding-window attention across layers offer a promising approach to efficient long-context inference, but the critical question of \\emph{which layers} should retain full attention remains unsolved. Existing methods use either fixed periodic patterns or attention-based heuristics that may not capture what matters for downstream accuracy. We propose NLL-guided layer selection, a training-free method that directly measures each layer's importance by computing the negative log-likelihood degradation on answer tokens when that layer uses sliding-window instead of full attention. On LongMemEval with Qwen3-4B, our method achieves 64.6\\% accuracy using only 1/4 full-attention layers, matching the 1/2-FA periodic baseline (65.0\\%) while halving the computational budget. NLL-guided selection outperforms the SWAA-reported periodic 1/4-FA baseline by 10.4 percentage points and a matched LightTransfer-style baseline by 26.4 percentage points. De-confounding analysis shows the signal is consistent with long-range attention needs rather than generic layer sensitivity. The method requires only $\\sim$15 minutes of one-time calibration, advancing the efficiency-accuracy Pareto frontier for long-context LLM deployment.",
+      "authors": [
+        "Qiong Tang",
+        "Xiangkun Hu",
+        "Xiangyang Liu",
+        "Yiran Chen",
+        "Yunfan Shao"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-06-26T07:20:23+00:00",
+      "link": "https://arxiv.org/pdf/2606.27791v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "training-free attention layer selection for efficient KV cache usage",
+      "llm_evidence_cn": "无训练注意力层选择以优化KV缓存使用",
+      "llm_evidence": "无训练注意力层选择以优化KV缓存使用",
+      "canonical_evidence": "无训练注意力层选择以优化KV缓存使用",
+      "llm_tldr_en": "Proposes NLL-guided layer selection to identify which layers need full attention, using only 1/4 full-attention layers to match 1/2-FA accuracy, reducing KV cache overhead.",
+      "llm_tldr_cn": "混合注意力模型在全注意力与滑动窗口间的层分配缺乏有效指导。本文提出基于负对数似然（NLL）的无训练层选择方法，通过衡量每层使用滑动窗口替代全注意力导致的精度退化来评估其重要性。在LongMemEval上，仅使用1/4的全注意力层即可达到1/2全注意力层的精度，大幅节省KV缓存开销。",
+      "llm_tldr": "混合注意力模型在全注意力与滑动窗口间的层分配缺乏有效指导。本文提出基于负对数似然（NLL）的无训练层选择方法，通过衡量每层使用滑动窗口替代全注意力导致的精度退化来评估其重要性。在LongMemEval上，仅使用1/4的全注意力层即可达到1/2全注意力层的精度，大幅节省KV缓存开销。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.25821v1",
+      "source": "arxiv",
+      "title": "SARA: Unlocking Multilingual Knowledge in Mixture-of-Experts via Semantically Anchored Routing Alignment",
+      "abstract": "Sparse Mixture-of-Experts (MoE) architectures have emerged as an increasingly influential paradigm as they offer a strategic balance between parameter scalability and computational efficiency. However, low-resource languages, which suffer from a scarcity of high-quality training data, often have their tokens routed to different experts than those predominantly activated by high-resource inputs, which limits cross-lingual expert sharing. This cross-lingual routing divergence consequently hinders their efficacy in multilingual contexts. To address this issue, we propose SARA (Semantically Anchored Routing Alignment), a framework designed to transfer specialized capabilities from high-resource languages as anchors to low-resource languages. SARA explicitly aligns the routing distribution of multilingual inputs with high-resource semantic anchors using a symmetric Jensen-Shannon (JS) divergence constraint. Unlike traditional distillation methods that operate on output logits, SARA directly aligns the internal routing distributions of MoE layers, encouraging mechanistic consistency in expert selection across languages. We conduct experiments on 2 LLMs across 5 low-resource languages and 3 benchmarks. Experiment results demonstrate that SARA outperforms standard instruction tuning, e.g., +0.8% on Qwen3-30B-A3B and +1.2% on Phi-3.5-MoE-instruct on Global-MMLU. Further analyses show that SARA effectively addresses performance bottlenecks in low-resource languages, providing a scalable pathway to enhance multilingual capabilities in sparse architectures.",
+      "authors": [
+        "Tianyu Dong",
+        "Yangyang Liu",
+        "Jiang Zhou",
+        "Xinwei Wu",
+        "Xiaohu Zhao",
+        "Hao Wang",
+        "Heng Liu",
+        "Linlong Xu",
+        "Longyue Wang",
+        "Weihua Luo",
+        "Shaolin Zhu",
+        "Deyi Xiong"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-06-24T13:36:46+00:00",
+      "link": "https://arxiv.org/pdf/2606.25821v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "MoE routing alignment improving cross-lingual communication efficiency",
+      "llm_evidence_cn": "混合专家模型路由对齐提升跨语言通信效率",
+      "llm_evidence": "混合专家模型路由对齐提升跨语言通信效率",
+      "canonical_evidence": "混合专家模型路由对齐提升跨语言通信效率",
+      "llm_tldr_en": "SARA aligns routing across languages in MoE to improve cross-lingual expert sharing and reduce routing divergence.",
+      "llm_tldr_cn": "针对稀疏混合专家模型在多语言场景下低资源语言路由偏离导致专家共享受限的问题，提出语义锚定路由对齐框架SARA，将高资源语言的专家分配模式迁移到低资源语言。实验表明SARA有效提升了多语言任务的性能，促进了专家间的有效通信。",
+      "llm_tldr": "针对稀疏混合专家模型在多语言场景下低资源语言路由偏离导致专家共享受限的问题，提出语义锚定路由对齐框架SARA，将高资源语言的专家分配模式迁移到低资源语言。实验表明SARA有效提升了多语言任务的性能，促进了专家间的有效通信。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.27732v1",
+      "source": "arxiv",
+      "title": "Bifocal Diffusion Language Models: Asymmetric Bidirectional Context for Parallel Generation",
+      "abstract": "Discrete diffusion language models (dLLMs) recover masked tokens in parallel, offering significant speedups over autoregressive (AR) generation. However, such promising frameworks face a fundamental architectural design dilemma: \\ding{182} Adopting bidirectional attention achieves strong generation quality by allowing each position to access the full context, but is inherently incompatible with KV caching, limiting inference throughput in batch-serving scenarios; \\ding{183} Conversely, causal attention enables efficient cached inference but loses all right-side context, substantially degrading generation quality. This paper introduces Bifocal dLLMs, a new paradigm that resolves this dilemma through \\emph{asymmetric bidirectional context}. Analogous to bifocal lenses, we instantiate the paradigm as \\textbf{R2LM} (Right-to-Left Mamba), which combines two complementary mechanisms: $a$) standard causal attention providing precise left-context with full KV cache compatibility, while $b$) a lightweight reverse Mamba SSM sidecar supplying compressed right-side context without breaking cacheability. Comprehensive experiments on continued pretraining of Qwen3-1.7B with 60B tokens demonstrate that R2LM achieves $2.4\\times$ to $12.9\\times$ higher throughput than bidirectional dLLMs and $1.9\\times$ to $2.9\\times$ speedup over AR baselines in batch serving through parallel decoding with KV caching, while exceeding the causal baseline on most benchmarks and surpassing the bidirectional dLLM on average.",
+      "authors": [
+        "Yuhang Chen",
+        "Xianfeng Wu",
+        "Jinhao Duan",
+        "Mingfu Liang",
+        "Xiaohan Wei",
+        "Yunchen Pu",
+        "Fei Tian",
+        "Chonglin Sun",
+        "Parish Aggarwal",
+        "Frank Shyu",
+        "Luke Simon",
+        "Sandeep Pandey",
+        "Xi Liu",
+        "Tianlong Chen"
+      ],
+      "primary_category": "cs.IR",
+      "categories": [
+        "cs.IR",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-26T05:26:11+00:00",
+      "link": "https://arxiv.org/pdf/2606.27732v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "addresses KV cache incompatibility in diffusion LLMs with asymmetric bidirectional context",
+      "llm_evidence_cn": "解决扩散LLM中KV缓存不兼容问题，提出不对称双向上下文",
+      "llm_evidence": "解决扩散LLM中KV缓存不兼容问题，提出不对称双向上下文",
+      "canonical_evidence": "解决扩散LLM中KV缓存不兼容问题，提出不对称双向上下文",
+      "llm_tldr_en": "Bifocal dLLMs resolve the KV cache dilemma for diffusion language models by asymmetric bidirectional context, enabling parallel generation with efficient caching and strong quality.",
+      "llm_tldr_cn": "扩散语言模型在双向注意力和因果注意力之间面临两难：双向注意力质量高但无法KV缓存，因果注意力可缓存但质量差。本文提出Bifocal dLLMs，通过不对称双向上下文设计，在保持生成质量的同时支持高效KV缓存。实验表明该方法在速度和生成质量上均优于现有模型，为高效并行生成提供了新范式。",
+      "llm_tldr": "扩散语言模型在双向注意力和因果注意力之间面临两难：双向注意力质量高但无法KV缓存，因果注意力可缓存但质量差。本文提出Bifocal dLLMs，通过不对称双向上下文设计，在保持生成质量的同时支持高效KV缓存。实验表明该方法在速度和生成质量上均优于现有模型，为高效并行生成提供了新范式。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.27743v1",
+      "source": "arxiv",
+      "title": "End-to-End Dynamic Sparsity for Resource-Adaptive LLM Inference",
+      "abstract": "Large Language Models (LLMs) inference is typically deployed under a static resource assumption, where models execute a fixed computational graph regardless of the runtime environment. However, real-world cloud infrastructure is inherently dynamic, characterized by fluctuating availability (e.g., spot instance preemption) and tiered Quality-of-Service requirements. In such volatile settings, static models are inflexible: they either crash under resource constraints or waste compute on redundant operations. To bridge this gap, we propose Learning to Allocate (L2A), an end-to-end framework for resource-adaptive inference. Unlike prior methods that condition only on input difficulty, we formulate inference as a constrained allocation problem conditioned on both the input and the runtime resource budget itself. We introduce lightweight, budget-conditioned and input-aware gating networks integrated into the LLM. These gates are trained via a unified objective that jointly optimizes task performance, logical consistency, and resource costs along three axes matching how real-world dynamics manifest: layer skipping for memory and depth pressure, head pruning for throughput contention, and reasoning-token reduction for latency tightening. This lets the model learn a budget-aware policy beyond input difficulty alone: it adaptively configures its computational footprint with respect to real-time resource dynamics, maximizing reasoning depth when resources permit while enforcing strict frugality when budgets tighten. A single L2A model traces the entire compute-accuracy Pareto frontier on Llama-3-8B and Qwen-3-4B: at up to 34% realized layer sparsity, it stays within 0.6% of the dense baseline on GSM8K, with the same gap holding zero-shot on out-of-distribution tasks, while every static or heuristic baseline requires a separately tuned model and still drops by 5-10% at comparable inference time.",
+      "authors": [
+        "Yuhang Chen",
+        "Jinhao Duan",
+        "Ruichen Zhang",
+        "Mingfu Liang",
+        "Xiaohan Wei",
+        "Yunchen Pu",
+        "Fei Tian",
+        "Chonglin Sun",
+        "Parish Aggarwal",
+        "Frank Shyu",
+        "Luke Simon",
+        "Sandeep Pandey",
+        "Tianlong Chen",
+        "Xi Liu"
+      ],
+      "primary_category": "cs.IR",
+      "categories": [
+        "cs.IR",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-26T05:48:21+00:00",
+      "link": "https://arxiv.org/pdf/2606.27743v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "resource-adaptive inference for dynamic cloud infrastructure",
+      "llm_evidence_cn": "针对动态云基础设施的资源自适应推理",
+      "llm_evidence": "针对动态云基础设施的资源自适应推理",
+      "canonical_evidence": "针对动态云基础设施的资源自适应推理",
+      "llm_tldr_en": "Proposes Learning to Allocate (L2A), an end-to-end framework that formulates inference as a constrained allocation problem conditioned on both input difficulty and resource availability, enabling dynamic sparsity for resource-adaptive LLM inference.",
+      "llm_tldr_cn": "现有LLM推理假设静态资源，无法适应云环境的动态变化。本文提出L2A框架，将推理建模为资源约束下的分配问题，根据输入难度和可用资源动态调整计算图。实验表明，该方法在资源波动场景下显著提升吞吐量并避免服务中断，为AI基础设施提供了实用化的自适应推理方案。",
+      "llm_tldr": "现有LLM推理假设静态资源，无法适应云环境的动态变化。本文提出L2A框架，将推理建模为资源约束下的分配问题，根据输入难度和可用资源动态调整计算图。实验表明，该方法在资源波动场景下显著提升吞吐量并避免服务中断，为AI基础设施提供了实用化的自适应推理方案。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.27906v1",
+      "source": "arxiv",
+      "title": "Phase Matters: Characterizing Heterogeneous Vision-Language Inference on a Mobile SoC",
+      "abstract": "Recent phone-class mobile SoCs expose practical NPU execution paths for on-device vision-language model (VLM) inference, but developers still lack phase-level guidance for mapping VLM pipelines across heterogeneous backends. We present a hardware-in-the-loop characterization of VLM inference on the Qualcomm SM8750 (Snapdragon 8 Elite), covering phase throughput, cache-state effects, 100-run thermal stability, energy, heterogeneous CPU/NPU pipeline configurations, and visual-token-budget sensitivity. Using FastVLM-0.5B as an end-to-end case study, together with encoder-only measurements across four architecture families, we show that phase matters: NPU execution is highly phase-dependent, delivering 1.64x speedup for prefill but only 1.18x for decode, while vision encoders achieve 20-45x speedups over CPU. These gains translate into 10.47 degrees C lower steady-state temperature and 2.52x lower energy, avoiding thermal throttling in always-on settings. Finally, we show that a four-step graph rewrite enables previously unsupported encoders, such as Phi-3.5-V, to reach the QNN path with up to 22x speedup, providing a practical porting recipe for mobile VLM deployment.",
+      "authors": [
+        "Aryama V Murthy",
+        "Yashas N Kotre",
+        "Prathmesh Sharma",
+        "Pragya Mishra",
+        "Sanjith Ganapathi",
+        "Priyesh Shukla"
+      ],
+      "primary_category": "cs.AR",
+      "categories": [
+        "cs.AR"
+      ],
+      "published": "2026-06-26T09:54:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.27906v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "characterizing heterogeneous VLM inference on mobile SoC",
+      "llm_evidence_cn": "移动SoC上异构视觉语言推理特征化",
+      "llm_evidence": "移动SoC上异构视觉语言推理特征化",
+      "canonical_evidence": "移动SoC上异构视觉语言推理特征化",
+      "llm_tldr_en": "Characterizes VLM inference on Qualcomm SM8750, revealing phase-dependent NPU speedups (1.64x prefill vs 1.18x decode) and heterogeneous pipeline trade-offs.",
+      "llm_tldr_cn": "移动SoC上视觉语言模型推理缺乏阶段级异构执行指导。本文对Snapdragon 8 Elite上的VLM推理进行硬件在环特征化，覆盖吞吐量、缓存效应、热稳定性、能效及异构CPU/NPU管线配置。结果表明NPU执行高度阶段依赖，prefill加速1.64倍而decode仅1.18倍，强调了阶段感知的异构映射的重要性。",
+      "llm_tldr": "移动SoC上视觉语言模型推理缺乏阶段级异构执行指导。本文对Snapdragon 8 Elite上的VLM推理进行硬件在环特征化，覆盖吞吐量、缓存效应、热稳定性、能效及异构CPU/NPU管线配置。结果表明NPU执行高度阶段依赖，prefill加速1.64倍而decode仅1.18倍，强调了阶段感知的异构映射的重要性。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "heterogeneous mixed inference for large models",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.27797v1",
+      "source": "arxiv",
+      "title": "Optimizing Teacher-Student Partitioning for Scalable Knowledge Distillation on HPC Systems",
+      "abstract": "Knowledge Distillation (KD) enables training smaller student models under the guidance of larger teacher models, and the widely adopted TRL library implements it. Yet, TRL treats both models symmetrically, missing opportunities to exploit their pronounced asymmetry in memory footprint, and communication requirements. This paper presents an HPC-aware methodology for KD that decouples teacher and student partitioning efficiently. Our approach achieves up to 67% higher samples-per-second than TRL by avoiding unnecessary teacher-model data structures and selecting the best split strategy. We combine vertical and horizontal partitioning of models, deriving an analytical expression that identifies the existence of inflection points between splitting regimes. These results showed that exploiting teacher--student asymmetry through topology-aware parallelism notably accelerated GKD training on production HPC clusters at our company",
+      "authors": [
+        "Adrian P. Dieguez",
+        "Victor Conchello Vendrell",
+        "Alex Batlle",
+        "Vinnam Kim",
+        "Jordi Ros-Giralt",
+        "Harris Teague"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-26T07:30:41+00:00",
+      "link": "https://arxiv.org/pdf/2606.27797v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "HPC-aware teacher-student partitioning for scalable KD improves throughput",
+      "llm_evidence_cn": "HPC感知的师生分区方法提升知识蒸馏吞吐量",
+      "llm_evidence": "HPC感知的师生分区方法提升知识蒸馏吞吐量",
+      "canonical_evidence": "HPC感知的师生分区方法提升知识蒸馏吞吐量",
+      "llm_tldr_en": "Optimizes teacher-student partitioning on HPC, achieving 67% higher samples-per-second by exploiting asymmetry in memory and communication.",
+      "llm_tldr_cn": "现有知识蒸馏库对称处理大小模型，未利用内存和通信不对称性。本文提出HPC感知的师生模型分区方法，结合垂直和水平分区，并通过解析表达式确定最佳分割策略。实验表明，相比TRL，样本吞吐量提升最高67%。该分区策略可推广至其他非对称模型训练场景。",
+      "llm_tldr": "现有知识蒸馏库对称处理大小模型，未利用内存和通信不对称性。本文提出HPC感知的师生模型分区方法，结合垂直和水平分区，并通过解析表达式确定最佳分割策略。实验表明，相比TRL，样本吞吐量提升最高67%。该分区策略可推广至其他非对称模型训练场景。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.27866v1",
+      "source": "arxiv",
+      "title": "FlexMoE: One-for-All Nested Intra-Expert Pruning for MoE Language Models",
+      "abstract": "Mixture-of-Experts (MoE) language models scale model ability with sparsely activated experts, making this architecture a standard recipe for modern large models. However, sparse activation does not remove the deployment burden of storing and serving all experts, and the available deployment budget can vary substantially across devices, users, and workloads. Existing MoE compression methods are still largely fixed-budget, typically optimizing one compressed endpoint at each chosen target budget. We study a different setting: converting a large pretrained MoE LLM into a nested family of deployable subnetworks across budgets. Our method first ranks expert FFN channels by their importance, then lets each expert learn a discrete action to prune its channels. By gradually increasing cost pressure, a single action-training run exports a series of action masks from high to low budgets, each of which identifies a reliable smaller subnetwork nested in the ranked base model. Moreover, we use a single recovery fine-tune at a mid pruning budget (40%) to recover degraded model quality and transfer the recovered model to other unseen budgets. Overall, our framework surpasses recent MoE compression baselines. Specifically, on Qwen2-57B-A14B, our method retains ~99.8% of base performance while pruning 50% of routed expert parameters even without fine-tuning. For deployment, our pruned subnetworks deliver real memory reduction and throughput gains, and further support realtime online budget switching with kernel-level co-design.",
+      "authors": [
+        "Fan Mo",
+        "Yuxuan Han",
+        "Geng Zhang",
+        "Wangbo Zhao",
+        "Yang You"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-26T09:08:03+00:00",
+      "link": "https://arxiv.org/pdf/2606.27866v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "nested intra-expert pruning for MoE language models reduces deployment burden",
+      "llm_evidence_cn": "MoE语言模型的嵌套专家内剪枝，降低部署开销",
+      "llm_evidence": "MoE语言模型的嵌套专家内剪枝，降低部署开销",
+      "canonical_evidence": "MoE语言模型的嵌套专家内剪枝，降低部署开销",
+      "llm_tldr_en": "FlexMoE converts a pretrained MoE LLM into nested subnetworks via expert channel pruning, enabling deployment across diverse budgets.",
+      "llm_tldr_cn": "MoE语言模型虽然稀疏激活，但存储和部署所有专家仍然开销巨大，且预算因设备而异。现有剪枝方法多为固定预算，本文提出FlexMoE，将预训练MoE LLM转换为嵌套系列子网络。方法首先对专家FFN通道进行重要性排序，然后让每个专家学习离散动作剪枝通道。实验表明，该框架能生成一组不同预算的可部署子网络，在压缩率和精度间取得良好平衡，实现灵活部署。",
+      "llm_tldr": "MoE语言模型虽然稀疏激活，但存储和部署所有专家仍然开销巨大，且预算因设备而异。现有剪枝方法多为固定预算，本文提出FlexMoE，将预训练MoE LLM转换为嵌套系列子网络。方法首先对专家FFN通道进行重要性排序，然后让每个专家学习离散动作剪枝通道。实验表明，该框架能生成一组不同预算的可部署子网络，在压缩率和精度间取得良好平衡，实现灵活部署。",
+      "llm_tags": [
+        "query:ai-infra:composite"
+      ],
+      "matched_query_tag": "query:ai-infra:composite",
+      "matched_query_text": "Papers central to kvcache、hpc、ai infra这几个关键词相关的，包括但不限于异构混合推理、moe通信优化等任何涉及ai基础设施加速的, especially work that connects or combines: KV cache optimization for large language models; AI infrastructure acceleration techniques; heterogeneous mixed inference for large models; communication optimization in mixture of experts models; inference acceleration for AI infrastructure; model parallelism techniques for distributed training; find AI infrastrcutre acceleration; find papers about KV cache management for large language model inference; search for heterogeneous computing in AI infrastructure; look up communication optimization for mixture of experts models.",
+      "matched_requirement_id": "req-composite-ai-infra",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
