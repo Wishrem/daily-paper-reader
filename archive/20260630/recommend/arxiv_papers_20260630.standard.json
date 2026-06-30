@@ -1,0 +1,451 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-30T22:03:32.453336+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 5,
+    "deep_cap": 6,
+    "deep_selected": 5,
+    "quick_candidates": 6,
+    "quick_skim_target": 11,
+    "quick_selected": 6
+  },
+  "deep_dive": [
+    {
+      "id": "2606.26472v2",
+      "source": "arxiv",
+      "title": "Epiphany-Aware KV Cache Eviction Without the Attention Matrix",
+      "abstract": "As reasoning models emit chains of thought tens of thousands of tokens long, KV cache increasingly becomes a deployment bottleneck. Existing cache eviction methods rank tokens by attention weight, which is a noisy importance proxy in long reasoning traces, and prohibits the use of fused kernels in production inference by forcing the model to materialize the attention matrix. In this work, we instead score tokens with a metric we term the epiphany score: the change in the model's internal representation, read directly from the forward pass with no attention matrix and negligible extra state. Our resulting cache eviction method, EpiKV, requires no training, classifier, or custom kernel, and can be used directly in FlashAttention inference stacks unchanged -- scaling to a 16x longer feasible context than attention-based scoring. upper-mid layers negatively) and remove a positional trend with a causal rolling z-score. At a 4096-token cache EpiKV reaches 72% on MATH-500, matching the strongest attention-based baseline (ThinKV 71%, H2O 67%); a lag-normalized KV variant reaches 37% on AIME-2024 at 8192 tokens against the best of them (33%), at up to 2.8x the speed.",
+      "authors": [
+        "Steven Kolawole",
+        "Virginia Smith"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.CL"
+      ],
+      "published": "2026-06-25T00:13:34+00:00",
+      "link": "https://arxiv.org/pdf/2606.26472v2",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "KV cache eviction using epiphany score without attention matrix",
+      "llm_evidence_cn": "KV缓存淘汰，无需注意力矩阵的模型内部表示变化得分",
+      "llm_evidence": "KV缓存淘汰，无需注意力矩阵的模型内部表示变化得分",
+      "canonical_evidence": "KV缓存淘汰，无需注意力矩阵的模型内部表示变化得分",
+      "llm_tldr_en": "Proposes EpiKV, a training-free KV cache eviction method that scores tokens by the change in model internal representation (epiphany score), avoiding attention matrix materialization and enabling use with fused kernels like FlashAttention.",
+      "llm_tldr_cn": "针对大语言模型推理中KV缓存成为瓶颈的问题，提出EpiKV方法，不依赖注意力权重而是通过模型内部表示变化（启发性分数）来评估令牌重要性，无需训练或自定义内核，可直接与FlashAttention等融合推理栈兼容，显著降低内存占用同时保持生成质量。",
+      "llm_tldr": "针对大语言模型推理中KV缓存成为瓶颈的问题，提出EpiKV方法，不依赖注意力权重而是通过模型内部表示变化（启发性分数）来评估令牌重要性，无需训练或自定义内核，可直接与FlashAttention等融合推理栈兼容，显著降低内存占用同时保持生成质量。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.28831v1",
+      "source": "arxiv",
+      "title": "HARD-KV: Head-Adaptive Regularization for Decoding-time KV Compression",
+      "abstract": "Long-context LLM inference faces a fundamental conflict: head-adaptive compression algorithms (e.g., Top-$p$ nucleus sampling) offer superior accuracy by dynamically fluctuating memory budgets, yet modern inference engines (e.g., vLLM) demand rigid, static memory patterns to leverage CUDA Graphs and PagedAttention. We resolve this ``Static-Dynamic'' mismatch with HARD-KV, a unified framework that that bridges dynamic selection with rigid system constraints. HARD-KV introduces a Cascade Cache hierarchy, managing the token lifecycle across dense, sparse, and condensed tiers. Crucially, we propose a Logits Calibration mechanism that normalizes diverse importance metrics into a unified probability space, enabling consistent Top-$p$ budgeting across heterogeneous heads. To bridge the efficiency gap, we offer a system-level solution, which rewrites fragmented, dynamic indices into contiguous physical layouts compatible with high-performance inference engine. Extensive experiments on math-reasoning benchmarks (AIME, U-Math) verify that HARD-KV achieves up to 2$\\times$ throughput improvement over static baselines while maintaining high-fidelity generation in 10k+ token scenarios. Code is available at https://github.com/SuDIS-ZJU/HARDInfer.",
+      "authors": [
+        "Yuxuan Yang",
+        "Feiyang Ren",
+        "Bowen Zeng",
+        "Dalin Zhang",
+        "Jinpeng Chen",
+        "Gang Chen",
+        "Huan Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-27T09:36:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.28831v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "head-adaptive KV compression for decoding-time optimization",
+      "llm_evidence_cn": "解码时KV缓存压缩中的头自适应正则化",
+      "llm_evidence": "解码时KV缓存压缩中的头自适应正则化",
+      "canonical_evidence": "解码时KV缓存压缩中的头自适应正则化",
+      "llm_tldr_en": "HARD-KV unifies dynamic KV compression with static system constraints via Cascade Cache hierarchy and Logits Calibration.",
+      "llm_tldr_cn": "长上下文LLM推理面临动态压缩算法与静态内存分配的矛盾。本文提出HARD-KV，引入级联缓存层次管理令牌生命周期，并通过对数校准机制将多样重要性度量统一到概率空间以实现一致预算分配，在不牺牲系统效率前提下实现自适应的KV缓存压缩，直接优化推理内存与速度。",
+      "llm_tldr": "长上下文LLM推理面临动态压缩算法与静态内存分配的矛盾。本文提出HARD-KV，引入级联缓存层次管理令牌生命周期，并通过对数校准机制将多样重要性度量统一到概率空间以实现一致预算分配，在不牺牲系统效率前提下实现自适应的KV缓存压缩，直接优化推理内存与速度。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.29094v1",
+      "source": "arxiv",
+      "title": "DiLaServe: High SLO Attainment Serving for Diffusion Language Models",
+      "abstract": "Diffusion language models (DLMs) have recently emerged as a promising alternative to conventional autoregressive language models. By generating multiple tokens in parallel during each denoising step, they offer higher inference throughput while maintaining competitive quality. However, realizing these throughput gains while meeting latency SLOs in a serving system requires addressing challenges introduced by DLMs' unique characteristics. These include navigating the speed-quality tradeoff created by confidence-based denoising, choosing appropriate parallelization levels across model instances under fluctuating load, and coordinating approximate KV caching mechanisms that introduce non-uniform per-step costs. To address these challenges, we present DiLaServe, a cluster-level serving system for DLMs. DiLaServe enables deadline-aware scheduling and adaptive load control through confidence-threshold adjustment, and dynamically reconfigures the cluster by solving a quality-aware optimization problem, while explicitly modeling the step-level heterogeneity introduced by approximate KV caching. Across multiple benchmarks and real-world traces, DiLaServe improves SLO attainment by up to 56.6 percentage points and reduces end-to-end request latency by up to 46\\% while incurring less than 1\\% accuracy drop.",
+      "authors": [
+        "Tzu-Tao Chang",
+        "Benjamin Yuanyang Hong",
+        "Kiet Pham",
+        "Shivaram Venkataraman"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-27T21:21:53+00:00",
+      "link": "https://arxiv.org/pdf/2606.29094v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "serving diffusion LLMs with approximate KV caching mechanisms",
+      "llm_evidence_cn": "服务于扩散语言模型，涉及近似KV缓存机制",
+      "llm_evidence": "服务于扩散语言模型，涉及近似KV缓存机制",
+      "canonical_evidence": "服务于扩散语言模型，涉及近似KV缓存机制",
+      "llm_tldr_en": "DiLaServe addresses SLO attainment for diffusion language models by coordinating approximate KV caching and quality-speed tradeoffs.",
+      "llm_tldr_cn": "扩散语言模型在推理服务中面临速度-质量权衡和近似KV缓存带来的非均匀步长成本。DiLaServe通过协调近似KV缓存、并行化水平和置信度去噪策略，在满足延迟SLO的前提下最大化吞吐量。实验证明相比现有方案，SLO满足率显著提升，是KV缓存优化和推理加速的实践案例。",
+      "llm_tldr": "扩散语言模型在推理服务中面临速度-质量权衡和近似KV缓存带来的非均匀步长成本。DiLaServe通过协调近似KV缓存、并行化水平和置信度去噪策略，在满足延迟SLO的前提下最大化吞吐量。实验证明相比现有方案，SLO满足率显著提升，是KV缓存优化和推理加速的实践案例。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.29563v1",
+      "source": "arxiv",
+      "title": "Coverage-Driven KV Cache Eviction for Efficient and Improved Inference of LLM",
+      "abstract": "Large language models (LLMs) excel at complex tasks like question answering and summarization, thanks to their ability to handle long-context inputs. However, deploying LLMs is costly, not only due to the high computational demands of quadratic complexity of self-attention and auto-regressive generation, but also because of the significant memory overhead required for storing the key-value (KV) cache during inference. To reduce the memory cost, existing KV-cache eviction strategies leverage the sparsity in attention to selectively store a subset of tokens. While reducing the memory footprint, such approaches show a considerable drop in performance, especially in tasks that require long-context reasoning. We identify that the drop in performance is linked to a reduction in the coverage of unique tokens. Additionally, we theoretically show that reduced coverage limits the mutual information between inputs and outputs, thereby impairing predictive accuracy. To this end, we introduce K-VEC, a novel coverage-aware KV-cache eviction strategy that prioritizes token coverage while evicting tokens in the cache. K-VEC introduces a cross-head and a cross-layer coverage module to enhance token retention across attention heads and model layers, mitigating performance degradation caused by low coverage. Evaluated on 16 LongBench subsets, K-VEC exhibit up to 10.35 points improvement over the existing methods under the same eviction rate and memory constraint. Comprehensive evaluations validate the effectiveness of our approach and demonstrate its potential for efficient LLM deployment in resource-constrained settings.",
+      "authors": [
+        "Shuvendu Roy",
+        "Mengyao Zhai",
+        "Hossein Hajimirsadeghi",
+        "Golnoosh Samei"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-06-28T19:04:47+00:00",
+      "link": "https://arxiv.org/pdf/2606.29563v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Coverage-driven KV cache eviction for efficient LLM inference",
+      "llm_evidence_cn": "覆盖度驱动的KV缓存淘汰，用于高效大模型推理",
+      "llm_evidence": "覆盖度驱动的KV缓存淘汰，用于高效大模型推理",
+      "canonical_evidence": "覆盖度驱动的KV缓存淘汰，用于高效大模型推理",
+      "llm_tldr_en": "Proposes a coverage-driven KV cache eviction method that selects tokens to maximize coverage of attention, improving inference efficiency while preserving long-context reasoning performance.",
+      "llm_tldr_cn": "针对LLM推理中KV缓存内存开销大且现有淘汰方法导致长上下文性能下降的问题，提出覆盖度驱动的淘汰策略，通过最大化注意力覆盖来选择保留的令牌，在减少内存使用的同时保持甚至提升长上下文推理能力。",
+      "llm_tldr": "针对LLM推理中KV缓存内存开销大且现有淘汰方法导致长上下文性能下降的问题，提出覆盖度驱动的淘汰策略，通过最大化注意力覆盖来选择保留的令牌，在减少内存使用的同时保持甚至提升长上下文推理能力。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.29982v1",
+      "source": "arxiv",
+      "title": "Beyond Uniform Experts: Cost-Aware Expert Execution for Efficient Multi-Device MoE Inference",
+      "abstract": "Mixture-of-Experts (MoE) architectures enable language models to achieve unprecedented scale via sparse activation. However, their inference performance is often limited by data movement bottlenecks. Two coupled challenges exacerbate this limtation: (1) Importance-Agnostic Cost: Low-contribution experts incur nearly uniform memory and transfer costs, resulting in a low cost-to-benefit ratio and wasting critical bandwidth; (2) System-Level Imbalance: Multi-device deployments are universally bottlenecked by the slowest device, meaning that local reductions on one device may yield no improvement in end-to-end latency. We propose Cost-Aware Expert Execution (CAEE), a hardware-guided runtime framework that jointly optimizes for token-level expert importance and system-level execution cost. CAEE uses lightweight, calibrated cost models to estimate hardware overhead, selectively prunes low-importance, high-cost experts, and redistributes their contributions via a low-overhead compensation mechanism, avoiding extra data movement. Evaluations on the 671B DeepSeek-R1 model show that CAEE can reduce end-to-end inference latency by 8\\%-18\\% across diverse deployment settings, including expert offloading and on-device execution on multi-device systems, while maintaining a model accuracy drop of less than 1\\%.",
+      "authors": [
+        "Hui Zang",
+        "Pengfei Xia",
+        "Hong Liu",
+        "Jiajia Chu",
+        "Tuo Hao",
+        "Minghao Chen",
+        "Rui Zhang",
+        "Ziyang Zhang"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-29T08:57:59+00:00",
+      "link": "https://arxiv.org/pdf/2606.29982v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Communication optimization in multi-device MoE inference",
+      "llm_evidence_cn": "多设备MoE推理中的通信优化",
+      "llm_evidence": "多设备MoE推理中的通信优化",
+      "canonical_evidence": "多设备MoE推理中的通信优化",
+      "llm_tldr_en": "Proposes Cost-Aware Expert Execution (CAEE) to address data movement bottlenecks in MoE inference by jointly optimizing token-latency across devices with importance-aware costing and system-level balancing.",
+      "llm_tldr_cn": "混合专家模型推理受限于数据移动瓶颈和系统负载不均。本文提出成本感知专家执行框架，通过识别专家贡献差异并均衡多设备延迟，显著降低通信开销与端到端延迟。实验证明该方法在保持精度的同时实现高效多设备推理。",
+      "llm_tldr": "混合专家模型推理受限于数据移动瓶颈和系统负载不均。本文提出成本感知专家执行框架，通过识别专家贡献差异并均衡多设备延迟，显著降低通信开销与端到端延迟。实验证明该方法在保持精度的同时实现高效多设备推理。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.27866v1",
+      "source": "arxiv",
+      "title": "FlexMoE: One-for-All Nested Intra-Expert Pruning for MoE Language Models",
+      "abstract": "Mixture-of-Experts (MoE) language models scale model ability with sparsely activated experts, making this architecture a standard recipe for modern large models. However, sparse activation does not remove the deployment burden of storing and serving all experts, and the available deployment budget can vary substantially across devices, users, and workloads. Existing MoE compression methods are still largely fixed-budget, typically optimizing one compressed endpoint at each chosen target budget. We study a different setting: converting a large pretrained MoE LLM into a nested family of deployable subnetworks across budgets. Our method first ranks expert FFN channels by their importance, then lets each expert learn a discrete action to prune its channels. By gradually increasing cost pressure, a single action-training run exports a series of action masks from high to low budgets, each of which identifies a reliable smaller subnetwork nested in the ranked base model. Moreover, we use a single recovery fine-tune at a mid pruning budget (40%) to recover degraded model quality and transfer the recovered model to other unseen budgets. Overall, our framework surpasses recent MoE compression baselines. Specifically, on Qwen2-57B-A14B, our method retains ~99.8% of base performance while pruning 50% of routed expert parameters even without fine-tuning. For deployment, our pruned subnetworks deliver real memory reduction and throughput gains, and further support realtime online budget switching with kernel-level co-design.",
+      "authors": [
+        "Fan Mo",
+        "Yuxuan Han",
+        "Geng Zhang",
+        "Wangbo Zhao",
+        "Yang You"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-26T09:08:03+00:00",
+      "link": "https://arxiv.org/pdf/2606.27866v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "MoE intra-expert pruning for deployment efficiency",
+      "llm_evidence_cn": "MoE专家内剪枝以提升部署效率",
+      "llm_evidence": "MoE专家内剪枝以提升部署效率",
+      "canonical_evidence": "MoE专家内剪枝以提升部署效率",
+      "llm_tldr_en": "FlexMoE converts a pretrained MoE LLM into a nested family of subnetworks via intra-expert pruning, enabling flexible deployment across budgets.",
+      "llm_tldr_cn": "该论文针对MoE大语言模型部署时固定预算压缩的局限性，提出FlexMoE方法，将预训练MoE模型转换为嵌套的可部署子网络族。首先对专家FFN通道进行重要性排序，然后让每个专家学习离散动作剪枝通道，以生成不同预算下的高效子网络。该方法避免了固定预算优化，使得一个模型适配多种部署场景，提升了MoE模型的推理效率和灵活性，对AI基础设施中的MoE推理加速和通信优化有间接贡献。",
+      "llm_tldr": "该论文针对MoE大语言模型部署时固定预算压缩的局限性，提出FlexMoE方法，将预训练MoE模型转换为嵌套的可部署子网络族。首先对专家FFN通道进行重要性排序，然后让每个专家学习离散动作剪枝通道，以生成不同预算下的高效子网络。该方法避免了固定预算优化，使得一个模型适配多种部署场景，提升了MoE模型的推理效率和灵活性，对AI基础设施中的MoE推理加速和通信优化有间接贡献。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.23017v1",
+      "source": "arxiv",
+      "title": "Nautilus: A Verifiable Hierarchical Federated Learning Framework for Vehicular-Edge-Cloud Systems",
+      "abstract": "Federated Learning (FL) enables privacy-preserving collaborative learning for Internet of Vehicles (IoV) scenarios, but the extreme heterogeneity of vehicular-edge-cloud resources severely limits system efficiency. While dynamic scheduling strategies can mitigate this issue, they introduce new trust concerns: how to verify that scheduling decisions are fair, and whether clients faithfully execute optimization instructions without disclosing private data? This paper proposes Nautilus, a verifiable and efficient federated learning framework. First, we design a multi-dimensional resource-aware scheduling algorithm that dynamically allocates compression ratios and training tasks based on vehicles bandwidth, latency, and computing power, significantly improving system training efficiency. Second, to address the trust deficit in the scheduling process, we introduce a Zero-Knowledge Proof (ZKP) mechanism that ensures the fairness of scheduling strategy generation and the compliance of client execution while preserving privacy. Experimental results demonstrate that the framework effectively reduces communication overhead and accelerates model convergence while maintaining system integrity.",
+      "authors": [
+        "Linyang Wu",
+        "Linpeng Jia",
+        "Hanwen Zhang",
+        "Tiantian Duan",
+        "Yi Sun"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-22T08:29:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.23017v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "verifiable hierarchical training in heterogeneous vehicular-edge-cloud systems",
+      "llm_evidence_cn": "异构车-边-云系统中的可验证分层训练",
+      "llm_evidence": "异构车-边-云系统中的可验证分层训练",
+      "canonical_evidence": "异构车-边-云系统中的可验证分层训练",
+      "llm_tldr_en": "Nautilus proposes a verifiable federated learning framework with multi-dimensional resource-aware scheduling for heterogeneous edge-cloud environments.",
+      "llm_tldr_cn": "联邦学习在车联网场景面临资源异构性和信任问题。Nautilus框架设计多维资源感知调度算法，动态分配压缩率和训练任务，并引入可验证机制确保调度公平。在异构环境中显著提升训练效率。属于AI基础设施加速技术。",
+      "llm_tldr": "联邦学习在车联网场景面临资源异构性和信任问题。Nautilus框架设计多维资源感知调度算法，动态分配压缩率和训练任务，并引入可验证机制确保调度公平。在异构环境中显著提升训练效率。属于AI基础设施加速技术。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.29775v1",
+      "source": "arxiv",
+      "title": "SMART-MIG: A Learning Framework for Scalable and Energy-Efficient GPU Scheduling",
+      "abstract": "The emergence of Multi-Instance GPU (MIG) technology enables us to run smaller machine learning models on partitions of a GPU rather than the entire device, thus improving utilization and reducing energy consumption, albeit with potential performance trade-offs. Meanwhile, the growing energy demands of GPU-equipped data centers motivate the development of online partitioning and scheduling schemes that not only ensure fast job processing but also achieve high energy efficiency. However, achieving energy-tardiness efficiency with manageable algorithmic complexity in large-scale scheduling remains a great challenge, due to the dual objectives of deciding on the GPU partitions and scheduling jobs onto the slices of the heterogeneous partitions. To address this challenge, we propose SMART-MIG, a parallel computing system that combines Mean-Field Multi-Agent Reinforcement Learning (MF-MARL) for large-scale MIG repartitioning with tailored heuristic algorithms for job scheduling. We demonstrate that the complexity of the repartitioning component remains constant even as the number of jobs and GPUs increases. We also establish theoretical lower bounds on energy consumption and tardiness to rigorously benchmark system performance. Finally, extensive experiments show that SMART-MIG improves the energy-tardiness efficiency by $18\\%$ compared to its corresponding static-partitioning counterpart, while being only $27\\%$ above the theoretical lower bound on energy consumption.",
+      "authors": [
+        "Wenqing Yu",
+        "Neel Karia",
+        "Tanvi Hisaria",
+        "Clifford Stein",
+        "Olivier Tardieu",
+        "Asser Tantawi"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-29T04:35:48+00:00",
+      "link": "https://arxiv.org/pdf/2606.29775v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "GPU scheduling for AI infrastructure acceleration",
+      "llm_evidence_cn": "面向AI基础设施加速的GPU调度",
+      "llm_evidence": "面向AI基础设施加速的GPU调度",
+      "canonical_evidence": "面向AI基础设施加速的GPU调度",
+      "llm_tldr_en": "Proposes SMART-MIG, a learning framework for scalable and energy-efficient GPU scheduling on MIG-enabled GPUs, addressing energy-tardiness trade-offs in large-scale data centers.",
+      "llm_tldr_cn": "当前GPU数据中心面临能效与作业延迟的平衡挑战。本文提出SMART-MIG学习框架，利用多实例GPU技术进行在线分区和调度决策，在保证作业处理速度的同时降低能耗。实验表明该方法能在大规模调度中实现能效与延迟的联合优化，为AI基础设施节能提供新思路。",
+      "llm_tldr": "当前GPU数据中心面临能效与作业延迟的平衡挑战。本文提出SMART-MIG学习框架，利用多实例GPU技术进行在线分区和调度决策，在保证作业处理速度的同时降低能耗。实验表明该方法能在大规模调度中实现能效与延迟的联合优化，为AI基础设施节能提供新思路。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.23017v2",
+      "source": "arxiv",
+      "title": "Nautilus: A Verifiable Hierarchical Federated Learning Framework for Vehicular-Edge-Cloud Systems",
+      "abstract": "Federated Learning (FL) enables privacy-preserving collaborative learning for Internet of Vehicles (IoV) scenarios, but the extreme heterogeneity of vehicular-edge-cloud resources severely limits system efficiency. While dynamic scheduling strategies can mitigate this issue, they introduce new trust concerns: how to verify that scheduling decisions are fair, and whether clients faithfully execute optimization instructions without disclosing private data? This paper proposes Nautilus, a verifiable and efficient federated learning framework. First, we design a multi-dimensional resource-aware scheduling algorithm that dynamically allocates compression ratios and training tasks based on vehicles bandwidth, latency, and computing power, significantly improving system training efficiency. Second, to address the trust deficit in the scheduling process, we introduce a Zero-Knowledge Proof (ZKP) mechanism that ensures the fairness of scheduling strategy generation and the compliance of client execution while preserving privacy. Experimental results demonstrate that the framework effectively reduces communication overhead and accelerates model convergence while maintaining system integrity.",
+      "authors": [
+        "Linyang Wu",
+        "Linpeng Jia",
+        "Hanwen Zhang",
+        "Tiantian Duan",
+        "Yi Sun"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-22T08:29:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.23017v2",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "heterogeneous resource scheduling in vehicular-edge-cloud federated learning",
+      "llm_evidence_cn": "车-边-云系统中异构资源感知的联邦学习调度",
+      "llm_evidence": "车-边-云系统中异构资源感知的联邦学习调度",
+      "canonical_evidence": "车-边-云系统中异构资源感知的联邦学习调度",
+      "llm_tldr_en": "Nautilus proposes a verifiable federated learning framework with multi-dimensional resource-aware scheduling for heterogeneous edge-cloud systems.",
+      "llm_tldr_cn": "车联网联邦学习中极端资源异构性限制效率。本文提出Nautilus框架，设计多维资源感知调度算法动态分配压缩率和训练任务，并引入可验证性保障公平执行，虽然聚焦联邦学习，但其异构资源调度思想可迁移至AI基础设施中的异构计算场景，属于方法论桥梁。",
+      "llm_tldr": "车联网联邦学习中极端资源异构性限制效率。本文提出Nautilus框架，设计多维资源感知调度算法动态分配压缩率和训练任务，并引入可验证性保障公平执行，虽然聚焦联邦学习，但其异构资源调度思想可迁移至AI基础设施中的异构计算场景，属于方法论桥梁。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "search for heterogeneous computing in AI infrastructure",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.30425v1",
+      "source": "arxiv",
+      "title": "Lossy Compression for Sparse Aggregation",
+      "abstract": "We consider the problem of transmitting sparse local updates to the server in a distributed learning system. Specifically, the system consists of $n$ clients, each possessing a $k$-sparse $d$-dimensional local model, and a central server responsible for aggregating the clients' models into a global model. The goal is to characterize the tradeoff between the communication cost in the transmission from the clients to the server and the accuracy in aggregating the global model. We propose a compression scheme for sparse local models by concatenating a covering method and a sketching method. We also present a converse based on f-divergence, which strengthens the conventional Fano-type lower bounds. The proposed lower bound is tight for the frequency estimation case, that is, each coordinate takes values in a binary alphabet. For general alphabets, the proposed achievable schemes remain suboptimal relative to the converse bounds, indicating that a complete characterization of the communication-accuracy tradeoff requires further investigation.",
+      "authors": [
+        "Yijun Fan",
+        "Fangwei Ye",
+        "Raymond W. Yeung"
+      ],
+      "primary_category": "cs.IT",
+      "categories": [
+        "cs.IT"
+      ],
+      "published": "2026-06-29T15:08:08+00:00",
+      "link": "https://arxiv.org/pdf/2606.30425v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "lossy compression for sparse aggregation reduces communication cost in distributed learning",
+      "llm_evidence_cn": "针对稀疏聚合的有损压缩减少分布式学习通信开销",
+      "llm_evidence": "针对稀疏聚合的有损压缩减少分布式学习通信开销",
+      "canonical_evidence": "针对稀疏聚合的有损压缩减少分布式学习通信开销",
+      "llm_tldr_en": "This paper proposes a compression scheme combining covering and sketching for transmitting sparse local updates, achieving optimal communication-accuracy tradeoff.",
+      "llm_tldr_cn": "分布式学习中客户端上传稀疏模型参数的通信开销是瓶颈。本文提出一种将覆盖编码与草图结合的有损压缩方案，可显著降低传输量。理论分析给出了通信-精度权衡的下界，并在频率估计任务上达到紧界。该方法可直接用于混合专家模型（MoE）的通信优化场景。",
+      "llm_tldr": "分布式学习中客户端上传稀疏模型参数的通信开销是瓶颈。本文提出一种将覆盖编码与草图结合的有损压缩方案，可显著降低传输量。理论分析给出了通信-精度权衡的下界，并在频率估计任务上达到紧界。该方法可直接用于混合专家模型（MoE）的通信优化场景。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.29215v1",
+      "source": "arxiv",
+      "title": "Multi-Block Diffusion Language Models",
+      "abstract": "Block Diffusion Language Models (BD-LMs) improve diffusion-based text generation with KV caching and flexible-length generation. A natural next step is to extend them from Single-Block Diffusion (SingleBD) to Multi-Block Diffusion (MultiBD), where a \\textit{running-set} of consecutive blocks is decoded concurrently for inter-block parallelism. However, existing BD-LMs are mostly trained under teacher forcing, where the model observes only one noisy block conditioned on a clean prefix. While the recent diffusion forcing strategy introduces visibility among multiple noisy blocks, its training states still differ from MultiBD inference, where decoding operates on a bounded \\textit{running-set} with heterogeneous slot-wise noise patterns. To bridge this gap, we propose \\textit{Multi-Block Diffusion Language Models} (MBD-LMs), obtained by post-training BD-LMs with \\textit{Multi-block Teacher Forcing} (MultiTF). MultiTF integrates teacher forcing and diffusion forcing by training on bounded \\textit{noise-groups} conditioned on clean prefixes, with randomized \\textit{noise-schedulers} that better match MultiBD inference states. To make MultiBD practically executable, we further introduce an optimized decoding algorithm based on the \\textit{Block Buffer} mechanism that preserves prefix-cache reuse, keeps input shapes static, and translates increased decoding parallelism into wall-clock acceleration. Empirically, MBD-LLaDA2-Mini increases average Tokens Per Forward pass (TPF) from 3.47 to \\textbf{6.19} and improves average accuracy from 79.95\\% to \\textbf{81.03\\%}; when combined with DMax, MBD-LLaDA2-Mini-DMax reaches an average TPF of \\textbf{9.34} with only a 1.02\\% accuracy drop on math and code benchmarks.",
+      "authors": [
+        "Yijie Jin",
+        "Jiajun Xu",
+        "Yuxuan Liu",
+        "Chenkai Xu",
+        "Yi Tu",
+        "Jiajun Li",
+        "Dandan Tu",
+        "Xiaohui Yan",
+        "Kai Yu",
+        "Pengfei Liu",
+        "Zhijie Deng"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.CL"
+      ],
+      "published": "2026-06-28T05:53:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.29215v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "KV caching and parallel decoding in diffusion language models",
+      "llm_evidence_cn": "扩散语言模型中的KV缓存与并行解码",
+      "llm_evidence": "扩散语言模型中的KV缓存与并行解码",
+      "canonical_evidence": "扩散语言模型中的KV缓存与并行解码",
+      "llm_tldr_en": "Multi-Block Diffusion extends block diffusion LMs with concurrent decoding of multiple blocks using a running-set and heterogeneous noise, improving inference parallelism.",
+      "llm_tldr_cn": "该论文将块扩散语言模型从单块扩展到多块，通过引入运行集和异构噪声模式，实现多个连续块的并发解码，从而增加推理并行性。虽然主要针对扩散模型，但其提出的KV缓存和并行解码策略可迁移至大型语言模型的推理加速场景。实验显示该方法有效提升了生成效率，对AI基础设施中的推理优化具有参考价值。",
+      "llm_tldr": "该论文将块扩散语言模型从单块扩展到多块，通过引入运行集和异构噪声模式，实现多个连续块的并发解码，从而增加推理并行性。虽然主要针对扩散模型，但其提出的KV缓存和并行解码策略可迁移至大型语言模型的推理加速场景。实验显示该方法有效提升了生成效率，对AI基础设施中的推理优化具有参考价值。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

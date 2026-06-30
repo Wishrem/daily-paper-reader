@@ -6,46 +6,57 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-29
-- 运行时间：2026-06-29 21:23:50 UTC
+- 最新运行日期：2026-06-30
+- 运行时间：2026-06-30 22:08:57 UTC
 - 运行状态：成功
-- 本次总论文数：8
-- 精读区：6
-- 速读区：2
+- 本次总论文数：11
+- 精读区：5
+- 速读区：6
 
 ### 今日简报（AI）
-1) 今日共推荐8篇论文，精读6篇，其中两篇聚焦于MoE模型的高效推理与稀疏化优化，评分均达9.0/10。
-2) 最值得关注的方向是多LLM系统服务（CrossPool通过KV缓存与权重分离提升冷启动效率）以及免训练的滑动窗口注意力适配方法（NLL-Guided层选择策略）。
-3) 建议优先阅读这两篇高分论文，了解如何在不增加训练成本的前提下提升MoE模型的推理速度与内存利用效率。
-- 详情：[/202606/29/README](/202606/29/README)
+今日共处理11篇论文，精读5篇、速读6篇，重点聚焦KV Cache优化与模型压缩。
+
+最值得关注的两篇精读《Epiphany-Aware KV Cache Eviction Without the Attention Matrix》与《HARD-KV: Head-Adaptive Regularization for Decoding-time KV Compression》，均评分9.0，深入探讨了无需注意力矩阵的缓存驱逐策略及解码时自适应压缩方法。
+
+建议优先研读这两篇KV Cache优化工作，对大模型推理加速有直接指导意义，后续可关注MoE剪枝与GPU调度方向。
+- 详情：[/202606/30/README](/202606/30/README)
 
 ### 精读区论文标签
-1. [CrossPool: Efficient Multi-LLM Serving for Cold MoE Models through KV-Cache and Weight Disaggregation](/202606/29/2606.24506v2-crosspool-efficient-multi-llm-serving-for-cold-moe-models-through-kv-cache-and-weight-disaggregation)  
+1. [Epiphany-Aware KV Cache Eviction Without the Attention Matrix](/202606/30/2606.26472v2-epiphany-aware-kv-cache-eviction-without-the-attention-matrix)  
    标签：评分：9.0/10、query:ai-infra
-   evidence：针对冷门MoE模型的KV缓存池化与权重解耦
-2. [NLL-Guided Full-Attention Layer Selection for Training-Free Sliding-Window Adaptation](/202606/29/2606.27791v1-nll-guided-full-attention-layer-selection-for-training-free-sliding-window-adaptation)  
+   evidence：KV缓存淘汰，无需注意力矩阵的模型内部表示变化得分
+2. [HARD-KV: Head-Adaptive Regularization for Decoding-time KV Compression](/202606/30/2606.28831v1-hard-kv-head-adaptive-regularization-for-decoding-time-kv-compression)  
    标签：评分：9.0/10、query:ai-infra
-   evidence：无训练注意力层选择以优化KV缓存使用
-3. [SARA: Unlocking Multilingual Knowledge in Mixture-of-Experts via Semantically Anchored Routing Alignment](/202606/29/2606.25821v1-sara-unlocking-multilingual-knowledge-in-mixture-of-experts-via-semantically-anchored-routing-alignment)  
-   标签：评分：8.0/10、query:ai-infra
-   evidence：混合专家模型路由对齐提升跨语言通信效率
-4. [Bifocal Diffusion Language Models: Asymmetric Bidirectional Context for Parallel Generation](/202606/29/2606.27732v1-bifocal-diffusion-language-models-asymmetric-bidirectional-context-for-parallel-generation)  
-   标签：评分：8.0/10、query:ai-infra
-   evidence：解决扩散LLM中KV缓存不兼容问题，提出不对称双向上下文
-5. [End-to-End Dynamic Sparsity for Resource-Adaptive LLM Inference](/202606/29/2606.27743v1-end-to-end-dynamic-sparsity-for-resource-adaptive-llm-inference)  
-   标签：评分：8.0/10、query:ai-infra
-   evidence：针对动态云基础设施的资源自适应推理
-6. [Phase Matters: Characterizing Heterogeneous Vision-Language Inference on a Mobile SoC](/202606/29/2606.27906v1-phase-matters-characterizing-heterogeneous-vision-language-inference-on-a-mobile-soc)  
-   标签：评分：8.0/10、query:ai-infra
-   evidence：移动SoC上异构视觉语言推理特征化
+   evidence：解码时KV缓存压缩中的头自适应正则化
+3. [DiLaServe: High SLO Attainment Serving for Diffusion Language Models](/202606/30/2606.29094v1-dilaserve-high-slo-attainment-serving-for-diffusion-language-models)  
+   标签：评分：9.0/10、query:ai-infra
+   evidence：服务于扩散语言模型，涉及近似KV缓存机制
+4. [Coverage-Driven KV Cache Eviction for Efficient and Improved Inference of LLM](/202606/30/2606.29563v1-coverage-driven-kv-cache-eviction-for-efficient-and-improved-inference-of-llm)  
+   标签：评分：9.0/10、query:ai-infra
+   evidence：覆盖度驱动的KV缓存淘汰，用于高效大模型推理
+5. [Beyond Uniform Experts: Cost-Aware Expert Execution for Efficient Multi-Device MoE Inference](/202606/30/2606.29982v1-beyond-uniform-experts-cost-aware-expert-execution-for-efficient-multi-device-moe-inference)  
+   标签：评分：9.0/10、query:ai-infra
+   evidence：多设备MoE推理中的通信优化
 
 ### 速读区论文标签
-1. [Optimizing Teacher-Student Partitioning for Scalable Knowledge Distillation on HPC Systems](/202606/29/2606.27797v1-optimizing-teacher-student-partitioning-for-scalable-knowledge-distillation-on-hpc-systems)  
+1. [FlexMoE: One-for-All Nested Intra-Expert Pruning for MoE Language Models](/202606/30/2606.27866v1-flexmoe-one-for-all-nested-intra-expert-pruning-for-moe-language-models)  
+   标签：评分：7.0/10、query:ai-infra
+   evidence：MoE专家内剪枝以提升部署效率
+2. [SMART-MIG: A Learning Framework for Scalable and Energy-Efficient GPU Scheduling](/202606/30/2606.29775v1-smart-mig-a-learning-framework-for-scalable-and-energy-efficient-gpu-scheduling)  
+   标签：评分：7.0/10、query:ai-infra
+   evidence：面向AI基础设施加速的GPU调度
+3. [Lossy Compression for Sparse Aggregation](/202606/30/2606.30425v1-lossy-compression-for-sparse-aggregation)  
+   标签：评分：7.0/10、query:ai-infra
+   evidence：针对稀疏聚合的有损压缩减少分布式学习通信开销
+4. [Nautilus: A Verifiable Hierarchical Federated Learning Framework for Vehicular-Edge-Cloud Systems](/202606/30/2606.23017v1-nautilus-a-verifiable-hierarchical-federated-learning-framework-for-vehicular-edge-cloud-systems)  
    标签：评分：6.0/10、query:ai-infra
-   evidence：HPC感知的师生分区方法提升知识蒸馏吞吐量
-2. [FlexMoE: One-for-All Nested Intra-Expert Pruning for MoE Language Models](/202606/29/2606.27866v1-flexmoe-one-for-all-nested-intra-expert-pruning-for-moe-language-models)  
+   evidence：异构车-边-云系统中的可验证分层训练
+5. [Nautilus: A Verifiable Hierarchical Federated Learning Framework for Vehicular-Edge-Cloud Systems](/202606/30/2606.23017v2-nautilus-a-verifiable-hierarchical-federated-learning-framework-for-vehicular-edge-cloud-systems)  
    标签：评分：6.0/10、query:ai-infra
-   evidence：MoE语言模型的嵌套专家内剪枝，降低部署开销
+   evidence：车-边-云系统中异构资源感知的联邦学习调度
+6. [Multi-Block Diffusion Language Models](/202606/30/2606.29215v1-multi-block-diffusion-language-models)  
+   标签：评分：6.0/10、query:ai-infra
+   evidence：扩散语言模型中的KV缓存与并行解码
 
 
 <div class="dpr-home-promo-card">
