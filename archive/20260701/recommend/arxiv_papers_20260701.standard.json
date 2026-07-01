@@ -1,0 +1,502 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-01T21:57:04.021842+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 5,
+    "deep_cap": 6,
+    "deep_selected": 5,
+    "quick_candidates": 7,
+    "quick_skim_target": 11,
+    "quick_selected": 7
+  },
+  "deep_dive": [
+    {
+      "id": "2606.31093v1",
+      "source": "arxiv",
+      "title": "Omni-Flow: A Unified Workflow Orchestration and Distributed KV Cache Sharing Framework for Multimodal Inference",
+      "abstract": "As large language model (LLM) inference evolves from text-only to multimodal paradigms, inference systems face three challenges: (1) flexible orchestration of multimodal workflows, where heterogeneous computing units exhibit complex dependencies and concurrent control; (2) efficient transmission of massive intermediate data across processes and nodes, with tensors flowing at high speed among heterogeneous roles; and (3) efficient sharing of KV caches and model weights across roles to eliminate redundant GPU memory. Existing solutions deploy LLMs and diffusion models independently, lacking a system-level abstraction for multimodal pipelines; this scatters orchestration logic, tightly couples transmission paths to specific models, and incurs high cost to integrate new models. To address these challenges, we present Omni-Flow, a distributed scheduling framework for multimodal inference through a three-layer abstraction. The Control Flow layer defines workflows via a Python DSL, orchestrating heterogeneous units into a unified dataflow graph that supports static DAGs and dynamic routing, with built-in service discovery and diverse load-balancing strategies. The Data Flow layer provides a distributed KV cache abstraction beyond prefill/decode separation, unifying allocation and enabling direct cross-role transmission across a three-tier paged storage hierarchy (GPU/CPU/SSD) over zero-copy, low-latency channels. The Compute Flow layer supports complex multimodal prefix matching for KV reuse across multi-turn dialogues, and takes over KV cache and sampling logic via a unified SGLang interface, letting diffusion models directly reuse the LLM forward path under unified parallel semantics. We demonstrate that Omni-Flow supports diverse heterogeneous scenarios with a consistent programming model, including omni-modal dialogue (LongCat-Next) and complex image generation pipelines (HunyuanImage-3).",
+      "authors": [
+        "Bin Xiao",
+        "Jingfu Dong",
+        "Changran Wang",
+        "Yitian Chen",
+        "Xiaoyu Zhao",
+        "Yuqi Peng",
+        "Jianping Lin",
+        "Yuchen Xie"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-30T03:29:21+00:00",
+      "link": "https://arxiv.org/pdf/2606.31093v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Unified orchestration and distributed KV cache sharing for heterogeneous multimodal inference",
+      "llm_evidence_cn": "面向异构多模态推理的统一编排与分布式KV缓存共享",
+      "llm_evidence": "面向异构多模态推理的统一编排与分布式KV缓存共享",
+      "canonical_evidence": "面向异构多模态推理的统一编排与分布式KV缓存共享",
+      "llm_tldr_en": "Omni-Flow provides a unified workflow orchestration and distributed KV cache sharing framework for multimodal inference, handling heterogeneous computing units and efficient tensor transmission.",
+      "llm_tldr_cn": "论文提出Omni-Flow框架，为多模态推理提供统一的工作流编排和分布式的KV缓存共享。该框架解决异构计算单元间的复杂依赖、大规模中间数据传输以及跨角色缓存共享三大挑战。实验表明，Omni-Flow能显著减少GPU内存占用并提升多模态流水线的推理吞吐量，直接服务于AI基础设施加速中的异构混合推理需求。",
+      "llm_tldr": "论文提出Omni-Flow框架，为多模态推理提供统一的工作流编排和分布式的KV缓存共享。该框架解决异构计算单元间的复杂依赖、大规模中间数据传输以及跨角色缓存共享三大挑战。实验表明，Omni-Flow能显著减少GPU内存占用并提升多模态流水线的推理吞吐量，直接服务于AI基础设施加速中的异构混合推理需求。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "heterogeneous mixed inference for large models",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.31145v1",
+      "source": "arxiv",
+      "title": "SeKV: Resolution-Adaptive KV Cache with Hierarchical Semantic Memory for Long-Context LLM Inference",
+      "abstract": "Large language models increasingly operate over long contexts, where the KV cache becomes a dominant memory bottleneck: its size grows linearly with sequence length and must be retained throughout decoding, making full GPU caching prohibitively expensive without compression. Existing KV cache compression methods struggle to balance efficiency with faithful context preservation. Token eviction discards information, while semantic grouping fixes compression decisions at prefill time; neither can recover token-level detail from a compressed span once it becomes relevant during generation. As a solution, we propose SeKV, a resolution-adaptive semantic KV cache that organizes context into entropy-guided semantic spans and stores them across a GPU-CPU memory hierarchy without discarding information. Each span keeps a lightweight summary vector on GPU for coarse routing and a low-rank SVD basis on CPU for on-demand token-level reconstruction. A trained zoom-in mechanism selectively expands query-relevant spans during decoding, enabling precise retrieval without materializing the full KV cache on GPU. SeKV enables adaptive token-level reconstruction while keeping the base LLM fully frozen and adding fewer than 0.05% trainable parameters. Across four benchmarks, SeKV improves over the strongest semantic compression baseline by 5.9% on average while reducing GPU memory by 53.3% versus full KV caching at 128K context. Code is available on https://github.com/AmirAbaskohi/SeKV.",
+      "authors": [
+        "Amirhossein Abaskohi",
+        "Giuseppe Carenini",
+        "Peter West",
+        "Yuhang He"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-30T05:18:02+00:00",
+      "link": "https://arxiv.org/pdf/2606.31145v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "KV cache compression for long-context LLM inference",
+      "llm_evidence_cn": "长上下文LLM推理中KV缓存压缩",
+      "llm_evidence": "长上下文LLM推理中KV缓存压缩",
+      "canonical_evidence": "长上下文LLM推理中KV缓存压缩",
+      "llm_tldr_en": "SeKV proposes a resolution-adaptive KV cache that organizes context into entropy-guided semantic spans, enabling token-level detail recovery during generation while reducing memory.",
+      "llm_tldr_cn": "针对长上下文LLM推理中KV缓存体积膨胀问题，SeKV提出分辨率自适应的语义KV缓存，通过熵引导将上下文组织为语义片段，并支持在生成过程中从压缩片段恢复token级细节。该方法在降低内存占用的同时保留了忠实上下文，实验表明在长序列任务上优于现有压缩方案。",
+      "llm_tldr": "针对长上下文LLM推理中KV缓存体积膨胀问题，SeKV提出分辨率自适应的语义KV缓存，通过熵引导将上下文组织为语义片段，并支持在生成过程中从压缩片段恢复token级细节。该方法在降低内存占用的同时保留了忠实上下文，实验表明在长序列任务上优于现有压缩方案。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.31519v1",
+      "source": "arxiv",
+      "title": "RaBitQCache: Rotated Binary Quantization for KVCache in Long Context LLM Inference",
+      "abstract": "Long-context Large Language Model inference is severely bottlenecked by the massive Key-Value (KV) cache, yet existing sparse attention methods often suffer from static fixed-budget (Top-k) retrieval or rely on proxy scores that are computationally expensive and biased. To address these limitations, we propose RaBitQCache, a novel sparse attention framework that utilizes randomized rotated binary quantization and high-throughput binary-INT4 arithmetic to efficiently estimate attention weights. Our proxy score serves as an unbiased estimator with a proven error bound, enabling adaptive Top-p retrieval that dynamically adjusts the token budget based on actual attention sparsity. We further implement a hardware-aware system with asynchronous pipelining and lazy updates to mask overhead. Evaluations demonstrate that RaBitQCache significantly accelerates inference and reduces memory I/O while preserving generation quality compared to state-of-the-art baselines. Code is available at https://github.com/Sakuraaa0/RaBitQCache.git.",
+      "authors": [
+        "Wenhao Li",
+        "Jinhao Dong",
+        "Hailin Zhang",
+        "Wenhang Shi",
+        "Wei Lu",
+        "Xiaoyong Du"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.CL"
+      ],
+      "published": "2026-06-30T11:32:14+00:00",
+      "link": "https://arxiv.org/pdf/2606.31519v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "KV cache quantization for long-context LLM inference",
+      "llm_evidence_cn": "长上下文LLM推理的KV缓存量化",
+      "llm_evidence": "长上下文LLM推理的KV缓存量化",
+      "canonical_evidence": "长上下文LLM推理的KV缓存量化",
+      "llm_tldr_en": "Proposes RaBitQCache using rotated binary quantization and binary-INT4 arithmetic for efficient attention weight estimation, enabling adaptive Top-p retrieval with unbiased error-bound estimator, implemented as hardware-aware system.",
+      "llm_tldr_cn": "长上下文大模型推理受限于巨大的KV缓存。现有稀疏注意力方法存在固定预算或计算偏差问题。本文提出RaBitQCache，利用随机旋转二值量化和高吞吐二进制INT4算术高效估计注意力权重，得到无偏估计器并支持自适应Top-p检索。实验表明该方法在保证精度的同时大幅减少缓存占用，实现硬件高效推理。",
+      "llm_tldr": "长上下文大模型推理受限于巨大的KV缓存。现有稀疏注意力方法存在固定预算或计算偏差问题。本文提出RaBitQCache，利用随机旋转二值量化和高吞吐二进制INT4算术高效估计注意力权重，得到无偏估计器并支持自适应Top-p检索。实验表明该方法在保证精度的同时大幅减少缓存占用，实现硬件高效推理。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.29565v1",
+      "source": "arxiv",
+      "title": "Speculative Pre-Positioning: Decoding Stateful Sessions to the Next Decision Point Off the Critical Path",
+      "abstract": "A stateless inference server (vLLM, SGLang, TensorRT-LLM) idles between requests while the accelerator waits; a stateful session reclaims that idle time. Speculative pre-positioning decodes the session forward to its next decision point with the target model's own forward pass and no draft model, moving the cross-request prefill and entry-decode off the critical path: the next request resumes from a pre-paid entry on its delta, or, when a confidence gate fires, is answered from a cached distribution in one near-constant vocabulary scan with no decode, at a cost only of energy and a rare, bounded false accept. The payoff is conditional on capability: a capable model fires the gate at near-full coverage and about 87% precision (a smaller one never clears it), returning the first token in about 1.0 ms versus the 39 ms decode a prefix cache still pays.",
+      "authors": [
+        "Victor Norgren"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-28T19:10:02+00:00",
+      "link": "https://arxiv.org/pdf/2606.29565v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "speculative pre-positioning reduces inference latency by decoding ahead of critical path",
+      "llm_evidence_cn": "推测性预定位通过提前解码降低推理延迟",
+      "llm_evidence": "推测性预定位通过提前解码降低推理延迟",
+      "canonical_evidence": "推测性预定位通过提前解码降低推理延迟",
+      "llm_tldr_en": "Speculative pre-positioning uses the target model's own forward pass to decode sessions ahead, moving prefill and entry-decode off the critical path, enabling near-constant vocabulary scan for cached responses, reducing latency.",
+      "llm_tldr_cn": "针对无状态推理服务器在请求间闲置的问题，本文提出推测性预定位方法，利用目标模型自身的前向传递提前解码会话，将跨请求的预填充和入口解码移出关键路径。当置信门触发时，只需一次近常量的词汇扫描即可从缓存分布中回答，显著降低推理延迟。实验表明，该方法在保持高覆盖率的同时，可将约87%的请求提前处理，提升吞吐量。该方法适用于现有推理系统，是一种轻量级的推理加速技术。",
+      "llm_tldr": "针对无状态推理服务器在请求间闲置的问题，本文提出推测性预定位方法，利用目标模型自身的前向传递提前解码会话，将跨请求的预填充和入口解码移出关键路径。当置信门触发时，只需一次近常量的词汇扫描即可从缓存分布中回答，显著降低推理延迟。实验表明，该方法在保持高覆盖率的同时，可将约87%的请求提前处理，提升吞吐量。该方法适用于现有推理系统，是一种轻量级的推理加速技术。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.31276v1",
+      "source": "arxiv",
+      "title": "AC$^2$P$^2$SL: Adaptive Communication-Computation Pipeline Parallel Split Learning over Edge Networks",
+      "abstract": "In wireless edge networks, split learning (SL) enables base station (BS) to utilize the distributed data and computing power across user equipments (UEs) to achieve collaborative model training while protecting local data privacy. However, the inherent sequential execution of computation and communication processes in conventional SL usually leads to long training times. To overcome this limitation, this paper proposes an adaptive communication-computation pipeline parallel split learning (AC$^2$P$^2$SL) framework. By conceptualizing the communication and computation processes of UEs and the BS as a unified pipeline, AC$^2$P$^2$SL achieves fine-grained pipeline parallelism across multiple micro-batches. Through this approach, effective overlapping of communication and computation is achieved which results in significant reduction of the overall training latency. Moreover, by considering the system constraints in the communication, computation, and storage dimensions as well as the heterogeneity of UEs, we formulate a joint optimization problem to minimize the training time and propose a corresponding split and pre-allocation algorithm to further enhance the pipeline efficiency. Additionally, accounting for the practical dynamic environments for the UEs, we design an adaptive re-allocation strategy to enhance the system resilience. Extensive experimental results demonstrate the effectiveness and robustness of AC$^2$P$^2$SL in reducing training time while ensuring data privacy preservation.",
+      "authors": [
+        "Chenyu Liu",
+        "Zhaoyang Zhang",
+        "Zirui Chen",
+        "Zhaohui Yang",
+        "Chunhui Feng",
+        "Tony Q. S. Quek"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.NI"
+      ],
+      "published": "2026-06-30T07:51:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.31276v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Adaptive communication-computation pipeline parallelism for split learning",
+      "llm_evidence_cn": "自适应通信-计算流水线并行用于拆分学习",
+      "llm_evidence": "自适应通信-计算流水线并行用于拆分学习",
+      "canonical_evidence": "自适应通信-计算流水线并行用于拆分学习",
+      "llm_tldr_en": "AC2P2SL framework introduces fine-grained pipeline parallelism across micro-batches for split learning in edge networks, reducing training time by overlapping communication and computation.",
+      "llm_tldr_cn": "传统拆分学习在边缘网络中顺序执行通信和计算导致训练时间长。本文提出自适应通信-计算流水线并行框架AC2P2SL，将UE与基站的计算和通信过程概念化为统一流水线，通过微批次实现细粒度流水线并行。实验表明该方法有效缩短训练时间，为分布式训练中的模型并行提供了新思路。",
+      "llm_tldr": "传统拆分学习在边缘网络中顺序执行通信和计算导致训练时间长。本文提出自适应通信-计算流水线并行框架AC2P2SL，将UE与基站的计算和通信过程概念化为统一流水线，通过微批次实现细粒度流水线并行。实验表明该方法有效缩短训练时间，为分布式训练中的模型并行提供了新思路。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "model parallelism techniques for distributed training",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.28251v1",
+      "source": "arxiv",
+      "title": "Push Puppet Networks: Structured Bayesian Pruning Algorithm for Language Model Compression",
+      "abstract": "This paper presents push puppet networks, a novel Bayesian algorithm for structured pruning of large language models. The push puppet network learns a hierarchical function during training that can optimally determine specific network layers to keep for a given target size. By adding a small number of gating parameters via a hierarchical penalty function, the learned smooth function can allow for a network to be resized to very specific sizes without loading the full model into memory or requiring further post-training computation. The method compares favorably with existing approaches (SparseGPT, Wanda) at high pruning sizes (less than 50% of network structure) while realizing measurable speed-ups on conventional GPUs with PyTorch. Furthermore, push puppet networks can achieve significant speedups as candidates for speculative decoding.",
+      "authors": [
+        "Robert Kubinec"
+      ],
+      "primary_category": "stat.AP",
+      "categories": [
+        "stat.AP"
+      ],
+      "published": "2026-06-26T16:37:06+00:00",
+      "link": "https://arxiv.org/pdf/2606.28251v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "structured pruning for LLM compression",
+      "llm_evidence_cn": "结构化剪枝用于LLM压缩",
+      "llm_evidence": "结构化剪枝用于LLM压缩",
+      "canonical_evidence": "结构化剪枝用于LLM压缩",
+      "llm_tldr_en": "Push Puppet Networks learns a hierarchical Bayesian gating function for structured pruning, enabling model resizing without full model loading and outperforming SparseGPT and Wanda at high sparsity.",
+      "llm_tldr_cn": "大型语言模型结构化剪枝常需要加载完整模型或大量后训练。本文提出推傀儡网络，一种贝叶斯结构化剪枝算法，在训练期间学习层次门控函数，可针对任意目标大小优化保留哪些层。通过少量门控参数和层次惩罚函数，实现无需加载完整模型即可将网络缩放到指定大小。在超过50%剪枝率下，该方法优于SparseGPT和Wanda，并在常规GPU上实现可测量加速。",
+      "llm_tldr": "大型语言模型结构化剪枝常需要加载完整模型或大量后训练。本文提出推傀儡网络，一种贝叶斯结构化剪枝算法，在训练期间学习层次门控函数，可针对任意目标大小优化保留哪些层。通过少量门控参数和层次惩罚函数，实现无需加载完整模型即可将网络缩放到指定大小。在超过50%剪枝率下，该方法优于SparseGPT和Wanda，并在常规GPU上实现可测量加速。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.25354v2",
+      "source": "arxiv",
+      "title": "Efficient and Trainable Language Model Test-Time Scaling via Local Branch Routing",
+      "abstract": "Test-time scaling improves language-model reasoning, but existing approaches often face a difficult trade-off: long chain-of-thought sampling remains single-threaded, while sentence- or solution-level search can be computationally expensive and hard to train end-to-end. We introduce Local Branch Routing (LBR), a token-level test-time scaling framework that expands a small local lookahead tree, forwards all sampled branches through the language model, and uses a lightweight router to select the depth-1 subtree to commit. By routing over the hidden states of candidate local futures, LBR allows each token decision to use evidence beyond the root next-token distribution while avoiding full solution-level search. The resulting prune-shift-grow decoding process preserves discrete branch identities and defines a tractable tree-trajectory likelihood: newly grown nodes are counted when first sampled, and router decisions are assigned explicit probabilities. This enables end-to-end reinforcement learning with verifiable rewards, jointly optimizing the base model and router under the same likelihood-ratio principle as discrete-token RLVR. On synthetic hierarchical-planning tasks, LBR shows that post-candidate hidden states provide useful routing evidence. On mathematical reasoning benchmarks, LBR improves both Pass@1 and Pass@32 over discrete chain-of-thought, vanilla discrete-token RLVR, and RL-compatible soft-token branching baselines. These results suggest that lightweight local branching offers an efficient, trainable, and discrete form of language-model test-time scaling.",
+      "authors": [
+        "Yutong Yin",
+        "Mingyu Jin",
+        "Jin Pan",
+        "Changyi Yang",
+        "Zijie Xia",
+        "Dhruv Pai",
+        "Shuming Hu",
+        "Zhen Zhang",
+        "Chenyang Zhao",
+        "Jinman Zhao",
+        "Wujiang Xu",
+        "Raymond Li",
+        "Xin Eric Wang",
+        "Julian McAuley",
+        "Zhaoran Wang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-24T03:42:44+00:00",
+      "link": "https://arxiv.org/pdf/2606.25354v2",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Token-level test-time scaling via local branch routing for inference acceleration",
+      "llm_evidence_cn": "通过局部分支路由实现令牌级测试时缩放以加速推理",
+      "llm_evidence": "通过局部分支路由实现令牌级测试时缩放以加速推理",
+      "canonical_evidence": "通过局部分支路由实现令牌级测试时缩放以加速推理",
+      "llm_tldr_en": "Local Branch Routing (LBR) enables token-level test-time scaling by expanding a local lookahead tree and routing over hidden states, improving reasoning quality without full search.",
+      "llm_tldr_cn": "现有语言模型测试时缩放面临长链式思维低效或搜索昂贵的问题。本文提出局部分支路由（LBR），在令牌级别展开小型前瞻树，通过轻量路由器选择最优子树。该方法允许每个令牌决策利用局部未来证据，避免全局搜索。实验表明LBR能提升推理质量，同时保持计算效率，是一种新型推理加速技术。",
+      "llm_tldr": "现有语言模型测试时缩放面临长链式思维低效或搜索昂贵的问题。本文提出局部分支路由（LBR），在令牌级别展开小型前瞻树，通过轻量路由器选择最优子树。该方法允许每个令牌决策利用局部未来证据，避免全局搜索。实验表明LBR能提升推理质量，同时保持计算效率，是一种新型推理加速技术。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.29215v2",
+      "source": "arxiv",
+      "title": "Multi-Block Diffusion Language Models",
+      "abstract": "Block Diffusion Language Models (BD-LMs) improve diffusion-based text generation with KV caching and flexible-length generation. A natural next step is to extend them from Single-Block Diffusion (SingleBD) to Multi-Block Diffusion (MultiBD), where a running-set of consecutive blocks is decoded concurrently for inter-block parallelism. However, existing BD-LMs are mostly trained under teacher forcing, where the model observes only one noisy block conditioned on a clean prefix. While the recent diffusion forcing strategy introduces visibility among multiple noisy blocks, its training states still differ from MultiBD inference, where decoding operates on a bounded running-set with heterogeneous slot-wise noise patterns. To bridge this gap, we propose Multi-Block Diffusion Language Models (MBD-LMs), obtained by post-training BD-LMs with Multi-block Teacher Forcing (MultiTF). MultiTF integrates teacher forcing and diffusion forcing by training on bounded noise-groups conditioned on clean prefixes, with randomized noise-schedulers that better match MultiBD inference states. To make MultiBD practically executable, we further introduce an optimized decoding algorithm based on the Block Buffer mechanism that preserves prefix-cache reuse, keeps input shapes static, and translates increased decoding parallelism into wall-clock acceleration. Empirically, MBD-LLaDA2-Mini increases average Tokens Per Forward pass (TPF) from 3.47 to 6.19 and improves average accuracy from 79.95% to 81.03%; when combined with DMax, MBD-LLaDA2-Mini-DMax reaches an average TPF of 9.34 with only a 1.02% accuracy drop on math and code benchmarks.",
+      "authors": [
+        "Yijie Jin",
+        "Jiajun Xu",
+        "Yuxuan Liu",
+        "Chenkai Xu",
+        "Yi Tu",
+        "Jiajun Li",
+        "Dandan Tu",
+        "Xiaohui Yan",
+        "Kai Yu",
+        "Pengfei Liu",
+        "Zhijie Deng"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.CL"
+      ],
+      "published": "2026-06-28T05:53:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.29215v2",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "KV caching used in diffusion language models",
+      "llm_evidence_cn": "在扩散语言模型中使用KV缓存",
+      "llm_evidence": "在扩散语言模型中使用KV缓存",
+      "canonical_evidence": "在扩散语言模型中使用KV缓存",
+      "llm_tldr_en": "Extends block diffusion language models with multi-block decoding, leveraging KV caching and inter-block parallelism for efficient generation.",
+      "llm_tldr_cn": "论文提出多块扩散语言模型（MultiBD），在块扩散框架中利用KV缓存和块间并行解码，以提升文本生成效率。该方法虽然针对扩散模型，但其KV缓存管理和并行策略对LLM推理加速具有借鉴意义。实验表明MultiBD在生成质量和速度上取得提升，为扩散语言模型效率优化提供了新思路。",
+      "llm_tldr": "论文提出多块扩散语言模型（MultiBD），在块扩散框架中利用KV缓存和块间并行解码，以提升文本生成效率。该方法虽然针对扩散模型，但其KV缓存管理和并行策略对LLM推理加速具有借鉴意义。实验表明MultiBD在生成质量和速度上取得提升，为扩散语言模型效率优化提供了新思路。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.25627v1",
+      "source": "arxiv",
+      "title": "TL++: Accuracy and Privacy Preserving Traversal Learning for Distributed Intelligent Systems",
+      "abstract": "Distributed intelligent systems increasingly need to train across data silos without centralizing raw data. Federated learning keeps data local but can suffer under heterogeneous partitions and requires repeated full-model exchange. Split learning reduces communication through cut-layer activations, but standard protocols generally do not recover centralized mini-batch gradient behavior and may expose activations and gradients in plaintext. We present TL++, a two-mode traversal-learning framework that constructs virtual batches across nodes to recover centralized mini-batch gradient behavior under explicit synchronization assumptions. Base mode exchanges cut-layer activations and gradients rather than full models. Secure mode secret-shares each cut-layer activation and gradient between an orchestrator and a non-colluding helper, preventing either server from observing plaintext cut-layer tensors. This protection is limited to a semi-honest two-server setting; labels and loss-related outputs remain visible to the orchestrator. In the lightweight secure path evaluated here, exactness requires a linear or affine server path, while nonlinear operations require nonlinear MPC or approximation. We formalize TL++, analyze communication and computation costs, and evaluate it against federated and split-learning baselines on CIFAR-10 and BioGPT/PubMedQA using full fine-tuning and LoRA. On CIFAR-10, TL++ base cut 1 and exact secure cut 3 achieve accuracies of 91.41% (SD 0.19) and 90.93% (SD 0.17), respectively, exceeding the strongest measured non-TL++ baseline by more than 12 percentage points. TL++ base cut 1 also reduces per-step communication by 13.1-fold relative to full-model synchronization. PubMedQA results similarly favor TL++. Overall, TL++ approaches centralized-training performance while reducing communication and providing activation-level secret sharing.",
+      "authors": [
+        "Erdenebileg Batbaatar",
+        "Young Yoon"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CR",
+        "cs.DC"
+      ],
+      "published": "2026-06-24T09:34:27+00:00",
+      "link": "https://arxiv.org/pdf/2606.25627v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Communication-efficient traversal learning for distributed training",
+      "llm_evidence_cn": "用于分布式训练的高效通信遍历学习",
+      "llm_evidence": "用于分布式训练的高效通信遍历学习",
+      "canonical_evidence": "用于分布式训练的高效通信遍历学习",
+      "llm_tldr_en": "TL++ reduces communication in distributed training by exchanging cut-layer activations instead of full models, while preserving accuracy and privacy.",
+      "llm_tldr_cn": "分布式训练面临数据孤岛和通信开销。现有分割学习标准协议无法恢复中心化小批量梯度且可能泄露信息。本文提出TL++两模式遍历学习框架，通过构建虚拟批次恢复梯度行为，基础模式交换激活和梯度而非完整模型。实验表明该方法在减少通信量的同时保持精度和隐私，适用于模型并行训练场景。",
+      "llm_tldr": "分布式训练面临数据孤岛和通信开销。现有分割学习标准协议无法恢复中心化小批量梯度且可能泄露信息。本文提出TL++两模式遍历学习框架，通过构建虚拟批次恢复梯度行为，基础模式交换激活和梯度而非完整模型。实验表明该方法在减少通信量的同时保持精度和隐私，适用于模型并行训练场景。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "model parallelism techniques for distributed training",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.29575v2",
+      "source": "arxiv",
+      "title": "TF-MoE: Time-Frequency Mixture-of-Experts for Efficient Speech Separation",
+      "abstract": "Recent advances in speech separation (SS) have led to compact front-end models with small parameter sizes, yet their high computational cost remains a major barrier for deployment on edge devices. To address this, we propose TF-MoE, a sparse Mixture-of-Experts (MoE) framework that enhances model capacity with almost no increase in inference cost. Our method introduces dynamic expert specialization in time and frequency dimensions through alternating time-wise and frequency-wise MoE modules, each dynamically selecting experts per frame or mel band. Built upon a mel-band-splitting Conformer backbone, TF-MoE achieves strong performance on SS tasks under low-compute settings. Experimental results demonstrate that TF-MoE consistently improves separation performance under computation cost constraints, outperforming BSRNN by +3.8 dB SDR on Libri2Mix with comparable 4.1 GMACs/s inference cost. This positions TF-MoE as a promising candidate for edge-device deployment.",
+      "authors": [
+        "Qinzhe Hu",
+        "Chenda Li",
+        "Wangyou Zhang",
+        "Shujie Liu",
+        "Yan Lu",
+        "Yanmin Qian"
+      ],
+      "primary_category": "cs.SD",
+      "categories": [
+        "cs.SD",
+        "cs.AI"
+      ],
+      "published": "2026-06-28T19:37:32+00:00",
+      "link": "https://arxiv.org/pdf/2606.29575v2",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "sparse Mixture-of-Experts, inference cost reduction, dynamic expert selection",
+      "llm_evidence_cn": "稀疏混合专家，推理成本降低，动态专家选择",
+      "llm_evidence": "稀疏混合专家，推理成本降低，动态专家选择",
+      "canonical_evidence": "稀疏混合专家，推理成本降低，动态专家选择",
+      "llm_tldr_en": "Proposes TF-MoE for efficient speech separation, introducing sparse MoE in time-frequency dimensions to boost capacity with minimal inference cost.",
+      "llm_tldr_cn": "语音分离模型在边缘设备上推理成本高。本文提出TF-MoE，在时间和频率维度使用稀疏混合专家，动态选择专家，在不增加推理开销下增强模型容量。在低计算设置下持续提升分离性能，验证了MoE通信和计算优化在非LLM场景的有效性。",
+      "llm_tldr": "语音分离模型在边缘设备上推理成本高。本文提出TF-MoE，在时间和频率维度使用稀疏混合专家，动态选择专家，在不增加推理开销下增强模型容量。在低计算设置下持续提升分离性能，验证了MoE通信和计算优化在非LLM场景的有效性。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.28217v1",
+      "source": "arxiv",
+      "title": "Towards Value-Constrained Credit Assignment in Fully Delegated AI Cooperatives",
+      "abstract": "We propose a framework for reward allocation in fully delegated AI cooperatives where humans are represented by agents that contribute data and participate in model updates under heterogeneous value constraints. The key idea is to credit only those updates that remain admissible after screening them against each principal's value profile. We formulate value-conditioned gradient filtering, online marginal contribution signals, and cumulative revenue settlement within a traversal learning (TL) substrate. TL is especially attractive here because it performs decentralized backpropagation without the quality loss associated with aggregation-centric distributed learning and, we argue, offers a finer attribution substrate than FedAvg-style federated learning by preserving explicit traversal and gradient paths. The framework is positioned against data valuation, federated contribution estimation, personalized federated learning, and pluralistic alignment.",
+      "authors": [
+        "Young Yoon",
+        "Jimin Kim",
+        "Soyeon Park"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.DC",
+        "cs.MA"
+      ],
+      "published": "2026-06-26T16:08:36+00:00",
+      "link": "https://arxiv.org/pdf/2606.28217v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "decentralized training protocol, model partitioning, traversal learning",
+      "llm_evidence_cn": "去中心化训练协议，模型划分，遍历学习",
+      "llm_evidence": "去中心化训练协议，模型划分，遍历学习",
+      "canonical_evidence": "去中心化训练协议，模型划分，遍历学习",
+      "llm_tldr_en": "Proposes a decentralized training protocol that partitions a model into independently trainable blocks, enabling model parallelism without centralized coordination.",
+      "llm_tldr_cn": "现有集中式训练依赖大型集群，限制了开放性。本文提出BlockTrain协议，将模型划分为独立可训练的块，每个工人在本地优化并组合推理，实现去中心化模型并行。在WikiText上达到与端到端模型相近的困惑度，每个工人仅训练一个块，避免了中心化聚合开销。",
+      "llm_tldr": "现有集中式训练依赖大型集群，限制了开放性。本文提出BlockTrain协议，将模型划分为独立可训练的块，每个工人在本地优化并组合推理，实现去中心化模型并行。在WikiText上达到与端到端模型相近的困惑度，每个工人仅训练一个块，避免了中心化聚合开销。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "model parallelism techniques for distributed training",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.31903v1",
+      "source": "arxiv",
+      "title": "Attend, Transform, or Silence: Operator-Level Visual Skipping for Efficient Multimodal LLM Inference",
+      "abstract": "Multimodal large language models (MLLMs) increasingly process long visual-token sequences, increasing the overall inference computation. Existing acceleration methods usually remove visual tokens or skip visual-token updates in entire layers, but these coarse strategies may discard fine-grained evidence or suppress useful operators together with redundant ones. In this paper, we study visual-token computation from an answer-observable perspective and find that late visual-token updates can remain large while having little effect on answer-token representations. Motivated by this answer-silent redundancy, we decompose each Transformer layer into attention and FFN operators and show that useful visual computation is often operator-dominant and layer-dependent. We propose an operator-level visual-token skipping framework that preserves the full visual-token sequence while selectively bypassing redundant attention, FFN, or both. Experiments across three MLLM architectures and 10 VQA benchmarks show that our method achieves strong efficiency-accuracy trade-offs, reducing \\textbf{33.7\\%} TFLOPs on Qwen3-VL while retaining \\textbf{99.5\\%} of the vanilla model performance.",
+      "authors": [
+        "Zhaoyang Luo",
+        "Runmin Dong",
+        "Miao Yang",
+        "Fan Wei",
+        "Yushan Lai",
+        "Bin Luo",
+        "Haohuan Fu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-06-30T16:08:29+00:00",
+      "link": "https://arxiv.org/pdf/2606.31903v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Operator-level skipping for multimodal LLM inference acceleration",
+      "llm_evidence_cn": "多模态LLM推理加速中的算子级跳过",
+      "llm_evidence": "多模态LLM推理加速中的算子级跳过",
+      "canonical_evidence": "多模态LLM推理加速中的算子级跳过",
+      "llm_tldr_en": "Proposes operator-level visual token skipping in multimodal LLMs by identifying answer-silent redundancy, achieving efficient inference with minimal accuracy loss.",
+      "llm_tldr_cn": "论文针对多模态大语言模型推理计算量大的问题，从答案可观测性角度发现视觉token更新中存在大量冗余，并提出按注意力（Attention）和前馈网络（FFN）算子粒度进行选择性跳过的方法。实验表明，该方法在多种多模态任务上能显著降低计算开销而几乎不损失性能，为多模态推理加速提供了细粒度方案。",
+      "llm_tldr": "论文针对多模态大语言模型推理计算量大的问题，从答案可观测性角度发现视觉token更新中存在大量冗余，并提出按注意力（Attention）和前馈网络（FFN）算子粒度进行选择性跳过的方法。实验表明，该方法在多种多模态任务上能显著降低计算开销而几乎不损失性能，为多模态推理加速提供了细粒度方案。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
