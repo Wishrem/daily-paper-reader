@@ -6,56 +6,34 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-01
-- 运行时间：2026-07-01 22:04:45 UTC
+- 最新运行日期：2026-07-02
+- 运行时间：2026-07-02 21:47:15 UTC
 - 运行状态：成功
-- 本次总论文数：12
-- 精读区：5
-- 速读区：7
+- 本次总论文数：4
+- 精读区：2
+- 速读区：2
 
 ### 今日简报（AI）
-今日精读5篇论文，重点关注多模态推理和长上下文LLM的KV缓存优化。最值得关注的是Omni-Flow的统一工作流编排与分布式KV缓存共享框架，以及SeKV的分辨率自适应KV缓存与层级语义记忆。建议深入研究KV缓存共享和语义记忆方向，对提升多模态和长上下文推理效率有重大价值。
-- 详情：[/202607/01/README](/202607/01/README)
+1. 今日精读两篇高分论文，聚焦长上下文LLM服务调度优化与AI工作流近似查询处理。
+2. 重点推荐《PersistentKV》的页面感知解码策略，可有效提升长上下文服务效率；其次是《Query-Centric Optimization》的代理模型加速思路。
+3. 建议优先深入理解PersistentKV的页面级内存管理，这对实际部署长上下文LLM具有直接参考价值。
+- 详情：[/202607/02/README](/202607/02/README)
 
 ### 精读区论文标签
-1. [Omni-Flow: A Unified Workflow Orchestration and Distributed KV Cache Sharing Framework for Multimodal Inference](/202607/01/2606.31093v1-omni-flow-a-unified-workflow-orchestration-and-distributed-kv-cache-sharing-framework-for-multimodal-inference)  
-   标签：评分：9.0/10、query:ai-infra
-   evidence：面向异构多模态推理的统一编排与分布式KV缓存共享
-2. [SeKV: Resolution-Adaptive KV Cache with Hierarchical Semantic Memory for Long-Context LLM Inference](/202607/01/2606.31145v1-sekv-resolution-adaptive-kv-cache-with-hierarchical-semantic-memory-for-long-context-llm-inference)  
-   标签：评分：9.0/10、query:ai-infra
-   evidence：长上下文LLM推理中KV缓存压缩
-3. [RaBitQCache: Rotated Binary Quantization for KVCache in Long Context LLM Inference](/202607/01/2606.31519v1-rabitqcache-rotated-binary-quantization-for-kvcache-in-long-context-llm-inference)  
-   标签：评分：9.0/10、query:ai-infra
-   evidence：长上下文LLM推理的KV缓存量化
-4. [Speculative Pre-Positioning: Decoding Stateful Sessions to the Next Decision Point Off the Critical Path](/202607/01/2606.29565v1-speculative-pre-positioning-decoding-stateful-sessions-to-the-next-decision-point-off-the-critical-path)  
+1. [PersistentKV: Page-Aware Decode Scheduling for Long-Context LLM Serving on Commodity GPUs](/202607/02/2606.26666v2-persistentkv-page-aware-decode-scheduling-for-long-context-llm-serving-on-commodity-gpus)  
+   标签：评分：10.0/10、query:ai-infra
+   evidence：面向长上下文大语言模型服务的页面感知解码调度与KV缓存优化
+2. [Query-Centric Optimization of AI Workflows via Approximate Query Processing and Proxy Models](/202607/02/2607.00254v1-query-centric-optimization-of-ai-workflows-via-approximate-query-processing-and-proxy-models)  
    标签：评分：8.0/10、query:ai-infra
-   evidence：推测性预定位通过提前解码降低推理延迟
-5. [AC$^2$P$^2$SL: Adaptive Communication-Computation Pipeline Parallel Split Learning over Edge Networks](/202607/01/2606.31276v1-ac2p2sl-adaptive-communication-computation-pipeline-parallel-split-learning-over-edge-networks)  
-   标签：评分：8.0/10、query:ai-infra
-   evidence：自适应通信-计算流水线并行用于拆分学习
+   evidence：使用近似查询处理和代理模型减少昂贵模型调用
 
 ### 速读区论文标签
-1. [Push Puppet Networks: Structured Bayesian Pruning Algorithm for Language Model Compression](/202607/01/2606.28251v1-push-puppet-networks-structured-bayesian-pruning-algorithm-for-language-model-compression)  
-   标签：评分：7.0/10、query:ai-infra
-   evidence：结构化剪枝用于LLM压缩
-2. [Multi-Block Diffusion Language Models](/202607/01/2606.29215v2-multi-block-diffusion-language-models)  
-   标签：评分：7.0/10、query:ai-infra
-   evidence：在扩散语言模型中使用KV缓存
-3. [TF-MoE: Time-Frequency Mixture-of-Experts for Efficient Speech Separation](/202607/01/2606.29575v2-tf-moe-time-frequency-mixture-of-experts-for-efficient-speech-separation)  
-   标签：评分：7.0/10、query:ai-infra
-   evidence：稀疏混合专家，推理成本降低，动态专家选择
-4. [Attend, Transform, or Silence: Operator-Level Visual Skipping for Efficient Multimodal LLM Inference](/202607/01/2606.31903v1-attend-transform-or-silence-operator-level-visual-skipping-for-efficient-multimodal-llm-inference)  
-   标签：评分：7.0/10、query:ai-infra
-   evidence：多模态LLM推理加速中的算子级跳过
-5. [Efficient and Trainable Language Model Test-Time Scaling via Local Branch Routing](/202607/01/2606.25354v2-efficient-and-trainable-language-model-test-time-scaling-via-local-branch-routing)  
+1. [Learning to Select, Not Relearn: Hard-Routed Mixtures of Reasoning LoRAs](/202607/02/2606.31413v1-learning-to-select-not-relearn-hard-routed-mixtures-of-reasoning-loras)  
    标签：评分：6.0/10、query:ai-infra
-   evidence：通过局部分支路由实现令牌级测试时缩放以加速推理
-6. [TL++: Accuracy and Privacy Preserving Traversal Learning for Distributed Intelligent Systems](/202607/01/2606.25627v1-tl-accuracy-and-privacy-preserving-traversal-learning-for-distributed-intelligent-systems)  
+   evidence：硬路由混合专家风格组合推理LoRA
+2. [CAT: Confidence-Adaptive Thinking for Efficient Reasoning of Large Reasoning Models](/202607/02/2607.00862v1-cat-confidence-adaptive-thinking-for-efficient-reasoning-of-large-reasoning-models)  
    标签：评分：6.0/10、query:ai-infra
-   evidence：用于分布式训练的高效通信遍历学习
-7. [Towards Value-Constrained Credit Assignment in Fully Delegated AI Cooperatives](/202607/01/2606.28217v1-towards-value-constrained-credit-assignment-in-fully-delegated-ai-cooperatives)  
-   标签：评分：6.0/10、query:ai-infra
-   evidence：去中心化训练协议，模型划分，遍历学习
+   evidence：通过置信度自适应调控推理长度以减少大推理模型的令牌开销
 
 
 <div class="dpr-home-promo-card">
