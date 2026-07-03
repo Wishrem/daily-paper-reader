@@ -1,0 +1,424 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-03T21:29:20.097368+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 4,
+    "deep_cap": 6,
+    "deep_selected": 4,
+    "quick_candidates": 6,
+    "quick_skim_target": 11,
+    "quick_selected": 6
+  },
+  "deep_dive": [
+    {
+      "id": "2607.01299v1",
+      "source": "arxiv",
+      "title": "HYPIC: Accelerating Hybrid-Attention LLM Serving with Position-Independent Caching",
+      "abstract": "In retrieval augmented generation (RAG) and agentic LLM serving, prompts are assembled from independent segments into long contexts, making the prefill stage dominate the per-request computation cost. To this cost, two directions have emerged in parallel: position-independent caching (PIC) admits KV reuse for non-contiguous segments shared across different requests, while hybrid-attention models reduce computation complexity by replacing most full-attention layers with linear attention. However, they cannot coexist: applying PIC to hybrid-attention models breaks down because per-token KV-cache reuse primitives do not transfer to the per-request recurrent state.   In this work, we present Hypic, the first serving system for hybrid-attention LLMs with position-independent caching. For linear-attention layers, we identify the segment-cumulative transition operator as the missing algebraic primitive, and cache it alongside each segment's zero-start end-state, enabling near-exact and constant-time state composition of independently cached segments. For the remaining full-attention layers, existing PIC methods also fail as linear layers do not expose the per-token hidden states for selective recomputation. We show that the most significant attention deviation concentrates at segment boundaries, so recomputing only a small seam window at each boundary suffices to restore cross-segment lookback. Finally, Hypic exploits segment-level self-containment to parallelize cache-miss prefill across instances, turning long cold requests -- a major tail-latency contributor under both prefix caching and prior PIC -- into an accelerable workload. Evaluated across four hybrid-attention models and five workloads, Hypic reduces time-to-first-token (TTFT) by 2.45x on average and improves peak throughput by up to 2.0x over existing systems, while staying within 3.3 points of full-recompute accuracy.",
+      "authors": [
+        "Yifei Liu",
+        "Juntong Wu",
+        "Yang Liu",
+        "Junhao Hu",
+        "Minghao Li",
+        "Xiaoxu Chen",
+        "Weihang Chen"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-07-01T14:03:56+00:00",
+      "link": "https://arxiv.org/pdf/2607.01299v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "position-independent caching for hybrid-attention LLM, directly accelerates KV cache reuse",
+      "llm_evidence_cn": "混合注意力LLM的位置无关缓存，直接加速KV缓存重用",
+      "llm_evidence": "混合注意力LLM的位置无关缓存，直接加速KV缓存重用",
+      "canonical_evidence": "混合注意力LLM的位置无关缓存，直接加速KV缓存重用",
+      "llm_tldr_en": "Hypic is the first serving system for hybrid-attention LLMs that enables KV cache reuse with position-independent caching, reducing prefill latency.",
+      "llm_tldr_cn": "在RAG和Agent场景中，长上下文预填充阶段计算开销大。混合注意力模型通过线性注意力降低复杂度，但无法与位置无关缓存共存。本文提出Hypic，首个混合注意力LLM服务系统，通过位置无关缓存实现KV缓存重用，克服了每令牌缓存原语与每请求循环状态的不兼容。实验表明大幅减少预填充延迟，提升推理吞吐。",
+      "llm_tldr": "在RAG和Agent场景中，长上下文预填充阶段计算开销大。混合注意力模型通过线性注意力降低复杂度，但无法与位置无关缓存共存。本文提出Hypic，首个混合注意力LLM服务系统，通过位置无关缓存实现KV缓存重用，克服了每令牌缓存原语与每请求循环状态的不兼容。实验表明大幅减少预填充延迟，提升推理吞吐。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.01831v1",
+      "source": "arxiv",
+      "title": "Lynx: Progressive Speculative Quantization for accelerating KV Transfer in Long-Context Inference",
+      "abstract": "Long-context inference is increasingly common in large language model (LLM) serving, driven by retrieval-augmented generation and agentic systems. In disaggregated inference, these workloads require transferring large Key-Value (KV) caches across the network, where decoding cannot begin until the transfer completes. Recent KV quantization techniques reduce data volume and alleviate this bottleneck, but existing schemes fail to achieve both low network-exposed latency and high inference accuracy.   We challenge the assumption that the KV cache is an indivisible unit that must be fully received before use. We leverage the observation that different bits in the KV cache contribute unequally to attention computation and inference precision: the most significant bits capture the coarse structure of attention and the least significant bits refine precision. This property enables partial use of the KV cache during decoding. We present Lynx, a system that enables progressive, split-stream KV transfer by partitioning the KV cache into a high-priority Anchor stream carrying the most significant bits and a low-priority Residual stream carrying remaining precision. Decoding begins upon receipt of the Anchor stream and proceeds speculatively while the Residual stream is transferred concurrently, followed by verification that ensures equivalence to higher-precision decoding.   Across multiple models and serving workloads, Lynx achieves Time-to-First-Token (TTFT) comparable to aggressive 4-bit KV quantization, while matching the accuracy of high-precision (BF16) inference, improving TTFT over standard 8-bit KV quantization by up to $1.43\\times$ and improving accuracy over state-of-the-art by up to $5.1\\%$.",
+      "authors": [
+        "Wenchen Han",
+        "Gingfung Matthew Yeung",
+        "Marco Barletta",
+        "William Toner",
+        "Amory Hoste",
+        "Adam Barker"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.LG"
+      ],
+      "published": "2026-07-02T07:52:43+00:00",
+      "link": "https://arxiv.org/pdf/2607.01831v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Progressive speculative quantization for KV transfer acceleration",
+      "llm_evidence_cn": "渐进推测量化加速KV传输",
+      "llm_evidence": "渐进推测量化加速KV传输",
+      "canonical_evidence": "渐进推测量化加速KV传输",
+      "llm_tldr_en": "Lynx proposes progressive speculative quantization for KV cache transfer in disaggregated long-context inference, reducing network-exposed latency by enabling partial KV use before full transfer.",
+      "llm_tldr_cn": "长上下文大模型推断中，分离式架构需通过网络传输KV缓存，现有量化方案无法兼顾低延迟和高精度。本文挑战KV缓存必须完整接收后使用的假设，提出渐进推测量化方法，利用KV缓存不同比特对注意力贡献的不均衡性，在传输过程中逐步使用已接收部分，从而显著降低网络暴露延迟，同时保持高推断精度。",
+      "llm_tldr": "长上下文大模型推断中，分离式架构需通过网络传输KV缓存，现有量化方案无法兼顾低延迟和高精度。本文挑战KV缓存必须完整接收后使用的假设，提出渐进推测量化方法，利用KV缓存不同比特对注意力贡献的不均衡性，在传输过程中逐步使用已接收部分，从而显著降低网络暴露延迟，同时保持高推断精度。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.01844v1",
+      "source": "arxiv",
+      "title": "Mixture-of-Parallelisms: Towards Memory-Efficient Training Stack for Mixture-of-Experts Models",
+      "abstract": "This paper showcases a memory-efficient training stack for Mixture-of-Experts (MoE) models. It is a training paradigm that combines and specializes various existing and novel parallelism techniques at different layers and stages of the Mixture-of-Experts (MoE) model training pipeline. It leverages these techniques to achieve maximal efficiency given the physical constraints of CPU, CPU memory, GPU HBM memory, and the CPU-GPU, GPU-GPU, and node-node communication bandwidth of the GPU cluster. It also contains a novel strategy for the optimizer step to achieve high throughput and memory efficiency, enabling practitioners to conduct lossless pre-training/fine-tuning of trillion-parameter scale models, at a million context length, with just under 12 8x H200 GPU nodes, with state-of-the-art throughput and memory efficiency. In our experiments, MoP delivers 4.7x--8.2x higher per-GPU throughput than a strongly-tuned FSDP2 baseline (with the gap widening at larger scale) and sustains training at context lengths up to 1M tokens, where the baseline runs out of memory beyond 64--128K.",
+      "authors": [
+        "Xuan-Phi Nguyen",
+        "Shrey Pandit",
+        "Yiran Zhao",
+        "Semih Yavuz",
+        "Silvio Savarese",
+        "Shafiq Joty"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.AI"
+      ],
+      "published": "2026-07-02T08:06:57+00:00",
+      "link": "https://arxiv.org/pdf/2607.01844v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Memory-efficient training stack for MoE with parallelisms and communication optimization",
+      "llm_evidence_cn": "面向MoE模型的内存高效训练栈，结合并行和通信优化",
+      "llm_evidence": "面向MoE模型的内存高效训练栈，结合并行和通信优化",
+      "canonical_evidence": "面向MoE模型的内存高效训练栈，结合并行和通信优化",
+      "llm_tldr_en": "Mixture-of-Parallelisms proposes a memory-efficient training stack combining parallelism techniques for MoE models, optimizing communication and memory.",
+      "llm_tldr_cn": "本文提出混合并行训练范式，为MoE模型组合多种并行技术，包括通信优化和内存管理，支持万亿参数规模训练，直接契合AI基础设施加速需求。",
+      "llm_tldr": "本文提出混合并行训练范式，为MoE模型组合多种并行技术，包括通信优化和内存管理，支持万亿参数规模训练，直接契合AI基础设施加速需求。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.02010v1",
+      "source": "arxiv",
+      "title": "InduceKV: Fixed-Footprint Continual Adaptation of Multimodal LLMs via Inducing KV Memories",
+      "abstract": "Multimodal large language models must adapt to evolving tasks and domains, yet continual improvement under bounded deployment footprint remains difficult because repeated parameter updates or growing replay stores can accumulate adaptation state over time. We study fixed-footprint continual adaptation: the deployed adaptation state is kept under a fixed memory budget, while the backbone model is left unchanged and task-specific updates are externalized. We propose InduceKV, a retrieval-based method that stores each selected training prefix as an attention-ready memory entry, consisting of a frozen retrieval key and compact layerwise key--value (KV) payloads that can be appended to the model's self-attention cache. Under a strict memory budget, InduceKV constructs a compact inducing set through bilevel selection: a lightweight calibration is fit for retrieval, while the selected memory balances current-task likelihood, anchor-based retention, and coverage in the frozen retrieval space. Across task-incremental instruction tuning, continual VQA, domain-incremental adaptation, and lifelong multimodal instruction tuning, InduceKV consistently improves over PEFT, MoE, replay, and prompt-retrieval baselines under matched memory budgets. We further report backbone-matched, stage-1 CoIN, compute-matched, and scalability diagnostics, showing that the gains are not due to a stronger backbone, replay alone, or an unbounded candidate pool.",
+      "authors": [
+        "Qianyu Chen",
+        "Ziteng Feng",
+        "Canran Xiao",
+        "Runxuan Tang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-02T10:45:28+00:00",
+      "link": "https://arxiv.org/pdf/2607.02010v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "KV memory induction for continual adaptation of multimodal LLMs under fixed footprint",
+      "llm_evidence_cn": "通过诱导KV记忆实现固定占用下的多模态LLM持续适应",
+      "llm_evidence": "通过诱导KV记忆实现固定占用下的多模态LLM持续适应",
+      "canonical_evidence": "通过诱导KV记忆实现固定占用下的多模态LLM持续适应",
+      "llm_tldr_en": "Proposes InduceKV, a retrieval-based method that stores training prefixes as attention-ready KV payloads for fixed-footprint continual adaptation of multimodal LLMs, enabling efficient KV cache management.",
+      "llm_tldr_cn": "多模态大语言模型需要在有限部署占用下持续适应新任务，但参数更新或重放存储会累积状态。InduceKV提出一种检索式方法，将训练前缀存储为包含冻结检索键和紧凑分层KV载荷的记忆条目，可直接追加到自注意力缓存。在严格内存预算下，该方法实现了高效的持续适应，避免了缓存无限增长，是KV缓存管理的一种创新方案。",
+      "llm_tldr": "多模态大语言模型需要在有限部署占用下持续适应新任务，但参数更新或重放存储会累积状态。InduceKV提出一种检索式方法，将训练前缀存储为包含冻结检索键和紧凑分层KV载荷的记忆条目，可直接追加到自注意力缓存。在严格内存预算下，该方法实现了高效的持续适应，避免了缓存无限增长，是KV缓存管理的一种创新方案。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.01308v1",
+      "source": "arxiv",
+      "title": "Cache Merging as a Convergent Replicated State for Multi-Agent Latent Reasoning",
+      "abstract": "Multi-agent latent reasoning composes agents' KV-caches into one context for a final agent. Prior work (Agent Primitives) does this by concatenating caches along the sequence axis with RoPE re-encoding, which we call BagMerge. BagMerge is non-commutative, and the best input ordering is unpredictable, shifting with the regime, the latent-step budget, and the model scale. We make this exchange a convergent replicated state. First, CanonicalMerge fixes the layout by content: ordering caches by mean K-norm at a middle layer renders the merged cache byte-identical under any input permutation, verified algorithmically (arity N<=5) and bit-for-bit on real Qwen3-1.7B and 4B state. Second, we separate the replicated state from decode-time layout: the state is a set of content-addressed latent fragments whose merge is set union, a state-based CvRDT (commutative, associative, idempotent, absorbing), and CanonicalMerge is its deterministic render. Because the render is byte-equivalent, every N=2 accuracy number carries over unchanged and re-delivered duplicates are absorbed rather than re-concatenated. On a partitioned-reasoning benchmark, CanonicalMerge matches the best BagMerge ordering in every regime-by-budget-by-ordering cell without knowing which order is best, trading a small, statistically insignificant accuracy margin for an unconditional structural guarantee. The behaviour transfers to real multi-document QA (HotpotQA), while the closest training-free output-fusion baseline (PackLLM) loses by 45 points at matched budget, placing cache-level merging in a regime distinct from output-level fusion. Finally, at k>2 the approach transports and colocates latent traces but does not by itself compose them, which we characterize to motivate future work.",
+      "authors": [
+        "Carlos Baquero",
+        "Luís Brito"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-07-01T17:05:04+00:00",
+      "link": "https://arxiv.org/pdf/2607.01308v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Cache merging for multi-agent reasoning with KV caches",
+      "llm_evidence_cn": "用于多agent推理的KV缓存合并机制",
+      "llm_evidence": "用于多agent推理的KV缓存合并机制",
+      "canonical_evidence": "用于多agent推理的KV缓存合并机制",
+      "llm_tldr_en": "Introduces CanonicalMerge to make multi-agent KV cache merging convergent and order-independent, enabling efficient latent reasoning with reduced cache overhead.",
+      "llm_tldr_cn": "多agent潜在推理中，现有KV缓存合并方法（BagMerge）非交换且顺序敏感。本文提出CanonicalMerge，通过按内容排序缓存（基于中层K-norm）实现字节级一致的合并结果，并分离复制状态与解码布局。实验在Qwen3-1.7B和4B上验证了合并的可复现性，显著降低了多agent推理的缓存管理复杂性。该工作为大规模agent协作提供了高效的缓存基础设施。",
+      "llm_tldr": "多agent潜在推理中，现有KV缓存合并方法（BagMerge）非交换且顺序敏感。本文提出CanonicalMerge，通过按内容排序缓存（基于中层K-norm）实现字节级一致的合并结果，并分离复制状态与解码布局。实验在Qwen3-1.7B和4B上验证了合并的可复现性，显著降低了多agent推理的缓存管理复杂性。该工作为大规模agent协作提供了高效的缓存基础设施。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.29575v1",
+      "source": "arxiv",
+      "title": "TF-MoE: Time-Frequency Mixture-of-Experts for Efficient Speech Separation",
+      "abstract": "Recent advances in speech separation (SS) have led to compact front-end models with small parameter sizes, yet their high computational cost remains a major barrier for deployment on edge devices. To address this, we propose TF-MoE, a sparse Mixture-of-Experts (MoE) framework that enhances model capacity with almost no increase in inference cost. Our method introduces dynamic expert specialization in time and frequency dimensions through alternating time-wise and frequency-wise MoE modules, each dynamically selecting experts per frame or mel band. Built upon a mel-band-splitting Conformer backbone, TF-MoE achieves strong performance on SS tasks under low-compute settings. Experimental results demonstrate that TF-MoE consistently improves separation performance under computation cost constraints, outperforming BSRNN by +3.8 dB SDR on Libri2Mix with comparable 4.1 GMACs/s inference cost. This positions TF-MoE as a promising candidate for edge-device deployment.",
+      "authors": [
+        "Qinzhe Hu",
+        "Chenda Li",
+        "Wangyou Zhang",
+        "Shujie Liu",
+        "Yan Lu",
+        "Yanmin Qian"
+      ],
+      "primary_category": "cs.SD",
+      "categories": [
+        "cs.SD",
+        "cs.AI"
+      ],
+      "published": "2026-06-28T19:37:32+00:00",
+      "link": "https://arxiv.org/pdf/2606.29575v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Mixture-of-Experts for efficient inference",
+      "llm_evidence_cn": "混合专家模型在语音分离中的高效推理",
+      "llm_evidence": "混合专家模型在语音分离中的高效推理",
+      "canonical_evidence": "混合专家模型在语音分离中的高效推理",
+      "llm_tldr_en": "Proposes TF-MoE for speech separation, using sparse MoE to increase capacity without increasing inference cost.",
+      "llm_tldr_cn": "该论文提出TF-MoE框架，通过时间频率维度的稀疏混合专家模块，在不增加推理成本的情况下提升语音分离模型的容量。动态专家选择机制在低计算设定下实现了性能提升。",
+      "llm_tldr": "该论文提出TF-MoE框架，通过时间频率维度的稀疏混合专家模块，在不增加推理成本的情况下提升语音分离模型的容量。动态专家选择机制在低计算设定下实现了性能提升。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.01701v1",
+      "source": "arxiv",
+      "title": "Arachne: Orchestrating Cascades for Efficient Text-to-Video Model Training",
+      "abstract": "The rising demand for AI-generated videos is fueled by advances in large-scale Text-to-Video (T2V) models, trained on extensive datasets of video clips spanning diverse resolutions and durations. To address this data heterogeneity, current training methods often use a bucketing strategy that groups samples into discrete buckets for efficiency. However, this approach struggles to scale with compute and data volumes under static parallelism schemes, such as data and sequence parallelism, leading to significant workload imbalances and hardware under-utilization.   In this paper, we present Arachne, a novel training framework for efficient T2V model training at scale. Arachne decomposes the training process into fine-grained computational units, called \\textit{cascades}, orchestrating their distributed execution and synchronization across the cluster through coordinated spatial and temporal optimization. Our comprehensive evaluation demonstrates that Arachne reduces iteration time by up to 65\\% over leading frameworks, exhibiting a positive scaling trend where its performance advantages amplify as training scale grows.",
+      "authors": [
+        "Peng Yu",
+        "Yuankai Fan",
+        "Yang Qiu",
+        "Tian Li",
+        "Bihuan Chen",
+        "Yin Chen",
+        "Qizhen Weng"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-07-02T04:50:33+00:00",
+      "link": "https://arxiv.org/pdf/2607.01701v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "model parallelism for training",
+      "llm_evidence_cn": "文本到视频模型训练中的并行优化",
+      "llm_evidence": "文本到视频模型训练中的并行优化",
+      "canonical_evidence": "文本到视频模型训练中的并行优化",
+      "llm_tldr_en": "Arachne decomposes text-to-video training into fine-grained units with adaptive parallelism to eliminate workload imbalance.",
+      "llm_tldr_cn": "该论文提出Arachne框架，将文本到视频模型训练分解为细粒度计算单元，并采用自适应并行策略，解决静态并行方案中的负载不均和硬件利用率低问题，提升训练效率。",
+      "llm_tldr": "该论文提出Arachne框架，将文本到视频模型训练分解为细粒度计算单元，并采用自适应并行策略，解决静态并行方案中的负载不均和硬件利用率低问题，提升训练效率。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "model parallelism techniques for distributed training",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.01590v1",
+      "source": "arxiv",
+      "title": "Hawk: Harnessing Hardware-Aware Knowledge for High-Performance NPU Kernel Generation",
+      "abstract": "Developing high-performance kernels for Neural Processing Units (NPUs) is a critical industry bottleneck, requiring developers to manually navigate implicit hardware constraints and strict memory hierarchies. While large language models offer immense automation potential, they fail catastrophically on NPUs due to a fundamental lack of hardware-specific priors. Naively transplanting code snippets from similar NPU kernels may pass the compiler, but it consistently triggers runtime crashes and performance degradation by blindly violating underlying hardware constraints. To overcome this, we introduce Hawk, a training-free framework that harnesses hardware-aware knowledge through three core modules: (1) Run-Time Knowledge Synthesis Module, which employs a Triple-Part Executable Knowledge Representation to inherently couple the error context with executable semantics; (2) Bottleneck-Aware Knowledge Retrieval Module, which implements a 2D-Retrieval paradigm to project queries into orthogonal syntactic and hardware-aligned semantic spaces; and (3) Effect-Driven Knowledge Distillation Module, which leverages LLM-driven semantic arbitration to continuously distill the knowledge by pruning errors and consolidating redundancies based on the empirical execution feedback. Extensive evaluations on real-world NPU workloads demonstrate that Hawk elevates generation accuracy from 49.4% to 80.0%, while achieving up to a 2.2x execution speedup over state-of-the-art baselines.",
+      "authors": [
+        "Junyi Wen",
+        "Ruiyan Zhuang",
+        "Yongjia Xu",
+        "Pengtu Li",
+        "Rui Zou",
+        "Hongyi Chen",
+        "Chingman Wan",
+        "Puxu Yang",
+        "Wuhui Chen",
+        "Yanlin Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.SE"
+      ],
+      "published": "2026-07-02T01:41:34+00:00",
+      "link": "https://arxiv.org/pdf/2607.01590v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "hardware-aware kernel generation for NPUs, accelerates AI infrastructure",
+      "llm_evidence_cn": "面向NPU的硬件感知内核生成，加速AI基础设施",
+      "llm_evidence": "面向NPU的硬件感知内核生成，加速AI基础设施",
+      "canonical_evidence": "面向NPU的硬件感知内核生成，加速AI基础设施",
+      "llm_tldr_en": "Hawk is a training-free framework that generates high-performance NPU kernels by synthesizing hardware-aware knowledge, avoiding runtime crashes.",
+      "llm_tldr_cn": "为神经网络处理器（NPU）开发高性能内核是行业瓶颈，手动编写易违反硬件约束。本文提出Hawk，无训练框架，通过运行时知识综合、硬件约束求解和代码重写三个模块自动生成硬件感知内核。实验表明生成的NPU内核相比手工实现性能提升显著，且避免了运行时故障，为AI加速器内核开发提供了高效自动化方案。",
+      "llm_tldr": "为神经网络处理器（NPU）开发高性能内核是行业瓶颈，手动编写易违反硬件约束。本文提出Hawk，无训练框架，通过运行时知识综合、硬件约束求解和代码重写三个模块自动生成硬件感知内核。实验表明生成的NPU内核相比手工实现性能提升显著，且避免了运行时故障，为AI加速器内核开发提供了高效自动化方案。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.01710v1",
+      "source": "arxiv",
+      "title": "Generic Expert Coverage for Pruning SparseMixture-of-Experts Language Models",
+      "abstract": "Sparsely activated Mixture-of-Experts (MoE) language models contain substantial structured redundancy among routed experts, but pruning them without downstream calibration data remains challenging. Existing expert-pruning methods typically rely on a single aggregated importance score, which can bias the retained set toward experts favored by dominant calibration patterns. We propose \\textbf{Generic TB-Coverage}, a coverage-aware expert pruning method that uses only generic text corpora (WikiText2 and C4) for calibration. Instead of collapsing expert utility into one score, our method profiles per-expert utility separately on each corpus and enforces a fixed-budget coverage rule that preserves high-utility experts from each corpus before constructing the final pruning mask. Across Qwen1.5-MoE-A2.7B and DeepSeek-MoE-16B-Base at 25\\%, 50\\%, and 75\\% retention budgets, our method improves average accuracy on six common zero-shot benchmarks over random pruning, REAP, and ExpertSparsity, while also reducing perplexity degradation on WikiText2 and C4. The gains are largest under aggressive pruning (25\\% and 50\\% retain), suggesting that preserving cross-corpus expert coverage is an effective generic-data prior for MoE pruning. Our improvements hold with fixed pruning budgets and no downstream calibration data.",
+      "authors": [
+        "Yongqin Zeng",
+        "Sicheng Pan",
+        "Jiale Wang",
+        "Hai-tao Zheng",
+        "Hong-Gee Kim",
+        "Chunxia Ma",
+        "XiuTeng Zhou"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-02T05:02:18+00:00",
+      "link": "https://arxiv.org/pdf/2607.01710v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "MoE expert pruning with coverage-aware method using generic corpora",
+      "llm_evidence_cn": "使用通用语料库的覆盖感知MoE专家剪枝",
+      "llm_evidence": "使用通用语料库的覆盖感知MoE专家剪枝",
+      "canonical_evidence": "使用通用语料库的覆盖感知MoE专家剪枝",
+      "llm_tldr_en": "Proposes Generic TB-Coverage, a coverage-aware expert pruning method for MoE that uses per-expert utility profiles from generic corpora to avoid calibration bias.",
+      "llm_tldr_cn": "针对稀疏MoE语言模型专家冗余且剪枝时依赖特定校准数据导致偏差的问题，本文提出通用TB-Coverage方法。该方法在WikiText2和C4通用语料上分别评估每个专家的效用，并通过固定预算覆盖规则保留高效用专家。无需下游校准数据即可有效剪枝，降低了MoE模型部署的维护成本。",
+      "llm_tldr": "针对稀疏MoE语言模型专家冗余且剪枝时依赖特定校准数据导致偏差的问题，本文提出通用TB-Coverage方法。该方法在WikiText2和C4通用语料上分别评估每个专家的效用，并通过固定预算覆盖规则保留高效用专家。无需下游校准数据即可有效剪枝，降低了MoE模型部署的维护成本。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.02501v1",
+      "source": "arxiv",
+      "title": "Embodied.cpp: A Portable Inference Runtime of Embodied AI Models on Heterogeneous Robots",
+      "abstract": "Embodied AI models now span vision-language-action (VLA) models and world-action models (WAMs), but practical deployment remains fragmented across model-specific Python stacks, backend assumptions, and robot-side glue code, especially on heterogeneous edge devices. Existing inference runtimes are designed mainly for request-response serving and therefore do not satisfy the runtime contract of embodied deployment: multi-rate execution inside closed-loop control, latency-first batch-1 inference on heterogeneous hardware, and extensible embodied interfaces beyond fixed token I/O. We present Embodied.cpp, a portable C++ inference runtime for embodied models. Based on an architectural analysis of representative VLA models and WAMs, Embodied.cpp captures a shared execution path and organizes it into five layers: input adapters, sequence builders, backbone execution, head plugins, and deployment adapters. The runtime provides modular multi-rate execution, latency-first fused inference, and extensible operator and I/O support, enabling deployment across heterogeneous devices, robots, and simulators through one backend abstraction. We evaluate Embodied.cpp on two VLA models, HY-VLA and pi0.5, and on a preliminary WAM benchmark using a LingBot-VA Transformer block. The VLA deployments achieve successful closed-loop execution with 100.0% and 91.0% task success rates, respectively. The WAM benchmark reduces block memory from 312.2 MiB to 88.1 MiB. These results show that Embodied.cpp improves deployment efficiency while preserving high accuracy across diverse embodied model architectures.",
+      "authors": [
+        "Ling Xu",
+        "Chuyu Han",
+        "Borui Li",
+        "Hao Wu",
+        "Shiqi Jiang",
+        "Ting Cao",
+        "Chuanyou Li",
+        "Sheng Zhong",
+        "Shuai Wang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.CV",
+        "cs.OS"
+      ],
+      "published": "2026-07-02T17:58:28+00:00",
+      "link": "https://arxiv.org/pdf/2607.02501v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "portable inference runtime for heterogeneous robots",
+      "llm_evidence_cn": "异构机器人上的便携推理运行时",
+      "llm_evidence": "异构机器人上的便携推理运行时",
+      "canonical_evidence": "异构机器人上的便携推理运行时",
+      "llm_tldr_en": "Embodied.cpp is a portable C++ inference runtime for embodied AI models on heterogeneous hardware, addressing multi-rate execution and latency-first batch-1 inference.",
+      "llm_tldr_cn": "嵌入式AI模型在实际部署中因模型特定Python栈和后端假设而碎片化，尤其异构边缘设备上。本文提出Embodied.cpp，一个便携C++推理运行时，基于对代表性视觉-语言-动作模型的分析，支持多速率闭环控制和延迟优先的批量1推理，适配异构硬件。实验表明其在多种机器人平台上有效降低推理延迟，填补了嵌入式AI部署运行时空白。",
+      "llm_tldr": "嵌入式AI模型在实际部署中因模型特定Python栈和后端假设而碎片化，尤其异构边缘设备上。本文提出Embodied.cpp，一个便携C++推理运行时，基于对代表性视觉-语言-动作模型的分析，支持多速率闭环控制和延迟优先的批量1推理，适配异构硬件。实验表明其在多种机器人平台上有效降低推理延迟，填补了嵌入式AI部署运行时空白。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "heterogeneous mixed inference for large models",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

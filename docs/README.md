@@ -6,34 +6,54 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-02
-- 运行时间：2026-07-02 21:47:15 UTC
+- 最新运行日期：2026-07-03
+- 运行时间：2026-07-03 21:35:17 UTC
 - 运行状态：成功
-- 本次总论文数：4
-- 精读区：2
-- 速读区：2
+- 本次总论文数：10
+- 精读区：4
+- 速读区：6
 
 ### 今日简报（AI）
-1. 今日精读两篇高分论文，聚焦长上下文LLM服务调度优化与AI工作流近似查询处理。
-2. 重点推荐《PersistentKV》的页面感知解码策略，可有效提升长上下文服务效率；其次是《Query-Centric Optimization》的代理模型加速思路。
-3. 建议优先深入理解PersistentKV的页面级内存管理，这对实际部署长上下文LLM具有直接参考价值。
-- 详情：[/202607/02/README](/202607/02/README)
+今日阅读10篇论文，精读2篇高分LLM推理加速工作（HYPIC混合注意力缓存、Lynx渐进式量化KV传输），速读3篇涉及多智能体推理、视频训练与MoE剪枝。
+
+最值得精读的是《HYPIC》与《Lynx》，它们分别从位置无关缓存和量化角度突破长上下文LLM服务的性能瓶颈。
+
+建议普通读者关注混合注意力架构和KV缓存量化如何降低推理延迟，这是当前大模型落地实际场景的关键技术方向。
+- 详情：[/202607/03/README](/202607/03/README)
 
 ### 精读区论文标签
-1. [PersistentKV: Page-Aware Decode Scheduling for Long-Context LLM Serving on Commodity GPUs](/202607/02/2606.26666v2-persistentkv-page-aware-decode-scheduling-for-long-context-llm-serving-on-commodity-gpus)  
-   标签：评分：10.0/10、query:ai-infra
-   evidence：面向长上下文大语言模型服务的页面感知解码调度与KV缓存优化
-2. [Query-Centric Optimization of AI Workflows via Approximate Query Processing and Proxy Models](/202607/02/2607.00254v1-query-centric-optimization-of-ai-workflows-via-approximate-query-processing-and-proxy-models)  
-   标签：评分：8.0/10、query:ai-infra
-   evidence：使用近似查询处理和代理模型减少昂贵模型调用
+1. [HYPIC: Accelerating Hybrid-Attention LLM Serving with Position-Independent Caching](/202607/03/2607.01299v1-hypic-accelerating-hybrid-attention-llm-serving-with-position-independent-caching)  
+   标签：评分：9.0/10、query:ai-infra
+   evidence：混合注意力LLM的位置无关缓存，直接加速KV缓存重用
+2. [Lynx: Progressive Speculative Quantization for accelerating KV Transfer in Long-Context Inference](/202607/03/2607.01831v1-lynx-progressive-speculative-quantization-for-accelerating-kv-transfer-in-long-context-inference)  
+   标签：评分：9.0/10、query:ai-infra
+   evidence：渐进推测量化加速KV传输
+3. [Mixture-of-Parallelisms: Towards Memory-Efficient Training Stack for Mixture-of-Experts Models](/202607/03/2607.01844v1-mixture-of-parallelisms-towards-memory-efficient-training-stack-for-mixture-of-experts-models)  
+   标签：评分：9.0/10、query:ai-infra
+   evidence：面向MoE模型的内存高效训练栈，结合并行和通信优化
+4. [InduceKV: Fixed-Footprint Continual Adaptation of Multimodal LLMs via Inducing KV Memories](/202607/03/2607.02010v1-inducekv-fixed-footprint-continual-adaptation-of-multimodal-llms-via-inducing-kv-memories)  
+   标签：评分：9.0/10、query:ai-infra
+   evidence：通过诱导KV记忆实现固定占用下的多模态LLM持续适应
 
 ### 速读区论文标签
-1. [Learning to Select, Not Relearn: Hard-Routed Mixtures of Reasoning LoRAs](/202607/02/2606.31413v1-learning-to-select-not-relearn-hard-routed-mixtures-of-reasoning-loras)  
+1. [Cache Merging as a Convergent Replicated State for Multi-Agent Latent Reasoning](/202607/03/2607.01308v1-cache-merging-as-a-convergent-replicated-state-for-multi-agent-latent-reasoning)  
+   标签：评分：7.0/10、query:ai-infra
+   evidence：用于多agent推理的KV缓存合并机制
+2. [Arachne: Orchestrating Cascades for Efficient Text-to-Video Model Training](/202607/03/2607.01701v1-arachne-orchestrating-cascades-for-efficient-text-to-video-model-training)  
+   标签：评分：7.0/10、query:ai-infra
+   evidence：文本到视频模型训练中的并行优化
+3. [Generic Expert Coverage for Pruning SparseMixture-of-Experts Language Models](/202607/03/2607.01710v1-generic-expert-coverage-for-pruning-sparsemixture-of-experts-language-models)  
+   标签：评分：7.0/10、query:ai-infra
+   evidence：使用通用语料库的覆盖感知MoE专家剪枝
+4. [TF-MoE: Time-Frequency Mixture-of-Experts for Efficient Speech Separation](/202607/03/2606.29575v1-tf-moe-time-frequency-mixture-of-experts-for-efficient-speech-separation)  
    标签：评分：6.0/10、query:ai-infra
-   evidence：硬路由混合专家风格组合推理LoRA
-2. [CAT: Confidence-Adaptive Thinking for Efficient Reasoning of Large Reasoning Models](/202607/02/2607.00862v1-cat-confidence-adaptive-thinking-for-efficient-reasoning-of-large-reasoning-models)  
+   evidence：混合专家模型在语音分离中的高效推理
+5. [Hawk: Harnessing Hardware-Aware Knowledge for High-Performance NPU Kernel Generation](/202607/03/2607.01590v1-hawk-harnessing-hardware-aware-knowledge-for-high-performance-npu-kernel-generation)  
    标签：评分：6.0/10、query:ai-infra
-   evidence：通过置信度自适应调控推理长度以减少大推理模型的令牌开销
+   evidence：面向NPU的硬件感知内核生成，加速AI基础设施
+6. [Embodied.cpp: A Portable Inference Runtime of Embodied AI Models on Heterogeneous Robots](/202607/03/2607.02501v1-embodiedcpp-a-portable-inference-runtime-of-embodied-ai-models-on-heterogeneous-robots)  
+   标签：评分：6.0/10、query:ai-infra
+   evidence：异构机器人上的便携推理运行时
 
 
 <div class="dpr-home-promo-card">
