@@ -1,0 +1,256 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-04T21:21:45.146084+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2606.29207v1",
+      "source": "arxiv",
+      "title": "KernelFlume: Elastic Core-Attention Scaling for Agentic Long-Context Decoding",
+      "abstract": "LLM serving is increasingly dominated by long and dynamic decode workloads from agents, reasoning models, and extended conversations. When bursty long-context demand exceeds deployed capacity, existing serving systems typically scale out by launching additional serving instances with model replicas. This instance-level elasticity increases KV capacity only by provisioning another full copy of the model, inheriting startup latency, memory overhead, and batch fragmentation.   We present KernelFlume, a decode-centric architecture that disaggregates the stable projection/FFN path from core-attention computation: weight nodes execute dense projection/FFN kernels, while weightless attention nodes store token-range KV partitions and scale with request-state demand. To make this separation elastic, KernelFlume maintains a routing table that maps token ranges to attention-node endpoints. It updates routes at token boundaries and uses host-visible graph signals to drive pre-registered UCX endpoint communication outside the captured CUDA Graph. To preserve low per-token latency after disaggregation, KernelFlume combines query-first core-attention dispatch with inter-layer kernel pipelining, overlapping remote attention and communication with local projection/FFN work. On real GPU testbeds (intra-node A6000 and cross-node H100), under a dynamic long-context agentic workload serving Llama-3.1-8B, KernelFlume sustains flat p99 TPOTs of ~74 ms on A6000 and ~34 ms on H100, while lowering cost per million output tokens by up to 32% and 61%, respectively, relative to full-instance elastic scaling with ServerlessLLM, a state-of-the-art instance-startup method. Replaying the same trace at larger model scale in simulation projects a 56--66% cost reduction over ServerlessLLM, widening to 80--85% with cheaper heterogeneous attention-node hardware and persisting into the million-token context range.",
+      "authors": [
+        "Guangyu Xiang",
+        "Xueze Kang",
+        "Lin Zhang",
+        "Wenxiang Lin",
+        "Shaohuai Shi",
+        "Yuxin Wang",
+        "Xiaowen Chu"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-28T05:16:17+00:00",
+      "link": "https://arxiv.org/pdf/2606.29207v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "KV cache optimization for LLM inference; core-attention scaling",
+      "llm_evidence_cn": "大语言模型KV缓存优化；核心注意力弹性扩展",
+      "llm_evidence": "大语言模型KV缓存优化；核心注意力弹性扩展",
+      "canonical_evidence": "大语言模型KV缓存优化；核心注意力弹性扩展",
+      "llm_tldr_en": "KernelFlume disaggregates projection/FFN from attention to enable elastic KV scaling for long-context LLM decoding, reducing startup latency and memory overhead.",
+      "llm_tldr_cn": "大语言模型长上下文解码场景中，现有系统通过复制完整模型实例来扩展KV容量，导致启动延迟和内存开销。KernelFlume提出解耦架构，将稳定投影/FFN路径与核心注意力计算分离，权重节点执行密集投影/FFN内核，而无权重注意力节点存储token范围KV分区并随请求弹性扩展。实验表明该方法有效降低延迟和内存碎片，适用于agent和推理工作负载。",
+      "llm_tldr": "大语言模型长上下文解码场景中，现有系统通过复制完整模型实例来扩展KV容量，导致启动延迟和内存开销。KernelFlume提出解耦架构，将稳定投影/FFN路径与核心注意力计算分离，权重节点执行密集投影/FFN内核，而无权重注意力节点存储token范围KV分区并随请求弹性扩展。实验表明该方法有效降低延迟和内存碎片，适用于agent和推理工作负载。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.02119v1",
+      "source": "arxiv",
+      "title": "An Efficient vLLM-Based Inference Pipeline for Unified Audio Understanding and Generation",
+      "abstract": "While Large Multimodal Models excel in comprehension, high-throughput inference engines lack native support for multimodal generation. This is severe in Speech Language Models, where generating multi-layered audio tokens via decoupled AR+NAR or synchronous Multi-Token Prediction (MTP) with delay-pattern interleaving conflicts with standard single-stream loops. We present a vLLM-based inference pipeline for unified speech understanding and generation. We extend autoregressive decoding to natively execute delay-pattern de-interleaving and coordinated multi-stream sampling, integrating an on-GPU acoustic decoder for end-to-end waveform synthesis. Crucially, we overcome the shared intuition that Classifier-Free Guidance (CFG) halves throughput. By co-scheduling paired conditional and unconditional requests within a continuous batch, our CFG implementation sustains 80% of non-CFG throughput, absorbing dual-request and logit merging overheads. We open-source our framework.",
+      "authors": [
+        "Haoran Wang",
+        "Jinchuan Tian",
+        "Siddhant Arora",
+        "Shinji Watanabe"
+      ],
+      "primary_category": "eess.AS",
+      "categories": [
+        "eess.AS",
+        "cs.AI"
+      ],
+      "published": "2026-07-02T12:55:11+00:00",
+      "link": "https://arxiv.org/pdf/2607.02119v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "vLLM-based inference pipeline for multimodal generation, extending autoregressive decoding",
+      "llm_evidence_cn": "基于vLLM的多模态推理流水线，扩展自回归解码",
+      "llm_evidence": "基于vLLM的多模态推理流水线，扩展自回归解码",
+      "canonical_evidence": "基于vLLM的多模态推理流水线，扩展自回归解码",
+      "llm_tldr_en": "Extends vLLM for unified audio understanding and generation, supporting delay-pattern de-interleaving and multi-stream sampling for multimodal inference acceleration.",
+      "llm_tldr_cn": "现有vLLM推理引擎不支持多模态生成，本文提出基于vLLM的流水线，扩展自回归解码以支持延迟模式解交织和多流采样，并集成GPU声学解码器，实现端到端波形合成，克服了CFG吞吐量减半的难题。",
+      "llm_tldr": "现有vLLM推理引擎不支持多模态生成，本文提出基于vLLM的流水线，扩展自回归解码以支持延迟模式解交织和多流采样，并集成GPU声学解码器，实现端到端波形合成，克服了CFG吞吐量减半的难题。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.27660v2",
+      "source": "arxiv",
+      "title": "MVPruner: Dynamic Token Pruning for Accelerating Multi-view Vision-Language Models in Autonomous Driving",
+      "abstract": "Vision-Language Models (VLMs) improve generalization and interpretability in autonomous driving but suffer from efficiency issues due to long visual token sequences, particularly in standard multi-view settings. Existing token pruning methods employ fixed pruning rate allocation and static importance metrics, ignoring dynamic inter-view importance differences and the evolving information importance during inference. Our analysis reveals that multi-view VLMs inherently encode task-related view priors in deeper layers and exhibit dynamic information requirements. Motivated by these findings, we propose MVPruner, a two-stage adaptive token pruning method that aligns pruning behavior with the model's dynamic information requirements. The first stage allocates pruning budgets based on the information diversity of each view, and retains tokens with consistent contribution across stages, ensuring semantic representational capacity. The second stage allocates budgets and selects tokens guided by instruction text to guarantee task alignment. Experimental results on four benchmarks demonstrate the superior performance of our method. For example, DriveMM equipped with MVPruner achieves 87.3% reduction in FLOPs, 4.97* speedup in prefilling phase while retaining 98.5% accuracy on DriveLM benchmark.",
+      "authors": [
+        "Nan Yang",
+        "Zhanwen Liu",
+        "Linfeng Zhang",
+        "Shangyu Xie",
+        "Yang Wang",
+        "Wenzhuo Zhou",
+        "Xiangmo Zhao"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-26T02:33:20+00:00",
+      "link": "https://arxiv.org/pdf/2606.27660v2",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Dynamic token pruning for accelerating vision-language models",
+      "llm_evidence_cn": "动态令牌剪枝加速视觉语言模型",
+      "llm_evidence": "动态令牌剪枝加速视觉语言模型",
+      "canonical_evidence": "动态令牌剪枝加速视觉语言模型",
+      "llm_tldr_en": "Adaptive token pruning method for multi-view VLMs in autonomous driving, considering dynamic inter-view and intra-layer importance.",
+      "llm_tldr_cn": "针对多视图视觉语言模型推理效率低的问题，提出MVPruner两阶段自适应令牌剪枝方法，利用动态视图重要性和层内信息需求变化，在保持精度的前提下显著加速推理。",
+      "llm_tldr": "针对多视图视觉语言模型推理效率低的问题，提出MVPruner两阶段自适应令牌剪枝方法，利用动态视图重要性和层内信息需求变化，在保持精度的前提下显著加速推理。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.01444v1",
+      "source": "arxiv",
+      "title": "On the Utility and Factual Reliability of Pruned Mixture-of-Experts Models in the Biomedical Domain",
+      "abstract": "Mixture-of-Experts (MoE) models offer inference speedups via selective activation but impose substantial memory requirements because the whole network must remain loaded. Structured expert pruning is a practical approach for reducing deployment costs in resource-constrained settings. However, prior studies primarily evaluate benchmark utility, leaving the effect of pruning on factual reliability underexplored, particularly in high-stakes domains such as biomedicine. In this paper, we investigate how domain-specific expert pruning affects both utility and reliability. We assess four MoE models, six pruning methods, and multiple pruning ratios across generation and classification tasks under in-domain (biomedical) and cross-domain settings. Results reveal that moderate pruning preserves in-domain utility without immediate reliability decline, although hallucination risks increase at extreme pruning ratios. When shifting to the general domain, both utility and reliability degrade rapidly. These findings indicate that safe compression depends heavily on the task and domain. Evaluating pruned MoE models solely on utility is inadequate for high-stakes deployment without reliability assessment.",
+      "authors": [
+        "Atsuki Yamaguchi",
+        "Szymon Palucha",
+        "Léo Bijar",
+        "Aline Villavicencio",
+        "Nikolaos Aletras"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-07-01T20:08:19+00:00",
+      "link": "https://arxiv.org/pdf/2607.01444v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "studies expert pruning in MoE models to reduce memory and deployment cost, relates to MoE optimization",
+      "llm_evidence_cn": "研究MoE模型专家剪枝以减少内存和部署成本，与MoE优化相关",
+      "llm_evidence": "研究MoE模型专家剪枝以减少内存和部署成本，与MoE优化相关",
+      "canonical_evidence": "研究MoE模型专家剪枝以减少内存和部署成本，与MoE优化相关",
+      "llm_tldr_en": "Investigates how domain-specific structured expert pruning affects utility and factual reliability of MoE models in biomedicine, highlighting trade-offs for deployment.",
+      "llm_tldr_cn": "MoE模型在资源受限场景下需内存优化，专家剪枝被广泛用于降低部署成本，但其对事实可靠性的影响未知。本文在生物医学领域评估了四种MoE模型和六种剪枝方法，发现剪枝会损害事实可靠性，但合理选择剪枝比例和领域特定策略可缓解。该工作为MoE模型的安全部署提供了重要指导。",
+      "llm_tldr": "MoE模型在资源受限场景下需内存优化，专家剪枝被广泛用于降低部署成本，但其对事实可靠性的影响未知。本文在生物医学领域评估了四种MoE模型和六种剪枝方法，发现剪枝会损害事实可靠性，但合理选择剪枝比例和领域特定策略可缓解。该工作为MoE模型的安全部署提供了重要指导。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.30189v1",
+      "source": "arxiv",
+      "title": "DAIN: Dynamic Agent-Based Interaction Network for Efficient and Collaborative Multimodal Reasoning",
+      "abstract": "Current multimodal fusion approaches, particularly those based on static Mixture-of-Experts (MoE) architectures, often struggle to provide the adaptive and efficient collaborative reasoning required by complex real-world applications. We introduce the Dynamic Agent-based Interaction Network (DAIN), which reconceptualizes multimodal fusion as a dynamic, multi-agent collaborative process. DAIN employs a context-aware Meta-Controller that dynamically schedules sparse activation of specialized interaction agents and orchestrates compressed inter-agent communication for consensus-building. The framework is guided by a multi-objective loss function that jointly optimizes task accuracy, agent specialization, and operational efficiency through sparse activation and communication regularization. Comprehensive evaluations across five diverse benchmarks -- ADNI, MIMIC-IV, MM-IMDB, CMU-MOSI, and ENRICO -- establish DAIN as a new state-of-the-art, delivering significant performance improvements including a 2.6\\% accuracy gain on ADNI. Ablation studies verify the critical roles of both dynamic scheduling and agent communication. Furthermore, DAIN offers enhanced interpretability by exposing context-dependent agent roles and collaboration patterns while maintaining computational efficiency through sample-wise sparse agent activation. Our work demonstrates the promise of dynamic, agent-based paradigms for multimodal reasoning.",
+      "authors": [
+        "Xinxin Chen",
+        "Yuchen Li",
+        "Zihan Wang",
+        "Haoyu Zhang",
+        "Ruixin Liu",
+        "Mingyuan Zhao"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-29T12:04:01+00:00",
+      "link": "https://arxiv.org/pdf/2606.30189v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "dynamic MoE with compressed inter-agent communication",
+      "llm_evidence_cn": "动态MoE与压缩的代理间通信",
+      "llm_evidence": "动态MoE与压缩的代理间通信",
+      "canonical_evidence": "动态MoE与压缩的代理间通信",
+      "llm_tldr_en": "DAIN proposes a dynamic multi-agent MoE framework with context-aware meta-controller and compressed inter-agent communication, optimizing accuracy and efficiency.",
+      "llm_tldr_cn": "针对静态MoE在复杂多模态推理中的局限性，DAIN提出了动态代理交互网络，通过元控制器动态调度专家代理并压缩代理间通信，在多目标损失优化下实现了任务精度、专家专业性和运行效率的协同提升，特别适用于需要高效通信的MoE场景。",
+      "llm_tldr": "针对静态MoE在复杂多模态推理中的局限性，DAIN提出了动态代理交互网络，通过元控制器动态调度专家代理并压缩代理间通信，在多目标损失优化下实现了任务精度、专家专业性和运行效率的协同提升，特别适用于需要高效通信的MoE场景。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.01789v1",
+      "source": "arxiv",
+      "title": "EPnG: Adaptive Expert Prune-and-Grow for Parameter-Efficient MoE Fine-tuning",
+      "abstract": "Mixture-of-Experts (MoE) models scale efficiently but remain costly to adapt due to redundant experts and uniform parameter allocation. Existing parameter-efficient fine-tuning (PEFT) methods such as LoRA ignore MoE routing dynamics, leading to suboptimal resource use. We propose EPnG, an adaptive prune-and-grow framework that reallocates LoRA capacity based on expert importance derived from router gate probabilities. EPnG prunes under-utilized experts and expands high-importance experts via rank growth with orthogonal initialization, while maintaining a fixed parameter budget. Across OLMoE and Qwen1.5-MoE, EPnG consistently outperforms LoRA under the same budget and achieves performance comparable to full fine-tuning while updating only 0.55%-0.72% of parameters (up to 140x-180x fewer). These results demonstrate that aligning PEFT with MoE routing yields a more effective and scalable fine-tuning strategy.",
+      "authors": [
+        "Ahin Lee",
+        "Sehyun Yun",
+        "Taesik Gong"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-07-02T07:02:44+00:00",
+      "link": "https://arxiv.org/pdf/2607.01789v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "MoE expert pruning and growing for parameter-efficient fine-tuning, relates to MoE optimization",
+      "llm_evidence_cn": "MoE专家剪枝与增长用于参数高效微调，关联MoE优化",
+      "llm_evidence": "MoE专家剪枝与增长用于参数高效微调，关联MoE优化",
+      "canonical_evidence": "MoE专家剪枝与增长用于参数高效微调，关联MoE优化",
+      "llm_tldr_en": "EPnG adaptively prunes under-utilized MoE experts and grows important ones via rank growth under fixed parameter budget, improving fine-tuning efficiency.",
+      "llm_tldr_cn": "混合专家(MoE)模型微调时存在冗余专家和资源分配不均的问题。本文提出EPnG，基于路由器门控概率的专家重要性，自适应剪枝低利用专家并扩展高重要性专家的秩，在固定参数预算下实现高效微调。该方法虽聚焦微调，但其对MoE路由和专家分配的优化思想可迁移至MoE通信优化场景。",
+      "llm_tldr": "混合专家(MoE)模型微调时存在冗余专家和资源分配不均的问题。本文提出EPnG，基于路由器门控概率的专家重要性，自适应剪枝低利用专家并扩展高重要性专家的秩，在固定参数预算下实现高效微调。该方法虽聚焦微调，但其对MoE路由和专家分配的优化思想可迁移至MoE通信优化场景。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

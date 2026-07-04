@@ -6,54 +6,38 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-03
-- 运行时间：2026-07-03 21:35:17 UTC
+- 最新运行日期：2026-07-04
+- 运行时间：2026-07-04 21:25:39 UTC
 - 运行状态：成功
-- 本次总论文数：10
-- 精读区：4
-- 速读区：6
+- 本次总论文数：6
+- 精读区：2
+- 速读区：4
 
 ### 今日简报（AI）
-今日阅读10篇论文，精读2篇高分LLM推理加速工作（HYPIC混合注意力缓存、Lynx渐进式量化KV传输），速读3篇涉及多智能体推理、视频训练与MoE剪枝。
-
-最值得精读的是《HYPIC》与《Lynx》，它们分别从位置无关缓存和量化角度突破长上下文LLM服务的性能瓶颈。
-
-建议普通读者关注混合注意力架构和KV缓存量化如何降低推理延迟，这是当前大模型落地实际场景的关键技术方向。
-- 详情：[/202607/03/README](/202607/03/README)
+今天共推荐6篇论文，精读2篇，速读4篇，聚焦长上下文解码优化与音频统一推理。最值得看KernelFlume的弹性核心注意力缩放技术，以及基于vLLM的音频理解生成统一管线。建议关注KV缓存优化方法，并探索音频多模态模型的实际落地场景。
+- 详情：[/202607/04/README](/202607/04/README)
 
 ### 精读区论文标签
-1. [HYPIC: Accelerating Hybrid-Attention LLM Serving with Position-Independent Caching](/202607/03/2607.01299v1-hypic-accelerating-hybrid-attention-llm-serving-with-position-independent-caching)  
+1. [KernelFlume: Elastic Core-Attention Scaling for Agentic Long-Context Decoding](/202607/04/2606.29207v1-kernelflume-elastic-core-attention-scaling-for-agentic-long-context-decoding)  
    标签：评分：9.0/10、query:ai-infra
-   evidence：混合注意力LLM的位置无关缓存，直接加速KV缓存重用
-2. [Lynx: Progressive Speculative Quantization for accelerating KV Transfer in Long-Context Inference](/202607/03/2607.01831v1-lynx-progressive-speculative-quantization-for-accelerating-kv-transfer-in-long-context-inference)  
-   标签：评分：9.0/10、query:ai-infra
-   evidence：渐进推测量化加速KV传输
-3. [Mixture-of-Parallelisms: Towards Memory-Efficient Training Stack for Mixture-of-Experts Models](/202607/03/2607.01844v1-mixture-of-parallelisms-towards-memory-efficient-training-stack-for-mixture-of-experts-models)  
-   标签：评分：9.0/10、query:ai-infra
-   evidence：面向MoE模型的内存高效训练栈，结合并行和通信优化
-4. [InduceKV: Fixed-Footprint Continual Adaptation of Multimodal LLMs via Inducing KV Memories](/202607/03/2607.02010v1-inducekv-fixed-footprint-continual-adaptation-of-multimodal-llms-via-inducing-kv-memories)  
-   标签：评分：9.0/10、query:ai-infra
-   evidence：通过诱导KV记忆实现固定占用下的多模态LLM持续适应
+   evidence：大语言模型KV缓存优化；核心注意力弹性扩展
+2. [An Efficient vLLM-Based Inference Pipeline for Unified Audio Understanding and Generation](/202607/04/2607.02119v1-an-efficient-vllm-based-inference-pipeline-for-unified-audio-understanding-and-generation)  
+   标签：评分：8.0/10、query:ai-infra
+   evidence：基于vLLM的多模态推理流水线，扩展自回归解码
 
 ### 速读区论文标签
-1. [Cache Merging as a Convergent Replicated State for Multi-Agent Latent Reasoning](/202607/03/2607.01308v1-cache-merging-as-a-convergent-replicated-state-for-multi-agent-latent-reasoning)  
+1. [MVPruner: Dynamic Token Pruning for Accelerating Multi-view Vision-Language Models in Autonomous Driving](/202607/04/2606.27660v2-mvpruner-dynamic-token-pruning-for-accelerating-multi-view-vision-language-models-in-autonomous-driving)  
    标签：评分：7.0/10、query:ai-infra
-   evidence：用于多agent推理的KV缓存合并机制
-2. [Arachne: Orchestrating Cascades for Efficient Text-to-Video Model Training](/202607/03/2607.01701v1-arachne-orchestrating-cascades-for-efficient-text-to-video-model-training)  
+   evidence：动态令牌剪枝加速视觉语言模型
+2. [DAIN: Dynamic Agent-Based Interaction Network for Efficient and Collaborative Multimodal Reasoning](/202607/04/2606.30189v1-dain-dynamic-agent-based-interaction-network-for-efficient-and-collaborative-multimodal-reasoning)  
    标签：评分：7.0/10、query:ai-infra
-   evidence：文本到视频模型训练中的并行优化
-3. [Generic Expert Coverage for Pruning SparseMixture-of-Experts Language Models](/202607/03/2607.01710v1-generic-expert-coverage-for-pruning-sparsemixture-of-experts-language-models)  
-   标签：评分：7.0/10、query:ai-infra
-   evidence：使用通用语料库的覆盖感知MoE专家剪枝
-4. [TF-MoE: Time-Frequency Mixture-of-Experts for Efficient Speech Separation](/202607/03/2606.29575v1-tf-moe-time-frequency-mixture-of-experts-for-efficient-speech-separation)  
+   evidence：动态MoE与压缩的代理间通信
+3. [On the Utility and Factual Reliability of Pruned Mixture-of-Experts Models in the Biomedical Domain](/202607/04/2607.01444v1-on-the-utility-and-factual-reliability-of-pruned-mixture-of-experts-models-in-the-biomedical-domain)  
    标签：评分：6.0/10、query:ai-infra
-   evidence：混合专家模型在语音分离中的高效推理
-5. [Hawk: Harnessing Hardware-Aware Knowledge for High-Performance NPU Kernel Generation](/202607/03/2607.01590v1-hawk-harnessing-hardware-aware-knowledge-for-high-performance-npu-kernel-generation)  
+   evidence：研究MoE模型专家剪枝以减少内存和部署成本，与MoE优化相关
+4. [EPnG: Adaptive Expert Prune-and-Grow for Parameter-Efficient MoE Fine-tuning](/202607/04/2607.01789v1-epng-adaptive-expert-prune-and-grow-for-parameter-efficient-moe-fine-tuning)  
    标签：评分：6.0/10、query:ai-infra
-   evidence：面向NPU的硬件感知内核生成，加速AI基础设施
-6. [Embodied.cpp: A Portable Inference Runtime of Embodied AI Models on Heterogeneous Robots](/202607/03/2607.02501v1-embodiedcpp-a-portable-inference-runtime-of-embodied-ai-models-on-heterogeneous-robots)  
-   标签：评分：6.0/10、query:ai-infra
-   evidence：异构机器人上的便携推理运行时
+   evidence：MoE专家剪枝与增长用于参数高效微调，关联MoE优化
 
 
 <div class="dpr-home-promo-card">
