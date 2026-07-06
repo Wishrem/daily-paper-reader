@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-06",
+  "date": "2026-07-06",
+  "generated_at": "2026-07-06T21:23:17",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/06/2606.31163v2-compliancegate-classifier-gated-multi-tier-llm-routing-for-inference-in-regulated-industries",
+      "section": "quick",
+      "title_en": "ComplianceGate: Classifier-Gated Multi-Tier LLM Routing for Inference in Regulated Industries",
+      "authors": "Abhishek Dey",
+      "date": "2026-06-30",
+      "pdf": "https://arxiv.org/pdf/2606.31163v2",
+      "score": "6.0",
+      "evidence": "分类器门控多级LLM路由通过减少GPU资源消耗提升推理效率",
+      "tldr": "在受监管行业，LLM部署面临合规与成本双重约束。现有方案中，PII可能在数据驻留判断前即到达模型端点，且无法按复杂度路由。我们提出ComplianceGate，在LLM推理前使用编码分类器评估查询，将含PII查询路由至本地端点，简单查询路由至小型模型，从根本上防止数据违规并降低成本。在600查询上，延迟降低39%，成本节省33-52%，吞吐量从50-64提升至122-200 tokens/s，分类器准确率99.2%且PII召回率近乎完美。该工作建立了预推理分类作为合规性设计LLM部署的实用路径。",
+      "tags": "query:ai-infra",
+      "abstract_en": "Large language models deployed in regulated industries operate under two constraints: compliance enforcement and cost efficiency. Personally identifiable information (PII) in user queries can reach model endpoints before the system determines whether that data should leave its jurisdictional boundary. Serving all queries through a single large model consumes full GPU capacity regardless of query complexity while offering no mechanism for geographic routing. Mixture-of-Experts architectures do not address this routing occurs between expert layers within the model after data has already arrived at the endpoint, with all experts loaded in memory regardless of query complexity. We propose a classifier-gated routing architecture that enforces compliance by design. A trained encoder classifier sits before any decoder inference, evaluating each query for complexity and data sensitivity, then routing it to an appropriately sized dense model in the appropriate geographic location. PII-containing queries route to local endpoints before any LLM computation begins, making data residency violations structurally impossible. Simple queries reach small, fast models at a fraction of the cost. Our evaluation on 600 queries demonstrates 39% median latency reduction, 33-52% cost savings depending on query distribution, and generation throughput of 122-200 tokens/second versus 50-64 for the baseline. The encoder classifier achieves 99.2% accuracy with near-perfect PII recall at 7ms inference overhead, establishing pre-inference classification as a practical path to compliance-by-design LLM deployment.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/06/2607.01468v1-cadenza-in-action-breaking-the-monolith-with-intent-dependent-plan-spaces-for-semantic-queries",
+      "section": "quick",
+      "title_en": "CADENZA in Action: Breaking the Monolith with Intent-Dependent Plan Spaces for Semantic Queries",
+      "authors": "Jaehyun Ha, Yongjoo Park, Wook-Shin Han",
+      "date": "2026-07-01",
+      "pdf": "https://arxiv.org/pdf/2607.01468v1",
+      "score": "6.0",
+      "evidence": "语义查询优化与意图分解，用于AI基础设施推理加速",
+      "tldr": "语义查询处理面临模型调用昂贵与语义丢失的权衡。CADENZA将意图分解为步骤，为每步选择物理实现并调参。用户通过Web界面探索不同偏好下的优化计划。该方法打破了单体实现限制，平衡了质量、延迟与成本。",
+      "tags": "query:ai-infra",
+      "abstract_en": "Semantic query processing engines execute semantic operators, whose behavior is specified by natural-language intents, via model inference over multimodal data. Most existing optimizers optimize the operators at the granularity of monolithic implementations -- such as LLMs and embedding models -- forcing a trade-off between expensive model calls and cheaper alternatives that fail to capture intent-dependent semantics. We present CADENZA, a semantic operator optimizer that compiles an intent into decomposed steps, selects concrete physical implementations for each step, and tunes their parameters under user-specified quality-latency-cost preferences. In this demonstration, users interact with CADENZA through a web interface over multimodal databases, exploring how an intent is decomposed into alternative plans, how each plan is optimized, and how different preferences yield different winning plans.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

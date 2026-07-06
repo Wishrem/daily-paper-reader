@@ -6,26 +6,27 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-05
-- 运行时间：2026-07-05 20:30:24 UTC
+- 最新运行日期：2026-07-06
+- 运行时间：2026-07-06 21:23:10 UTC
 - 运行状态：成功
 - 本次总论文数：2
-- 精读区：1
-- 速读区：1
+- 精读区：0
+- 速读区：2
 
 ### 今日简报（AI）
-今日精读一篇高分论文，探讨经典缓存策略失效时如何用学习增强方法优化语义检索缓冲区，速读一篇关于自然语言编译到任务算子的研究。重点推荐精读“当经典缓存策略失效”一文，其结论对提升语义缓存命中率有直接指导意义。下一步建议普通读者优先精读该论文，理解学习增强替换的核心机制，再结合速读中的查询处理思路进行实践。
-- 详情：[/202607/05/README](/202607/05/README)
+今日速读2篇论文，聚焦合规场景与语义查询架构优化。值得关注的方向：监管行业的多层LLM路由策略，以及基于意图驱动的单体语义查询拆解。建议可重点跟进合规路由的精度控制方法，并结合业务需求探索查询分离设计。
+- 详情：[/202607/06/README](/202607/06/README)
 
 ### 精读区论文标签
-1. [When Classic Cache Policies Fail: Learning-Augmented Replacement for Semantic Retrieval Buffers](/202607/05/2607.00394v1-when-classic-cache-policies-fail-learning-augmented-replacement-for-semantic-retrieval-buffers)  
-   标签：评分：8.0/10、query:ai-infra
-   evidence：针对LLM智能体的学习增强型语义缓存替换
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [CADENZA: Compiling Natural-Language Intent into Task-Specific Operator DAGs for Semantic Query Processing](/202607/05/2606.29151v2-cadenza-compiling-natural-language-intent-into-task-specific-operator-dags-for-semantic-query-processing)  
+1. [ComplianceGate: Classifier-Gated Multi-Tier LLM Routing for Inference in Regulated Industries](/202607/06/2606.31163v2-compliancegate-classifier-gated-multi-tier-llm-routing-for-inference-in-regulated-industries)  
    标签：评分：6.0/10、query:ai-infra
-   evidence：通过算子DAG编译优化语义查询推理延迟和成本
+   evidence：分类器门控多级LLM路由通过减少GPU资源消耗提升推理效率
+2. [CADENZA in Action: Breaking the Monolith with Intent-Dependent Plan Spaces for Semantic Queries](/202607/06/2607.01468v1-cadenza-in-action-breaking-the-monolith-with-intent-dependent-plan-spaces-for-semantic-queries)  
+   标签：评分：6.0/10、query:ai-infra
+   evidence：语义查询优化与意图分解，用于AI基础设施推理加速
 
 
 <div class="dpr-home-promo-card">
