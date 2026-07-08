@@ -1,0 +1,567 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-08T20:25:58.570837+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 7,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [
+    {
+      "id": "2607.06523v1",
+      "source": "arxiv",
+      "title": "DepthWeave-KV: Token-Adaptive Cross-Layer Residual Factorization for Long-Context KV Cache Compression",
+      "abstract": "Long-context language model inference is increasingly limited by the memory bandwidth and capacity required to store key-value caches, yet existing compression methods often apply uniform budgets across layers or tokens and degrade retrieval when lexical cues and semantic states require different preservation. We introduce DepthWeave-KV, a token-adaptive cache compression method that factorizes key and value states across neighboring transformer layers using shared low-rank channel bases while retaining lightweight token-specific residuals where attention behavior is sensitive. DepthWeave-KV combines cross-depth residual factorization with a token-conditional depth router that allocates higher reconstruction rank to instruction-bearing and retrieval-critical tokens, and uses calibration-free online error tracking from attention-output probes to adapt compression during generation without retraining the base model. A fused CUDA implementation jointly performs basis lookup, residual dequantization, and attention projection to reduce decode-time memory traffic. Across LongBench, Needle-in-a-Haystack, L-Eval, and long-form QA and summarization benchmarks, DepthWeave-KV achieves near-full-cache task quality with substantially lower memory use, improving average score and retrieval accuracy over prior compressed caches while reaching 8.3x KV memory reduction and 72.8 tokens per second at 64K context.",
+      "authors": [
+        "Anna Cordoba",
+        "Adam Puente Tercero",
+        "Nerea Angulo Hijo",
+        "Mar Linares Tercero",
+        "Julia Barrientos",
+        "Ainhoa Miranda",
+        "Jesus Olivera"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-07T17:29:01+00:00",
+      "link": "https://arxiv.org/pdf/2607.06523v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "token-adaptive KV cache compression via cross-layer residual factorization",
+      "llm_evidence_cn": "基于跨层残差分解的令牌自适应KV缓存压缩",
+      "llm_evidence": "基于跨层残差分解的令牌自适应KV缓存压缩",
+      "canonical_evidence": "基于跨层残差分解的令牌自适应KV缓存压缩",
+      "llm_tldr_en": "DepthWeave-KV token-adaptively compresses KV caches by factorizing key/value states across layers with low-rank bases and allocating higher rank to sensitive tokens, reducing memory for long-context inference.",
+      "llm_tldr_cn": "针对长上下文语言模型推理中KV缓存内存带宽和容量瓶颈，提出DepthWeave-KV压缩方法；通过跨层低秩基分解和令牌条件深度路由器分配可变秩，在保持检索能力的同时显著压缩KV缓存；实验表明在保持精度的前提下大幅降低内存占用。",
+      "llm_tldr": "针对长上下文语言模型推理中KV缓存内存带宽和容量瓶颈，提出DepthWeave-KV压缩方法；通过跨层低秩基分解和令牌条件深度路由器分配可变秩，在保持检索能力的同时显著压缩KV缓存；实验表明在保持精度的前提下大幅降低内存占用。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.06202v1",
+      "source": "arxiv",
+      "title": "UBEP: Re-architecting Expert Parallelism Communication Library for Production Superpods",
+      "abstract": "The deployment of Mixture-of-Experts (MoE) models on production high-bandwidth superpods, such as NVIDIA's NVL72/576 and Huawei's CloudMatrix384, introduces critical challenges beyond raw interconnect bandwidth. While these systems provide unified global address spaces and high-bandwidth fabrics, their full potential for sparse MoE communication is hindered by three fundamental bottlenecks: (1) Strict execution serialization imposed by coarse-grained Bulk Synchronous Parallel (BSP) orchestration of interdependent communication phases; (2) Prohibitive synchronization overhead that fails to scale alongside high interconnect bandwidth; and (3) Severe load imbalance resulting from distance-agnostic scheduling of irregular token traffic. To eliminate these bottlenecks, we introduce UBEP (Unified-Bus Expert Parallelism), a production-ready communication library that rethinks MoE's All-to-All primitives for modern superpod architectures. Through large scale experiments, UBEP reduces All-to-All latency by up to 52.4% and MoE inference Time Per Output Token (TPOT) by up to 11.1%.",
+      "authors": [
+        "Yipeng Liu",
+        "Chang Liu",
+        "Si Shen",
+        "Jiaqi Zheng",
+        "Mingfan Li",
+        "Yuyang Yang",
+        "Guanhua Li",
+        "Yuquan Zhang",
+        "Yimeng Xu",
+        "Zhongzhe Hu",
+        "Zhiyuan Huang",
+        "Qihang Duan",
+        "Junsong Wang",
+        "Wenkai Ling",
+        "Baochuan Yang",
+        "Xianzhi Yu",
+        "Han Bao",
+        "Yijie Chen",
+        "Guihai Chen"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.AI",
+        "cs.NI"
+      ],
+      "published": "2026-07-07T12:25:16+00:00",
+      "link": "https://arxiv.org/pdf/2607.06202v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "communication optimization for MoE on production superpods",
+      "llm_evidence_cn": "生产级超级计算机上MoE通信优化",
+      "llm_evidence": "生产级超级计算机上MoE通信优化",
+      "canonical_evidence": "生产级超级计算机上MoE通信优化",
+      "llm_tldr_en": "UBEP re-architects expert parallelism communication to mitigate serialization, synchronization, and load imbalance in MoE.",
+      "llm_tldr_cn": "针对MoE模型在NVL72等超大规模集群上部署时的通信瓶颈，重新设计专家并行通信库。解决BSP串行化、高同步开销和不均衡调度三大问题。通过异步流水线和距离感知调度，提升高带宽网络的利用率，实现高效稀疏MoE推理。",
+      "llm_tldr": "针对MoE模型在NVL72等超大规模集群上部署时的通信瓶颈，重新设计专家并行通信库。解决BSP串行化、高同步开销和不均衡调度三大问题。通过异步流水线和距离感知调度，提升高带宽网络的利用率，实现高效稀疏MoE推理。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "communication optimization in mixture of experts models",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.06519v1",
+      "source": "arxiv",
+      "title": "FreqDepthKV: Frequency-Guided Depth Sharing for Robust KV Cache Compression in Long-Context LLM Inference",
+      "abstract": "Long-context LLM inference is increasingly limited by the memory and bandwidth cost of KV caches, yet aggressive compression can remove the layer-specific evidence needed for retrieval and multi-step reasoning. We introduce FreqDepthKV, an inference-time cache compression method that factorizes adjacent-layer KV states into shared low-frequency depth components and sparse high-frequency residuals. A lightweight online probe assigns attention heads to shared-depth, residual-depth, or exact cache modes according to their contribution to reconstruction-sensitive attention logits, allowing the compression policy to adapt to prompt structure without retraining. Across long-context question answering, needle retrieval, summarization, and code generation benchmarks, FreqDepthKV preserves task accuracy under substantially smaller cache budgets. With a 32k-token prefill window, FreqDepthKV reaches 58.3 Exact Match, 63.0 F1, 32.5 ROUGE-L, and 48.1 pass@1, closely matching full KV while outperforming prior compressed-cache methods. It also improves decoding throughput to 70.4 tokens/s, reduces TTFT to 2.06 seconds, and lowers peak KV memory to 6.2 GB, achieving a 3.9x effective compression ratio.",
+      "authors": [
+        "Anna Córdoba",
+        "Adam Puente Tercero",
+        "Nerea Angulo Hijo",
+        "Mar Linares Tercero",
+        "Julia Barrientos",
+        "Ainhoa Miranda",
+        "Jesús Olivera"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-07T17:26:28+00:00",
+      "link": "https://arxiv.org/pdf/2607.06519v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "frequency-guided KV cache compression",
+      "llm_evidence_cn": "频率引导的KV缓存压缩",
+      "llm_evidence": "频率引导的KV缓存压缩",
+      "canonical_evidence": "频率引导的KV缓存压缩",
+      "llm_tldr_en": "FreqDepthKV factorizes adjacent-layer KV states into shared low-frequency depth and sparse high-frequency residuals, with an adaptive compression policy, achieving robust KV cache compression for long-context LLM inference.",
+      "llm_tldr_cn": "针对长上下文LLM推理中KV缓存带宽和内存瓶颈，提出FreqDepthKV。该方法将相邻层KV状态分解为共享低频深度分量和稀疏高频残差，并通过在线探针自适应分配注意力头到不同模式。实验表明，在长上下文问答和检索任务中，该方法在显著压缩缓存的同时保留了检索和推理所需的层特异性信息。",
+      "llm_tldr": "针对长上下文LLM推理中KV缓存带宽和内存瓶颈，提出FreqDepthKV。该方法将相邻层KV状态分解为共享低频深度分量和稀疏高频残差，并通过在线探针自适应分配注意力头到不同模式。实验表明，在长上下文问答和检索任务中，该方法在显著压缩缓存的同时保留了检索和推理所需的层特异性信息。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "KV cache optimization for large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.04371v2",
+      "source": "arxiv",
+      "title": "Nemotron-Labs-3-Puzzle-75B-A9B: Compressing Hybrid MoE LLMs",
+      "abstract": "We present Nemotron-Labs-3-Puzzle-75B-A9B, a compressed variant of Nemotron-3-Super optimized for interactive deployment. We designed the model to maximize server throughput under high user throughput constraints. In interactive serving workloads on a single 8xB200 node, Puzzle-75B-A9B achieves approximately 2x higher server throughput than Nemotron-3-Super at matched user throughput constraints. In ultra-long-context deployment on a single H100 GPU, the compressed model increases 1M-token concurrency from 1 request to 8 requests. Puzzle-75B-A9B is constructed using a multi-stage pipeline that combines the Iterative Puzzle compression framework with knowledge distillation, reinforcement learning, quantization, and a Multi-Token Prediction head. The compression process jointly optimizes heterogeneous MoE pruning, active parameter budget, and Mamba pruning to improve inference efficiency while preserving model quality. We evaluate Puzzle-75B-A9B on a broad suite of reasoning, coding, multilingual, long-context, and agentic benchmarks. Despite substantial compression, the model retains strong downstream accuracy relative to the parent model across a wide range of tasks. These results demonstrate that large hybrid MoE models can be substantially optimized for deployment efficiency while maintaining strong downstream capability. Our model is publicly available on Hugging Face.",
+      "authors": [
+        "Akhiad Bercovich",
+        "Talor Abramovich",
+        "Daniel Afrimi",
+        "Shay Aharon",
+        "Nir Ailon",
+        "Vladimir Anisimov",
+        "Omer Ullman Argov",
+        "Maor Ashkenazi",
+        "Tomer Asida",
+        "Nave Assaf",
+        "Tomer Bar Natan",
+        "Alexander Bukharin",
+        "Grzegorz Chlebus",
+        "Marcin Chochowski",
+        "Eric Chung",
+        "Mohammad Dabbah",
+        "Carlo del Mundo",
+        "Ewa Dobrowolska",
+        "Ido Galil",
+        "Yaniv Galron",
+        "Amnon Geifman",
+        "Yonatan Geifman",
+        "Izik Golan",
+        "Alex Gronskiy",
+        "Tomasz Grzegorzek",
+        "Netanel Haber",
+        "Lior Kadoch",
+        "Grzegorz Karch",
+        "Tomer Keren",
+        "Abhinav Khattar",
+        "Amir Klein",
+        "Tugrul Konuk",
+        "Roi Koren",
+        "Daniel Korzekwa",
+        "Shaun Kotek",
+        "Konstantinos Krommydas",
+        "Itay Levy",
+        "Ofri Masad",
+        "Yoav Miron",
+        "Pavlo Molchanov",
+        "Shahar Mor",
+        "Zach Moshe",
+        "Saurav Muralidharan",
+        "Najeeb Nabwani",
+        "Besmira Nushi",
+        "Mostofa Patwary",
+        "Omri Puny",
+        "Johannes Rausch",
+        "Tomer Ronen",
+        "Sepehr Sameni",
+        "Itamar Schen",
+        "Elad Segal",
+        "Daniel Serebrenik",
+        "Ido Shahaf",
+        "Soumye Singhal",
+        "Daniil Sorokin",
+        "Sharath Turuvekere Sreenivas",
+        "Marta Stepniewska-Dziubinska",
+        "Ali Taghibakhshi",
+        "Nima Tajbakhsh",
+        "Oren Tropp",
+        "Dor Tzur",
+        "Anna Warno",
+        "Yi-Fu Wu",
+        "Michal Zawalski",
+        "Jiaqi Zeng",
+        "Yian Zhang",
+        "Ran Zilberstein",
+        "Amit Zuker",
+        "Ran El-Yaniv"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-05T16:00:29+00:00",
+      "link": "https://arxiv.org/pdf/2607.04371v2",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Compressing hybrid MoE LLM for interactive deployment throughput",
+      "llm_evidence_cn": "压缩混合MoE LLM以提升交互部署吞吐量",
+      "llm_evidence": "压缩混合MoE LLM以提升交互部署吞吐量",
+      "canonical_evidence": "压缩混合MoE LLM以提升交互部署吞吐量",
+      "llm_tldr_en": "Presents Puzzle-75B-A9B, a compressed hybrid MoE LLM that uses iterative puzzle compression, distillation, RL, quantization, and multi-token prediction to achieve 2x throughput on a single 8xB200 node and 8x concurrency for 1M-token contexts.",
+      "llm_tldr_cn": "部署大规模MoE模型面临高吞吐需求与资源限制的矛盾。本文通过多阶段压缩管道（迭代拼图压缩、知识蒸馏、强化学习、量化和多令牌预测）得到Nemotron-Labs-3-Puzzle-75B-A9B，在单节点8xB200上实现2倍服务器吞吐量，并在单卡H100上将超长上下文并发扩展8倍，是异构混合推理加速的典范工作。",
+      "llm_tldr": "部署大规模MoE模型面临高吞吐需求与资源限制的矛盾。本文通过多阶段压缩管道（迭代拼图压缩、知识蒸馏、强化学习、量化和多令牌预测）得到Nemotron-Labs-3-Puzzle-75B-A9B，在单节点8xB200上实现2倍服务器吞吐量，并在单卡H100上将超长上下文并发扩展8倍，是异构混合推理加速的典范工作。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "heterogeneous mixed inference for large models",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.05240v1",
+      "source": "arxiv",
+      "title": "Optimizing ML Workload Partitioning between CPUs and CIM Accelerators for Heterogeneous Computing",
+      "abstract": "Computing-in-Memory (CIM) accelerators execute Matrix-Vector Multiplications (MVMs) in memory, making them a compelling solution for Machine Learning (ML) workloads. However, existing ML workload partitioning approaches for CIM accelerators do not fully account for Resistive Random Access Memory (RRAM) constraints such as limited memory, high write latency, and limited endurance. They also neglect parallelism, low-level architectural effects, or the Central Processing Unit (CPU) as a complementary compute resource. To address these limitations, we propose an Integer Linear Programming (ILP)-based workload partitioning framework for heterogeneous CPU-CIM systems. It minimizes end-to-end inference latency under RRAM constraints, captures parallelism, and combines empirical profiling with analytical models. Using our framework, heterogeneous CPU-CIM execution achieves speedups of up to 30.9x over CPU-only execution on an edge CPU and 7.3x over a high-performance CPU. A Design Space Exploration (DSE) yields further design insights for future CIM accelerators.",
+      "authors": [
+        "Joel Klein",
+        "Rebecca Pelke",
+        "Roberto Laudani",
+        "Jan Moritz Joseph",
+        "Rainer Leupers"
+      ],
+      "primary_category": "cs.ET",
+      "categories": [
+        "cs.ET",
+        "cs.AI",
+        "cs.AR",
+        "cs.DC",
+        "cs.LG"
+      ],
+      "published": "2026-07-06T15:50:44+00:00",
+      "link": "https://arxiv.org/pdf/2607.05240v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "heterogeneous CPU-CIM workload partitioning for inference latency minimization",
+      "llm_evidence_cn": "异构CPU-CIM工作负载分区，最小化推理延迟",
+      "llm_evidence": "异构CPU-CIM工作负载分区，最小化推理延迟",
+      "canonical_evidence": "异构CPU-CIM工作负载分区，最小化推理延迟",
+      "llm_tldr_en": "Proposes an ILP-based workload partitioning framework for heterogeneous CPU-CIM systems, minimizing end-to-end inference latency under RRAM constraints.",
+      "llm_tldr_cn": "现有异构CPU-CIM系统的工作负载分区未充分考虑RRAM约束和CPU协作，导致推理效率低下。本文提出基于整数线性规划的分区框架，将ML推理任务最优划分到CPU和CIM加速器，在满足RRAM限制的同时最小化端到端延迟。实验表明该方法能有效利用异构资源，加速推理过程。",
+      "llm_tldr": "现有异构CPU-CIM系统的工作负载分区未充分考虑RRAM约束和CPU协作，导致推理效率低下。本文提出基于整数线性规划的分区框架，将ML推理任务最优划分到CPU和CIM加速器，在满足RRAM限制的同时最小化端到端延迟。实验表明该方法能有效利用异构资源，加速推理过程。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "heterogeneous mixed inference for large models",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.05147v1",
+      "source": "arxiv",
+      "title": "DSpark: Confidence-Scheduled Speculative Decoding with Semi-Autoregressive Generation",
+      "abstract": "Speculative decoding accelerates Large Language Model (LLM) inference by decoupling draft generation from target verification. While recent parallel drafters efficiently propose long token sequences in a single forward pass, they suffer from rapid acceptance decay due to a lack of inter-token dependencies. Furthermore, indiscriminately verifying these extended blocks wastes critical batch capacity on tokens with high rejection risks, severely degrading throughput in high-concurrency serving systems. We introduce DSpark, a speculative decoding framework that unifies high-throughput parallel generation with adaptive, load-aware verification. To maintain draft quality, DSpark utilizes a semi-autoregressive architecture, coupling a parallel backbone with a lightweight sequential module, to introduce intra-block dependency modeling and mitigate suffix decay. To optimize system efficiency, DSpark employs confidence-scheduled verification, dynamically tailoring the verification length for each request based on estimated prefix survival probabilities and engine-specific throughput profiles. On offline benchmarks across diverse domains, DSpark substantially improves the accepted length over state-of-the-art autoregressive and parallel drafters. When deployed within the DeepSeek-V4 serving system under live user traffic, DSpark successfully mitigates verification waste. Compared to the established production baseline (MTP-1), DSpark accelerates per-user generation speeds by 60 to 85 percent at matched throughput levels. More importantly, by preventing severe throughput degradation under strict interactivity constraints, it enables performance tiers that were previously unattainable, shifting the Pareto frontier of our serving system.",
+      "authors": [
+        "Xin Cheng",
+        "Xingkai Yu",
+        "Chenze Shao",
+        "Jiashi Li",
+        "Yunfan Xiong",
+        "Yi Qian",
+        "Jiaqi Zhu",
+        "Shirong Ma",
+        "Xiaokang Zhang",
+        "Jiasheng Ye",
+        "Qinyu Chen",
+        "Chengqi Deng",
+        "Jiping Yu",
+        "Damai Dai",
+        "Zhengyan Zhang",
+        "Yixuan Wei",
+        "Yixuan Tan",
+        "Wenkai Yang",
+        "Runxin Xu",
+        "Yu Wu",
+        "Zhean Xu",
+        "Xuanyu Wang",
+        "Muyang Chen",
+        "Rui Tian",
+        "Xiao Bi",
+        "Zhewen Hao",
+        "Shaoyuan Chen",
+        "Huanqi Cao",
+        "Wentao Zhang",
+        "Anyi Xu",
+        "Huishuai Zhang",
+        "Dongyan Zhao",
+        "Wenfeng Liang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-07-06T14:28:06+00:00",
+      "link": "https://arxiv.org/pdf/2607.05147v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "speculative decoding for LLM inference acceleration",
+      "llm_evidence_cn": "投机解码加速大模型推理",
+      "llm_evidence": "投机解码加速大模型推理",
+      "canonical_evidence": "投机解码加速大模型推理",
+      "llm_tldr_en": "DSpark proposes a speculative decoding framework with semi-autoregressive draft generation and adaptive verification to improve LLM throughput, addressing inefficiencies in parallel draft acceptance and batch usage.",
+      "llm_tldr_cn": "大语言模型推理中，投机解码通过解耦草稿生成和目标验证来加速，但现有并行草稿方法因缺乏令牌间依赖导致接受率低，且盲目验证浪费批处理容量。DSpark 提出半自回归架构生成高质量草稿，并采用自适应负载感知验证策略，在保持吞吐量的同时提高令牌接受率。实验表明，DSpark 在高并发场景下显著提升推理速度。",
+      "llm_tldr": "大语言模型推理中，投机解码通过解耦草稿生成和目标验证来加速，但现有并行草稿方法因缺乏令牌间依赖导致接受率低，且盲目验证浪费批处理容量。DSpark 提出半自回归架构生成高质量草稿，并采用自适应负载感知验证策略，在保持吞吐量的同时提高令牌接受率。实验表明，DSpark 在高并发场景下显著提升推理速度。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "carryover_cache",
+      "paper_id": "2607.05147v1"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.05272v1",
+      "source": "arxiv",
+      "title": "Adaptive Inference Batching using Policy Gradients",
+      "abstract": "Inference serving systems must balance throughput and latency under bursty, heterogeneous workloads, yet the industry standard remains static batching policies that require manual tuning and cannot adapt to shifting traffic. We investigate whether reinforcement learning (RL) can learn adaptive batching and routing policies that outperform these heuristics, training REINFORCE and PPO agents on a discrete-event simulator validated against queuing theory and production traces (Azure Functions, BurstGPT). We formulate the problem as an MDP over queue state, request type and GPU availability, evaluating across standard Poisson traffic, extreme bursts, real-world traces and heterogeneous multi-GPU routing.   Our central finding is a clear boundary condition for RL's value in systems problems. In single-GPU settings, a well-tuned static batching policy is already near-optimal under Poisson-like arrivals and RL offers only marginal gains (+0.1% to +1.0%). In multi-GPU heterogeneous routing, however, where fast and slow requests compete for shared resources, the agent discovers a workload-segregation policy that eliminates Head-of-Line blocking, yielding a 3.5x (348%) improvement over Round-Robin and a 48% improvement over the strongest heuristic baseline (Shortest-Queue), with 60% higher throughput and 25% lower latency while respecting SLA constraints. The policy generalizes to unseen bursty and real-world traffic despite training only on synthetic Poisson arrivals and an attention-augmented policy network converges roughly 20% faster than an MLP baseline.   These results suggest RL's advantage over engineered heuristics concentrates in combinatorial, multi-resource decisions rather than single-resource temporal scheduling, a practical distinction for deciding where learned policies justify their engineering cost in production inference infrastructure.",
+      "authors": [
+        "Ruslan Sharifullin"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.DC",
+        "cs.PF"
+      ],
+      "published": "2026-07-06T16:20:19+00:00",
+      "link": "https://arxiv.org/pdf/2607.05272v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "inference serving batching policy",
+      "llm_evidence_cn": "推理服务批处理策略",
+      "llm_evidence": "推理服务批处理策略",
+      "canonical_evidence": "推理服务批处理策略",
+      "llm_tldr_en": "Proposes RL-based adaptive batching and routing for inference serving systems, evaluated on heterogeneous multi-GPU traces, directly improving inference throughput and latency.",
+      "llm_tldr_cn": "针对推理服务系统在突发、异构负载下吞吐-延迟平衡难的问题，提出基于强化学习的自适应批处理与路由策略，在离散事件模拟器上使用真实生产轨迹验证，能自动调整批大小并实现异构多GPU路由，显著优于静态启发式方法。",
+      "llm_tldr": "针对推理服务系统在突发、异构负载下吞吐-延迟平衡难的问题，提出基于强化学习的自适应批处理与路由策略，在离散事件模拟器上使用真实生产轨迹验证，能自动调整批大小并实现异构多GPU路由，显著优于静态启发式方法。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2607.05708v1",
+      "source": "arxiv",
+      "title": "Akashic: A Low-Overhead LLM Inference Service with MemAttention",
+      "abstract": "Recent LLM-based agent systems continuously accumulate context across multi-turn interactions, tool invocations, and cross-session workflows. Replaying the full history for every request quickly becomes impractical: long contexts increase prefill cost, may exceed context limits, and often bury task-relevant evidence in irrelevant content, degrading both serving efficiency and output quality. We propose Akashic, a low-overhead memory system built around MemAttention, which organizes context into bounded chunks and models semantic relationships across chunks, preserving cross-chunk evidence without repeatedly rewriting the full history. Akashic further applies hardware-software co-designed memory placement to co-locate likely co-retrieved chunks, reducing retrieval fragmentation and I/O overhead. Across four representative workloads and three model sizes, Akashic improves task accuracy by up to 10.2 points, throughput by up to 1.21x, and sustainable request rate by up to 1.88x over strong prior memory baselines.",
+      "authors": [
+        "Yang Liu",
+        "Zhaokai Luo",
+        "Huayi Jin",
+        "Ruozhou He",
+        "Chenchen Hong",
+        "Zhiyong Wang",
+        "Yifei Liu",
+        "Yunfei Gu",
+        "Chentao Wu",
+        "Junhao Hu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-07T00:06:22+00:00",
+      "link": "https://arxiv.org/pdf/2607.05708v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "low-overhead LLM inference service",
+      "llm_evidence_cn": "低开销LLM推理服务",
+      "llm_evidence": "低开销LLM推理服务",
+      "canonical_evidence": "低开销LLM推理服务",
+      "llm_tldr_en": "Akashic uses MemAttention to organize context into bounded chunks with semantic relationship modeling, reducing prefill cost for LLM inference and improving serving efficiency.",
+      "llm_tldr_cn": "针对基于LLM的代理系统在多轮交互中上下文累积导致预填充成本高和内容超限的问题，提出Akashic内存系统。核心是MemAttention，将上下文组织成有界块并建模块间语义关系，无需重复重写完整历史。通过硬件软件协同设计的内存放置进一步优化检索效率，降低了推理延迟。",
+      "llm_tldr": "针对基于LLM的代理系统在多轮交互中上下文累积导致预填充成本高和内容超限的问题，提出Akashic内存系统。核心是MemAttention，将上下文组织成有界块并建模块间语义关系，无需重复重写完整历史。通过硬件软件协同设计的内存放置进一步优化检索效率，降低了推理延迟。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.01602v1",
+      "source": "arxiv",
+      "title": "ProWAFT: A ROMA-LPD Instance for Workload-Aware and Dynamic Fault Tolerance in FPGA-Based CNN Accelerators",
+      "abstract": "SRAM-based FPGAs provide an attractive platform for energy- and latency-constrained CNN inference at the network edge, yet transient faults can lead to silent errors that compromise reliability. Always-on redundancy (e.g., full TMR) improves correctness but incurs substantial performance and energy overhead, while reactive recovery may introduce unacceptable latency on the critical path. We propose \\textbf{ProWAFT}, a proactive workload-aware fault-tolerance framework for FPGA-based CNN accelerators that uses partial reconfiguration to selectively apply TMR across reconfigurable partitions. ProWAFT quantifies workload criticality, models fault propagation and reconfiguration overhead, and selects configurations that minimize a composite objective over latency, energy, and reliability risk. Implemented on a Xilinx Zynq UltraScale+ ZCU104 platform with six reconfigurable regions and evaluated on a 500-task trace derived from ResNet-18, MobileNetV2, and EfficientNet-Lite under time-varying SEU injection, ProWAFT achieves lower composite cost than static TMR and reactive reconfiguration while maintaining high task success rate and near-baseline throughput with low online decision overhead.",
+      "authors": [
+        "Xinxin Chen",
+        "Haoran Qiao",
+        "Yiming Guo",
+        "Kecheng Luo",
+        "Siyuan Feng",
+        "Jingwen Ma"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-07-02T02:04:07+00:00",
+      "link": "https://arxiv.org/pdf/2607.01602v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "FPGA-based CNN accelerator fault tolerance",
+      "llm_evidence_cn": "基于FPGA的CNN加速器容错",
+      "llm_evidence": "基于FPGA的CNN加速器容错",
+      "canonical_evidence": "基于FPGA的CNN加速器容错",
+      "llm_tldr_en": "ProWAFT provides workload-aware dynamic fault tolerance for FPGA-based CNN accelerators using partial reconfiguration, enhancing reliability in edge AI infrastructure.",
+      "llm_tldr_cn": "针对边缘AI中FPGA加速器易受瞬态故障影响的问题，提出ProWAFT框架。该框架通过部分重配置选择性应用三模冗余，量化工作负载关键性并建模故障传播。实验表明在保证可靠性的同时降低了性能与能耗开销，适用于AI基础设施中的推理加速。",
+      "llm_tldr": "针对边缘AI中FPGA加速器易受瞬态故障影响的问题，提出ProWAFT框架。该框架通过部分重配置选择性应用三模冗余，量化工作负载关键性并建模故障传播。实验表明在保证可靠性的同时降低了性能与能耗开销，适用于AI基础设施中的推理加速。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "AI infrastructure acceleration techniques",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.06114v1",
+      "source": "arxiv",
+      "title": "x-Prediction Is All You Need:Training-Free Accelerated Generation via Endpoint Decodability",
+      "abstract": "Diffusion and flow matching models generate high-quality samples, but their ODE samplers often need tens to hundreds of neural function evaluations (NFEs). This remains a practical challenge for released checkpoints, since many accelerators require additional design choices and training cost through retraining, distillation, or trajectory redesign. We investigate a different route based on $x$-prediction. During sampling, standard affine probability paths already expose $x_0$ information: an intermediate state and its path velocity determine a principled estimate of the clean sample. We formalize this property as \\textbf{endpoint decodability} and show that the decoder is the minimum-MSE estimator $\\mathbb{E}[x_0\\mid x_t]$ under the usual $\\ell_2$ objective. This yields \\textbf{Truncated Jump Sampling} (TJS): stop the ODE at an early-exit time $t^*$ and return the decoded $x_0$. TJS requires no retraining, distillation, or architecture change. Across SDXL, SD3.5M, Z-Image-Turbo, and three class-conditional benchmarks, it reduces NFEs by 20--70\\% with near-matched quality. The analysis also shows why endpoint prediction can work without straightening the trajectory, providing inference acceleration without trajectory redesign.",
+      "authors": [
+        "Xin Peng",
+        "Ang Gao"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-07-07T10:24:38+00:00",
+      "link": "https://arxiv.org/pdf/2607.06114v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "training-free accelerated generation via endpoint decodability",
+      "llm_evidence_cn": "通过端点可解码性实现无训练加速生成",
+      "llm_evidence": "通过端点可解码性实现无训练加速生成",
+      "canonical_evidence": "通过端点可解码性实现无训练加速生成",
+      "llm_tldr_en": "Proposes x-prediction for training-free accelerated generation in diffusion/flow models, leveraging endpoint decodability to reduce NFEs without retraining.",
+      "llm_tldr_cn": "扩散模型和流匹配模型的采样需要大量神经函数评估，现有加速方法需要额外训练。本文提出基于x预测的无训练加速方法，利用标准仿射概率路径中隐含的x0信息，通过端点可解码性定义最小MSE估计器，直接估计干净样本。该方法无需重新训练或蒸馏即可减少NFE，加速生成过程，适用于AI基础设施中的推理加速。",
+      "llm_tldr": "扩散模型和流匹配模型的采样需要大量神经函数评估，现有加速方法需要额外训练。本文提出基于x预测的无训练加速方法，利用标准仿射概率路径中隐含的x0信息，通过端点可解码性定义最小MSE估计器，直接估计干净样本。该方法无需重新训练或蒸馏即可减少NFE，加速生成过程，适用于AI基础设施中的推理加速。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.06370v1",
+      "source": "arxiv",
+      "title": "Training-Free Acceleration for Vision-Language-Action Models with Action Caching and Refinement",
+      "abstract": "Vision-Language-Action (VLA) models have emerged as a promising approach for generalizable robotic manipulations. In particular, flow matching-based VLA models have shown remarkable success due to their capability to generate precise and smooth action sequences and capture multimodal distributions. However, the iterative denoising process in the action head acts as a major computational bottleneck, posing a critical challenge for real-time deployment. To address this challenge, we propose ActionCache, a plug-and-play external cache that opportunistically reuses past intermediate actions to warm-start generations from the vicinity of target actions, thereby drastically reducing the inference latency. Specifically, ActionCache stores the intermediate actions with compact multimodal keys, which enables retrieval from similar past contexts across different episodes or even different tasks. Experimental results in simulation and real-world environments demonstrate that ActionCache maintains high task success rates in a low-latency regime, achieving inference acceleration of up to $11.75\\times$ and $34.43\\times$ for representative flow-based VLA models, $π_{0.5}$ and GR00T-N1.6, respectively.",
+      "authors": [
+        "Ryuji Oi",
+        "Hikari Otsuka",
+        "Kosuke Matsushima",
+        "Yuki Ichikawa",
+        "Masato Motomura",
+        "Tatsuya Kaneko",
+        "Daichi Fujiki"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.CV",
+        "cs.LG"
+      ],
+      "published": "2026-07-07T15:10:15+00:00",
+      "link": "https://arxiv.org/pdf/2607.06370v1",
+      "tags": [
+        "keyword:ai-infra",
+        "query:ai-infra"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Training-free acceleration for VLA models using action caching",
+      "llm_evidence_cn": "使用动作缓存对VLA模型进行无训练加速",
+      "llm_evidence": "使用动作缓存对VLA模型进行无训练加速",
+      "canonical_evidence": "使用动作缓存对VLA模型进行无训练加速",
+      "llm_tldr_en": "Proposes ActionCache, a plug-and-play external cache that reuses intermediate actions to warm-start generation, reducing inference latency of flow-matching VLA models without retraining.",
+      "llm_tldr_cn": "流匹配VLA模型的动作头迭代去噪过程是计算瓶颈，影响实时部署。本文提出ActionCache外置缓存，通过复用过去的中间动作来热启动生成，显著降低推理延迟且无需重新训练。该方法虽面向机器人领域，但其缓存思想与LLM KV缓存优化异曲同工，可启发AI基础设施中的通用缓存加速策略。",
+      "llm_tldr": "流匹配VLA模型的动作头迭代去噪过程是计算瓶颈，影响实时部署。本文提出ActionCache外置缓存，通过复用过去的中间动作来热启动生成，显著降低推理延迟且无需重新训练。该方法虽面向机器人领域，但其缓存思想与LLM KV缓存优化异曲同工，可启发AI基础设施中的通用缓存加速策略。",
+      "llm_tags": [
+        "query:ai-infra"
+      ],
+      "matched_query_tag": "query:ai-infra",
+      "matched_query_text": "inference acceleration for AI infrastructure",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

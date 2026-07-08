@@ -6,76 +6,55 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-07
-- 运行时间：2026-07-07 22:08:44 UTC
+- 最新运行日期：2026-07-08
+- 运行时间：2026-07-08 20:32:18 UTC
 - 运行状态：成功
-- 本次总论文数：18
-- 精读区：7
-- 速读区：11
+- 本次总论文数：11
+- 精读区：6
+- 速读区：5
 
 ### 今日简报（AI）
-今日精选18篇论文，重点精读KV缓存量化与混合扩散语言模型方向。
-高分推荐：《GSRQ》实现亚1比特KV缓存量化，《Training Hybrid Block Diffusion》探索部分双向训练新范式。
-普通读者可关注Agentic应用的工作流感知服务层（8.0分）及自推测加速推理方法（SPORK，8.0分）。
-- 详情：[/202607/07/README](/202607/07/README)
+今日日报聚焦长上下文KV缓存压缩与专家并行通信库，共评估11篇论文，其中精读6篇、速读5篇。  
+最值得关注的是得分10分的DepthWeave-KV，提出token自适应跨层残差分解以压缩KV缓存；以及9分的UBEP，重构生产级超算的专家并行通信库。  
+建议重点研读这两篇高分论文，尤其适合关注长序列推理优化与分布式训练通信瓶颈的研究者。
+- 详情：[/202607/08/README](/202607/08/README)
 
 ### 精读区论文标签
-1. [GSRQ: Gain-Shape Residual Quantization for Sub-1-bit KV Cache](/202607/07/2607.01065v1-gsrq-gain-shape-residual-quantization-for-sub-1-bit-kv-cache)  
+1. [DepthWeave-KV: Token-Adaptive Cross-Layer Residual Factorization for Long-Context KV Cache Compression](/202607/08/2607.06523v1-depthweave-kv-token-adaptive-cross-layer-residual-factorization-for-long-context-kv-cache-compression)  
+   标签：评分：10.0/10、query:ai-infra
+   evidence：基于跨层残差分解的令牌自适应KV缓存压缩
+2. [UBEP: Re-architecting Expert Parallelism Communication Library for Production Superpods](/202607/08/2607.06202v1-ubep-re-architecting-expert-parallelism-communication-library-for-production-superpods)  
    标签：评分：9.0/10、query:ai-infra
-   evidence：使用增益-形状K均值实现低于1比特的KV缓存量化
-2. [Training Hybrid Block Diffusion Language Models with Partial Bidirectionality](/202607/07/2607.02805v1-training-hybrid-block-diffusion-language-models-with-partial-bidirectionality)  
+   evidence：生产级超级计算机上MoE通信优化
+3. [FreqDepthKV: Frequency-Guided Depth Sharing for Robust KV Cache Compression in Long-Context LLM Inference](/202607/08/2607.06519v1-freqdepthkv-frequency-guided-depth-sharing-for-robust-kv-cache-compression-in-long-context-llm-inference)  
    标签：评分：9.0/10、query:ai-infra
-   evidence：直接解决大语言模型推理中的KV缓存内存瓶颈
-3. [ELiTeFormer: An Efficient Transformer for FPGAs](/202607/07/2607.03652v1-eliteformer-an-efficient-transformer-for-fpgas)  
-   标签：评分：9.0/10、query:ai-infra
-   evidence：LLM的KV缓存压缩与FPGA部署
-4. [BrownoutMoE: Structure-Aware Expert Grouping for Efficient and Accurate LLM Web-based Services](/202607/07/2607.04164v1-brownoutmoe-structure-aware-expert-grouping-for-efficient-and-accurate-llm-web-based-services)  
-   标签：评分：9.0/10、query:ai-infra
-   evidence：MoE模型中的专家分组与通信优化
-5. [Nemotron-Labs-3-Puzzle-75B-A9B: Compressing Hybrid MoE LLMs](/202607/07/2607.04371v1-nemotron-labs-3-puzzle-75b-a9b-compressing-hybrid-moe-llms)  
-   标签：评分：9.0/10、query:ai-infra
-   evidence：MoE大模型压缩加速推理
-6. [KVpop -- Key-Value Cache Compression with Predictive Online Pruning](/202607/07/2607.05061v1-kvpop----key-value-cache-compression-with-predictive-online-pruning)  
-   标签：评分：9.0/10、query:ai-infra
-   evidence：KV缓存预测性在线剪枝压缩
-7. [Communication-Aware Placement and Pruning for Efficient Mixture-of-Experts Inference](/202607/07/2607.05116v1-communication-aware-placement-and-pruning-for-efficient-mixture-of-experts-inference)  
-   标签：评分：9.0/10、query:ai-infra
-   evidence：面向MoE推理的通信感知放置与剪枝
+   evidence：频率引导的KV缓存压缩
+4. [Nemotron-Labs-3-Puzzle-75B-A9B: Compressing Hybrid MoE LLMs](/202607/08/2607.04371v2-nemotron-labs-3-puzzle-75b-a9b-compressing-hybrid-moe-llms)  
+   标签：评分：8.0/10、query:ai-infra
+   evidence：压缩混合MoE LLM以提升交互部署吞吐量
+5. [DSpark: Confidence-Scheduled Speculative Decoding with Semi-Autoregressive Generation](/202607/08/2607.05147v1-dspark-confidence-scheduled-speculative-decoding-with-semi-autoregressive-generation)  
+   标签：评分：8.0/10、query:ai-infra
+   evidence：投机解码加速大模型推理
+6. [Optimizing ML Workload Partitioning between CPUs and CIM Accelerators for Heterogeneous Computing](/202607/08/2607.05240v1-optimizing-ml-workload-partitioning-between-cpus-and-cim-accelerators-for-heterogeneous-computing)  
+   标签：评分：8.0/10、query:ai-infra
+   evidence：异构CPU-CIM工作负载分区，最小化推理延迟
 
 ### 速读区论文标签
-1. [A Workflow-Aware Serving Layer for Agentic Applications](/202607/07/2607.02942v1-a-workflow-aware-serving-layer-for-agentic-applications)  
+1. [Adaptive Inference Batching using Policy Gradients](/202607/08/2607.05272v1-adaptive-inference-batching-using-policy-gradients)  
    标签：评分：8.0/10、query:ai-infra
-   evidence：面向智能体应用的异构后端工作流感知服务层
-2. [HyperParallel-Mpipe: A Composable Algebra System for Optimizing MLLM Training over Supernode Clusters](/202607/07/2607.03229v1-hyperparallel-mpipe-a-composable-algebra-system-for-optimizing-mllm-training-over-supernode-clusters)  
-   标签：评分：8.0/10、query:ai-infra
-   evidence：使用调度代数为多模态大模型训练设计异构并行方案
-3. [SPORK: Self-Speculative Forking to Accelerate Agentic LLM Inference](/202607/07/2607.03333v1-spork-self-speculative-forking-to-accelerate-agentic-llm-inference)  
-   标签：评分：8.0/10、query:ai-infra
-   evidence：无训练投机执行加速智能体LLM推理
-4. [PLACEMEM: Toward a Compute-Aware Memory Plane for Lifelong Agents](/202607/07/2607.04089v1-placemem-toward-a-compute-aware-memory-plane-for-lifelong-agents)  
-   标签：评分：8.0/10、query:ai-infra
-   evidence：面向终身智能体的KV感知内存平面，使用版本化胶囊
-5. [CoCoScale: Leveraging Layer-wise Scaling to Unlock the Potential of Online LLM Serving](/202607/07/2607.04181v1-cocoscale-leveraging-layer-wise-scaling-to-unlock-the-potential-of-online-llm-serving)  
-   标签：评分：8.0/10、query:ai-infra
-   evidence：针对在线LLM服务的层粒度缩放，解决工作负载倾斜和冷启动延迟问题
-6. [Embodied.cpp: A Portable Inference Runtime of Embodied AI Models on Heterogeneous Robots](/202607/07/2607.02501v2-embodiedcpp-a-portable-inference-runtime-of-embodied-ai-models-on-heterogeneous-robots)  
+   evidence：推理服务批处理策略
+2. [Akashic: A Low-Overhead LLM Inference Service with MemAttention](/202607/08/2607.05708v1-akashic-a-low-overhead-llm-inference-service-with-memattention)  
    标签：评分：7.0/10、query:ai-infra
-   evidence：面向异构机器人的可移植推理运行时，处理异构计算
-7. [NKI-Agent: Domain-Specific Fine-Tuning and Agentic Tool Use for Neuron Kernel Generation](/202607/07/2607.04395v1-nki-agent-domain-specific-fine-tuning-and-agentic-tool-use-for-neuron-kernel-generation)  
+   evidence：低开销LLM推理服务
+3. [x-Prediction Is All You Need:Training-Free Accelerated Generation via Endpoint Decodability](/202607/08/2607.06114v1-x-prediction-is-all-you-needtraining-free-accelerated-generation-via-endpoint-decodability)  
    标签：评分：7.0/10、query:ai-infra
-   evidence：自动生成新兴AI加速器的内核，直接加速AI基础设施
-8. [Direct Model State Migration for Elastic Training of Large Language Models](/202607/07/2607.04749v1-direct-model-state-migration-for-elastic-training-of-large-language-models)  
+   evidence：通过端点可解码性实现无训练加速生成
+4. [Training-Free Acceleration for Vision-Language-Action Models with Action Caching and Refinement](/202607/08/2607.06370v1-training-free-acceleration-for-vision-language-action-models-with-action-caching-and-refinement)  
    标签：评分：7.0/10、query:ai-infra
-   evidence：弹性混合并行训练的状态迁移
-9. [Can Model Merging Improve Aggregation in DiLoCo?](/202607/07/2607.03011v1-can-model-merging-improve-aggregation-in-diloco)  
+   evidence：使用动作缓存对VLA模型进行无训练加速
+5. [ProWAFT: A ROMA-LPD Instance for Workload-Aware and Dynamic Fault Tolerance in FPGA-Based CNN Accelerators](/202607/08/2607.01602v1-prowaft-a-roma-lpd-instance-for-workload-aware-and-dynamic-fault-tolerance-in-fpga-based-cnn-accelerators)  
    标签：评分：6.0/10、query:ai-infra
-   evidence：模型合并技术改进分布式学习聚合，减少通信
-10. [A Reconfigurable and Representation-Adaptive ISA-Based Architecture for Efficient DNN Acceleration](/202607/07/2607.04475v1-a-reconfigurable-and-representation-adaptive-isa-based-architecture-for-efficient-dnn-acceleration)  
-   标签：评分：6.0/10、query:ai-infra
-   evidence：基于可重构ISA的高效DNN加速架构
-11. [Heaviside Continuity of Rolling Coefficients for Eliminating Epistemic Entropy in Large Language Models](/202607/07/2607.04562v1-heaviside-continuity-of-rolling-coefficients-for-eliminating-epistemic-entropy-in-large-language-models)  
-   标签：评分：6.0/10、query:ai-infra
-   evidence：使用Heaviside门控的LLM验证优先推理框架
+   evidence：基于FPGA的CNN加速器容错
 
 
 <div class="dpr-home-promo-card">

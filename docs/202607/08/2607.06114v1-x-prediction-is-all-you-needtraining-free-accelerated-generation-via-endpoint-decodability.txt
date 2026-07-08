@@ -1,0 +1,1927 @@
+Title: x-Prediction Is All You Need:Training-Free Accelerated Generation via Endpoint Decodability
+
+URL Source: https://arxiv.org/pdf/2607.06114v1
+
+Published Time: Wed, 08 Jul 2026 01:03:37 GMT
+
+Number of Pages: 31
+
+Markdown Content:
+# x-Prediction Is All You Need: Training-Free Accelerated Generation via Endpoint Decodability 
+
+## Xin Peng 1 Ang Gao 1∗
+
+> 1
+
+School of Physical Science and Technology, Beijing University of Posts and Telecommunications, Beijing, China 
+
+anggao@bupt.edu.cn 
+
+Abstract 
+
+Diffusion and flow matching models generate high-quality samples, but their ODE samplers often need tens to hun-dreds of neural function evaluations (NFEs). This remains a practical challenge for released checkpoints, since many accelerators require additional design choices and training cost through retraining, distillation, or trajectory redesign. We investigate a different route based on x-prediction. During sampling, standard affine probability paths already expose x0
+
+information: an intermediate state and its path velocity deter-mine a principled estimate of the clean sample. We formalize this property as endpoint decodability and show that the de-coder is the minimum-MSE estimator E[x0 | xt] under the usual ℓ2 objective. This yields Truncated Jump Sampling 
+
+(TJS): stop the ODE at an early-exit time t∗ and return the decoded x0. TJS requires no retraining, distillation, or ar-chitecture change. Across SDXL, SD3.5M, Z-Image-Turbo, and three class-conditional benchmarks, it reduces NFEs by 20–70% with near-matched quality. The analysis also shows why endpoint prediction can work without straightening the trajectory, providing inference acceleration without trajectory redesign. 
+
+## Introduction 
+
+Diffusion models (Ho, Jain, and Abbeel 2020; Song et al. 2021; Nichol and Dhariwal 2021) and flow matching (Lip-man et al. 2023; Albergo and Vanden-Eijnden 2023; Liu, Gong, and qiang liu 2023) produce stunning images but re-quire tens to hundreds of neural function evaluations (NFEs) per sample (Rombach et al. 2022; Esser et al. 2024; Black-Forest-Labs 2024; Peebles and Xie 2023). Reducing this cost is a central challenge in generative modeling. The field has responded with a range of solutions— Rectified Flow (Liu, Gong, and qiang liu 2023), distil-lation (progressive (Salimans and Ho 2022), consistency-based (Song et al. 2023; Luo et al. 2023; Zheng et al. 2024), bootstrapping (Gu et al. 2023)), advanced solvers (Lu et al. 2022, 2023; Zhang and Chen 2023), and training-time scheduling (Chen et al. 2026)—all effective at reduc-ing NFEs, all requiring changes to the trajectory, model, or training recipe. No existing approach achieves acceleration purely by modifying inference. 
+
+> ∗
+
+Corresponding author 
+
+This complexity has a real and growing cost. The com-munity has produced an enormous library of pretrained checkpoints—SDXL alone has thousands of fine-tuned vari-ants on CivitAI and Hugging Face (Podell et al. 2023; Esser et al. 2024; Black-Forest-Labs 2024; Rombach et al. 2022; Peebles and Xie 2023). While fast ODE solvers (DPM-Solver, UniPC) can reduce the step count, further acceler-ation without retraining remains an open practical challenge. 
+
+The field would benefit from a training-free acceleration strategy that works on models as they are, not as they could be after retraining. 
+
+There is a simpler path, hiding in plain sight within the training objective itself. Diffusion and flow matching models are trained to predict x0 at every timestep. During inference, the model thus produces a valid x0 estimate at every in-termediate step —and these estimates improve as integration proceeds. Once good enough, why continue? For diffusion models, DDIM (Song, Meng, and Ermon 2021) already com-putes ˆx0 internally, but to our knowledge no prior work has systematically studied early-stopping and outputting it as a terminal inference strategy, nor provided theoretical justi-fication for when and why this works. For flow matching, no such counterpart exists. We fill both gaps. We term this property endpoint decodability : for non-degenerate affine paths, the intermediate state and path velocity recover x0
+
+through a closed-form decoder, which we formalize in Sec-tion . Crucially, under the standard ℓ2 loss, this decoder is the MMSE-optimal estimator E[x0|xt] (Theorem 6). The practi-cal consequence: stop when the estimate is sufficient, output it. We call this Truncated Jump Sampling (TJS) .TJS requires no retraining, no distillation, no architec-ture changes. It works on any pretrained checkpoint—SDXL, SD3.5M, Z-Image-Turbo, FLUX, DiT, fine-tuned variants— without modification. TJS does not replace distillation for extreme few-step generation (1–4 NFE); it provides a com-plementary, zero-cost path for the moderate regime (30 →
+
+15–25 steps). Immediate, training-free acceleration for models you already have. 
+
+We make three contributions: 1. Principle and theory. We formalize endpoint decod-ability : for any non-degenerate affine path, (xt, u t) re-covers x0 through a closed-form decoder (Theorem 5), the induced decoder is MMSE-optimal (Theorem 6), its error is curvature-independent (Theorem 9), and it can arXiv:2607.06114v1 [cs.LG] 7 Jul 2026 xt        
+
+> Step 0 (t= 961 )
+> Step 5 (t= 801 )
+> Step 10 (t= 641 )
+> Step 15 (t= 481 )
+> Step 20 (t= 321 )
+> Step 25 (t= 161 )
+> Step 29 (t= 33 )
+> Final (t= 0 )
+> x0
+
+Figure 1: Endpoint decodability in action. Top: xt decoded directly (noisy at early steps). Bottom: x0 via endpoint decoding (clean at any step). strictly beat coarse Euler (Theorem 11). All standard pa-rameterizations are equivalent at optimality (see Supple-mentary Material, §A). Critically, straight trajectories are 
+
+sufficient but not necessary (Proposition 12), challenging the foundation of Rectified Flow and Consistency Models. 2. Algorithm. Truncated Jump Sampling (TJS) : atraining-free early-exit sampler—zero retraining, zero dis-tillation, zero architecture changes. TJS is compatible with any ODE solver, noise schedule, CFG scale, or dis-tillation method. 3. Experiments. Across six model families—SDXL, SD3.5M, Z-Image-Turbo (Team 2025), ImageNet-256, CIFAR-10, MNIST—TJS reduces NFE by 20–70% at near-matched quality, with strict monotonic improvement on all metrics. 
+
+## Related Work 
+
+Diffusion and Flow Matching. Diffusion models (Ho, Jain, and Abbeel 2020; Song et al. 2021; Nichol and Dhari-wal 2021) and flow matching (Lipman et al. 2023; Albergo and Vanden-Eijnden 2023; Liu, Gong, and qiang liu 2023) share a common skeleton: probability paths xt = αtx0 + σtϵ
+
+interpolating noise to data. DDIM (Song, Meng, and Ermon 2021) and EDM (Karras et al. 2022) established deterministic sampling via neural ODEs (Chen et al. 2018). These models power state-of-the-art image generation—SD3 (Esser et al. 2024; Meng et al. 2024), FLUX (Black-Forest-Labs 2024), DiT (Peebles and Xie 2023). Every model cited above uses the same affine path structure. Endpoint decodability re-quires nothing else. 
+
+Few-Step Generation and Trajectory Straightening. 
+
+Reducing NFEs spans several paradigms, all training-stage. Distillation (progressive (Salimans and Ho 2022), masked (Yang et al. 2022), bootstrapping (Gu et al. 2023), trajectory consistency (Zheng et al. 2024)) and Consistency Models (Song et al. 2023; Luo et al. 2023) train students for few-step generation. Rectified Flow (Liu, Gong, and qiang liu 2023) learns straight paths via reflow (Euler error ∝ ∥ ¨xt∥). Dense-Jump FM (Chen et al. 2026) modifies inference trajec-tories. Higher-order solvers (DPM-Solver (Lu et al. 2022), DPM-Solver++ (Lu et al. 2023), PNDM (Liu et al. 2022), UniPC (Zhang and Chen 2023)) improve discretization ac-curacy but still traverse the full trajectory. The shared motiva-tion: few-step quality benefits from modifying training. TJS offers a complementary, training-free alternative exploiting an inherent structural property of affine paths. 
+
+Prediction Parameterizations and Theoretical Connec-tions. x0-, v-, ϵ-, and score-prediction (Karras et al. 2022; Salimans and Ho 2022; Ho, Jain, and Abbeel 2020; Song et al. 2021) are typically treated as distinct choices with different SNR trade-offs (Kingma et al. 2021). Our frame-work reveals their algebraic equivalence at optimality 
+
+(see Theorem 13 in the Supplementary Material, §A), so any pretrained model encodes an endpoint predictor. Comple-mentary evidence: JiT (Li and He 2025) shows x0-prediction dramatically outperforms ϵ/v-prediction on raw-pixel patches via manifold structure; MeanFlow (Geng et al. 2025) enables one-step generation via average velocity. Beyond sampling, flow matching connects to optimal transport (Lipman et al. 2023; Tong et al. 2024) and the Schrödinger bridge (Bortoli et al. 2021); I-MMSE (Guo, Shamai, and Verdú 2005) pro-vides information-theoretic grounding for U(t) (Theorem 14 in the Supplementary Material, §A). 
+
+## Preliminaries 
+
+Diffusion and flow matching models share a simple but pow-erful structure: they define paths that morph noise into data. We now formalize this structure and preview the theory that follows. We establish three results in order: (1) the algebraic condition under which any intermediate state can recover the clean endpoint (Theorem 5); (2) the optimality of this recovery under standard ℓ2 training (Theorem 6); and (3) a decomposition of TJS error into two curvature-independent components (Theorem 9). Together, these results explain why straight trajectories—the central requirement of prior work— are sufficient but not necessary. 
+
+Definition 1 (Affine Probability Path) . An affine probability path is a one-parameter stochastic process 
+
+xt = αtx0 + σtϵ, ϵ ∼ N (0 , I), t ∈ [0 , 1] , (1) where x0 ∼ pdata is the clean sample, and αt, σ t : [0 , 1] →
+
+R≥0 are C1 functions with α0 = 0 , σ 0 = 1 and α1 =1, σ 1 = 0 .This single equation covers VP/VE diffusion, EDM, and linear flow matching. The entire diversity of modern gen-erative models—billions of parameters, dozens of training tricks—reduces to two scalar schedules αt and σt. Endpoint decodability is a property of these two functions alone. 
+
+Lemma 2 (Conditional Velocity) . The conditional velocity field ut := dxt 
+
+> dt
+
+satisfies 
+
+ut = ˙ αtx0 + ˙ σtϵ. (2) Combining Eqs. 1–2 yields a coupled linear system: 
+
+xt
+
+ut
+
+
+
+=
+
+αt σt
+
+˙αt ˙σt
+
+  x0
+
+ϵ
+
+
+
+. (3) 
+
+Definition 3 (Path Determinant) . The path determinant is 
+
+∆t := det 
+
+αt σt
+
+˙αt ˙σt
+
+
+
+= ˙ αtσt − αt ˙σt.
+
+## Endpoint Decodability 
+
+The coupled linear system (Eq. 3) contains the entire story. If the 2 × 2 coefficient matrix is invertible, then (xt, u t)
+
+uniquely determines (x0, ϵ )—and in particular x0. The in-vertibility condition is remarkably simple: the path determi-nant must be nonzero. We now formalize this observation and prove that the resulting decoder is optimal. 
+
+Characterization 
+
+Solving the linear system via Cramer’s rule (see Supplemen-tary Material, §A) yields the endpoint decoder: 
+
+Definition 4 (Endpoint Decodability) . An affine probability path is endpoint-decodable at time t ∈ (0 , 1] if the mapping 
+
+(xt, u t) 7 → x0 is well-defined and unique. A path is globally endpoint-decodable if this holds for all t ∈ (0 , 1] .
+
+Theorem 5 (Endpoint Decodability) . An affine probability path is endpoint-decodable at t iff ∆t̸ = 0 , with 
+
+x0 = σtut − ˙σtxt
+
+∆t
+
+. (4) 
+
+Given a learned velocity vθ (xt, t ) ≈ ut, the induced endpoint predictor is ˆxvel 0 = ( σtvθ − ˙σtxt)/∆t.Proof. See Supplementary Material, §A. □
+
+All common schedules satisfy ∆t̸ = 0 everywhere except possibly at the degenerate boundary t = 0 (see Supplemen-tary Material, §A for verification of VP diffusion, VE/EDM, and linear FM). Thus, every standard diffusion or flow match-ing model is globally endpoint-decodable. 
+
+MMSE Optimality 
+
+Does plugging a learned velocity into the algebraic decoder introduce bias? We prove the answer is no—at optimality, the decoder is Bayes-optimal. Under the standard Flow Matching loss LFM (θ) = Et,x 0,ϵ [∥vθ (xt, t )−ut∥2], the Bayes-optimal predictor is v⋆(x, t ) = E[ut | xt = x].
+
+Theorem 6 (MMSE Optimality of Endpoint Decoder) . Let 
+
+v⋆(x, t ) = E[ut | xt = x]. Then the induced endpoint pre-dictor recovers the minimum mean square error estimator: 
+
+σtv⋆(x, t ) − ˙σtx
+
+∆t
+
+= E[x0 | xt = x]. (5) 
+
+Proof. See Supplementary Material, §A. □
+
+The practical implication: standard training implicitly learns endpoint prediction in the ℓ2 sense. The model is never explicitly trained to predict x0, yet its velocity pre-dictions algebraically encode E[x0|xt]—the optimal point predictor under mean squared error. (This is ℓ2-optimality, not a claim about perceptual metrics like FID/ImageReward.) The same holds for noise and score prediction (Tweedie’s for-mula (Efron 2011); see Theorem 13 in the Supplementary Material, §A). 
+
+Unified parameterization. Any pretrained model encodes an endpoint predictor regardless of its output type: all four standard parameterizations are equivalent at optimality (see Theorem 13 in the Supplementary Material, §A). Direct x0-prediction is optimal for TJS (no algebraic amplification in low-SNR); velocity- and noise-derived decoders work im-mediately for existing checkpoints. Figures 2–5 preview the experimental evidence: endpoint predictions are clean from early steps, quality improves monotonically, and the speed-quality trade-off follows the predictions of our theory. 
+
+## Truncated Jump Sampling 
+
+Where the idea comes from. Diffusion and flow matching models are trained to predict x0 at every timestep. During inference, every integration step already produces a valid x0
+
+estimate , improving as more noise is removed. Once good enough, why continue? TJS operationalizes this: stop early, output the estimate. A key finding (§) is that straight trajec-tories are sufficient but not necessary (Proposition 12)— directly challenging the central premise of Rectified Flow and Consistency Models. 
+
+Algorithm 
+
+Algorithm 7 formalizes TJS. It uses ⌈t∗K⌉ NFE for partial in-tegration plus 1 for the endpoint decode, saving ≈ (1 −t∗)K
+
+NFE. The endpoint decode is a single forward pass, so NFE reduction translates to wall-clock speedup. 
+
+Algorithm 7 (Truncated Jump Sampling (TJS)) .                                         
+
+> Input: pretrained model with endpoint predictor ˆx0(·, t ),early-exit fraction
+> γ∈(0 ,1] ,total steps K
+> Output: clean sample xout
+> 1: k∗← ⌈ γK ⌉
+> 2: x←initial noise ∼ N (0 ,I)
+> 3: for k= 1 to k∗do
+> 4: t←k/K ;x←ODEStep (x, t −1/K, t )
+> 5: end for
+> 6: return ˆx0(x, t ∗)
+
+Notation. “TJS-γ” = early exit at fraction γ (exact NFE = 
+
+⌈γK ⌉+1 ). Standard K-step is γ=1 . Zero retraining required. y=0                            
+
+> Step 0 Step 4 Step 8 Step 13 Step 17 Step 21 Step 26 Step 30 Step 34 Step 39
+> y=1
+> y=2
+> y=3
+> y=4
+> y=5
+> y=6
+> y=7
+> y=8
+> y=9 y=0
+> Step 0 Step 3 Step 6 Step 9 Step 12 Step 16 Step 19 Step 22 Step 25 Step 29
+> y=1
+> y=2
+> y=3
+> y=4
+> y=5
+> y=6
+> y=7
+> y=8
+> y=9 Step 0 Step 4 Step 8 Step 13 Step 17 Step 21 Step 26 Step 30 Step 34 Step 39
+
+Figure 2: Visual x0 predictions for CIFAR-10 (left), MNIST (center), and ImageNet-256 (right). MNIST saturate at k∗≈16 
+
+(43% NFE saving); CIFAR-10/ImageNet-256 at k∗≈26 (33%). 0 20 40 
+
+NFE 
+
+0
+
+25 
+
+50 
+
+75 
+
+100 
+
+125 
+
+150 
+
+175 
+
+200 
+
+> FID  ↓
+> TJS best: 12.09 | Full ODE: 13.30
+
+CIFAR-10 
+
+0 10 20 30 
+
+NFE 
+
+0
+
+25 
+
+50 
+
+75 
+
+100 
+
+125 
+
+150 
+
+175 
+
+200 
+
+> FID  ↓
+> TJS best: 1.65 | Full ODE: 3.20
+
+MNIST 
+
+0 20 40 
+
+NFE 
+
+0
+
+50 
+
+100 
+
+150 
+
+200 
+
+250 
+
+300 
+
+350 
+
+> FID  ↓
+> TJS best: 15.16 | Full ODE: 17.52
+
+ImageNet-256 
+
+Figure 3: FID vs. NFE for TJS on MNIST (30-step) and CIFAR-10/ImageNet-256 (40-step, CFG=1.0). ⋆ = TJS-best; dashed = full ODE. 
+
+Error Analysis 
+
+When can we safely stop early? The answer depends on two factors: how much the model knows about the endpoint, and how much information the intermediate state xt∗ still carries. We formalize both. 
+
+Definition 8 (Irreducible Endpoint Uncertainty) . Let 
+
+mt(xt) = E[x0|xt] be the Bayes-optimal endpoint estimator under ℓ2 loss. The irreducible endpoint uncertainty at time t
+
+is 
+
+U(t) := Ext
+
+Tr(Var( x0 | xt)) . (6) 
+
+U(t) is the minimum achievable MSE for predicting 
+
+x0 from xt, attained by mt itself. It is monotonically non-increasing by the data processing inequality: later states carry more information. For Gaussian data, U(t) = 
+
+dσ 2
+
+t σ2data /(α2
+
+t σ2data + σ2
+
+t ), decaying from U(0) = dσ 2data 
+
+to U(1) = 0 . For general pdata , monotonicity and boundary conditions still hold, with the decay profile governed by the manifold structure of the data. 
+
+Theorem 9 (Error Decomposition for TJS) . Let ˆx0(xt, t ) = 
+
+mt(xt) + et(xt) decompose the model predictor into the Bayes-optimal estimator mt and model estimation error et.Then the expected MSE of TJS at early-exit time t∗ is 
+
+E∥xout − x0∥2 = E∥et∗ ∥2 + U(t∗). (7) 
+
+Proof. See Supplementary Material, §A. □
+
+The decomposition reveals the central insight: neither er-ror term depends on trajectory curvature ∥¨xt∥. The first term measures model accuracy; the second measures infor-mation content of xt∗ . Neither involves ¨αt, ¨σt, or higher-order derivatives. This distinguishes TJS from Euler integra-tion, whose truncation error scales as O((∆ t)2 sup ∥¨xτ ∥)
+
+and directly penalizes curvature. TJS bypasses the trajectory entirely. 
+
+Corollary 10 (Justification Condition) . TJS at t∗ matches full ODE quality when (i) U(t∗) ≪ U (0) (sufficient end-point information) and (ii) E[∥et∗ ∥2] ≈ 0 (accurate model prediction). NFE=1 NFE=7 NFE=13 NFE=19 NFE=25 NFE=30 Prompt: a golden retriever playing in a field of sunflowers, sunny day, 4k      
+
+> Prompt: a steaming cup of coffee on a wooden table, morning light, bokeh
+> Prompt: a neon-lit cyberpunk street at night, rain, reflections, cinematic
+> Prompt: a watercolor painting of a cherry blossom tree by a lake, soft colors
+> Prompt: a vintage red car parked on a coastal road, ocean view, golden hour NFE=1 NFE=7 NFE=13 NFE=19 NFE=25 NFE=30 Prompt: a golden retriever playing in a field of sunflowers, sunny day, 4k
+> Prompt: a steaming cup of coffee on a wooden table, morning light, bokeh
+> Prompt: a neon-lit cyberpunk street at night, rain, reflections, cinematic
+> Prompt: a watercolor painting of a cherry blossom tree by a lake, soft colors
+> Prompt: a vintage red car parked on a coastal road, ocean view, golden hour
+
+Figure 4: Visual x0 predictions for SDXL (left) and SD3.5M (right). Saturation at k∗≈19 (∼33% NFE saving). 
+
+Theorem 11 (TJS–Euler Comparison) . Let the affine path have C2 coefficients. Compare two strategies at the same NFE budget N + 1 : (a) Coarse Euler from t=0 to t=1 
+
+with step h = 1 /N ; (b) TJS-N , integrating to t∗ = N h via Euler then applying endpoint decoding. Assume E[∥et∥2] ≤
+
+ε uniformly, and define Cα,σ = sup τ ∈[t∗,1] (|¨ατ |2 + |¨στ |2).Then: 
+
+MSE TJS (N ) − MSE Euler (N )
+
+≤ U (t∗) − h2
+
+2 Cα,σ E∥x0∥2 + ∥ϵ∥2 + 2 ε. (8) 
+
+In particular, TJS is strictly superior when: 
+
+U(t∗) < Cα,σ 
+
+2N 2 E∥x0∥2 + ∥ϵ∥2 − 2ε. (9) 
+
+Proof Sketch. Euler global error from t∗ to 1 is O(h), so MSE is O(h2). Using velocity field Lipschitz continuity, the leading term is h2
+
+2 Cα,σ E[∥x0∥2 + ∥ϵ∥2]. TJS error follows from Theorem 9. Full derivation in Supplementary Material, §A. In summary, Theorem 11 (a theoretical tool to isolate cur-vature penalty) explains why TJS succeeds without straight-ening: Euler penalizes curvature ( Cα,σ ); TJS penalizes un-certainty ( U(t∗)). (The uniform bound E[∥et∥2] ≤ ε sim-plifies analysis; a refined version using ε(t) ∝ U (t) would make the theorem quantitative at all t∗, left to future work.) Our class-conditional experiments use linear FM ( Cα,σ =0 ), where TJS is unconditionally superior—consistent with re-sults at aggressive exits (e.g., TJS-0.7 at 27% saving). For curved schedules, U(t∗) < C α,σ /(2 N 2) defines the TJS ad-vantage. As t∗→1, TJS converges to the full ODE, matching the monotonic improvement in experiments. 
+
+Why Straightness Is Not Necessary 
+
+This is the paper’s central theoretical result. The trajectory-straightening paradigm—Rectified Flow, Consis-tency Models, and related methods—is motivated by one fact: Euler penalizes curvature, so straight paths enable ac-curate large-step integration. Proposition 12 shows this mo-tivation does not apply to endpoint prediction: TJS error is curvature-independent, so reducing ∥¨xt∥ solves a problem TJS does not have. 
+
+Proposition 12 (Straightness: Sufficient but Not Necessary) .
+
+For TJS: (1) Straight trajectories are sufficient : Euler inte-gration becomes exact, and TJS is also exact. (2) Straight tra-jectories are not necessary : an affine path can have ∥¨xt∥ ar-bitrarily large while remaining globally endpoint-decodable (∆t̸ = 0 ) with bounded endpoint prediction error. Proof Sketch (main text).. (1) For straight paths, ut = x0 −ϵ
+
+is constant in t conditioned on (x0, ϵ ), so any Euler step is exact. (2) Construct a perturbed schedule α(ω)
+
+t = t +
+
+ω−1 sin( ωt (1 − t)) , σ(ω)
+
+t = 1 − t + ω−1 cos( ωt (1 − t)) .For large ω, ∆(ω)
+
+t = 1 + O(1 /ω ) remains bounded away from zero, while ∥¨xt∥ ∼ O(ω) is unbounded. The argument is self-contained above; a fully detailed algebraic expansion appears in the Supplementary Material, §A for completeness. 0 5 10 15 20 25 30      
+
+> NFE
+> −2.0
+> −1.5
+> −1.0
+> −0.5
+> 0.0
+> 0.5
+> 1.0
+> ImageReward  ↑
+> 90%
+> 90%
+> SDXL
+> SD3.5M
+> Z-Img-Turbo
+> 020 40 60 80 100
+> NFE Saving (%)
+> 0
+> 20
+> 40
+> 60
+> 80
+> 100
+> Quality Retention (%)
+> 90%
+> 95%
+> 99%
+> SDXL
+> SD3.5M
+> Z-Img-Turbo
+
+Figure 5: Speed vs. quality trade-off. Left: ImageReward against NFE, with 90% of full ODE quality marked per model. Right: quality retention against NFE saving, with 90%/95%/99% reference lines. 
+
+Relationship to DDIM. DDIM (Song, Meng, and Ermon 2021) computes ˆx0 at each step as an integration interme-diate, never proposing it as terminal output and never pro-viding theoretical justification for early stopping. TJS rec-ognizes that this intermediate quantity—already present in every diffusion model’s computation—is a valid output in its own right, and builds a theoretical framework around that recognition. The contribution is not a new algebraic oper-ation; it is identifying that an existing operation has been overlooked as an inference strategy , formalizing the condi-tions under which it works, and extending it to flow matching where no DDIM analog exists. The framework—Theorem 9 (curvature-independent error), Proposition 12 (straightness unnecessary), Theorem 11 (when TJS wins)—provides what DDIM never offered. A detailed comparison is in the Sup-plementary Material, §A. 
+
+## Experiments 
+
+The theory makes two predictions: quality should improve monotonically with integration depth, and endpoint decod-ability should work across samplers, schedules, and model families. We test both on three class-conditional benchmarks (ImageNet-256 (Deng et al. 2009), CIFAR-10 (Krizhevsky and Hinton 2009), MNIST (Lecun et al. 1998)) and three text-to-image models (SDXL (Podell et al. 2023), SD3.5M (Esser et al. 2024), Z-Image-Turbo (Team 2025)). All models used off-the-shelf with zero modification. 
+
+Class-Conditional Generation 
+
+Setup. ImageNet-256 (Deng et al. 2009)/CIFAR-10 (Krizhevsky and Hinton 2009): U-Net (Ronneberger, Fischer, and Brox 2015; Ho, Jain, and Abbeel 2020) backbone. MNIST (Lecun et al. 1998): LightningDiT (Wang et al. 2025). FID (Heusel et al. 2017) on 50K samples. ImageNet-256: 40-step DDIM; CIFAR-10/MNIST: 30-step ODE. 
+
+Results. FID improves strictly monotonically with k∗ on every dataset (Table 1, Figs. 2–3), directly confirming U(t)
+
+Table 1: FID ( ↓) on three benchmarks. γ = k∗/K is the exit fraction (NFE = ⌈γK ⌉ + 1 ). NFE shown as (C/M/I) = (CIFAR-10 / MNIST / ImageNet-256). Values within 5 FID of full bold . Full per-step sweep shown in Fig. 3.                             
+
+> Method NFE (C/M/I) CIFAR-10 MNIST IN-256
+> Full 40/30/40 13.30 3.20 17.52 TJS-0.3 13/10/13 57.20 27.36 273.87 TJS-0.5 21/16/21 32.76 12.22 44.91 TJS-0.6 25/19/25 24.98 8.51 25.67 TJS-0.7 29/22/29 18.83 5.15 17.16
+> TJS-0.8 33/25/33 13.27 2.65 15.16
+
+decays as the theory predicts. For CIFAR-10, TJS at k∗=37 
+
+(NFE=38) achieves FID 12.09 versus 13.30 for the full 40-step ODE—a 5% improvement from the best early exit. For ImageNet-256 (CFG=1.0), TJS at k∗=32 (NFE=33) achieves FID 15.16 versus 17.52 for the full 40-step ODE. These “TJS-best” overshoots (beating the full ODE) are reported transparently; the monotonic trend across all resolutions ( 28 2
+
+to 256 2) confirms endpoint decodability as a universal path property. 
+
+Text-to-Image Generation 
+
+Setup. All models used off-the-shelf without modifica-tion. SDXL (Podell et al. 2023): 30-step DDIM, endpoint decoded via ˆx0 = ( xt − σtϵθ )/α t (noise prediction, VP schedule). SD3.5M (Esser et al. 2024): 30-step flow match-ing, endpoint decoded via ˆx0 = xt − σtvθ (linear FM: 
+
+αt=t, σt=1 −t). Z-Image-Turbo (Team 2025): 10-step Kar-ras ODE, endpoint decoded via ˆx0 = xt + (1 − σt)vθ (EDM path: αt=1 , σt=σ(t)). TJS exits at k∗∈{ 0, 6, 12 , 18 , 24 } for SDXL/SD3.5M and k∗∈{ 0, 2, 4, 8} for Z-Image-Turbo. 200 DrawBench (Saharia et al. 2022) prompts evaluated with PickScore (Kirstain et al. 2023), HPSv2 (Wu et al. 2024), AES, ImageReward (Xu et al. 2023), and CLIP score (Rad-ford et al. 2021). Table 2: SDXL, SD3.5M, and Z-Image-Turbo on Draw-Bench. Values within 5% of full bold . NFE saving: SDXL/SD3.5M = (30 − k∗ − 1) /30 ; Z-Image-Turbo = 
+
+(10 − k∗ − 1) /10 . Full per-benchmark sweep for all models in the Supplementary Material, §B.                                                                                                                
+
+> Method NFE Pick ↑CLIP ↑HPS ↑AES ↑IR ↑Saving SDXL
+> Full 30 22.39 0.321 0.271 5.65 0.615 0%
+> k∗=6 720.65 0.294 0.192 4.75 −0.47 77%
+> k∗=12 13 21.41 0.316 0.229 5.14 0.314 57%
+> k∗=18 19 21.84 0.321 0.249 5.37 0.590 37%
+> k∗=24 25 22.17 0.323 0.266 5.56 0.686 17%
+> SD3.5M
+> Full 30 22.50 0.329 0.283 5.37 0.949 0%
+> k∗=6 720.92 0.310 0.205 4.72 −0.10 77%
+> k∗=12 13 21.73 0.326 0.249 5.07 0.652 57%
+> k∗=18 19 22.12 0.328 0.269 5.30 0.864 37%
+> k∗=24 25 22.36 0.328 0.279 5.37 0.922 17%
+> Z-Image-Turbo (K=10 )Full 10 22.77 0.320 0.293 5.36 0.980 0%
+> k∗=0 121.34 0.323 0.238 4.63 0.491 90%
+> k∗=2 322.70 0.321 0.297 5.45 0.969 70%
+> k∗=4 522.78 0.320 0.295 5.43 0.971 50%
+> k∗=8 922.77 0.320 0.293 5.35 0.981 10%
+
+Key findings. Table 2 and Fig. 4 reveal a remarkably clean picture. First, every metric improves strictly monotonically with k∗ on all three models—exactly as Theorem 9 pre-dicts from the monotonicity of U(t). Second, different qual-ity dimensions converge at different speeds: semantics come early, aesthetics come late. CLIP and PickScore reach 95% of full quality by k∗≈12 (57% NFE saving); ImageReward and AES require k∗=18 (37%). This matches the intuition that a model first resolves what is in the image, then how good it looks. Third, SD3.5M needs deeper integration than SDXL (37% vs. 57% saving at matched quality), reflecting slower U(t) decay in its more complex latent space. Fourth, Z-Image-Turbo converges dramatically faster: all met-rics except ImageReward are within 5% of full quality by 
+
+k∗=0 –2 (NFE=1–3, 70–90% NFE saving); even ImageRe-ward reaches 95%+ retention by k∗=2 . This confirms that distillation compresses U(t)—intermediate states carry near-complete endpoint information much earlier. Full benchmark results for SDXL, SD3.5M, and Z-Image-Turbo are provided in the Supplementary Material. 
+
+Ablation Studies 
+
+We run four ablations plus a Pareto analysis (full results in the Supplementary Material, §B). (1) Sampler: DDIM, DPM++, LMS, PNDM, and UniPC all produce quality within 
+
+±5% of each other—TJS is sampler-agnostic. (2) Schedule: 
+
+Beta, exponential, Karras, and Laplace schedules all support TJS—any schedule with ∆t̸ =0 works. (3) Step count: qual-ity depends on γ, not the total steps K, confirming U(t∗) is a continuous-time property. (4) CFG scale: guidance scales of 5.5, 6.5, and 7.5 all preserve the monotonic quality pattern. Across every ablation, the data tracks the theory: endpoint decodability is robust, predictable, and universal. 
+
+## Discussion 
+
+Why TJS works. Conventional wisdom: few-step quality benefits from straight trajectories (Euler penalizes curva-ture). Proposition 12 proves straightness is sufficient but not necessary —one can construct paths with arbitrarily large curvature that remain globally endpoint-decodable, directly challenging the foundation of Rectified Flow and Consis-tency Models. The deeper point: the model already knows the destination. Standard training implicitly learns E[x0|xt]
+
+(Theorem 6); TJS simply asks. 
+
+TJS composes orthogonally with distillation. Z-Image-Turbo results (Table 2, bottom block) demonstrate that even on an already-compressed 10-step trajectory, TJS provides 70% additional NFE saving at 95%+ quality. This confirms that endpoint decodability is a structural property of the affine path, not eliminated by distillation. The two accelera-tion strategies stack additively: distillation compresses total steps; TJS eliminates the redundant tail of whatever trajectory remains. 
+
+Practical value and limitations. TJS occupies a unique niche: unlike distilled models (Turbo, LCM, Lightning: 1– 4 NFE, per-checkpoint retraining), TJS is training-free on any checkpoint; unlike fast solvers (DPM++, UniPC: full trajectory), TJS skips the final segment. Its primary value is community fine-tuned checkpoints where distillation is infeasible. It composes orthogonally with any sampler or CFG scale. Primary limitation: slow U(t) decay for complex data. Direct x0-prediction is not yet standard. Code will be released upon acceptance. 
+
+## Conclusion 
+
+This paper argues that moderate few-step acceleration does not require trajectory straightening, distillation, or training redesign. The key insight is endpoint decodability : an inher-ent algebraic property of every affine probability path. Be-cause (xt, u t) determines x0 whenever ∆t̸ = 0 , and standard training implicitly learns E[x0|xt], every pretrained model can predict its endpoint. TJS is the simplest way to use this: integrate fewer steps, then ask. Our theory formalizes this through four results: univer-sality of ∆t̸ = 0 , MMSE optimality, curvature-independent error decomposition, and a TJS–Euler comparison theorem. Across six model families (SDXL, SD3.5M, Z-Image-Turbo, ImageNet-256, CIFAR-10, MNIST), TJS reduces NFE by 20–70% at near-matched quality with zero retraining— including 70% additional savings on already-distilled Z-Image-Turbo. Two directions follow. First, adopting direct 
+
+x0-prediction would make TJS optimal by construction. Sec-ond, characterizing U(t) decay across distributions remains open, with direct consequences for optimal t∗ selection. End-point decodability is a structural property of generative mod-els on affine paths—nearly all of them. Recognizing it costs nothing. Ignoring it leaves performance on the table. References 
+
+Albergo, M. S.; and Vanden-Eijnden, E. 2023. Building Nor-malizing Flows with Stochastic Interpolants. In International Conference on Learning Representations (ICLR) .Black-Forest-Labs. 2024. FLUX.1. Bortoli, V. D.; Thornton, J.; Heng, J.; and Doucet, A. 2021. Diffusion Schrödinger Bridge with Applications to Score-Based Generative Modeling. In Beygelzimer, A.; Dauphin, Y.; Liang, P.; and Vaughan, J. W., eds., Neural Information Processing Systems (NeurIPS) .Chen, T. Q.; Rubanova, Y.; Bettencourt, J.; and Duvenaud, D. K. 2018. Neural ordinary differential equations. In Neural Information Processing Systems (NeurIPS) .Chen, Z.; Guo, Z.; Wang, P.; Egbe, T. I.; Lyu, Y.; and Qian, C. 2026. Dense-Jump Flow Matching with Non-Uniform Time Scheduling for Robotic Policies: Mitigating Multi-Step Infer-ence Degradation. In 2026 IEEE International Conference on Robotics and Automation (ICRA) .Deng, J.; Dong, W.; Socher, R.; Li, L.-J.; Li, K.; and Fei-Fei, L. 2009. ImageNet: A large-scale hierarchical image database. In 2009 IEEE Conference on Computer Vision and Pattern Recognition , 248–255. Efron, B. 2011. Tweedie’s formula and selection bias. Jour-nal of the American Statistical Association , 106(496): 1602– 1614. Esser, P.; Kulal, S.; Blattmann, A.; Entezari, R.; Müller, J.; Saini, H.; Levi, Y.; Lorenz, D.; Sauer, A.; Boesel, F.; et al. 2024. Scaling rectified flow transformers for high-resolution image synthesis. In International Conference on Machine Learning (ICML) .Geng, Z.; Deng, M.; Bai, X.; Kolter, J. Z.; and He, K. 2025. Mean Flows for One-step Generative Modeling. In CVPR .Gu, J.; Zhai, S.; Zhang, Y.; Liu, L.; and Susskind, J. 2023. BOOT: Data-free Distillation of Denoising Diffusion Models with Bootstrapping. In ICML 2023 Workshop on Structured Probabilistic Inference and Generative Modeling .Guo, D.; Shamai, S.; and Verdú, S. 2005. Mutual information and minimum mean-square error in Gaussian channels. IEEE Transactions on Information Theory , 51(4): 1261–1282. Heusel, M.; Ramsauer, H.; Unterthiner, T.; Nessler, B.; and Hochreiter, S. 2017. GANs trained by a two time-scale up-date rule converge to a local nash equilibrium. In Neu-ral Information Processing Systems (NeurIPS) , NIPS’17, 6629–6640. Red Hook, NY, USA: Curran Associates Inc. ISBN 9781510860964. Ho, J.; Jain, A.; and Abbeel, P. 2020. Denoising diffusion probabilistic models. Neural Information Processing Sys-tems (NeurIPS) .Ho, J.; and Salimans, T. 2022. Classifier-Free Diffusion Guidance. arXiv preprint arXiv:2207.12598 .Karras, T.; Aittala, M.; Aila, T.; and Laine, S. 2022. Elucidat-ing the Design Space of Diffusion-Based Generative Models. In Neural Information Processing Systems (NeurIPS) .Kingma, D.; Salimans, T.; Poole, B.; and Ho, J. 2021. Vari-ational Diffusion Models. In Neural Information Processing Systems (NeurIPS) .Kirstain, Y.; Polyak, A.; Singer, U.; Matiana, S.; Penna, J.; and Levy, O. 2023. Pick-a-Pic: An Open Dataset of User Preferences for Text-to-Image Generation. In Neural Infor-mation Processing Systems (NeurIPS) .Krizhevsky, A.; and Hinton, G. 2009. Learning multiple layers of features from tiny images. Technical Report 0, University of Toronto, Toronto, Ontario. Lecun, Y.; Bottou, L.; Bengio, Y.; and Haffner, P. 1998. Gradient-based learning applied to document recognition. 
+
+Proceedings of the IEEE , 86(11): 2278–2324. Li, T.; and He, K. 2025. Back to Basics: Let Denoising Gen-erative Models Denoise. arXiv preprint arXiv:2511.13720 .Lipman, Y.; Chen, R. T. Q.; Ben-Hamu, H.; Nickel, M.; and Le, M. 2023. Flow Matching for Generative Modeling. In International Conference on Learning Representations (ICLR) .Liu, L.; Ren, Y.; Lin, Z.; and Zhao, Z. 2022. Pseudo Numer-ical Methods for Diffusion Models on Manifolds. In Inter-national Conference on Learning Representations (ICLR) .Liu, X.; Gong, C.; and qiang liu. 2023. Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow. In International Conference on Learning Representa-tions (ICLR) .Lu, C.; Zhou, Y.; Bao, F.; Chen, J.; Li, C.; and Zhu, J. 2022. DPM-Solver: A Fast ODE Solver for Diffusion Probabilistic Model Sampling in Around 10 Steps. In Neural Information Processing Systems (NeurIPS) .Lu, C.; Zhou, Y.; Bao, F.; Chen, J.; Li, C.; and Zhu, J. 2023. DPM-Solver++: Fast Solver for Guided Sampling of Diffu-sion Probabilistic Models. In Neural Information Processing Systems (NeurIPS) .Luo, S.; Tan, Y.; Huang, L.; Li, J.; and Zhao, H. 2023. Latent Consistency Models: Synthesizing High-Resolution Images with Few-Step Inference. arXiv:2310.04378. Meng, C.; et al. 2024. Scaling Rectified Flow Transform-ers for High-Resolution Image Synthesis. arXiv preprint arXiv:2403.03206 .Nichol, A. Q.; and Dhariwal, P. 2021. Improved denoising diffusion probabilistic models. In International Conference on Machine Learning (ICML) . PMLR. Peebles, W.; and Xie, S. 2023. Scalable diffusion models with transformers. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR) .Podell, D.; English, Z.; Lacey, K.; Blattmann, A.; Dockhorn, T.; Müller, J.; Penna, J.; and Rombach, R. 2023. Sdxl: Im-proving latent diffusion models for high-resolution image synthesis. arXiv preprint arXiv:2307.01952 .Radford, A.; Kim, J. W.; Hallacy, C.; Ramesh, A.; Goh, G.; Agarwal, S.; Sastry, G.; Askell, A.; Mishkin, P.; Clark, J.; Krueger, G.; and Sutskever, I. 2021. Learning Transferable Visual Models From Natural Language Supervision. In In-ternational Conference on Machine Learning (ICML) .Rombach, R.; Blattmann, A.; Lorenz, D.; Esser, P.; and Om-mer, B. 2022. High-resolution image synthesis with latent diffusion models. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR) , 10684–10695. Ronneberger, O.; Fischer, P.; and Brox, T. 2015. U-Net: Con-volutional Networks for Biomedical Image Segmentation. In Navab, N.; Hornegger, J.; Wells, W. M.; and Frangi, A. F., eds., Medical Image Computing and Computer-Assisted In-tervention – MICCAI 2015 , 234–241. Cham: Springer Inter-national Publishing. ISBN 978-3-319-24574-4. Saharia, C.; Chan, W.; Saxena, S.; Li, L.; Whang, J.; Denton, E. L.; Ghasemipour, K.; Gontijo Lopes, R.; Karagol Ayan, B.; Salimans, T.; et al. 2022. Photorealistic text-to-image diffusion models with deep language understanding. In Neu-ral Information Processing Systems (NeurIPS) , volume 35, 36479–36494. Salimans, T.; and Ho, J. 2022. Progressive Distillation for Fast Sampling of Diffusion Models. In International Con-ference on Learning Representations (ICLR) .Song, J.; Meng, C.; and Ermon, S. 2021. Denoising Diffusion Implicit Models. In International Conference on Learning Representations (ICLR) .Song, Y.; Dhariwal, P.; Chen, M.; and Sutskever, I. 2023. Consistency Models. In International Conference on Ma-chine Learning (ICML) .Song, Y.; Sohl-Dickstein, J.; Kingma, D. P.; Kumar, A.; Er-mon, S.; and Poole, B. 2021. Score-Based Generative Mod-eling through Stochastic Differential Equations. In Interna-tional Conference on Learning Representations (ICLR) .Team, Z.-I. 2025. Z-Image: An Efficient Image Genera-tion Foundation Model with Single-Stream Diffusion Trans-former. arXiv preprint arXiv:2511.22699 .Tong, A.; Malkin, N.; Huguet, G.; Zhang, Y.; Jarrid, J.; Fa-tras, K.; Wolf, G.; and Bengio, Y. 2024. Conditional Flow Matching: A General Framework for Transporting Distribu-tions. In International Conference on Learning Representa-tions (ICLR) .Wang, Z.; Li, Y.; Zhang, J.; et al. 2025. Reconstruction vs. Generation: Taming Optimization Dilemma in Latent Diffu-sion Models. In CVPR .Wu, X.; Hao, Y.; Sun, K.; Chen, Y.; Zhu, F.; Zhao, R.; and Li, H. 2024. Human Preference Score v2: A Calibrated Bench-mark for Evaluating Text-to-Image Alignment. In Neural Information Processing Systems (NeurIPS) .Xu, J.; Liu, X.; Wu, Y.; Tong, Y.; Li, Q.; Ding, M.; Tang, J.; and Dong, Y. 2023. ImageReward: Learning and Evaluating Human Preferences for Text-to-Image Generation. In Neural Information Processing Systems (NeurIPS) .Yang, Z.; Li, Z.; Jiang, X.; Gong, Y.; Yuan, Z.; Zhao, D.; and Zhan, C. 2022. Masked Generative Distillation. In European Conference on Computer Vision (ECCV) .Zhang, Q.; and Chen, Y. 2023. Fast Sampling of Diffusion Models via Operator Learning. In International Conference on Machine Learning (ICML) .Zheng, J.; Hu, M.; Fan, Z.; Wang, C.; Ding, C.; Tao, D.; and Cham, T.-J. 2024. Trajectory Consistency Distillation: Im-proved Few-Step Image Generation. In Neural Information Processing Systems (NeurIPS) .Supplementary Material A Theoretical Proofs 
+
+This section provides complete proofs for all theoretical re-sults stated in the main text, together with extended discus-sion, intuitive interpretations, and concrete worked exam-ples. We organize the material to progress from the founda-tional algebraic condition (Theorem 5), through optimality guarantees (Theorem 6), to the error analysis that justifies TJS as an inference strategy (Theorems 9–11), and finally to the information-theoretic characterization of U(t) and the boundary of decodability beyond affine paths. 
+
+A.1 Proof of Theorem 5 and Schedule Verification 
+
+Intuition. The core insight is geometric. An affine proba-bility path xt = αtx0 + σtϵ is a one-parameter curve in data space. Its derivative ut = ˙ αtx0 + ˙ σtϵ is the tangent vector. Together, (xt, u t) give two linear equations in two unknowns 
+
+(x0, ϵ ). When the coefficient matrix is invertible— i.e., , when the two equations are linearly independent—we can solve for 
+
+x0 uniquely. The path determinant ∆t measures this lin-ear independence: it is zero precisely when the position xt
+
+and velocity ut provide redundant information about (x0, ϵ ).Geometrically, ∆t̸ = 0 means that the path is not instanta-neously radial from the origin in the (x0, ϵ ) plane—position and velocity span different directions, so together they pin down the endpoint. 
+
+Proof. From the linear system (Eq. 3), the coefficient ma-trix Mt =
+
+αt σt
+
+˙αt ˙σt
+
+
+
+is invertible iff det( Mt) = ∆ t̸ = 0 .Applying Cramer’s rule: 
+
+x0 =det 
+
+xt σt
+
+ut ˙σt
+
+
+
+det 
+
+αt σt
+
+˙αt ˙σt
+
+ = ˙σtxt − σtut
+
+−∆t
+
+= σtut − ˙σtxt
+
+∆t
+
+.
+
+(10) This establishes both necessity ( ∆t̸ = 0 ) and the closed-form decoder. The derivation reveals why the condition is both necessary and sufficient: if ∆t = 0 , the two rows of Mt are linearly dependent, so (xt, u t) cannot jointly constrain (x0, ϵ )
+
+across independent directions—infinitely many (x0, ϵ ) pairs produce the same (xt, u t). □
+
+Schedule verification. We verify the condition ∆t̸ = 0 for all standard schedules used in practice. This verification is critical because it confirms that every deployed diffusion and flow matching model is endpoint-decodable without modifi-cation. 
+
+Linear FM (αt = t, σt = 1 − t): Here ˙αt = 1 , ˙σt = −1,giving ∆FM  
+
+> t
+
+= 1 · (1 − t) − t · (−1) = 1 for all t. This is the ideal case: the path determinant is not only nonzero but constant , meaning the linear system is perfectly condi-tioned at every timestep. The decoder simplifies elegantly to 
+
+ˆx0 = xt + (1 − t)vθ , which is the formula used for SD3.5M throughout our experiments. The constant determinant also implies that no timestep is numerically more sensitive than any other—a desirable property for robust inference. 
+
+VP Diffusion (αt = √¯αt, σt = √1 − ¯αt): The sched-ules satisfy α2 
+
+> t
+
++ σ2 
+
+> t
+
+= 1. Direct differentiation gives 
+
+∆VP  
+
+> t
+
+= ˙αtσt − αt ˙σt < 0 for all t ∈ (0 , 1] . (The sign follows from ˙¯αt < 0: both ˙αt and − ˙σt are negative, making the determinant strictly negative.) The determinant is never zero in the interior, confirming global endpoint decodability. SDXL uses this schedule. 
+
+VE/EDM (αt = 1 , σt = σ(t)): Here ˙αt = 0 , so ∆VE  
+
+> t
+
+=0 · σt − 1 · ˙σt = − ˙σt. Since σ(t) is designed to decrease monotonically ( ˙σt < 0), ∆VE  
+
+> t
+
+> 0. Z-Image-Turbo uses a variant of this schedule. The decoder becomes ˆx0 = xt +
+
+σtvθ /(− ˙σt), which in the EDM convention simplifies to 
+
+ˆx0 = xt + (1 − σt)vθ .
+
+Takeaway. All three major schedule families satisfy ∆t̸ =0 globally. The condition is remarkably permissive: it only fails when ˙αt/α t = ˙σt/σ t, which would require the sig-nal and noise components to decay at exactly proportional rates—a pathological case that no standard schedule exhibits. 
+
+A.2 Proof of Theorem 6 
+
+Intuition. The algebraic decoder from Theorem 5 is exact when ut is known perfectly. In practice, we only have a learned approximation vθ (xt, t ) ≈ ut. A natural concern is whether plugging in a learned model introduces systematic bias, e.g., , bias from the ℓ2 training objective that differs from the algebraic decoding formula. Theorem 6 proves that the answer is no: at optimality, the algebraic decoder applied to the Bayes-optimal velocity predictor recovers E[x0|xt],the minimum mean square error estimator. The ℓ2 objective and the algebraic decoder are perfectly aligned. 
+
+Proof. Under ℓ2 loss, the Bayes-optimal velocity predictor is the conditional expectation: v⋆(x, t ) = E[ut | xt = x].By linearity of conditional expectation and the definition 
+
+ut = ˙ αtx0 + ˙ σtϵ:
+
+v⋆(x, t ) = ˙ αtE[x0 | xt = x] + ˙ σtE[ϵ | xt = x]. (11) The key step is relating E[ϵ|xt] to E[x0|xt]. From x = αtx0 +
+
+σtϵ, taking conditional expectations and using the linearity of the forward process (under Gaussian noise): 
+
+E[ϵ | xt = x] = x − αtE[x0 | xt = x]
+
+σt
+
+. (12) This identity holds because, conditional on xt, the noise ϵ is Gaussian with mean (x − αtE[x0|xt]) /σ t. Substituting into the algebraic decoder: 
+
+σtv⋆ − ˙σtx
+
+∆t
+
+= ˙αtσtE[x0|xt] + ˙ σt(x − αtE[x0|xt]) − ˙σtx
+
+∆t
+
+= ( ˙ αtσt − αt ˙σt)E[x0|xt]∆t
+
+= ∆tE[x0|xt]∆t
+
+= E[x0 | xt = x].
+
+(13) The cancellation of x terms is not a coincidence—it reflects the fact that the algebraic decoder is constructed specifically to eliminate the ϵ component while preserving x0. □Implications. This theorem has three practical conse-quences. (1) Any pretrained model (diffusion or flow match-ing) implicitly encodes an endpoint predictor—no archi-tectural change or auxiliary head is needed. (2) The end-point predictor inherits the statistical properties of the veloc-ity/score/noise model: if the model is well-trained (low ℓ2
+
+error), the endpoint prediction is correspondingly accurate. 
+
+(3) Direct x0-prediction (training the model to output ˆx0 di-rectly) is theoretically optimal for TJS because it avoids the algebraic division by ∆t that can amplify errors when |∆t|
+
+is small (low-SNR regime). We discuss this point further in the unified parameterization section below. 
+
+A.3 Proof of Theorem 9 
+
+Intuition. This is perhaps the most consequential proof in the paper. It decomposes TJS error into exactly two terms: model error and irreducible uncertainty. What makes it pow-erful is what is absent : there is no term involving ¨αt, ¨σt,or any measure of trajectory curvature. This means that— unlike Euler integration, whose error depends on ∥¨xt∥—TJS error is completely independent of how curved the path is. A highly curved path (bad for Euler) and a perfectly straight path (good for Euler) produce the same TJS error at the same 
+
+t∗, provided the model is equally well-trained on both. 
+
+Proof. Let ˆx0 = mt + et with mt = E[x0|xt] being the Bayes-optimal estimator and et being the model’s deviation from optimality. Expanding the squared error: 
+
+∥xout − x0∥2 = ∥(mt∗ + et∗ ) − x0∥2
+
+= ∥et∗ ∥2 + ∥x0 − mt∗ ∥2 + 2 ⟨et∗ , m t∗ − x0⟩.
+
+(14) The cross-term is the only link between model error and irreducible uncertainty. We prove it vanishes in expectation: 
+
+E[⟨et∗ , m t∗ −x0⟩] = Ext∗
+
+⟨et∗ (xt∗ ), E[mt∗ − x0 | xt∗ ]
+
+| {z }
+
+> =0
+
+⟩ = 0 .
+
+(15) The inner conditional expectation is zero by definition of 
+
+mt∗ as the conditional mean: E[mt∗ − x0|xt∗ ] = mt∗ −
+
+E[x0|xt∗ ] = 0 . This uses the law of total expectation and the fact that et∗ is a deterministic function of xt∗ (the model produces a fixed output for a given input). The second term is E[∥x0 − mt∥2] = U(t∗) by Definition 8, yielding Eq. 7. 
+
+□
+
+Why the cross-term vanishes. The orthogonality argu-ment is a standard result in estimation theory (the error of the Bayes estimator is orthogonal to any function of the ob-servation), but it has a concrete meaning here: the model’s errors are, in expectation, uncorrelated with the information that xt∗ has not yet captured about x0. This is an optimal-ity property—it would fail if the model were systematically biased (e.g., always underestimating x0 in a way correlated with the residual uncertainty), but such biases would be cor-rected by further ℓ2 training. 
+
+A.4 Proof of Proposition 12 
+
+Intuition. This proposition is the paper’s key theoretical challenge to the prevailing paradigm. The entire trajectory-straightening literature (Rectified Flow, Consistency Models, ReFlow) is motivated by reducing Euler integration error, which scales with ∥¨xt∥. But TJS does not use Euler integra-tion for the final step—it decodes algebraically. So curvature is irrelevant to TJS. We prove this by constructing paths with 
+
+arbitrarily large curvature that remain perfectly endpoint-decodable. 
+
+Proof. (1) Sufficiency. For straight paths (linear FM), ut =
+
+x0 − ϵ is constant in t conditioned on (x0, ϵ ). Consequently, any Euler step is exact regardless of step size. TJS at any t∗
+
+is also exact (the algebraic decoder applied to the endpoint simply reverses the linear transformation). Thus straightness is sufficient for both good Euler integration and good TJS. 
+
+(2) Non-necessity. We construct a counterexample by perturbing the linear FM schedule with a high-frequency but low-amplitude oscillation. Let the base schedule be 
+
+(α(0)  
+
+> t
+
+, σ (0)  
+
+> t
+
+) = ( t, 1 − t), for which ∆t ≡ 1. Define the perturbed schedules: 
+
+α(ω) 
+
+> t
+
+= t+ 1
+
+ω sin( ωt (1 −t)) , σ(ω) 
+
+> t
+
+= 1 −t+ 1
+
+ω cos( ωt (1 −t)) .
+
+(16) The perturbation magnitude is O(1 /ω ), so the boundary conditions are preserved up to O(1 /ω ): α(ω)0 = 0 , σ(ω)0 =1 + 1 /ω ; α(ω)1 = 1 , σ(ω)1 = 1 /ω ≈ 0 for large ω. Computing the path determinant via direct differentiation: 
+
+˙α(ω) 
+
+> t
+
+= 1 + cos( ωt (1 − t)) · (1 − 2t), (17) 
+
+˙σ(ω) 
+
+> t
+
+= −1 − sin( ωt (1 − t)) · (1 − 2t). (18) Substituting into ∆(ω) 
+
+> t
+
+= ˙ α(ω) 
+
+> t
+
+σ(ω) 
+
+> t
+
+− α(ω) 
+
+> t
+
+˙σ(ω) 
+
+> t
+
+and simpli-fying yields ∆(ω) 
+
+> t
+
+= 1 + O(1 /ω ), which remains bounded away from zero for sufficiently large ω.Now examine the curvature. The second derivatives are: 
+
+¨α(ω) 
+
+> t
+
+= −ω(1 −2t)2 sin( ωt (1 −t)) −2 cos( ωt (1 −t))+ O(1) ,
+
+(19) and similarly for ¨σ(ω) 
+
+> t
+
+. The leading term is O(ω), so ∥¨xt∥ =
+
+∥¨α(ω) 
+
+> t
+
+x0 + ¨ σ(ω) 
+
+> t
+
+ϵ∥ ∼ O(ω). As ω → ∞ , the curvature di-verges while ∆(ω) 
+
+> t
+
+→ 1. Thus, the path can be arbitrarily curved and yet remain globally endpoint-decodable with a well-conditioned linear system. □
+
+What this means for practice. This result does not claim that curvature is irrelevant for training —learning a veloc-ity field on a highly curved path may be harder. Rather, it shows that once a model is trained, the curvature of the path imposes no fundamental barrier to accurate endpoint predic-tion. This decouples the inference strategy (TJS) from the training strategy (straightening). Practitioners can use TJS on any pretrained model regardless of whether its training used reflow, distillation, or neither. A.5 Proof of Theorem 13 
+
+Theorem 13 (Unified Parameterization) . At Bayes optimal-ity, the following are equivalent estimators of E[x0|xt]:
+
+ˆxvel 0 (x, t ) = σtvθ (x, t ) − ˙σtx
+
+∆t
+
+, (20) 
+
+ˆxnoise 0 (x, t ) = x − σtϵθ (x, t )
+
+αt
+
+, (21) 
+
+ˆxscore 0 (x, t ) = x + σ2 
+
+> t
+
+sθ (x, t )
+
+αt
+
+, (22) 
+
+ˆxdirect 0 (x, t ) = xθ (x, t ). (23) 
+
+Proof. Velocity prediction is proven in Theorem 6. For noise prediction: at optimality ϵθ (x, t ) = E[ϵ|xt]. Substituting 
+
+E[ϵ|xt] = ( x − αtE[x0|xt]) /σ t into (x − σtϵθ )/α t yields 
+
+E[x0|xt]. For score prediction: Tweedie’s formula (Efron 2011) states that for the Gaussian channel xt = αtx0 +
+
+σtϵ, the Bayes estimator of x0 is E[x0|xt] = (xt +
+
+σ2 
+
+> t
+
+∇x log pt(xt)) /α t. The score function sθ is trained to approximate ∇x log pt, so at optimality the induced ˆx0 re-covers E[x0|xt]. For direct x0-prediction: the ℓ2 objective 
+
+E[∥xθ (xt, t ) − x0∥2] has unique minimizer x⋆θ (xt, t ) =
+
+E[x0|xt] by the standard property of ℓ2 regression. □
+
+Practical guidance. While all four parameterizations are equivalent at optimality, they differ in finite-sample behavior, particularly at low SNR ( α2 
+
+> t
+
+≪ σ2 
+
+> t
+
+). In this regime, αt is near zero, so the noise-prediction and score-prediction decoders involve division by a small number, amplifying estimation errors. The velocity decoder involves division by ∆t, which for VP diffusion can also become small near t = 0 . Direct x0-prediction avoids all algebraic divisions and is therefore the most numerically stable choice for TJS at aggressive early ex-its. However, since the vast majority of existing checkpoints use ϵ-prediction (diffusion) or v-prediction (flow matching), the velocity and noise decoders serve as drop-in adapters. Our experiments confirm they work well in practice (Tables 2–3). 
+
+A.6 Proof of Theorem 11 
+
+Intuition. This theorem provides the quantitative switch-ing criterion between two strategies at the same NFE budget. Euler integration accumulates error from curvature; TJS pays uncertainty cost U(t∗). When the curvature penalty exceeds the uncertainty penalty, TJS wins. The theorem formalizes this trade-off and explains why TJS can outperform Euler even when the ODE is not perfectly solved. 
+
+Proof. The Euler method applied to the ODE ˙xt = vθ (xt, t )
+
+from t∗ to 1 with step h = (1 − t∗)/N Euler has global truncation error O(h). Specifically, under the C2 assumption on αt, σ t, the velocity field ut = ˙ αtx0 + ˙ σtϵ is Lipschitz in 
+
+t uniformly over the data distribution. 
+
+Step 1: Bounding the Lipschitz constant. For any two times t, s , the difference in conditional velocities is: 
+
+∥ut − us∥ = ∥( ˙ αt − ˙αs)x0 + ( ˙ σt − ˙σs)ϵ∥. (24) By the mean value theorem, | ˙αt − ˙αs| ≤ sup τ |¨ατ | · | t − s|,and similarly for ˙σt. Let Cα,σ = sup τ ∈[0 ,1] (|¨ατ |2 + |¨στ |2).Then by Cauchy-Schwarz: 
+
+∥ut − us∥ ≤ pCα,σ |t − s| p∥x0∥2 + ∥ϵ∥2. (25) 
+
+Step 2: Euler error bound. Standard analysis for Euler integration of a Lipschitz ODE gives, for integration from t∗
+
+to 1 with N steps: 
+
+E[∥xEuler 1 − x1∥2] ≤ h2
+
+2 Cα,σ E[∥x0∥2 + ∥ϵ∥2] + o(h2).
+
+(26) The h2/2 prefactor arises from the leading term in the Euler error expansion after accounting for the boundary condition at t = 1 where σ1 = 0 simplifies the dynamics. This follows from standard numerical analysis of ODE solvers (see (Chen et al. 2018) for the neural ODE context). 
+
+Step 3: Combining with TJS error. From Theorem 9, 
+
+MSE TJS = E[∥et∗ ∥2] + U(t∗) ≤ ε + U(t∗). Subtracting the Euler error and canceling the common integration error from 
+
+0 to t∗ (which both strategies incur) yields Eq. 8. 
+
+Step 4: The superiority condition. When U(t∗) <  
+
+> Cα,σ
+> 2N2
+
+E[∥x0∥2 + ∥ϵ∥2] − 2ε, the TJS error is strictly smaller than the Euler error. For linear FM paths where ¨αt = ¨ σt = 0 ,
+
+Cα,σ = 0 and TJS is unconditionally superior—a result con-sistent with our CIFAR-10 and MNIST experiments where TJS operates on straight paths and achieves FID improve-ments over the full ODE. □
+
+A.7 I-MMSE Characterization of Endpoint Uncertainty 
+
+This section establishes a fundamental connection between our operational quantity U(t) and information theory. The relationship provides both a deeper understanding of why 
+
+U(t) decays and a practical tool for reasoning about optimal early-exit points. 
+
+Theorem 14 (Information-Theoretic Characterization of 
+
+U(t)). For the affine probability path with SNR( t) = α2 
+
+> t
+
+/σ 2 
+
+> t
+
+,the irreducible endpoint uncertainty satisfies: 
+
+dd SNR I(x0; xt) = 12 U(t), (27) 
+
+where I(x0; xt) is the mutual information between the clean sample and the intermediate state. Consequently, U(t) de-cays at a rate proportional to the information gain rate: when 
+
+I(x0; xt) approaches saturation, U(t) approaches zero. 
+
+Interpretation. Eq. 27 reveals that U(t) is the derivative 
+
+of mutual information with respect to SNR. This is a pow-erful connection: it means we can reason about TJS perfor-mance in terms of how much information xt carries about 
+
+x0. Early in the trajectory (low SNR), each unit increase in SNR brings a large gain in mutual information, so U(t) drops rapidly. Later (high SNR), information gain saturates, U(t)
+
+approaches zero slowly, and additional integration yields di-minishing returns. This directly explains the concave shape of all TJS quality curves in our experiments (Figs. 6, 7, 14): steep initial improvement followed by gradual plateauing. 
+
+Proof. The normalized channel xt/σ t = ( αt/σ t)x0 + ϵ =√SNR x0 + ϵ with ϵ ∼ N (0 , I) is in canonical Gaussian form. The I-MMSE relationship (Guo, Shamai, and Verdú 2005) states: 
+
+dd SNR I(x0; √SNR x0 + ϵ) = 12 MMSE(SNR) , (28) where MMSE(SNR) = E[∥x0 − E[x0 | xt]∥2]. Since 
+
+xt/σ t is an invertible linear function of xt, we have 
+
+I(x0; xt/σ t) = I(x0; xt) and E[x0|xt/σ t] = E[x0|xt]. By definition MMSE(SNR) = U(t) (Definition 8), yielding Eq. 27. U(t) decays monotonically because I(x0; xt) is non-decreasing in SNR by the data processing inequality: xt is a Markov kernel of x0, so later (higher SNR) states cannot carry less information. □
+
+Corollary 15 (Effective Dimension Bound) . If pdata is sup-ported on a set of effective dimension deff ≤ d (e.g., a k-dimensional manifold with k ≪ d), then for SNR ≫ 1 (i.e., 
+
+α2 
+
+> t
+
+≫ σ2 
+
+> t
+
+): 
+
+U(t) ≤ deff · σ2
+
+> t
+
+α2
+
+> t
+
++ o
+
+ σ2
+
+> t
+
+α2
+
+> t
+
+
+
+. (29) 
+
+This bound assumes SNR ≫ 1 (α2 
+
+> t
+
+≫ σ2 
+
+> t
+
+); at lower SNR it serves as a qualitative trend. The prediction—faster U(t)
+
+decay for structured data—is consistent with our empirical results. 
+
+Empirical validation. The effective dimension bound ex-plains a key experimental pattern: MNIST ( deff ≈ 10 –15 ,a low-dimensional manifold of handwritten digits) achieves 90% quality at 73% NFE saving, while SD3.5M (operating on a high-dimensional latent space, deff in the thousands) achieves only 57% at the same threshold (Table 10). The bound predicts that U(t) decays as σ2 
+
+> t
+
+/α 2 
+
+> t
+
+times the effec-tive dimension, so lower-dimensional data distributions enjoy faster decay and support more aggressive early exits. 
+
+A.8 Boundary of Endpoint Decodability: Non-Affine Paths 
+
+A natural question is whether endpoint decodability extends beyond affine paths. This section shows that affine paths rep-resent a natural boundary: for non-affine (nonlinear) paths, global endpoint decodability generally fails. 
+
+Proposition 16 (Non-Affine Counterexample) . There exist smooth, non-affine probability paths with the same bound-ary conditions ( α0=0 , σ 0=1 ; α1=1 , σ 1=0 ) for which the endpoint mapping (xt, u t) 7 → x0 is not injective—endpoint decodability fails. 
+
+Intuition. The quadratic term γtx20 introduces ambiguity: a given position and velocity can be explained by two differ-ent x0 values with different ϵ values. This is a fundamental obstruction—no deterministic function can map (xt, u t) to a unique x0. In geometric terms, the quadratic term folds the 
+
+(x0, ϵ ) plane, causing distinct (x0, ϵ ) pairs to project to the same (xt, u t).
+
+Proof Sketch. Consider the scalar nonlinear path xt =
+
+αtx0 + σtϵ + γtx20, with γ0 = γ1 = 0 preserving boundary conditions. At any t where γt̸ = 0 , the equations linking 
+
+(x0, ϵ ) to (xt, u t) are: 
+
+αtx0 + σtϵ + γtx20 = xt, (30) 
+
+˙αtx0 + ˙ σtϵ + ˙ γtx20 = ut. (31) Eliminating ϵ yields a quadratic equation Ax 0 + Bx 20 = C
+
+where A = ˙αtσt − αt ˙σt = ∆ t and B = ˙γtσt − γt ˙σt.For generic parameters where B̸ = 0 , this quadratic ad-mits two distinct real roots x0̸ = ˜x0 that produce iden-tical (xt, u t), paired with different ϵ values computed as 
+
+ϵ = ( xt − αtx0 − γtx20)/σ t and ˜ϵ = ( xt − αt ˜x0 − γt ˜x20)/σ t.Hence the mapping (x0, ϵ ) 7 → (xt, u t) is not injective, and deterministic endpoint decoding fails. For paths where the Jacobian ∂(xt, u t)/∂ (x0, ϵ ) has full rank, local endpoint decoding is possible via the implicit function theorem. This suggests that affine is the natural boundary of global endpoint decodability, while local de-codability may extend to broader path families through iter-ative inversion (e.g., Newton’s method). Full analysis is left to future work. □
+
+Practical significance. This result justifies our focus on affine paths: they are the largest class for which global, closed-form endpoint decoding is guaranteed. Extensions to nonlinear paths would require either (a) iterative local decod-ing, trading the single-step guarantee for a multi-step proce-dure, or (b) restricting to path families where the quadratic equation has a unique admissible root ( e.g., , by sign con-straints). Both directions are beyond the scope of this paper but represent natural avenues for future investigation. 
+
+A.9 Detailed Relationship to DDIM 
+
+We provide a self-contained comparison between TJS and DDIM (Song, Meng, and Ermon 2021) to clarify the rela-tionship discussed in §. This comparison is essential because a casual reader might wonder: “Doesn’t DDIM already do this?” The answer is a firm no, and we explain exactly why. 
+
+What DDIM does. For diffusion models under the variance-preserving (VP) schedule ( αt = √¯αt, σt =√1 − ¯αt, so α2 
+
+> t
+
++ σ2 
+
+> t
+
+= 1 ), the DDIM (Song, Meng, and Ermon 2021) deterministic update from xt to xs (s > t 
+
+in our forward-time convention: t=0 noise, t=1 data) uses noise prediction ϵθ :
+
+xs = αs
+
+xt − σtϵθ (xt, t )
+
+αt
+
+| {z }
+
+> ˆx0(xt,t )
+
++ σs ϵθ (xt, t ). (32) At each step, DDIM (i) computes ˆx0, (ii) uses it together with ϵθ to compute the next state xs, and (iii) discards ˆx0.DDIM was designed as a step-size-robust ODE integrator: its goal is traversing the full trajectory from t=0 to t=1 
+
+accurately with fewer steps. DDIM never proposed taking a large jump to the endpoint, never suggested that ˆx0 at intermediate steps can serve as the final output, and never analyzed when or why early stopping would work. What TJS does differently. TJS is not an integrator—it is an early-exit strategy. The key observation is that every intermediate step of DDIM (or any affine-path ODE solver) already produces a valid ˆx0 estimate , and these estimates naturally improve as integration proceeds. TJS simply stops the ODE early and outputs ˆx0 as the final result. This is not a better way to integrate; it is a decision not to integrate further. 
+
+Algebraic similarity, strategic difference. When s = 1 
+
+(the clean endpoint: α1 = 1 , σ1 = 0 ), the second term in Eq. 32 vanishes and x1 = ˆ x0(xt, t ). Algebraically , this sin-gle step from xt to x1 is the same formula as TJS’s endpoint decode. But DDIM never proposed doing this as an infer-ence strategy—it was always used to step from xt to xt−1
+
+(or xt−k for moderate k), continuing the integration chain. The jump from an intermediate xt directly to x1 was never studied, analyzed, or recommended in the DDIM paper or its subsequent literature. 
+
+What TJS provides that DDIM never did. 
+
+1. The early-exit principle. TJS explicitly identifies that 
+
+ˆx0(xt, t ) is already a valid output at every integration step—not just at t = 1 . DDIM never made this claim. 2. Universality. TJS extends endpoint decoding beyond VP diffusion to any affine path (VE, EDM, linear FM) via the unified condition ∆t̸ = 0 (Theorem 5). DDIM is specific to the VP schedule and offers no guidance for flow matching. 3. Theoretical justification. Theorem 9 proves that the early-exit error decomposes into model error + U(t), with neither term depending on trajectory curvature. DDIM an-alyzed discretization error, not the statistical validity of early stopping. 4. When to stop. Theorem 11 quantifies the regime where a single endpoint jump outperforms continued Euler in-tegration. DDIM provides no such criterion. 5. Straightness is unnecessary. Proposition 12 proves that straight trajectories are not required for accurate endpoint prediction—a direct challenge to Rectified Flow’s moti-vation, invisible from DDIM’s integrator perspective. In summary: DDIM showed how to take moderate steps accurately along the full trajectory. TJS shows that you do not need the full trajectory at all—every intermediate step already produces a viable output, and once it is good enough, you can stop. 
+
+A.10 T2I Quality Metrics: Full Per-Step Analysis 
+
+We now provide a thorough analysis of the T2I quality met-rics that complements the condensed main-text presentation. The main text (Table 2) reports key k∗ values; here we present the complete picture with detailed per-metric interpretation. Fig. 6 provides the full quantitative picture of T2I quality across integration depths. We discuss each panel in detail. 
+
+PickScore (top-left). PickScore measures overall image-text alignment using a model trained on human preference judgments from Pick-a-Pic (Kirstain et al. 2023). It is broadly sensitive to both semantic coherence and basic aesthetic qual-ity. The curves rise steeply from k∗=0 to k∗≈12 (roughly 0.14 units per NFE), then decelerate: the gain from k∗=12 to 
+
+k∗=24 is only 0.03 units per NFE. By k∗=12 (13 NFE, 57% saving), both models exceed 95% of full ODE PickScore. SD3.5M consistently scores ≈0.2–0.3 higher than SDXL at every k∗, reflecting its stronger text encoder (the MMDiT ar-chitecture jointly attends to text and image tokens). The two curves are nearly parallel, indicating that the rate of endpoint decodability—the slope d(PickScore )/dk ∗—is architecture-independent, even though the absolute level differs. 
+
+ImageReward (top-right). ImageReward (Xu et al. 2023) is trained on human preference data with an emphasis on fine-grained visual quality: texture detail, lighting, compo-sition, and aesthetic appeal. It is by far the most dynamic and demanding metric. Key observations: (a) ImageReward is negative for k∗ ≤ 6 (NFE ≤ 7) on both models, mean-ing early endpoint predictions are perceived as worse than random baselines by human raters—the model knows what 
+
+to generate but not how to make it look good . (b) The zero-crossing occurs between k∗=6 and k∗=8 , marking the tran-sition from “recognizable but ugly” to “beginning to look acceptable.” (c) The curves do not plateau even at k∗=24 
+
+(NFE=25), continuing to rise toward full ODE quality—the final 6 steps still improve aesthetic quality by ≈0.08 units. (d) SD3.5M and SDXL exhibit a notable cross-over: SD3.5M starts higher (less negative at early k∗) but converges from below on final quality, while SDXL requires deeper integra-tion to surpass SD3.5M’s early advantage. This asymmetry reveals that SD3.5M’s MMDiT backbone produces better endpoint estimates at low SNR, but SDXL’s U-Net benefits more from fine-grained denoising in the late stages. 
+
+HPSv2 (bottom-left). HPSv2 (Wu et al. 2024) is a human preference score trained on the Human Preference Dataset v2, covering a broad range of aesthetic and semantic dimen-sions at moderate resolution. It occupies an intermediate position: less dynamic than ImageReward (0.18 range from 
+
+k∗=0 to full, vs. 1.6 for ImageReward) but more sensitive than CLIP. HPSv2 reaches 90% of full ODE by k∗≈12 and 95% by k∗≈18 , making it a good single-number summary for practitioners choosing an operating point. 
+
+CLIP Score (bottom-right). CLIP score (Radford et al. 2021) measures cosine similarity between image and text em-beddings in the CLIP joint space. It is the earliest-saturating metric by a wide margin: by k∗=6 (7 NFE, 77% saving), CLIP already exceeds 95% of full ODE on both models. The total dynamic range is only ≈0.10 units (0.22 to 0.33 for SDXL), and the curve is essentially flat from k∗=12 onward (variation ≤0.005). This confirms that high-level semantic content is resolved very early in the denoising trajectory. Once the model determines what objects to generate, CLIP is satisfied—it cares little about texture quality, composition, or fine details. 
+
+Cross-metric synthesis. The four panels together reveal a clean hierarchy of convergence speeds: CLIP (semantics) 
+
+≺ PickScore (semantics + basic aesthetics) ≺ HPSv2 (mod-erate aesthetics) ≺ ImageReward (fine-grained aesthetics). This hierarchy is consistent with the theoretical picture: dif-ferent aspects of x0 are resolved at different rates along the trajectory, corresponding to different eigendirections of the conditional covariance Var( x0|xt). Low-frequency seman-tic content (object identity, scene layout) is resolved early; high-frequency texture detail is resolved late. 0 10 20 30          
+
+> NFE
+> 18
+> 19
+> 20
+> 21
+> 22
+> PickScore  ↑
+> SDXL
+> SD3.5M
+> 010 20 30
+> NFE
+> −2
+> −1
+> 0
+> 1
+> ImageReward  ↑
+> SDXL
+> SD3.5M
+> 010 20 30
+> NFE
+> 0.10
+> 0.15
+> 0.20
+> 0.25
+> 0.30
+> HPSv2  ↑
+> SDXL
+> SD3.5M
+> 010 20 30
+> NFE
+> 0.225
+> 0.250
+> 0.275
+> 0.300
+> 0.325
+> CLIP Score  ↑
+> SDXL
+> SD3.5M
+
+Figure 6: Four-panel detailed view of T2I quality metrics (PickScore, ImageReward, HPSv2, CLIP) for SDXL and SD3.5M across the full 30-step TJS sweep. Each panel shows both models; per-model horizontal dashed lines mark the full 30-step ODE quality. All four metrics improve strictly monotonically with k∗.
+
+## B Extended Experiments 
+
+We provide the full set of ablation figures and tables ref-erenced in the main text, together with detailed interpreta-tion, cross-referencing to theory, and a discussion of failure modes. 
+
+B.1 Multi-Benchmark Consistency 
+
+The main text reports T2I results primarily on DrawBench (200 prompts). A natural concern is whether the conver-gence patterns—particularly the NFE thresholds for 90% and 95% quality—are specific to DrawBench’s prompt distribu-tion. We address this by evaluating TJS on three benchmarks spanning a total of 1,099 prompts with different characteris-tics: PickScore (499 prompts from the Pick-a-Pic dataset, de-signed for preference evaluation), DrawBench (200 prompts, curated for diversity across 11 categories), and HPD (400 prompts, drawn from real user interactions with image gen-eration systems). Fig. 7 overlays all six curves (3 benchmarks × 2 models) for each of the five metrics in a compact 3 ×2 grid. The key observations per metric panel are as follows. PickScore: All six curves are tightly clustered (spread ≈1.5 units), with the 95% threshold crossed at k∗=12 –13 for all curves simulta-neously. HPSv2: Slightly more spread, with HPD prompts (real user requests) producing systematically lower scores than curated benchmarks. AES: SD3.5M curves exhibit a slight decline from k∗=24 to full ODE, a concrete instance of the TJS-best overshoot phenomenon. ImageReward: The most dramatic panel—all curves start deeply negative and the 95% threshold is not reached until k∗=22 –24 , confirm-ing ImageReward as the gating metric. CLIP: Near-identical across all curves and k∗, underscoring the importance of multi-metric evaluation. Crucially, the NFE to reach 95% of full ODE varies by at most ±1 across benchmarks for ev-ery metric-model pair, validating that U(t∗) is a model-data property. Table 3 reports per-metric absolute quality values. Key patterns: CLIP is bolded ( ≥95%) at k∗=12 for every model-benchmark pair and varies by ≤0.01 from k∗=12 onward— semantic decodability is architecture-agnostic. ImageRe-ward is the bottleneck: universally negative at k∗=6 , only reaching ≥95% at k∗=24 . SD3.5M scores higher in abso-lute terms (0.95–1.15) than SDXL (0.61–0.84), but the rel-ative convergence profile is nearly identical. HPSv2 shows the widest benchmark dependence (6.9 pp spread at k∗=12 ). 
+
+AES and PickScore exhibit intermediate convergence. Strik-ingly, SDXL and SD3.5M are nearly superposable at matched 
+
+k∗ after accounting for absolute quality offsets, providing strong evidence for the universality of endpoint decodability. Tables 4 and 5 provide the full quantitative picture for Z-Image-Turbo. The retention table is particularly illuminating because it expresses TJS quality as a percentage of full ODE, making the speed-quality trade-off directly readable. Key observations: Table 3: Per-metric absolute quality at key k∗ values across three benchmarks (SDXL and SD3.5M, K=30 ). Bold: ≥95% of full ODE quality. ImageReward at k∗=6 is negative for all entries (the model’s endpoint estimate is not yet informative for aesthetic quality); this is consistent across all benchmarks and both models. The full ODE column provides the reference value for retention computation. NFE = k∗ + 1 .                                                                                                                                                                                 
+
+> Metric Bench. Model k∗=6 k∗=12 k∗=18 k∗=24 Full
+> PickScore PickScore SDXL 19.93 20.85 21.36 21.73 21.99 SD3.5M 20.20 21.10 21.60 21.91 22.03 DrawBench SDXL 20.65 21.41 21.84 22.17 22.39 SD3.5M 20.92 21.73 22.12 22.36 22.50 HPD SDXL 20.13 21.23 21.87 22.34 22.65 SD3.5M 20.35 21.44 22.06 22.46 22.64 HPSv2 PickScore SDXL 0.1971 0.2391 0.2626 0.2801 0.2849 SD3.5M 0.2086 0.2559 0.2793 0.2924 0.2966 DrawBench SDXL 0.1924 0.2292 0.2491 0.2661 0.2705 SD3.5M 0.2055 0.2493 0.2688 0.2794 0.2835 HPD SDXL 0.1854 0.2328 0.2604 0.2811 0.2870 SD3.5M 0.1984 0.2524 0.2803 0.2960 0.3011 AES PickScore SDXL 4.9977 5.5673 5.8492 6.0501 6.1373 SD3.5M 5.0548 5.5655 5.7965 5.8753 5.8671 DrawBench SDXL 4.7491 5.1409 5.3730 5.5582 5.6495 SD3.5M 4.7196 5.0743 5.3046 5.3726 5.3720 HPD SDXL 4.9833 5.5521 5.8499 6.0692 6.1525 SD3.5M 5.1122 5.6321 5.8578 5.9497 5.9595 ImageReward PickScore SDXL -0.4244 0.3735 0.6589 0.7482 0.7043 SD3.5M -0.1046 0.6528 0.8928 0.9975 1.0250 DrawBench SDXL -0.4657 0.3143 0.5901 0.6859 0.6147 SD3.5M -0.0981 0.6521 0.8638 0.9219 0.9487 HPD SDXL -0.4310 0.4447 0.7587 0.8657 0.8384 SD3.5M -0.0441 0.7649 1.0313 1.1241 1.1500 CLIP PickScore SDXL 0.2995 0.3197 0.3249 0.3267 0.3270 SD3.5M 0.3052 0.3187 0.3225 0.3238 0.3238 DrawBench SDXL 0.2939 0.3155 0.3214 0.3229 0.3206 SD3.5M 0.3098 0.3262 0.3282 0.3284 0.3287 HPD SDXL 0.3080 0.3357 0.3420 0.3450 0.3443 SD3.5M 0.3123 0.3301 0.3345 0.3358 0.3365
+
+CLIP is flat and universally ≥95% at every k∗ includ-ing k∗=0 (1 NFE, 90% saving). This is the strongest evi-dence for Theorem 5: a distilled model encodes semantically complete endpoint information from the very first step. The CLIP score varies by ≤0.015 across all k∗ and benchmarks, confirming that the semantic content of the image is deter-mined almost entirely by the initial noise sample and the text conditioning—the subsequent ODE integration primarily re-fines visual quality, not semantic content. 
+
+ImageReward saturates by k∗=2 (3 NFE, 70% saving) ,with 97.8–98.9% retention across all benchmarks. This is a dramatic acceleration relative to the 30-step models, where ImageReward reaches 95% only at k∗=18 –24 . The contrast quantifies how much distillation compresses U(t): the 10-step trajectory of Z-Image-Turbo carries as much endpoint information at k∗=2 as the 30-step SDXL trajectory does at 
+
+k∗=18 .
+
+HPSv2 and AES exhibit the TJS overshoot phe-nomenon (retention > 100% ) at k∗=2 –4, peaking at 101.4– 101.8%. This occurs because the 10-step ODE with the Kar-ras schedule accumulates small discretization errors in the final steps that marginally degrade quality; TJS at k∗=2 –4
+
+bypasses these error-prone steps entirely, producing endpoint estimates that are actually better than the full ODE output. This is the same phenomenon observed on MNIST with FID, and it underscores a key advantage of TJS: it is robust to late-trajectory integration errors. 
+
+The k∗=0 baseline (1 NFE, 90% saving) is remarkably strong. At k∗=0 , CLIP retention is ≥98%, PickScore ≥91%, and even ImageReward reaches ≈45–50% of full ODE. This is a direct consequence of distillation: the model is explic-itly trained to produce good x0 estimates from any noise level, so endpoint information is available essentially from the start. For applications where semantic coherence matters more than fine-grained aesthetics ( e.g., , quick prototyping, content-aware search), k∗=0 may already be sufficient. 
+
+Practical sweet spot: k∗=2 (3 NFE, 70% saving). At this operating point, every metric exceeds 95% retention on every benchmark, making it the recommended default for Z-Image-Turbo users. The gap to full ODE is imperceptible in practice (see visual comparison in Fig. 15). Table 4: Z-Image-Turbo per-metric absolute quality at key k∗ values across all three benchmarks ( K=10 ). Bold: ≥95% of full ODE quality. Note that CLIP is at ≥95% at every k∗ including k∗=0 , demonstrating that distillation produces semantically coherent endpoint estimates from the very first step.                                                                                       
+
+> Metric Bench. k∗=0 k∗=2 k∗=4 k∗=8 Full
+> PickScore DrawBench 21.34 22.70 22.78 22.77 22.77 PickScore 20.30 21.88 21.94 21.90 21.90 HPD 20.51 22.35 22.43 22.43 22.43 HPSv2 DrawBench 0.2377 0.2969 0.2954 0.2928 0.2928 PickScore 0.2368 0.2974 0.2964 0.2936 0.2936 HPD 0.2284 0.2967 0.2961 0.2938 0.2938 AES DrawBench 4.6322 5.4495 5.4314 5.3546 5.3564 PickScore 4.8903 5.8281 5.8016 5.7231 5.7230 HPD 4.9853 5.9183 5.8940 5.8357 5.8360 ImageReward DrawBench 0.4905 0.9691 0.9711 0.9806 0.9802 PickScore 0.4484 0.9754 0.9923 0.9963 0.9970 HPD 0.4761 1.0536 1.0673 1.0682 1.0683 CLIP DrawBench 0.3225 0.3206 0.3197 0.3201 0.3201 PickScore 0.3111 0.3150 0.3147 0.3149 0.3149 HPD 0.3198 0.3264 0.3260 0.3263 0.3262
+
+B.2 Ablation Studies 
+
+We conduct four systematic ablations on SDXL, primarily at 
+
+k∗=12 (NFE=13, 57% saving) unless otherwise noted. Each ablation targets a different degree of freedom in the inference pipeline: the ODE solver, the noise schedule, the total step budget, and the CFG scale. Together, they verify that TJS is robust to every practical choice a practitioner might make. 
+
+Sampler Ablation Motivation. Different ODE solvers traverse the same continuous trajectory with different discretization strate-gies. First-order methods (DDIM, LMS) are simpler but have larger per-step truncation error. Second-order methods (DPM++, UniPC) achieve smaller per-step error by using intermediate evaluations. PNDM uses a linear multi-step ap-proach. If endpoint decoding quality depended on the precise path taken to xt∗ , different solvers would produce different 
+
+ˆx0 estimates. The sampler ablation tests whether this is the case. Fig. 8 and Table 6 present the results. Five common ODE solvers—DDIM, DPM++, LMS, PNDM, and UniPC—are evaluated at k∗=12 , K=30 (NFE=13). Despite fundamen-tally different discretization strategies, the solvers yield near-identical quality: PickScore varies by ≤0.43 (from 21.18 to 21.61), CLIP by ≤0.007 (from 0.312 to 0.319), and ImageRe-ward by ≤0.040 (from 0.298 to 0.338). All values lie within 
+
+±5% of the DDIM baseline. 
+
+Theoretical explanation. The result directly confirms the theory. TJS error is E[∥et∗ ∥2] + U(t∗) (Theorem 9). The sampler only affects the path to xt∗ ; it does not affect the endpoint predictor ˆx0(·, t ∗), which is a fixed function of its input. As long as xt∗ is approximately correct (which it is for any reasonable solver at K=30 ), the endpoint estimate is unchanged. More precisely, let xexact  
+
+> t∗
+
+be the true ODE solution and xsolver  
+
+> t∗
+
+be the solver output. By the Lipschitz continuity of ˆx0(·, t ∗) (inherited from the neural network), 
+
+∥ˆx0(xsolver  
+
+> t∗
+
+) − ˆx0(xexact  
+
+> t∗
+
+)∥ ≤ L · ∥ xsolver  
+
+> t∗
+
+− xexact  
+
+> t∗
+
+∥. For 
+
+K=30 , the solver discrepancy is already small, so the end-point discrepancy is negligible. 
+
+Practical implication. Practitioners can freely choose their preferred ODE solver without affecting TJS perfor-mance. This is a significant practical advantage: the existing ecosystem of solvers (with different speed-accuracy trade-offs) composes seamlessly with TJS. 
+
+Schedule Ablation Motivation. Different noise schedules allocate sampling effort differently across the noise-to-data trajectory. Beta schedules concentrate steps near the data manifold (high SNR); Karras schedules concentrate steps in the high-noise regime (low SNR) where U(t) changes most rapidly; expo-nential and Laplace schedules provide different trade-offs. Theorem 5 only requires ∆t̸ = 0 , which all these schedules satisfy. The schedule ablation verifies that this single condi-tion is indeed sufficient, and measures the practical impact of schedule choice on TJS performance. Fig. 9 and Table 7 evaluate four noise schedules. The key findings: (1) Universality confirmed. All four sched-ules support TJS, as predicted by Theorem 5—the only re-quirement is ∆t̸ = 0 , which all standard schedules satisfy. 
+
+(2) Narrow performance spread. ImageReward at k∗=12 
+
+ranges from 0.291 (Laplace) to 0.322 (Karras), a spread of only 0.031—less than 5% of the full ODE ImageReward. (3) Karras is marginally optimal. Karras reaches ≥95% one step earlier ( k∗=17 vs. 18–19), consistent with its design: Karras concentrates steps in the high-noise regime where 
+
+dU/dt is largest (by the I-MMSE relationship, Theorem 14), so each step extracts more endpoint information. (4) Laplace trails slightly, likely because its heavy-tailed step distribu-tion undersamples the intermediate-SNR regime where aes-thetic quality (measured by ImageReward) is most rapidly Table 5: Z-Image-Turbo quality retention (%) at key k∗ values across all three benchmarks ( K=10 ). Bold: ≥95% retention. NFE saving relative to the full 10-step ODE: k∗=0 →90% , k∗=2 →70% , k∗=4 →50% , k∗=8 →10% . Note the overshoot at k∗=2 –4
+
+for HPSv2 and AES ( > 100% ), indicating TJS surpasses full ODE quality due to bypassing discretization errors in the final steps.                                                    
+
+> Metric Bench. k∗=0 k∗=2 k∗=4 k∗=8
+> PickScore DrawBench 93.7% 99.7% 100.0% 100.0%
+> PickScore 92.7% 99.9% 100.2% 100.0%
+> HPD 91.4% 99.6% 100.0% 100.0%
+> HPSv2 DrawBench 81.2% 101.4% 100.9% 100.0%
+> PickScore 80.6% 101.3% 100.9% 100.0%
+> HPD 77.7% 101.0% 100.8% 100.0%
+> AES DrawBench 86.5% 101.7% 101.4% 100.0%
+> PickScore 85.5% 101.8% 101.4% 100.0%
+> HPD 85.4% 101.4% 101.0% 100.0%
+> ImageReward DrawBench 50.0% 98.9% 99.1% 100.0%
+> PickScore 45.0% 97.8% 99.5% 99.9%
+> HPD 44.6% 98.6% 99.9% 100.0%
+> CLIP DrawBench 100.8% 100.2% 99.9% 100.0%
+> PickScore 98.8% 100.0% 100.0% 100.0%
+> HPD 98.0% 100.1% 99.9% 100.0%
+
+Table 6: Sampler ablation (SDXL, k∗=12 , DrawBench). All five solvers produce quality within ±5% of each other across all three metrics. The full ODE reference (30 NFE) is in-cluded for context. The convergence order (1st vs. 2nd) has negligible impact on TJS quality, confirming that discretiza-tion accuracy matters for trajectory fidelity but not for end-point information extraction.                                    
+
+> Sampler Order Pick ↑CLIP ↑IR ↑NFE
+> DDIM 1st 21.41 0.316 0.314 13 DPM++ 2nd 21.61 0.319 0.338 13 LMS 1st 21.18 0.312 0.305 13 PNDM 1st 21.23 0.313 0.298 13 UniPC 2nd 21.45 0.317 0.321 13 Full –22.39 0.321 0.615 30
+
+Table 7: Schedule ablation (SDXL, 30-step, ImageReward at 
+
+k∗=12 , DrawBench). All four schedules support TJS. Karras achieves the highest ImageReward at every k∗ and reaches 
+
+≥95% of full ODE quality at k∗=17 , one step earlier than the other schedules. The “Best k∗” column reports the earliest exit achieving ≥95% retention.                      
+
+> Schedule k∗=6 k∗=12 k∗=18 Best k∗
+> Beta −0.52 0.298 0.572 18 Exponential −0.48 0.308 0.585 18 Karras −0.41 0.322 0.595 17 Laplace −0.55 0.291 0.565 19
+
+resolved. 
+
+Theoretical connection. The schedule ablation pro-vides an empirical illustration of the I-MMSE relationship (Eq. 27). The rate of U(t) decay is dU/dt = ( dU/d SNR) ·
+
+(d SNR /dt ) = 2( d2I/d SNR 2) · (d SNR /dt ). Schedules differ in how they allocate d SNR /dt across t, which af-fects where the information gain is concentrated. Karras al-locates more SNR change in the high-noise regime where 
+
+d2I/d SNR 2 is largest (mutual information grows fastest), yielding marginally more efficient endpoint information ex-traction per step. 
+
+Step-Count Ablation Motivation. The theory predicts that endpoint quality de-pends on t∗, the continuous time at which we stop, not on the discretization granularity K. The step-count ablation tests this prediction by varying the total step budget K while holding the exit fraction γ = k∗/K constant. If the theory is correct, quality at fixed γ should be nearly independent of 
+
+K.Table 8: Step-count ablation (SDXL, DrawBench, ImageRe-ward). Quality at fixed integration fraction γ = k∗/K 
+
+is consistent across total step budgets K, confirming the continuous-time nature of U(t∗). The residual dependence on K (e.g., γ = 0 .8: 0.47 at K=10 vs. 0.59 at K=30 ) re-flects improved ODE integration accuracy at finer step sizes, which yields a marginally more accurate xt∗ for the endpoint decoder.                          
+
+> γ=k∗/K K=10 K=15 K=20 K=25 K=30
+> γ= 0 .4−0.52 −0.41 −0.35 −0.28 −0.21
+> γ= 0 .60.18 0.24 0.27 0.30 0.31
+> γ= 0 .80.47 0.52 0.55 0.58 0.59
+
+Fig. 10 and Table 8 present the results. We vary K ∈{10 , 15 , 20 , 25 , 30 } and evaluate TJS at three fixed integra-tion fractions: γ = 0 .4, 0.6, and 0.8. The main finding: at fixed γ, ImageReward is nearly constant across K. For 
+
+γ=0 .8, the spread is only 0.12 (from 0.47 at K=10 to 0.59 at K=30 ). For γ=0 .6, the spread is even smaller (0.13). This near-invariance confirms the theoretical prediction: U(t∗) is a function of continuous time t∗, not of discretization. 
+
+Residual dependence on K. The modest improvement with larger K (most visible at γ=0 .4) is attributable to ODE integration accuracy: with more steps, xt∗ is closer to the true ODE solution, providing a slightly cleaner input to the endpoint decoder. This effect is second-order: doubling K
+
+from 15 to 30 at γ=0 .6 improves ImageReward by only 0.07, compared to the 0.49 gain from increasing γ from 0.4 to 0.6. The dominant factor is when you stop, not how finely you integrated. 
+
+Practical recipe. This finding has a direct practical conse-quence: practitioners can reduce K without sacrificing TJS quality, as long as they maintain the same γ (equivalently, the same continuous-time t∗). For example, TJS at γ=0 .6
+
+with K=15 (NFE=10) achieves ImageReward 0.24, while TJS at γ=0 .6 with K=30 (NFE=19) achieves only 0.31—a 90% NFE increase yields only a 0.07 quality gain. The prac-tical recommendation is to use the smallest K that provides acceptable ODE integration accuracy (typically K=15 –20 )and tune γ for the desired quality-speed trade-off. 
+
+CFG Scale Ablation Motivation. Classifier-free guidance (CFG) (Ho and Sal-imans 2022) modifies the velocity field to increase condi-tioning strength: vCFG  
+
+> θ
+
+= vθ (xt, t, ∅) + w · (vθ (xt, t, c ) −
+
+vθ (xt, t, ∅)) . This changes the effective trajectory but pre-serves the affine path structure ( αt, σ t are unchanged). The theory predicts that CFG and TJS should be orthogonal: CFG modifies the conditioning signal, not the path geometry, so 
+
+U(t) is unaffected and TJS should compose seamlessly. Table 9: CFG scale ablation (SDXL, DrawBench, ImageRe-ward). TJS tracks full-ODE quality across all three guidance scales. At every k∗, ImageReward increases monotonically with w, mirroring the full-ODE trend. The optimal operating point is k∗=18 , w=7 .5, achieving ≈96% of full CFG quality at 37% NFE saving.                            
+
+> Method k∗=0 k∗=6 k∗=12 k∗=18 k∗=24 Full
+> w= 5 .5
+> TJS (IR) −1.95 −0.42 0.314 0.590 0.686 0.615
+> w= 6 .5
+> TJS (IR) −2.05 −0.38 0.338 0.612 0.705 0.638
+> w= 7 .5
+> TJS (IR) −2.15 −0.35 0.352 0.628 0.718 0.652
+
+Fig. 11 and Table 9 present the CFG ablation. The re-sults confirm orthogonality: (1) At every k∗, ImageReward increases monotonically with w (e.g., at k∗=12 : 0.314 →
+
+0.338 → 0.352). (2) The monotonic TJS improvement pat-tern is preserved at all three CFG scales—the curves are near-parallel, shifted vertically by the CFG strength. (3) The optimal operating point is k∗=18 , w=7 .5, achieving Im-ageReward 0.628 (96% of full CFG quality at 37% NFE saving). (4) At ultra-early exits ( k∗=0 ), higher CFG actu-ally makes ImageReward more negative ( −1.95 at w=5 .5
+
+vs. −2.15 at w=7 .5). This is because strong CFG ampli-fies high-frequency artifacts that are especially objectionable when the endpoint estimate is poor; as integration proceeds and U(t) decays, the artifacts are resolved and higher CFG becomes beneficial. 
+
+Theoretical explanation. CFG modifies the effective ve-locity field to vCFG  
+
+> θ
+
+= vuncond  
+
+> θ
+
++w(vcond  
+
+> θ
+
+−vuncond  
+
+> θ
+
+). Substi-tuting into the endpoint decoder (Eq. 4) yields a CFG-aware endpoint estimate. Crucially, the path geometry ( αt, σ t) is unchanged, so ∆t and U(t) are unaffected. CFG and TJS operate on orthogonal axes: CFG controls the target (what image to generate), TJS controls when to stop (how much integration is needed). This orthogonality is practically valu-able: practitioners can tune CFG and k∗ independently. Fig. 12 extends the CFG analysis to ImageNet-256 class-conditional generation, providing a cross-domain validation. The figure sweeps CFG scales 1.0, 1.25, and 1.5 over the full 40-step TJS trajectory (FID, lower is better). Key ob-servations: (1) FID improves monotonically with k∗ at all CFG scales, and the optimal early-exit fraction is stable at 
+
+k∗≈24 –26 (≥95% FID retention). (2) Higher CFG yields better FID at matched k∗ for k∗ ≥ 18 , consistent with the well-known benefit of CFG for class-conditional genera-tion. (3) The cross-over behavior (CFG 1.5 underperforms CFG 1.0 at very early k∗) mirrors the T2I CFG result, where strong guidance amplifies artifacts when U(t) is large. The agreement between class-conditional and text-to-image CFG results—across different architectures (U-Net vs. MMDiT), data modalities (class labels vs. text), and metrics (FID vs. ImageReward)—is strong evidence that classifier-free guid-ance and endpoint decodability are fundamentally orthogo-nal mechanisms. We also provide two additional ImageNet-256 CFG visual comparison figures for completeness. Fig. 13 shows visual x0 predictions for ImageNet-256 at CFG=1.25 and CFG=1.5, complementing the CFG=1.0 re-sults in the main text (Fig. 2, right panel). At both CFG scales, the visual progression follows the same pattern: early steps (k∗=0 –6) produce blurry but recognizable category content; intermediate steps ( k∗=12 –18 ) resolve global structure and basic textures; later steps ( k∗=24 –32 ) refine fine details. Higher CFG (1.5 vs. 1.25) yields sharper textures and more distinct category features at matched k∗, at the cost of slightly reduced diversity (visible in the background detail). 
+
+B.3 Generalization to Distilled Models 
+
+We extend TJS to a distilled model, Z-Image-Turbo (Team 2025), to test whether the endpoint-decodability framework generalizes beyond standard diffusion and flow matching models. This is a critical test: distillation pipelines (progres-sive distillation, adversarial distillation, consistency training) substantially alter the trajectory geometry, and it is not a pri-ori obvious that endpoint decodability survives. Z-Image-Turbo uses a 10-step distillation pipeline with DDIM and a Karras noise schedule under an EDM-style path ( αt = 1 , σt = σ(t)). Distillation compresses the trajec-tory in two ways: (a) each step covers a larger ∆t, making the ODE integration coarser, and (b) the model is explicitly trained to produce good x0 estimates from any noise level (the distillation objective typically includes a reconstruction loss at multiple noise scales). Both effects should accelerate 
+
+U(t) decay: intermediate states carry near-complete endpoint information much earlier. The quantitative question is how much earlier, and whether the TJS framework provides accu-rate predictions. Fig. 14 reports the per-metric TJS convergence curves for Z-Image-Turbo. Several findings are notable: 
+
+(1) Rapid saturation. All five metrics converge to within 95% of full-ODE quality by k∗≤3 (NFE ≤4, NFE saving 
+
+≥60%). This is dramatically faster than SDXL and SD3.5M (cf. Table 10). Quantitatively: Z-Image-Turbo reaches 95% PickScore at k∗=2 (3 NFE) vs. SDXL at k∗=12 (13 NFE)—a 4× reduction in required integration steps. This confirms that distillation compresses the informative trajectory by training the model to produce accurate x0 estimates across a wider range of noise levels. 
+
+(2) Metric hierarchy preserved. Even with the com-pressed trajectory, the same convergence hierarchy holds: CLIP saturates earliest (essentially flat from k∗=0 ), followed by PickScore, HPSv2, AES, and finally ImageReward. The hierarchy is a property of what each metric measures (se-mantics vs. texture vs. composition), not of the trajectory length. Distillation compresses the timescale but preserves the ordering. 
+
+(3) Benchmark consistency. The convergence shape is invariant across benchmarks: the NFE at which 95% qual-ity is reached is consistent within ±1 NFE for every met-ric. This mirrors the benchmark invariance observed for SDXL/SD3.5M and reinforces the conclusion that U(t) is a model-data property. 
+
+(4) No overshoot at k∗=0 . Unlike the class-conditional models (CIFAR-10, MNIST), Z-Image-Turbo at k∗=0 is still meaningfully below full ODE quality for most metrics. This is because the 1-NFE endpoint estimate, while semantically coherent, lacks the fine texture refinement that even 2–3 ad-ditional integration steps provide. 
+
+(5) Full-ODE baselines are closely matched. The three benchmark curves converge to nearly identical full-ODE val-ues for each metric (spread ≤0.05), confirming the robust-ness of Z-Image-Turbo’s generation quality across prompt distributions. 
+
+(6) Practical implication. With Z-Image-Turbo, TJS at 
+
+k∗=3 (4 NFE) provides 95%+ quality retention—a 60% NFE saving over the already-fast 10-step ODE. This demonstrates that TJS and distillation are complementary: distillation com-presses the trajectory; TJS eliminates the redundant tail of whatever trajectory remains. Fig. 15 shows visual x0 predictions for Z-Image-Turbo across the full range of k∗. We draw attention to specific visual phenomena that illustrate the theoretical concepts: 
+
+k∗=0 (1 NFE): The model produces images with correct global semantics (subject matter, color palette, composition) but noticeably soft textures and occasional structural arti-facts (e.g., asymmetric faces, warped text). This corresponds to U(0) being nontrivial: the initial noise sample plus text conditioning narrows the posterior over x0 to a region of semantic plausibility, but the residual variance within that region is visible as blur and distortion. 
+
+k∗=1 (2 NFE): A single integration step before end-point decoding dramatically improves sharpness. This is the regime where dU/dt is largest (by the I-MMSE relationship), so each step extracts maximal endpoint information. 
+
+k∗=2 (3 NFE): Text rendering becomes accurate (impor-tant for prompts involving signs, logos, or labels). Facial fea-tures are symmetric and well-proportioned. Material textures (fur, fabric, metal) are clearly discernible. At this point, the model has recovered ≈97–99% of full ODE quality across all metrics (Table 5). 
+
+k∗=3 (4 NFE) and beyond: Changes are subtle and pri-marily affect fine texture consistency and edge sharpness. The visual difference between k∗=3 and full ODE is im-perceptible without pixel-level comparison, consistent with 
+
+>99% metric retention. Fig. 16 provides the most visually compelling evidence for endpoint decodability. The top row shows xt—what you would see if you directly decoded the intermediate latent to pixel space. At k∗=0 , xt is indistinguishable from noise; at k∗=2 , faint structures begin to emerge; only at k∗=6 –
+
+8 does xt become visually coherent. In stark contrast, the bottom row shows ˆx0 decoded from the same xt: at k∗=0 ,we already see a recognizable scene with correct colors and composition; at k∗=2 , the image is nearly complete. This dramatic difference—clean output from noisy input—is the operational definition of endpoint decodability. The model knows where it is going long before the trajectory arrives. 
+
+B.4 Pareto Table and Speed-Quality Trade-off 
+
+Table 10 translates the speed–quality trade-off into actionable numbers across all six model families. Each cell answers: “If I need X% of full quality, what is the earliest I can stop, and how many NFE do I save?” 
+
+Z-Image-Turbo is exceptionally efficient. At k∗=1 (2 NFE, 80% saving), all five metrics exceed 90% of full ODE quality—HPSv2 and AES already surpass 100% (the TJS-best overshoot). At k∗=4 (5 NFE, 50% saving), ImageReward—the bottleneck metric—finally reaches 99%. This confirms that distillation concentrates endpoint infor-mation into the earliest integration steps. 
+
+T2I models converge at moderate thresholds. SDXL and SD3.5M reach 90% at k∗=10 –12 (57–63% saving) and 95% at k∗=17 –18 (37–40% saving), measured by ImageReward—the most demanding metric. 
+
+Class-conditional models vary by dataset complexity. 
+
+MNIST and ImageNet-256 save ≈50–57% at 90%; CIFAR-10 requires deeper integration (37% at 90%, 0% at 99%). 
+
+B.5 Decodability Rate and Failure Modes 
+
+This section provides a systematic analysis of when TJS works well and when it fails, building on the theoretical framework to offer practical guidance. Table 10: Speed-quality Pareto frontier across all model families. Values show the minimum k∗ (NFE saving in parentheses) for 90%, 95%, and 99% of full quality—computed when all metrics reach the threshold (Z-Image-Turbo: PickScore, HPSv2, AES, ImageReward, CLIP; other T2I: ImageReward; class-conditional: FID). NFE saving computed as (K − k∗ − 1) /K .Z-Image-Turbo reaches 90% and 95% at k∗=1 (2 NFE, 80% saving), reflecting its distilled trajectory.                         
+
+> Thresh. SDXL SD3.5M Z-Img-Turbo CIFAR-10 MNIST IN-256
+> 90% 10 (63%) 12 (57%) 1 (80%) 21 (45%) 12 (57%) 19 (50%) 95% 17 (40%) 18 (37%) 1 (80%) 26 (32%) 15 (47%) 22 (42%) 99% 22 (23%) 25 (13%) 4 (50%) 32 (18%) 21 (27%) 26 (32%)
+
+The decodability rate ρ(k∗). To quantify how quickly endpoint quality improves, we define the normalized met-ric: 
+
+ρ(k∗) = metric( k∗) − metric(0) metric( K) − metric(0) , (33) which measures the fraction of full-ODE quality recovered by step k∗. This normalization is essential for cross-model and cross-metric comparison because it removes differences in absolute scale. Key properties: ρ(0) = 0 (no improvement over the initial endpoint estimate), ρ(K) = 1 (full ODE quality), and ρ(k∗) > 1 indicates TJS outperforming the full trajectory (the overshoot phenomenon). The initial slope dρ/dk ∗|k∗=0 reflects how rapidly U(t)
+
+decays in the early integration phase. Analysis of the Draw-Bench ImageReward data reveals: SD3.5M decodes faster initially ( ρ(6)=0 .67 , meaning 67% of full quality recovered after only 6 of 30 steps) vs. SDXL ( ρ(6)=0 .62 ), but SDXL overtakes SD3.5M in the late regime ( ρ(24)=0 .99 vs. 0.98 ). This cross-over pattern—steeper initial decay but earlier sat-uration for SD3.5M—is consistent with a model whose latent space encodes endpoint information more compactly but re-quires finer refinement in the final stages. The decodability rate also reveals practical guidance: 
+
+ρ(k∗) typically reaches 0.8–0.9 by k∗/K ≈ 0.4–0.5, after which additional integration yields diminishing returns. This suggests a simple heuristic: set γ = 0 .5 as a starting point and adjust based on the application’s quality requirements. 
+
+Failure modes. We systematically identify three regimes where TJS degrades, each with distinct causes and mitiga-tions: 
+
+(1) Ultra-early exit ( k∗ ≤ 5, γ ≤ 0.17 ). In this regime, the endpoint predictor effectively collapses to the unconditional mean E[x0], producing outputs that are severely blurred and lack fine detail. The cause is fundamental: at very low SNR, 
+
+xt carries almost no information about x0 beyond its mean (large U(t)). The model cannot overcome this information-theoretic barrier regardless of how well it is trained. Mitiga-tion: None—this is the irreducible uncertainty regime. Users needing quality should avoid γ < 0.2.
+
+(2) Slow U(t) decay for complex prompts. For prompts requiring fine-grained spatial reasoning (“a clock showing 3:17 with Roman numerals”), rare concept compositions (“a cyberpunk samurai riding a mechanical ostrich”), or precise attribute binding (“a red cube on top of a blue sphere”), the optimal t∗ shifts closer to 1. The cause is that these prompts occupy low-probability regions of the data manifold where the conditional posterior Var( x0|xt) decays more slowly— the model needs more integration steps to disambiguate be-tween competing interpretations. Mitigation: Adaptive k∗
+
+selection based on prompt complexity (e.g., using CLIP score or PickScore at k∗=6 as a proxy for whether to continue). 
+
+(3) High-frequency texture degradation at intermedi-ate k∗. At k∗ ≈ 10 –15 (33–50% of full trajectory), the model resolves global semantics and basic textures but under-resolves fine high-frequency details: fur texture, text charac-ters, fabric weave patterns, and specular highlights. The cause is that high-frequency information corresponds to the small-est eigenvalues of Var( x0|xt), which decay most slowly with SNR. Mitigation: For applications where texture fidelity is critical ( e.g., , product visualization, medical imaging), use higher k∗ (≥ 20 ) or pair TJS with a lightweight super-resolution refinement step. The phenomenon aligns with the observation that semantic metrics (CLIP, PickScore) satu-rate earlier than aesthetic metrics (ImageReward, AES) in Table 2, and is directly predicted by the effective dimen-sion bound (Corollary 15): high-frequency texture dimen-sions contribute additively to U(t) and decay with the slowest timescale. 
+
+(4) [Bonus] The overshoot regime. On simple data dis-tributions (MNIST, CIFAR-10), TJS at k∗ near but not equal to K can outperform the full ODE. This is not a failure mode but a beneficial anomaly worth understanding. The cause: the final ODE steps, while reducing U(t), introduce small discretization errors that accumulate. When the gain from reduced U(t) is smaller than the accumulated discretization error, stopping early produces a better output. This is visi-ble in the MNIST FID curve (Fig. 3, center panel), where the minimum FID occurs at k∗=28 rather than k∗=30 . The phenomenon is more pronounced with first-order solvers (DDIM) than second-order (DPM++), consistent with the discretization-error explanation. 
+
+B.6 Connecting Theory to Experiments: A Unified View 
+
+We conclude the supplementary material by summarizing how each theoretical result maps to the experimental evi-dence, demonstrating the coherence of the endpoint decod-ability framework. 
+
+Theorem 5 ( ∆t̸ = 0 ). All standard schedules support end-point decoding. Validated by the schedule ablation (Table 7): Beta, Exponential, Karras, and Laplace schedules all work, as does Z-Image-Turbo’s EDM path. 
+
+Theorem 6. Any pretrained model encodes E[x0|xt]. Con-firmed by the fact that SDXL (noise-prediction), SD3.5M (velocity-prediction), and Z-Image-Turbo (distilled) all pro-duce viable x0 estimates without any modification. 
+
+Theorem 9. TJS error = model error + U(t∗), with no curvature dependence. Validated by monotonic quality im-provement on all six model families (Figs. 3, 7) and sampler-agnostic behavior (Table 6). 
+
+Theorem 11. TJS beats coarse Euler when U(t∗) exceeds the curvature penalty. Confirmed by MNIST and CIFAR-10 results where TJS-best FID falls below full ODE FID (Ta-ble 1). For linear FM paths ( Cα,σ =0 ), TJS is unconditionally superior. 
+
+Proposition 12. Straightness is unnecessary for accurate endpoint prediction. Supported by the finding that the curved VP schedule (SDXL) achieves essentially the same ρ(k∗)
+
+profile as the straight FM schedule (SD3.5M) (Table 3). 
+
+Theorem 14. U(t) decays as dI/d SNR . The concave shape of all quality curves (Figs. 6, 7)—steep initial im-provement followed by gradual plateauing—directly reflects this information-theoretic relationship. 
+
+Corollary 15. Lower effective dimension implies faster 
+
+U(t) decay. MNIST ( deff ≈10 2) achieves 73% NFE saving at 90% quality, while SD3.5M ( deff ≈10 4) achieves only 57% (Table 10). 
+
+Summary. The experimental evidence is remarkably consistent with the theory. Every qualitative prediction— monotonicity, concavity, sampler-agnosticity, schedule ro-bustness, effective-dimension ordering, orthogonality with CFG, and composition with distillation—is borne out quan-titatively across six model families, three benchmarks, and five metrics. This degree of cross-validation is unusual for a training-free inference method and speaks to the fundamen-tal nature of endpoint decodability as a structural property of affine probability paths. 0 5 10 15 20 25 30 
+
+NFE 
+
+18 
+
+19 
+
+20 
+
+21 
+
+22 
+
+> 95% of lowest full ODE
+> 90% of lowest full ODE
+
+PickScore 
+
+0 5 10 15 20 25 30 
+
+NFE 
+
+0.10 
+
+0.15 
+
+0.20 
+
+0.25 
+
+0.30 95% of lowest full ODE 
+
+> 90% of lowest full ODE
+
+HPSv2 
+
+0 5 10 15 20 25 30 
+
+NFE 
+
+4.0 
+
+4.5 
+
+5.0 
+
+5.5 
+
+6.0 95% of lowest full ODE 
+
+> 90% of lowest full ODE
+
+AES 
+
+0 5 10 15 20 25 30 
+
+NFE 
+
+2.0 
+
+1.5 
+
+1.0 
+
+0.5 
+
+0.0 
+
+0.5 
+
+1.0 95% of lowest full ODE 
+
+> 90% of lowest full ODE
+
+ImageReward 
+
+0 5 10 15 20 25 30 
+
+NFE 
+
+0.22 
+
+0.24 
+
+0.26 
+
+0.28 
+
+0.30 
+
+0.32 
+
+0.34 95% of lowest full ODE 
+
+> 90% of lowest full ODE
+
+CLIP 
+
+Benchmark 
+
+PickScore 
+
+DrawBench 
+
+HPD 
+
+Model 
+
+SDXL 
+
+SD3.5M 
+
+TJS Multi-Benchmark Convergence (dashed / dotted = 95% / 90% of lowest full ODE) 
+
+NFE Figure 7: Comprehensive multi-benchmark TJS convergence analysis. Five metric panels, each with six curves (3 benchmarks ×
+
+2 models). Blue = PickScore, orange = DrawBench, green = HPD; solid = SDXL, dashed = SD3.5M. Grey dashed/dotted lines = 95%/90% of lowest full ODE across all six curves. The convergence shape is invariant across benchmarks: 95% is reached within ±1 NFE for every metric-model pair. 0 10 20 30 
+
+NFE    
+
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> ImageReward
+> DDIM
+> DPM++
+> LMS
+> PNDM
+> UniPC
+> 010 20 30
+
+NFE    
+
+> 17
+> 18
+> 19
+> 20
+> 21
+> 22
+> PickScore
+> DDIM
+> DPM++
+> LMS
+> PNDM
+> UniPC
+> 010 20 30
+
+NFE    
+
+> 0.200
+> 0.225
+> 0.250
+> 0.275
+> 0.300
+> 0.325
+> CLIP Score
+> DDIM
+> DPM++
+> LMS
+> PNDM
+> UniPC
+> 010 20 30
+
+NFE 
+
+> 0.10
+> 0.15
+> 0.20
+> 0.25
+> HPSv2
+> DDIM
+> DPM++
+> LMS
+> PNDM
+> UniPC
+
+## Sampler Compatibility (SDXL, DrawBench) Figure 8: Sampler ablation (SDXL, k∗=12 , DrawBench). Five common ODE solvers (DDIM, DPM++, LMS, PNDM, UniPC) are evaluated with identical k∗ and K. Bar chart displays PickScore, CLIP, and ImageReward for each solver. The near-identical bar heights across all five solvers confirm that endpoint decoding quality is sampler-agnostic: the endpoint predictor extracts the same information regardless of the specific integration path taken to xt∗ .0 10 20 30 
+
+NFE 
+
+2.0 
+
+1.5 
+
+1.0 
+
+0.5 
+
+0.0 
+
+0.5 
+
+> ImageReward
+> Beta
+> Exponential
+> Karras
+> Laplace
+
+0 10 20 30 
+
+NFE 
+
+19 
+
+20 
+
+21 
+
+22 
+
+> PickScore
+> Beta
+> Exponential
+> Karras
+> Laplace
+
+0 10 20 30 
+
+NFE 
+
+0.22 
+
+0.24 
+
+0.26 
+
+0.28 
+
+0.30 
+
+0.32 
+
+> CLIP Score
+> Beta
+> Exponential
+> Karras
+> Laplace
+
+0 10 20 30 
+
+NFE 
+
+0.10 
+
+0.15 
+
+0.20 
+
+0.25 
+
+> HPSv2
+> Beta
+> Exponential
+> Karras
+> Laplace
+
+## Noise Schedule Robustness (SDXL, DDIM, DrawBench) Figure 9: Schedule ablation (SDXL, DrawBench). Four noise schedules (Beta, Exponential, Karras, Laplace) evaluated across 
+
+k∗ ∈ { 6, 12 , 18 }. All schedules support TJS with similar convergence profiles. Karras yields marginally higher ImageReward at intermediate k∗, consistent with its emphasis on the high-noise regime where U(t) decays most rapidly. 0 10 20 30 
+
+NFE    
+
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> ImageReward
+> K=10
+> K=15
+> K=20
+> K=25
+> K=30
+> 010 20 30
+
+NFE    
+
+> 19
+> 20
+> 21
+> 22
+> PickScore
+> K=10
+> K=15
+> K=20
+> K=25
+> K=30
+> 010 20 30
+
+NFE    
+
+> 0.22
+> 0.24
+> 0.26
+> 0.28
+> 0.30
+> 0.32
+> CLIP Score
+> K=10
+> K=15
+> K=20
+> K=25
+> K=30
+> 010 20 30
+
+NFE 
+
+> 0.10
+> 0.15
+> 0.20
+> 0.25
+> HPSv2
+> K=10
+> K=15
+> K=20
+> K=25
+> K=30
+
+## Step Count Independence (SDXL, DDIM, DrawBench) Figure 10: Step-count ablation (SDXL, DrawBench). ImageReward evaluated at three fixed integration fractions ( γ =0.4, 0.6, 0.8) across five total step budgets ( K ∈ { 10 , 15 , 20 , 25 , 30 }). At fixed γ, quality is nearly invariant to K, con-firming that U(t∗) is a continuous-time property. The modest residual trend (higher K yields marginally better quality at fixed 
+
+γ) is attributable to improved ODE integration accuracy at finer discretization. 0 10 20 30 
+
+NFE    
+
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> ImageReward
+> CFG=5.5
+> CFG=6.5
+> CFG=7.5
+> 010 20 30
+
+NFE    
+
+> 19
+> 20
+> 21
+> 22
+> PickScore
+> CFG=5.5
+> CFG=6.5
+> CFG=7.5
+> 010 20 30
+
+NFE    
+
+> 0.22
+> 0.24
+> 0.26
+> 0.28
+> 0.30
+> 0.32
+> CLIP Score
+> CFG=5.5
+> CFG=6.5
+> CFG=7.5
+> 010 20 30
+
+NFE 
+
+> 0.10
+> 0.15
+> 0.20
+> 0.25
+> HPSv2
+> CFG=5.5
+> CFG=6.5
+> CFG=7.5
+
+## CFG Scale Sensitivity (SDXL, DDIM, DrawBench) Figure 11: CFG scale ablation (SDXL, DrawBench). ImageReward evaluated at CFG scales w ∈ { 5.5, 6.5, 7.5} across k∗ ∈{0, 6, 12 , 18 , 24 }. TJS composes naturally with CFG: monotonic improvement is preserved at all guidance scales, and the curves are near-parallel, confirming that CFG shifts the absolute quality level without altering the U(t) decay profile. 0 5 10 15 20 25 30 35 40 
+
+NFE 
+
+> 0
+> 50
+> 100
+> 150
+> 200
+> 250
+> 300
+> 350
+> 400
+> FID
+> TJS best: 15.16 | Full ODE: 17.52
+> TJS best: 9.27 | Full ODE: 9.27
+> TJS best: 10.83 | Full ODE: 10.83
+
+ImageNet-256 CFG Ablation 
+
+> CFG=1.0
+> CFG=1.25
+> CFG=1.5
+
+Figure 12: CFG scale ablation on ImageNet-256 (class-conditional generation). Full TJS FID sweep (40 steps) at three CFG scales: w=1 .0 (no guidance), w=1 .25 , and w=1 .5. Dashed horizontal lines mark the full 40-step ODE FID for each scale. The monotonic FID improvement with k∗ is preserved at all CFG scales, and the optimal early-exit fraction is stable at k∗≈24 –26 
+
+(≥95% FID retention). Cross-domain consistency between class-conditional (this figure) and text-to-image (Fig. 11) CFG results confirms the orthogonality of CFG and endpoint decodability. Step 0 Step 4 Step 8 Step 13 Step 17 Step 21 Step 26 Step 30 Step 34 Step 39 Step 0 Step 4 Step 8 Step 13 Step 17 Step 21 Step 26 Step 30 Step 34 Step 39 
+
+Figure 13: Visual x0 predictions for ImageNet-256 at CFG=1.25 (left) and CFG=1.5 (right). As k∗ increases, image quality improves monotonically: global structure emerges first ( k∗=0 –12 ), followed by texture detail ( k∗=18 –26 ). The TJS-best ( ⋆)predictions at k∗=26 –32 are visually indistinguishable from or superior to the full 40-step ODE. Compare with Fig. 2 (right panel, CFG=1.0) for the unguided case. 0 2 4 6 8 10 
+
+NFE 
+
+20.0 
+
+20.5 
+
+21.0 
+
+21.5 
+
+22.0 
+
+22.5 
+
+> 95% of lowest full ODE
+> 90% of lowest full ODE
+
+PickScore 
+
+0 2 4 6 8 10 
+
+NFE 
+
+0.23 
+
+0.24 
+
+0.25 
+
+0.26 
+
+0.27 
+
+0.28 
+
+0.29 
+
+0.30 95% of lowest full ODE 
+
+> 90% of lowest full ODE
+
+HPSv2 
+
+0 2 4 6 8 10 
+
+NFE 
+
+4.6 
+
+4.8 
+
+5.0 
+
+5.2 
+
+5.4 
+
+5.6 
+
+5.8 
+
+> 95% of lowest full ODE
+> 90% of lowest full ODE
+
+AES 
+
+0 2 4 6 8 10 
+
+NFE 
+
+0.5 
+
+0.6 
+
+0.7 
+
+0.8 
+
+0.9 
+
+1.0 
+
+> 95% of lowest full ODE
+> 90% of lowest full ODE
+
+ImageReward 
+
+0 2 4 6 8 10 
+
+NFE 
+
+0.29 
+
+0.30 
+
+0.31 
+
+0.32 
+
+> 95% of lowest full ODE
+> 90% of lowest full ODE
+
+CLIP 
+
+Benchmark 
+
+PickScore-499 
+
+DrawBench 
+
+HPD 
+
+Z-Image-Turbo TJS Convergence Across Benchmarks (dashed / dotted = 95% / 90% of lowest full ODE) Figure 14: Comprehensive TJS convergence analysis for Z-Image-Turbo ( K=10 ) across three benchmarks (5 metric panels). Each panel displays three curves (one per benchmark) with the full ODE reference (faded dashed line) and 95%/90% thresholds (grey). The rapid saturation is striking: all metrics converge to within 95% of full ODE by k∗≤3 (NFE ≤4, NFE saving ≥60%). Compare with Fig. 7 for SDXL/SD3.5M, where 95% saturation requires k∗≈18 –24 .NFE=1 NFE=2 NFE=4 NFE=6 NFE=8 NFE=9 Prompt: a golden retriever playing in a field of sunflowers, sunny day, 4k 
+
+> Prompt: a steaming cup of coffee on a wooden table, morning light, bokeh
+> Prompt: a neon-lit cyberpunk street at night, rain, reflections, cinematic
+> Prompt: a watercolor painting of a cherry blossom tree by a lake, soft colors
+> Prompt: a vintage red car parked on a coastal road, ocean view, golden hour
+
+Figure 15: Visual x0 predictions for Z-Image-Turbo ( K=10 ) at increasing k∗ ∈ { 0, 1, 2, 3, 4, 6, 8}, plus the full 10-step ODE as reference. Each row shows a different prompt. The visual progression confirms the quantitative findings: k∗=0 (1 NFE) already produces semantically recognizable content; k∗=2 (3 NFE) resolves fine details such as text rendering, facial features, and material textures; k∗=3 (4 NFE) outputs are visually indistinguishable from the full ODE. This figure is the visual complement to Tables 4–5. x0 pred               
+
+> step 0 step 1 step 2 step 3 step 4 step 5 step 6 step 7 step 8 step 9
+> xt(latent)
+> Z-Image-Turbo x0vs xt(9 NFEs) Prompt: a golden retriever playing in a field of sunflowers, sunny day, 4k
+
+Figure 16: Direct visual comparison of xt (top row, the intermediate state at step k∗) vs. x0 (bottom row, endpoint-decoded from the same xt) for Z-Image-Turbo ( K=10 ). This figure provides the most direct illustration of Theorem 5: while xt remains corrupted by noise (top row, especially at early k∗), the endpoint decoder recovers a clean, semantically coherent x0 (bottom row) from the exact same intermediate state . The contrast is starkest at k∗=0 –2, where xt is nearly pure noise but ˆx0 already depicts recognizable content.
